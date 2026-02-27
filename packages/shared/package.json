@@ -4,6 +4,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "keywords": [],
+  "type": "module",
   "author": "Evgenii Ruchkin",
   "license": "ISC",
   "description": "",

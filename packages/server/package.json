@@ -6,6 +6,11 @@
   "author": "Evgenii Ruchkin",
   "license": "ISC",
   "description": "",
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc --project tsconfig.json"
+  },
   "dependencies": {
     "@proton/shared": "*",
     "@fastify/cors": "latest",

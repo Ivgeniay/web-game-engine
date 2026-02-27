@@ -35,8 +35,8 @@
     {
       "label": "build: editor",
       "type": "shell",
-      "command": "vite",
-      "args": ["build"],
+      "command": "npm",
+      "args": ["run", "build"],
       "options": {
         "cwd": "${workspaceFolder}/packages/editor"
       },
@@ -54,8 +54,8 @@
     {
       "label": "dev: server",
       "type": "shell",
-      "command": "tsx",
-      "args": ["watch", "src/index.ts"],
+      "command": "npm",
+      "args": ["run", "dev"],
       "options": {
         "cwd": "${workspaceFolder}/packages/server"
       },
@@ -65,7 +65,8 @@
     {
       "label": "dev: editor",
       "type": "shell",
-      "command": "vite",
+      "command": "npm",
+      "args": ["run", "dev"],
       "options": {
         "cwd": "${workspaceFolder}/packages/editor"
       },
@@ -75,6 +76,7 @@
     {
       "label": "dev: all",
       "dependsOn": ["dev: server", "dev: editor"],
+      "dependsOrder": "parallel",
       "group": "test"
     }
   ]

@@ -4,7 +4,12 @@
   "keywords": [],
   "author": "Evgenii Ruchkin",
   "license": "ISC",
+  "type": "module",
   "description": "",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
   "dependencies": {
     "@proton/engine": "*",
     "@proton/shared": "*",
