@@ -1,0 +1,16 @@
+{
+  "name": "@proton/smoke_engine",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "keywords": [],
+  "author": "Evgenii Ruchkin",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@proton/engine": "*"
+  },
+  "devDependencies": {
+    "tsx": "latest",
+    "typescript": "latest"
+  }
+}

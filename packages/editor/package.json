@@ -1,0 +1,22 @@
+{
+  "name": "@proton/editor",
+  "version": "1.0.0",
+  "keywords": [],
+  "author": "Evgenii Ruchkin",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@proton/engine": "*",
+    "@proton/shared": "*",
+    "dockview": "latest",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@vitejs/plugin-react": "latest",
+    "typescript": "latest",
+    "vite": "latest"
+  }
+}

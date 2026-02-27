@@ -1,0 +1,26 @@
+{
+  "name": "@proton/server",
+  "version": "1.0.0",
+  "main": "src/index.ts",
+  "keywords": [],
+  "author": "Evgenii Ruchkin",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@proton/shared": "*",
+    "@fastify/cors": "latest",
+    "@fastify/jwt": "latest",
+    "@fastify/multipart": "latest",
+    "@fastify/static": "latest",
+    "@fastify/websocket": "latest",
+    "bcrypt": "latest",
+    "chokidar": "latest",
+    "esbuild": "latest",
+    "fastify": "latest"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "latest",
+    "tsx": "latest",
+    "typescript": "latest"
+  }
+}

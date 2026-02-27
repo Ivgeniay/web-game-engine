@@ -1,0 +1,22 @@
+{
+  "name": "proton",
+  "version": "1.0.0",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ivgeniay/web-game-engine.git"
+  },
+  "keywords": [],
+  "author": "Evgenii Ruchkin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ivgeniay/web-game-engine/issues"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "homepage": "https://github.com/Ivgeniay/web-game-engine#readme",
+  "description": ""
+}

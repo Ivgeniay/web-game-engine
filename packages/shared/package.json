@@ -1,0 +1,19 @@
+{
+  "name": "@proton/shared",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "keywords": [],
+  "author": "Evgenii Ruchkin",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@proton/stdlib": "*"
+  },
+  "devDependencies": {
+    "typescript": "latest"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}

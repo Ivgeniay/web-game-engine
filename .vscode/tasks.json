@@ -1,23 +1,81 @@
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"label": "Run Frontend",
-			"type": "shell",
-			"command": "npm start",
-			"options": {
-				"cwd": "${workspaceFolder}/frontend"
-			},
-			"group": "build"
-		},
-		{
-			"label": "Run GameCoreTests",
-			"type": "shell",
-			"command": "npm test",
-			"options": {
-				"cwd": "${workspaceFolder}/gameCoreTests"
-			},
-			"group": "test"
-		}
-	]
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "build: stdlib",
+      "type": "shell",
+      "command": "tsc",
+      "args": ["--project", "packages/stdlib/tsconfig.json"],
+      "group": "build"
+    },
+    {
+      "label": "build: engine",
+      "type": "shell",
+      "command": "tsc",
+      "args": ["--project", "packages/engine/tsconfig.json"],
+      "group": "build",
+      "dependsOn": ["build: stdlib"]
+    },
+    {
+      "label": "build: shared",
+      "type": "shell",
+      "command": "tsc",
+      "args": ["--project", "packages/shared/tsconfig.json"],
+      "group": "build",
+      "dependsOn": ["build: engine"]
+    },
+    {
+      "label": "build: server",
+      "type": "shell",
+      "command": "tsc",
+      "args": ["--project", "packages/server/tsconfig.json"],
+      "group": "build",
+      "dependsOn": ["build: shared"]
+    },
+    {
+      "label": "build: editor",
+      "type": "shell",
+      "command": "vite",
+      "args": ["build"],
+      "options": {
+        "cwd": "${workspaceFolder}/packages/editor"
+      },
+      "group": "build",
+      "dependsOn": ["build: shared"]
+    },
+    {
+      "label": "build: all",
+      "dependsOn": ["build: server", "build: editor"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "dev: server",
+      "type": "shell",
+      "command": "tsx",
+      "args": ["watch", "src/index.ts"],
+      "options": {
+        "cwd": "${workspaceFolder}/packages/server"
+      },
+      "isBackground": true,
+      "group": "test"
+    },
+    {
+      "label": "dev: editor",
+      "type": "shell",
+      "command": "vite",
+      "options": {
+        "cwd": "${workspaceFolder}/packages/editor"
+      },
+      "isBackground": true,
+      "group": "test"
+    },
+    {
+      "label": "dev: all",
+      "dependsOn": ["dev: server", "dev: editor"],
+      "group": "test"
+    }
+  ]
 }
