@@ -11,7 +11,8 @@
   "dependencies": {
     "@proton/engine": "*",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "@radix-ui/react-dropdown-menu": "latest"
   },
   "devDependencies": {
     "@types/react": "^19.0.0",

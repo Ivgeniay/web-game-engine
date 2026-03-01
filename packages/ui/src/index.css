@@ -33,3 +33,58 @@
   --color-warning: #e6a817;
   --color-success: #1a8a6e;
 }
+
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+@layer utilities {
+  .bg-primary {
+    background-color: var(--color-bg-primary);
+  }
+  .bg-secondary {
+    background-color: var(--color-bg-secondary);
+  }
+  .bg-panel {
+    background-color: var(--color-bg-panel);
+  }
+  .bg-hover {
+    background-color: var(--color-bg-hover);
+  }
+  .bg-accent {
+    background-color: var(--color-accent);
+  }
+  .bg-accent-hover {
+    background-color: var(--color-accent-hover);
+  }
+  .text-primary {
+    color: var(--color-text-primary);
+  }
+  .text-secondary {
+    color: var(--color-text-secondary);
+  }
+  .text-disabled {
+    color: var(--color-text-disabled);
+  }
+  .border-default {
+    border-color: var(--color-border);
+  }
+  .border-focus {
+    border-color: var(--color-border-focus);
+  }
+  .text-error {
+    color: var(--color-error);
+  }
+  .text-warning {
+    color: var(--color-warning);
+  }
+  .text-success {
+    color: var(--color-success);
+  }
+}

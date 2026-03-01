@@ -4,6 +4,7 @@
     "jsx": "react-jsx",
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "noUncheckedSideEffectImports": true,
+    "exactOptionalPropertyTypes": false,
     "paths": {
       "@proton/ui": ["../ui/src/index.ts"],
       "@proton/engine": ["../engine/src/index.ts"],

@@ -1,9 +1,9 @@
-import { ThemeToggle } from "@proton/ui";
+import { UIEditor } from "./ui/main_editor_layouts/UIEditor";
 
 export default function App() {
   return (
-    <div className="w-screen h-screen bg-[var(--color-bg-primary)]">
-      <ThemeToggle />
-    </div>
+    <>
+      <UIEditor />
+    </>
   );
 }

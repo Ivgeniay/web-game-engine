@@ -12,7 +12,7 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggle}
-      className="px-4 py-2 rounded bg-[var(--color-accent)] text-[var(--color-text-primary)] hover:bg-[var(--color-accent-hover)] border border-[var(--color-border)] transition-colors"
+      className="px-4 py-2 rounded bg-accent text-primary hover:bg-accent-hover border border-default transition-colors"
     >
       {isDark ? "Light Mode" : "Dark Mode"}
     </button>
