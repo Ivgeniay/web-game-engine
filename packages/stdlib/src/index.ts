@@ -1,3 +1,1 @@
-export function std_greet(name: string): string {
-  return `Hello, ${name}!`;
-}
+export type { DynamicFloat32Array } from "./collections/DynamicFloat32Array";

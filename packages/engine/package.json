@@ -12,7 +12,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@proton/stdlib": "*"
+    "@proton/stdlib": "*",
+    "reflect-metadata": "latest"
   },
   "devDependencies": {
     "@webgpu/types": "^0.1.69",
