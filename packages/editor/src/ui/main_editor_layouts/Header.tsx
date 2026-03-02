@@ -3,61 +3,57 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuSub,
+  type MenuBarChild,
 } from "@proton/ui";
+import { useMenuStore } from "../../store/menu_store";
 
-function MenuButton({ label }: { label: string }) {
-  return (
-    <div
-      className="px-3 py-1 text-sm text-primary hover:bg-hover transition-colors cursor-pointer select-none"
-      //onClick={() => console.log("clicked", label)}
-    >
-      {label}
-    </div>
-  );
+function renderChildren(children: MenuBarChild[]) {
+  return children.map((child) => {
+    if (child.separator) {
+      return <DropdownMenuSeparator key={child.id} />;
+    }
+    if (child.children && child.children.length > 0) {
+      return (
+        <DropdownMenuSub
+          key={child.id}
+          label={child.label}
+          disabled={child.disabled}
+        >
+          {renderChildren(child.children)}
+        </DropdownMenuSub>
+      );
+    }
+    return (
+      <DropdownMenuItem
+        key={child.id}
+        label={child.label}
+        shortcut={child.shortcut}
+        disabled={child.disabled}
+        onClick={child.onClick}
+      />
+    );
+  });
 }
 
 export function Header() {
+  const registry = useMenuStore((state) => state.registries["editor.header"]);
+
+  if (!registry) return null;
+
   return (
     <header className="flex items-center h-8 bg-secondary border-b border-default">
-      <DropdownMenu trigger={<MenuButton label="File" />}>
-        <DropdownMenuItem label="New Project" shortcut="Ctrl+N" />
-        <DropdownMenuItem label="Open Project" shortcut="Ctrl+O" />
-        <DropdownMenuSeparator />
-        <DropdownMenuItem label="Save" shortcut="Ctrl+S" />
-        <DropdownMenuItem label="Save As..." shortcut="Ctrl+Shift+S" />
-        <DropdownMenuSeparator />
-        <DropdownMenuItem label="Exit" />
-      </DropdownMenu>
-
-      <DropdownMenu trigger={<MenuButton label="Edit" />}>
-        <DropdownMenuItem label="Undo" shortcut="Ctrl+Z" />
-        <DropdownMenuItem label="Redo" shortcut="Ctrl+Y" />
-        <DropdownMenuSeparator />
-        <DropdownMenuItem label="Preferences" />
-      </DropdownMenu>
-
-      <DropdownMenu trigger={<MenuButton label="Assets" />}>
-        <DropdownMenuItem label="Import Asset..." />
-        <DropdownMenuSeparator />
-        <DropdownMenuSub label="Create">
-          <DropdownMenuItem label="Folder" />
-          <DropdownMenuItem label="Script" />
-          <DropdownMenuItem label="Material" />
-        </DropdownMenuSub>
-      </DropdownMenu>
-
-      <DropdownMenu trigger={<MenuButton label="Window" />}>
-        <DropdownMenuItem label="Scene" />
-        <DropdownMenuItem label="Hierarchy" />
-        <DropdownMenuItem label="Inspector" />
-        <DropdownMenuItem label="Console" />
-        <DropdownMenuItem label="File System" />
-      </DropdownMenu>
-
-      <DropdownMenu trigger={<MenuButton label="Help" />}>
-        <DropdownMenuItem label="Documentation" />
-        <DropdownMenuItem label="About Proton" />
-      </DropdownMenu>
+      {registry.items.map((item) => (
+        <DropdownMenu
+          key={item.id}
+          trigger={
+            <div className="px-3 py-1 text-sm text-primary hover:bg-hover transition-colors cursor-pointer select-none">
+              {item.label}
+            </div>
+          }
+        >
+          {item.children && renderChildren(item.children)}
+        </DropdownMenu>
+      ))}
     </header>
   );
 }
