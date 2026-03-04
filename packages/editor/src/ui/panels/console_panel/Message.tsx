@@ -1,17 +1,19 @@
+import type { ReactNode } from "react";
 import type { DebugMessage } from "@proton/engine";
 import { DebugLevel, MessageStyle } from "@proton/engine";
+import { RenderJson } from "./RenderJson";
 
 interface MessageProps {
   message: DebugMessage;
 }
 
 const levelLabels: Record<DebugLevel, string> = {
-  [DebugLevel.Verbose]: "VRB",
-  [DebugLevel.Debug]: "DBG",
-  [DebugLevel.Info]: "INF",
-  [DebugLevel.Warning]: "WRN",
-  [DebugLevel.Error]: "ERR",
-  [DebugLevel.Fatal]: "FTL",
+  [DebugLevel.Verbose]: "VERBOSE",
+  [DebugLevel.Debug]: "DEBUG",
+  [DebugLevel.Info]: "INFO",
+  [DebugLevel.Warning]: "WARNING",
+  [DebugLevel.Error]: "ERROR",
+  [DebugLevel.Fatal]: "FATAL",
 };
 
 const levelColors: Record<DebugLevel, string> = {
@@ -35,6 +37,7 @@ export function Message({ message }: MessageProps) {
   const isBold = (message.style & MessageStyle.Bold) !== 0;
   const isItalic = (message.style & MessageStyle.Italic) !== 0;
   const isNotSelectable = (message.style & MessageStyle.NotSelectable) !== 0;
+  const isJsonHighlight = (message.style & MessageStyle.JsonHighlight) !== 0;
 
   const textClass = [
     "text-xs break-words whitespace-pre-wrap flex-1",
@@ -56,7 +59,14 @@ export function Message({ message }: MessageProps) {
       >
         {levelLabels[message.level]}
       </span>
-      <span className={textClass}>{message.text}</span>
+      {isJsonHighlight ? (
+        // <span className={textClass}>{RenderJson(message.text)}</span>
+        <span className={textClass}>
+          <RenderJson text={message.text} />
+        </span>
+      ) : (
+        <span className={textClass}>{message.text}</span>
+      )}
     </div>
   );
 }

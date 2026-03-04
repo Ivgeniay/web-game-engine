@@ -12,4 +12,5 @@ export const enum MessageStyle {
   Bold = 1 << 0,
   Italic = 1 << 1,
   NotSelectable = 1 << 2,
+  JsonHighlight = 1 << 3,
 }

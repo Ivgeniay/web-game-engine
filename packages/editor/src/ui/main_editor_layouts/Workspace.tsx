@@ -64,7 +64,7 @@ export function Workspace() {
   const restore = function () {
     Debug.Info(
       JSON.stringify(state),
-      MessageStyle.Bold | MessageStyle.Italic | MessageStyle.NotSelectable,
+      MessageStyle.Bold | MessageStyle.Italic | MessageStyle.JsonHighlight,
     );
   };
 
