@@ -60,7 +60,6 @@ export function Message({ message }: MessageProps) {
         {levelLabels[message.level]}
       </span>
       {isJsonHighlight ? (
-        // <span className={textClass}>{RenderJson(message.text)}</span>
         <span className={textClass}>
           <RenderJson text={message.text} />
         </span>

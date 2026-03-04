@@ -1,13 +1,26 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "types": ["@webgpu/types"],
+    "types": ["@webgpu/types", "node"],
     "lib": ["ESNext", "DOM"],
-    "rootDir": "./src",
     "outDir": "./dist",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "noUncheckedIndexedAccess": false
   },
-  "include": ["src"]
+  "include": ["src", "tests"]
 }
+
+// {
+//   "extends": "../../tsconfig.json",
+//   "compilerOptions": {
+//     "types": ["@webgpu/types"],
+//     "lib": ["ESNext", "DOM"],
+//     "rootDir": "./src",
+//     "outDir": "./dist",
+//     "experimentalDecorators": true,
+//     "emitDecoratorMetadata": true,
+//     "noUncheckedIndexedAccess": false
+//   },
+//   "include": ["src"]
+// }

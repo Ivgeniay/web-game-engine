@@ -62,10 +62,7 @@ export function Workspace() {
   };
 
   const restore = function () {
-    Debug.Info(
-      JSON.stringify(state),
-      MessageStyle.Bold | MessageStyle.Italic | MessageStyle.JsonHighlight,
-    );
+    Debug.Info(JSON.stringify(state), MessageStyle.JsonHighlight);
   };
 
   return (

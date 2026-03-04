@@ -12,7 +12,7 @@
       "label": "build: engine",
       "type": "shell",
       "command": "tsc",
-      "args": ["--project", "packages/engine/tsconfig.json"],
+      "args": ["--project", "packages/engine/tsconfig.build.json"],
       "group": "build",
       "dependsOn": ["build: stdlib"]
     },
@@ -77,6 +77,18 @@
       "label": "dev: all",
       "dependsOn": ["dev: server", "dev: editor"],
       "dependsOrder": "parallel",
+      "group": "test"
+    },
+
+    //TESTS
+    {
+      "label": "test: engine",
+      "type": "shell",
+      "command": "npm",
+      "args": ["run", "test"],
+      "options": {
+        "cwd": "${workspaceFolder}/packages/engine"
+      },
       "group": "test"
     }
   ]
