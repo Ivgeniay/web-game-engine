@@ -7,4 +7,6 @@ export {
 } from "./general/decorators/components/field_decorators";
 export { World, type QueryOptions, type WorldOptions } from "./core/ecs/World";
 export { type Entity } from "./core/ecs/Entity";
-//export { } from ""
+export { DebugLevel, MessageStyle } from "./debug/DebugLevel";
+export { type DebugMessage } from "./debug/DebugMessage";
+export { Debug } from "./debug/Debug";

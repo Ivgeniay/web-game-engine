@@ -1,5 +1,27 @@
 import type { MenuBarRegistry } from "@proton/ui";
 
+interface defaultWindowCoef {
+  HierarchyWidth: number;
+  HierarchyHeight: number;
+  SceneWidth: number;
+  SceneHeight: number;
+  InspectorWidth: number;
+  InspectorHeight: number;
+  ConsoleWight: number;
+  ConsoleHeight: number;
+}
+
+export const defaultWindowCoef: defaultWindowCoef = {
+  HierarchyWidth: 0.15,
+  HierarchyHeight: 0.7,
+  SceneWidth: 0.7,
+  SceneHeight: 0.7,
+  InspectorWidth: 0.15,
+  InspectorHeight: 0.7,
+  ConsoleWight: 1,
+  ConsoleHeight: 0.3,
+};
+
 export const defaultEditorMenu: MenuBarRegistry = {
   id: "editor.header",
   items: [
