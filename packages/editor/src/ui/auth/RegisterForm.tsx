@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useUserStore } from "../../store/user_store";
-import { api } from "../../api/api";
 
 interface RegisterFormProps {
   onSwitch: () => void;
@@ -24,11 +23,18 @@ export function RegisterForm({ onSwitch }: RegisterFormProps) {
     setLoading(true);
 
     try {
-      const registerResponse = await api.post("/auth/register", {
-        username,
-        password,
-        email: email.trim() || undefined,
-      });
+      const registerResponse = await fetch(
+        "http://localhost:3000/auth/register",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            username,
+            password,
+            email: email.trim() || undefined,
+          }),
+        },
+      );
 
       const registerData = await registerResponse.json();
 
@@ -37,9 +43,10 @@ export function RegisterForm({ onSwitch }: RegisterFormProps) {
         return;
       }
 
-      const loginResponse = await api.post("/auth/login", {
-        username,
-        password,
+      const loginResponse = await fetch("http://localhost:3000/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, password }),
       });
 
       const loginData = await loginResponse.json();

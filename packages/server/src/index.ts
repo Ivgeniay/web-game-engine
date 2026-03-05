@@ -1,6 +1,7 @@
 import Fastify from "fastify";
 import fastifyJwt from "@fastify/jwt";
 import fastifyCors from "@fastify/cors";
+import fastifyWebSocket from "@fastify/websocket";
 import { resolve } from "node:path";
 import { defaultServerConfig } from "./config/server_config.js";
 import { createAppDb } from "./db/app.js";
@@ -9,6 +10,7 @@ import { authRoutes } from "./routes/auth.js";
 import { projectRoutes } from "./routes/projects.js";
 import { collaborationRoutes } from "./routes/collaboration.js";
 import { personalSettingsRoutes } from "./routes/personal_settings.js";
+import { wsRoutes } from "./routes/ws.js";
 
 const app = Fastify({ logger: true });
 
@@ -25,11 +27,13 @@ const start = async () => {
       origin: true,
       methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     });
+    await app.register(fastifyWebSocket);
 
     await authRoutes(app, db, config);
     await projectRoutes(app, db, config);
     await collaborationRoutes(app, db);
     await personalSettingsRoutes(app);
+    await wsRoutes(app, db);
 
     app.get("/health", async () => {
       return { status: "ok" };

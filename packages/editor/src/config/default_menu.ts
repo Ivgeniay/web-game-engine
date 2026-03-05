@@ -3,6 +3,9 @@ import type { MenuBarRegistry } from "@proton/ui";
 import { useUserStore } from "../store/user_store";
 import { EditorLayoutService } from "../services/EditorLayoutService";
 import { SettingsPanel } from "../ui/panels/settings_panel/SettingsPanel";
+import { useProjectStore } from "../store/project_store";
+import { WsService } from "../services/WsService";
+import { useDebugStore } from "../store/debug_store";
 
 interface defaultWindowCoef {
   HierarchyWidth: number;
@@ -43,8 +46,9 @@ export const defaultEditorMenu: MenuBarRegistry = {
           id: "file.exit",
           label: "Exit",
           onClick: () => {
-            Debug.Error("Exit");
+            useDebugStore.getState().clearMessages();
             useUserStore.getState().clearUser();
+            useProjectStore.getState().clearProject();
           },
         },
       ],

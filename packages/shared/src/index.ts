@@ -34,3 +34,11 @@ export type {
   AddMemberBody,
   RemoveMemberBody,
 } from "./models/collaboration.js";
+export type { WsRoomEvent, RoomMember } from "./ws/wstypes.js";
+export {
+  type AppNotification,
+  type NotificationSettings,
+  type NotificationType,
+  type NotificationPosition,
+  defaultNotificationSettings,
+} from "./models/notifications.js";

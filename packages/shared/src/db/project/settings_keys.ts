@@ -4,4 +4,5 @@ export const SettingsKeys = {
 
 export const PersonalSettingsKeys = {
   editorLayout: "editor.layout",
+  editorNotifications: "editor.notifications",
 } as const;

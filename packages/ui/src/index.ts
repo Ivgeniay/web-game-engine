@@ -19,3 +19,4 @@ export {
   ProgressBar,
   ProgressBarWithLabel,
 } from "./components/loaders/ProgressBar";
+export { Notifications } from "./components/notifications/Notifications";

@@ -1,5 +1,6 @@
 import { useState, type JSX } from "react";
 import { CollaborativeSettings } from "./CollaborativeSettings";
+import { NotificationSettings } from "./NotificationSettings";
 
 interface SettingsCategory {
   id: string;
@@ -12,6 +13,11 @@ const categories: SettingsCategory[] = [
     id: "collaborative",
     label: "Collaborative Developing",
     component: CollaborativeSettings,
+  },
+  {
+    id: "notifications",
+    label: "Notifications",
+    component: NotificationSettings,
   },
 ];
 
