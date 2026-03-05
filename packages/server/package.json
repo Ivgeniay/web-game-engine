@@ -21,11 +21,16 @@
     "bcrypt": "latest",
     "chokidar": "latest",
     "esbuild": "latest",
-    "fastify": "latest"
+    "fastify": "latest",
+    "drizzle-orm": "latest",
+    "@libsql/client": "latest",
+    "dotenv": "latest"
   },
   "devDependencies": {
     "@types/bcrypt": "latest",
     "tsx": "latest",
-    "typescript": "latest"
+    "typescript": "latest",
+    "drizzle-kit": "latest",
+    "@types/dotenv": "latest"
   }
 }

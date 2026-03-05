@@ -10,3 +10,12 @@ export type {
   MenuBarItem,
   MenuBarRegistry,
 } from "./components/dropdown/";
+export { Spinner } from "./components/loaders/Spinner";
+export {
+  IndeterminateBar,
+  IndeterminateBarWithLabel,
+} from "./components/loaders/IndeterminateBar";
+export {
+  ProgressBar,
+  ProgressBarWithLabel,
+} from "./components/loaders/ProgressBar";

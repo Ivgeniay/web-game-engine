@@ -1,4 +1,8 @@
+import { Debug } from "@proton/engine";
 import type { MenuBarRegistry } from "@proton/ui";
+import { useUserStore } from "../store/user_store";
+import { EditorLayoutService } from "../services/EditorLayoutService";
+import { SettingsPanel } from "../ui/panels/settings_panel/SettingsPanel";
 
 interface defaultWindowCoef {
   HierarchyWidth: number;
@@ -35,7 +39,14 @@ export const defaultEditorMenu: MenuBarRegistry = {
         { id: "file.save", label: "Save", shortcut: "Ctrl+S" },
         { id: "file.saveas", label: "Save As...", shortcut: "Ctrl+Shift+S" },
         { id: "file.sep2", label: "", separator: true },
-        { id: "file.exit", label: "Exit" },
+        {
+          id: "file.exit",
+          label: "Exit",
+          onClick: () => {
+            Debug.Error("Exit");
+            useUserStore.getState().clearUser();
+          },
+        },
       ],
     },
     {
@@ -45,7 +56,20 @@ export const defaultEditorMenu: MenuBarRegistry = {
         { id: "edit.undo", label: "Undo", shortcut: "Ctrl+Z" },
         { id: "edit.redo", label: "Redo", shortcut: "Ctrl+Y" },
         { id: "edit.sep1", label: "", separator: true },
-        { id: "edit.preferences", label: "Preferences" },
+        {
+          id: "edit.preferences",
+          label: "Preferences",
+          onClick: () => {
+            EditorLayoutService.openPanel({
+              id: "settings",
+              title: "Preferences",
+              component: SettingsPanel,
+              floating: true,
+              initialWidth: 600,
+              initialHeight: 400,
+            });
+          },
+        },
       ],
     },
     {

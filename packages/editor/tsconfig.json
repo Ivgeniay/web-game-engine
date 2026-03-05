@@ -5,6 +5,7 @@
     "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "noUncheckedSideEffectImports": true,
     "exactOptionalPropertyTypes": false,
+    "types": ["vite/client"],
     "paths": {
       "@proton/ui": ["../ui/src/index.ts"],
       "@proton/engine": ["../engine/src/index.ts"],

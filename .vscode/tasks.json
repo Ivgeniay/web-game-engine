@@ -28,7 +28,7 @@
       "label": "build: server",
       "type": "shell",
       "command": "tsc",
-      "args": ["--project", "packages/server/tsconfig.json"],
+      "args": ["--project", "packages/server/tsconfig.build.json"],
       "group": "build",
       "dependsOn": ["build: shared"]
     },

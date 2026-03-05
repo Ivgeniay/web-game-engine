@@ -1,74 +1,205 @@
+import { useEffect, useState } from "react";
 import type { DockviewApi, SerializedDockview } from "dockview";
 import { EditorLayout } from "../components/EditorLayout";
 import { ScenePanel } from "../panels/scene_panel/ScenePanel";
 import { HierarchyPanel } from "../panels/hierarchy_panel/HierarchyPanel";
 import { InspectorPanel } from "../panels/inspector_panel/InspectorPanel";
 import { ConsolePanel } from "../panels/console_panel/ConsolePanel";
+import { SettingsPanel } from "../panels/settings_panel/SettingsPanel";
+import { IndeterminateBarWithLabel } from "@proton/ui";
 import { defaultWindowCoef } from "../../config/default_menu";
-import { useState } from "react";
+import { EditorLayoutService } from "../../services/EditorLayoutService";
+import { useProjectStore } from "../../store/project_store";
+import { api } from "../../api/api";
+import { PersonalSettingsKeys } from "@proton/shared";
 import { Debug, MessageStyle } from "@proton/engine";
+
+type LayoutState =
+  | { status: "loading" }
+  | { status: "ready"; layout: SerializedDockview | null };
 
 export function Workspace() {
   const defCoef = defaultWindowCoef;
+  const projectId = useProjectStore((state) => state.activeProject?.id);
+  const [layoutState, setLayoutState] = useState<LayoutState>({
+    status: "loading",
+  });
 
-  let [state, setState] = useState<SerializedDockview | null>(null);
+  EditorLayoutService.registerComponent("scene", ScenePanel);
+  EditorLayoutService.registerComponent("hierarchy", HierarchyPanel);
+  EditorLayoutService.registerComponent("inspector", InspectorPanel);
+  EditorLayoutService.registerComponent("console", ConsolePanel);
+  EditorLayoutService.registerComponent("settings", SettingsPanel);
 
-  const onReady = (api: DockviewApi) => {
-    const scene = api.addPanel({
-      id: "scene",
-      component: "content",
-      title: "Scene",
-      params: { component: ScenePanel },
-      initialWidth: window.innerWidth * defCoef.SceneWidth,
-      initialHeight: window.innerHeight * defCoef.SceneHeight,
-    });
+  useEffect(() => {
+    if (!projectId) return;
 
-    const hierarchy = api.addPanel({
-      id: "hierarchy",
-      component: "content",
-      title: "Hierarchy",
-      params: { component: HierarchyPanel },
-      position: { referencePanel: "scene", direction: "left" },
-      initialWidth: window.innerWidth * defCoef.HierarchyWidth,
-      initialHeight: window.innerHeight * defCoef.HierarchyHeight,
-    });
+    const load = async () => {
+      try {
+        const response = await api.get(
+          `/projects/${projectId}/user-settings/${PersonalSettingsKeys.editorLayout}`,
+        );
 
-    api.addPanel({
-      id: "inspector",
-      component: "content",
-      title: "Inspector",
-      params: { component: InspectorPanel },
-      position: { referencePanel: "scene", direction: "right" },
-      initialWidth: window.innerWidth * defCoef.InspectorWidth,
-      initialHeight: window.innerHeight * defCoef.InspectorHeight,
-    });
+        if (response.ok) {
+          const data = await response.json();
+          const layout = JSON.parse(data.value) as SerializedDockview;
+          setLayoutState({ status: "ready", layout });
+        } else {
+          setLayoutState({ status: "ready", layout: null });
+        }
+      } catch {
+        setLayoutState({ status: "ready", layout: null });
+      }
+    };
 
-    api.addPanel({
-      id: "console",
-      component: "content",
-      title: "Console",
-      params: { component: ConsolePanel },
-      position: { direction: "below" },
-      initialWidth: window.innerWidth * defCoef.ConsoleWight,
-      initialHeight: window.innerHeight * defCoef.ConsoleHeight,
-    });
+    load();
+  }, [projectId]);
 
-    api.onDidLayoutChange((e) => {
-      setState(api.toJSON());
-    });
-    api.onDidActivePanelChange((panel) => {
-      setState(api.toJSON());
+  const saveLayout = async () => {
+    if (!projectId) return;
+    const layout = EditorLayoutService.serialize();
+    if (!layout) return;
+    await api.put(`/projects/${projectId}/user-settings`, {
+      key: PersonalSettingsKeys.editorLayout,
+      value: JSON.stringify(layout),
     });
   };
 
-  const restore = function () {
-    Debug.Info(JSON.stringify(state), MessageStyle.JsonHighlight);
+  const onReady = (dockviewApi: DockviewApi) => {
+    EditorLayoutService.connect(dockviewApi);
+
+    if (layoutState.status === "ready" && layoutState.layout) {
+      EditorLayoutService.restore(layoutState.layout);
+    } else {
+      EditorLayoutService.openPanel({
+        id: "scene",
+        title: "Scene",
+        component: ScenePanel,
+        initialWidth: window.innerWidth * defCoef.SceneWidth,
+        initialHeight: window.innerHeight * defCoef.SceneHeight,
+      });
+
+      EditorLayoutService.openPanel({
+        id: "hierarchy",
+        title: "Hierarchy",
+        component: HierarchyPanel,
+        position: { referencePanel: "scene", direction: "left" },
+        initialWidth: window.innerWidth * defCoef.HierarchyWidth,
+        initialHeight: window.innerHeight * defCoef.HierarchyHeight,
+      });
+
+      EditorLayoutService.openPanel({
+        id: "inspector",
+        title: "Inspector",
+        component: InspectorPanel,
+        position: { referencePanel: "scene", direction: "right" },
+        initialWidth: window.innerWidth * defCoef.InspectorWidth,
+        initialHeight: window.innerHeight * defCoef.InspectorHeight,
+      });
+
+      EditorLayoutService.openPanel({
+        id: "console",
+        title: "Console",
+        component: ConsolePanel,
+        position: { referencePanel: "scene", direction: "below" },
+        initialWidth: window.innerWidth * defCoef.ConsoleWight,
+        initialHeight: window.innerHeight * defCoef.ConsoleHeight,
+      });
+    }
+
+    dockviewApi.onDidLayoutChange(() => {
+      saveLayout();
+    });
   };
+
+  if (layoutState.status === "loading") {
+    return <IndeterminateBarWithLabel label="Loading layout..." />;
+  }
 
   return (
     <div className="flex-1 overflow-hidden">
       <EditorLayout onReady={onReady} class_="w-full h-full" />
-      <button onClick={restore}>RESTORE</button>
     </div>
   );
 }
+
+// import type { DockviewApi } from "dockview";
+// import { EditorLayout } from "../components/EditorLayout";
+// import { ScenePanel } from "../panels/scene_panel/ScenePanel";
+// import { HierarchyPanel } from "../panels/hierarchy_panel/HierarchyPanel";
+// import { InspectorPanel } from "../panels/inspector_panel/InspectorPanel";
+// import { ConsolePanel } from "../panels/console_panel/ConsolePanel";
+// import { SettingsPanel } from "../panels/settings_panel/SettingsPanel";
+// import { defaultWindowCoef } from "../../config/default_menu";
+// import { EditorLayoutService } from "../../services/EditorLayoutService";
+// import { useProjectStore } from "../../store/project_store";
+// import { api } from "../../api/api";
+// import { PersonalSettingsKeys } from "@proton/shared";
+
+// export function Workspace() {
+//   const defCoef = defaultWindowCoef;
+//   const projectId = useProjectStore((state) => state.activeProject?.id);
+
+//   const saveLayout = async () => {
+//     if (!projectId) return;
+//     const layout = EditorLayoutService.serialize();
+//     if (!layout) return;
+//     await api.put(`/projects/${projectId}/user-settings`, {
+//       key: PersonalSettingsKeys.editorLayout,
+//       value: JSON.stringify(layout),
+//     });
+//   };
+
+//   const onReady = (dockviewApi: DockviewApi) => {
+//     EditorLayoutService.connect(dockviewApi);
+
+//     EditorLayoutService.registerComponent("scene", ScenePanel);
+//     EditorLayoutService.registerComponent("hierarchy", HierarchyPanel);
+//     EditorLayoutService.registerComponent("inspector", InspectorPanel);
+//     EditorLayoutService.registerComponent("console", ConsolePanel);
+//     EditorLayoutService.registerComponent("settings", SettingsPanel);
+
+//     EditorLayoutService.openPanel({
+//       id: "scene",
+//       title: "Scene",
+//       component: ScenePanel,
+//       initialWidth: window.innerWidth * defCoef.SceneWidth,
+//       initialHeight: window.innerHeight * defCoef.SceneHeight,
+//     });
+
+//     EditorLayoutService.openPanel({
+//       id: "hierarchy",
+//       title: "Hierarchy",
+//       component: HierarchyPanel,
+//       position: { referencePanel: "scene", direction: "left" },
+//       initialWidth: window.innerWidth * defCoef.HierarchyWidth,
+//       initialHeight: window.innerHeight * defCoef.HierarchyHeight,
+//     });
+
+//     EditorLayoutService.openPanel({
+//       id: "inspector",
+//       title: "Inspector",
+//       component: InspectorPanel,
+//       position: { referencePanel: "scene", direction: "right" },
+//       initialWidth: window.innerWidth * defCoef.InspectorWidth,
+//       initialHeight: window.innerHeight * defCoef.InspectorHeight,
+//     });
+
+//     EditorLayoutService.openPanel({
+//       id: "console",
+//       title: "Console",
+//       component: ConsolePanel,
+//       position: { referencePanel: "scene", direction: "below" },
+//       initialWidth: window.innerWidth * defCoef.ConsoleWight,
+//       initialHeight: window.innerHeight * defCoef.ConsoleHeight,
+//     });
+
+//     dockviewApi.onDidLayoutChange(() => saveLayout());
+//   };
+
+//   return (
+//     <div className="flex-1 overflow-hidden">
+//       <EditorLayout onReady={onReady} class_="w-full h-full" />
+//     </div>
+//   );
+// }

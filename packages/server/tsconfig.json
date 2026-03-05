@@ -2,10 +2,12 @@
   "extends": "../../tsconfig.json",
   "compilerOptions": {
     "lib": ["ESNext"],
-    "rootDir": "./src",
     "outDir": "./dist",
     "module": "NodeNext",
-    "moduleResolution": "NodeNext"
+    "moduleResolution": "NodeNext",
+    "paths": {
+      "@proton/shared": ["../shared/src/index.ts"]
+    }
   },
   "include": ["src"]
 }

@@ -9,7 +9,8 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@proton/stdlib": "*"
+    "@proton/stdlib": "*",
+    "drizzle-orm": "latest"
   },
   "devDependencies": {
     "typescript": "latest"

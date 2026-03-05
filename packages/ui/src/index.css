@@ -87,4 +87,35 @@ body,
   .text-success {
     color: var(--color-success);
   }
+
+  .animate-spin-cw {
+    animation: spin-cw 0.8s linear infinite;
+  }
+  .animate-spin-ccw {
+    animation: spin-ccw 1.2s linear infinite;
+  }
+  .animate-indeterminate {
+    animation: indeterminate 1.4s ease-in-out infinite;
+  }
+}
+
+@keyframes spin-cw {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes spin-ccw {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@keyframes indeterminate {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(300%);
+  }
 }
