@@ -3,6 +3,7 @@ import { useDebugStore } from "../../../store/debug_store";
 import { ConsoleToolbar } from "./ConsoleToolbar";
 import { ConsoleInput } from "./ConsoleInput";
 import { Message } from "./Message";
+import { Spinner } from "@proton/ui";
 
 export function ConsolePanel() {
   const messages = useDebugStore((state) => state.messages);

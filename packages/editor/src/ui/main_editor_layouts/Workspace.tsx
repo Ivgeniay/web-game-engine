@@ -10,7 +10,7 @@ import { IndeterminateBarWithLabel } from "@proton/ui";
 import { defaultWindowCoef } from "../../config/default_menu";
 import { EditorLayoutService } from "../../services/EditorLayoutService";
 import { useProjectStore } from "../../store/project_store";
-import { api } from "../../api/api";
+import { client } from "../../api/client";
 import { PersonalSettingsKeys } from "@proton/shared";
 import { Debug, MessageStyle } from "@proton/engine";
 
@@ -36,7 +36,7 @@ export function Workspace() {
 
     const load = async () => {
       try {
-        const response = await api.get(
+        const response = await client.get(
           `/projects/${projectId}/user-settings/${PersonalSettingsKeys.editorLayout}`,
         );
 
@@ -59,7 +59,7 @@ export function Workspace() {
     if (!projectId) return;
     const layout = EditorLayoutService.serialize();
     if (!layout) return;
-    await api.put(`/projects/${projectId}/user-settings`, {
+    await client.put(`/projects/${projectId}/user-settings`, {
       key: PersonalSettingsKeys.editorLayout,
       value: JSON.stringify(layout),
     });
@@ -122,84 +122,3 @@ export function Workspace() {
     </div>
   );
 }
-
-// import type { DockviewApi } from "dockview";
-// import { EditorLayout } from "../components/EditorLayout";
-// import { ScenePanel } from "../panels/scene_panel/ScenePanel";
-// import { HierarchyPanel } from "../panels/hierarchy_panel/HierarchyPanel";
-// import { InspectorPanel } from "../panels/inspector_panel/InspectorPanel";
-// import { ConsolePanel } from "../panels/console_panel/ConsolePanel";
-// import { SettingsPanel } from "../panels/settings_panel/SettingsPanel";
-// import { defaultWindowCoef } from "../../config/default_menu";
-// import { EditorLayoutService } from "../../services/EditorLayoutService";
-// import { useProjectStore } from "../../store/project_store";
-// import { api } from "../../api/api";
-// import { PersonalSettingsKeys } from "@proton/shared";
-
-// export function Workspace() {
-//   const defCoef = defaultWindowCoef;
-//   const projectId = useProjectStore((state) => state.activeProject?.id);
-
-//   const saveLayout = async () => {
-//     if (!projectId) return;
-//     const layout = EditorLayoutService.serialize();
-//     if (!layout) return;
-//     await api.put(`/projects/${projectId}/user-settings`, {
-//       key: PersonalSettingsKeys.editorLayout,
-//       value: JSON.stringify(layout),
-//     });
-//   };
-
-//   const onReady = (dockviewApi: DockviewApi) => {
-//     EditorLayoutService.connect(dockviewApi);
-
-//     EditorLayoutService.registerComponent("scene", ScenePanel);
-//     EditorLayoutService.registerComponent("hierarchy", HierarchyPanel);
-//     EditorLayoutService.registerComponent("inspector", InspectorPanel);
-//     EditorLayoutService.registerComponent("console", ConsolePanel);
-//     EditorLayoutService.registerComponent("settings", SettingsPanel);
-
-//     EditorLayoutService.openPanel({
-//       id: "scene",
-//       title: "Scene",
-//       component: ScenePanel,
-//       initialWidth: window.innerWidth * defCoef.SceneWidth,
-//       initialHeight: window.innerHeight * defCoef.SceneHeight,
-//     });
-
-//     EditorLayoutService.openPanel({
-//       id: "hierarchy",
-//       title: "Hierarchy",
-//       component: HierarchyPanel,
-//       position: { referencePanel: "scene", direction: "left" },
-//       initialWidth: window.innerWidth * defCoef.HierarchyWidth,
-//       initialHeight: window.innerHeight * defCoef.HierarchyHeight,
-//     });
-
-//     EditorLayoutService.openPanel({
-//       id: "inspector",
-//       title: "Inspector",
-//       component: InspectorPanel,
-//       position: { referencePanel: "scene", direction: "right" },
-//       initialWidth: window.innerWidth * defCoef.InspectorWidth,
-//       initialHeight: window.innerHeight * defCoef.InspectorHeight,
-//     });
-
-//     EditorLayoutService.openPanel({
-//       id: "console",
-//       title: "Console",
-//       component: ConsolePanel,
-//       position: { referencePanel: "scene", direction: "below" },
-//       initialWidth: window.innerWidth * defCoef.ConsoleWight,
-//       initialHeight: window.innerHeight * defCoef.ConsoleHeight,
-//     });
-
-//     dockviewApi.onDidLayoutChange(() => saveLayout());
-//   };
-
-//   return (
-//     <div className="flex-1 overflow-hidden">
-//       <EditorLayout onReady={onReady} class_="w-full h-full" />
-//     </div>
-//   );
-// }

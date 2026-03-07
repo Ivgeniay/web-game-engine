@@ -2,7 +2,6 @@ import Fastify from "fastify";
 import fastifyJwt from "@fastify/jwt";
 import fastifyCors from "@fastify/cors";
 import fastifyWebSocket from "@fastify/websocket";
-import { resolve } from "node:path";
 import { defaultServerConfig } from "./config/server_config.js";
 import { createAppDb } from "./db/app.js";
 import { ProjectDbManager } from "./db/ProjectDbManager.js";
@@ -11,6 +10,9 @@ import { projectRoutes } from "./routes/projects.js";
 import { collaborationRoutes } from "./routes/collaboration.js";
 import { personalSettingsRoutes } from "./routes/personal_settings.js";
 import { wsRoutes } from "./routes/ws.js";
+import { FileService } from "./services/FileService.js";
+import { MetaService } from "./services/MetaService.js";
+import { fileRoutes } from "./routes/files.js";
 
 const app = Fastify({ logger: true });
 
@@ -19,13 +21,14 @@ const start = async () => {
     const config = defaultServerConfig;
     const db = await createAppDb(config.dbPath);
 
-    const projectsDir = resolve(config.dbPath, "..", "projects");
-    ProjectDbManager.init(projectsDir);
+    ProjectDbManager.init(config.projectsPath);
+    FileService.init(config.projectsPath);
+    MetaService.init(config.projectsPath);
 
     await app.register(fastifyJwt, { secret: config.jwtSecret });
     await app.register(fastifyCors, {
       origin: true,
-      methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     });
     await app.register(fastifyWebSocket);
 
@@ -34,6 +37,7 @@ const start = async () => {
     await collaborationRoutes(app, db);
     await personalSettingsRoutes(app);
     await wsRoutes(app, db);
+    await fileRoutes(app);
 
     app.get("/health", async () => {
       return { status: "ok" };

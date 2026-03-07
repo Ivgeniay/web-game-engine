@@ -20,3 +20,14 @@ export {
   ProgressBarWithLabel,
 } from "./components/loaders/ProgressBar";
 export { Notifications } from "./components/notifications/Notifications";
+
+export type { IconProps, IconConfig, TreeItem } from "./components/icons/types";
+export { TreeView } from "./components/icons/TreeView";
+export {
+  type IconSpaceItem,
+  IconTileSpace,
+} from "./components/icons/IconTileSpace";
+export { IconTile } from "./components/icons/IconTile";
+export { IconRowSpace } from "./components/icons/IconRowSpace";
+export { IconRow } from "./components/icons/IconRow";
+export { FileIcon } from "./components/icons/FileIcon";

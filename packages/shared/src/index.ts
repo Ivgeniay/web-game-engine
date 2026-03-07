@@ -34,7 +34,11 @@ export type {
   AddMemberBody,
   RemoveMemberBody,
 } from "./models/collaboration.js";
-export type { WsRoomEvent, RoomMember } from "./ws/wstypes.js";
+export {
+  type WsRoomEvent,
+  type RoomMember,
+  WsEventName,
+} from "./ws/wstypes.js";
 export {
   type AppNotification,
   type NotificationSettings,
@@ -42,3 +46,32 @@ export {
   type NotificationPosition,
   defaultNotificationSettings,
 } from "./models/notifications.js";
+export type {
+  MetaType,
+  BaseMeta,
+  DirectoryMeta,
+  TextureMeta,
+  AudioMeta,
+  ScriptMeta,
+  MaterialMeta,
+  ModelMeta,
+  SceneMeta,
+  PrefabMeta,
+  UnknownMeta,
+  AnyMeta,
+} from "./models/meta.js";
+export {
+  metaExtensionMap,
+  getMetaType,
+  getExtensionsByType,
+} from "./models/meta.js";
+export {
+  type FileNode,
+  type ScanResult,
+  type ScanOptions,
+  type MoveBody,
+  type RenameBody,
+  type CreateFileBody,
+  type CreateDirBody,
+  DEFAULT_EXCLUDE,
+} from "./models/files.js";

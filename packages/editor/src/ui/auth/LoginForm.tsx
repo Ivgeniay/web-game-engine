@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useUserStore } from "../../store/user_store";
-import { api } from "../../api/api";
+import { client } from "../../api/client";
 
 interface LoginFormProps {
   onSwitch: () => void;
@@ -23,7 +23,7 @@ export function LoginForm({ onSwitch }: LoginFormProps) {
     setLoading(true);
 
     try {
-      const response = await api.post("/auth/login", { username, password });
+      const response = await client.post("/auth/login", { username, password });
 
       const data = await response.json();
 

@@ -18,7 +18,9 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "zustand": "latest",
-    "@radix-ui/react-dropdown-menu": "latest"
+    "@radix-ui/react-dropdown-menu": "latest",
+    "@dnd-kit/core": "latest",
+    "@dnd-kit/utilities": "latest"
   },
   "devDependencies": {
     "@types/react": "^19.0.0",

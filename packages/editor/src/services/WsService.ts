@@ -1,11 +1,18 @@
 import type { WsRoomEvent } from "@proton/shared";
+import { WsEventName } from "@proton/shared";
 
-type WsEventHandler = (event: WsRoomEvent) => void;
+type WsEventMap = {
+  [K in WsRoomEvent["type"]]: Extract<WsRoomEvent, { type: K }>;
+};
+
+type WsEventHandler<K extends keyof WsEventMap> = (
+  event: WsEventMap[K],
+) => void;
 
 class WsServiceClass {
   private ws: WebSocket | null = null;
-  private handlers: Set<WsEventHandler> = new Set();
   private projectId: string | null = null;
+  private handlers: Map<string, Set<WsEventHandler<any>>> = new Map();
 
   connect(projectId: string, token: string): void {
     if (this.ws) this.disconnect();
@@ -19,10 +26,12 @@ class WsServiceClass {
     );
     this.ws = ws;
 
-    this.ws.onmessage = (e) => {
+    ws.onmessage = (e) => {
       try {
         const event = JSON.parse(e.data as string) as WsRoomEvent;
-        for (const handler of this.handlers) {
+        const handlers = this.handlers.get(event.type);
+        if (!handlers) return;
+        for (const handler of handlers) {
           handler(event);
         }
       } catch {
@@ -30,7 +39,7 @@ class WsServiceClass {
       }
     };
 
-    this.ws.onclose = () => {
+    ws.onclose = () => {
       if (this.ws === ws) {
         this.ws = null;
         this.projectId = null;
@@ -39,17 +48,21 @@ class WsServiceClass {
   }
 
   disconnect(): void {
-    console.log("disconnect called, ws:", this.ws?.readyState);
     if (!this.ws) return;
     this.ws.close();
-    console.log("ws.close() called, readyState:", this.ws.readyState);
     this.ws = null;
     this.projectId = null;
   }
 
-  on(handler: WsEventHandler): () => void {
-    this.handlers.add(handler);
-    return () => this.handlers.delete(handler);
+  on<K extends keyof WsEventMap>(
+    type: K,
+    handler: WsEventHandler<K>,
+  ): () => void {
+    if (!this.handlers.has(type)) {
+      this.handlers.set(type, new Set());
+    }
+    this.handlers.get(type)!.add(handler);
+    return () => this.handlers.get(type)?.delete(handler);
   }
 
   isConnected(): boolean {

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { api } from "../../api/api";
+import { client } from "../../api/client";
 import { useProjectStore } from "../../store/project_store";
 import type { EngineTemplate, Project } from "@proton/shared";
 
@@ -21,8 +21,8 @@ export function ProjectPage() {
     const load = async () => {
       try {
         const [projectsRes, templatesRes] = await Promise.all([
-          api.get("/projects"),
-          api.get("/engine-templates"),
+          client.get("/projects"),
+          client.get("/engine-templates"),
         ]);
 
         if (!projectsRes.ok || !templatesRes.ok) {
@@ -59,7 +59,7 @@ export function ProjectPage() {
     setCreating(true);
 
     try {
-      const response = await api.post("/projects", {
+      const response = await client.post("/projects", {
         name: projectName.trim(),
         engineTemplateId: selectedTemplate,
       });

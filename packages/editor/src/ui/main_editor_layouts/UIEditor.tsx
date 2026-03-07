@@ -10,6 +10,7 @@ import { WsService } from "../../services/WsService";
 import { NotificationService } from "../../services/NotificationService";
 import { Notifications } from "@proton/ui";
 import { useNotifications } from "../../hooks/useNotifications";
+import { WsEventName } from "@proton/shared";
 
 export function UIEditor() {
   const registerBar = useMenuStore((state) => state.registerBar);
@@ -30,19 +31,18 @@ export function UIEditor() {
   }, [projectId, token]);
 
   useEffect(() => {
-    return WsService.on((event) => {
-      if (event.type === "user.joined") {
-        NotificationService.info(
-          "User joined",
-          `${event.username} joined the project`,
-        );
-      }
-      if (event.type === "user.left") {
-        NotificationService.info(
-          "User left",
-          `${event.username} left the project`,
-        );
-      }
+    WsService.on(WsEventName.userJoined, (event) => {
+      NotificationService.info(
+        "User joined",
+        `${event.username} joined the project`,
+      );
+    });
+
+    WsService.on(WsEventName.userLeft, (event) => {
+      NotificationService.info(
+        "User left",
+        `${event.username} left the project`,
+      );
     });
   }, []);
 

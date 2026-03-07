@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { api } from "../../../api/api";
+import { client } from "../../../api/client";
 import { useProjectStore } from "../../../store/project_store";
 import { useUserStore } from "../../../store/user_store";
 import type { ProjectMemberView } from "@proton/shared";
@@ -26,7 +26,7 @@ export function CollaborativeSettings() {
     setLoading(true);
     setError(null);
     try {
-      const response = await api.get(`/projects/${projectId}/members`);
+      const response = await client.get(`/projects/${projectId}/members`);
       const data = await response.json();
       if (!response.ok) {
         setError(data.error ?? "Failed to load members");
@@ -45,7 +45,7 @@ export function CollaborativeSettings() {
     setAddError(null);
     setAdding(true);
     try {
-      const response = await api.post("/projects/members/add", {
+      const response = await client.post("/projects/members/add", {
         projectId,
         usernameOrEmail: search.trim(),
       });
@@ -71,7 +71,7 @@ export function CollaborativeSettings() {
     }
     return;
     try {
-      const response = await api.post("/projects/members/remove", {
+      const response = await client.post("/projects/members/remove", {
         projectId,
         userId,
       });

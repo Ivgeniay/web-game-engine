@@ -57,7 +57,8 @@ export async function projectRoutes(
       const id = randomUUID();
       const now = new Date();
 
-      const projectDir = resolve(config.dbPath, "..", "projects", id);
+      //const projectDir = resolve(config.dbPath, "..", "projects", id);
+      const projectDir = resolve(config.projectsPath, id);
       await mkdir(resolve(projectDir, "Assets"), { recursive: true });
 
       await ProjectDbManager.get(id);

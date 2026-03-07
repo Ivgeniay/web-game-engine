@@ -6,6 +6,7 @@ import type {
   IDockviewPanelProps,
 } from "dockview";
 import "dockview/dist/styles/dockview.css";
+import { Spinner } from "@proton/ui";
 
 interface PanelParams {
   component: () => JSX.Element;
@@ -14,6 +15,7 @@ interface PanelParams {
 interface EditorLayoutProps {
   onReady: (api: DockviewApi) => void;
   class_?: string;
+  isLoading?: boolean;
 }
 
 function PanelContent({ params }: IDockviewPanelProps<PanelParams>) {

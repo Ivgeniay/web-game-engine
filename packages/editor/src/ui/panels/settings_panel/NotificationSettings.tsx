@@ -5,7 +5,7 @@ import type {
 } from "@proton/shared";
 import { NotificationService } from "../../../services/NotificationService";
 import { useProjectStore } from "../../../store/project_store";
-import { api } from "../../../api/api";
+import { client } from "../../../api/client";
 import { PersonalSettingsKeys } from "@proton/shared";
 
 const positions: { value: NotificationPosition; label: string }[] = [
@@ -34,7 +34,7 @@ export function NotificationSettings() {
     if (!projectId) return;
     setSaving(true);
     try {
-      await api.put(`/projects/${projectId}/user-settings`, {
+      await client.put(`/projects/${projectId}/user-settings`, {
         key: PersonalSettingsKeys.editorNotifications,
         value: JSON.stringify(settings),
       });

@@ -1,8 +1,8 @@
 import type { FastifyInstance } from "fastify";
 import { eq, and } from "drizzle-orm";
-import { projectMembers, users } from "@proton/shared";
+import { projectMembers, users, WsEventName } from "@proton/shared";
 import type { AppDb } from "../db/app.js";
-import { RoomManager } from "../ws/RoomMamager.js";
+import { RoomManager } from "../ws/RoomManager.js";
 
 export async function wsRoutes(
   fastify: FastifyInstance,
@@ -50,17 +50,18 @@ export async function wsRoutes(
       RoomManager.join(projectId, member);
       RoomManager.broadcast(
         projectId,
-        { type: "user.joined", userId: caller.id, username: caller.username },
+        {
+          type: WsEventName.userJoined,
+          userId: caller.id,
+          username: caller.username,
+        },
         member,
       );
 
       socket.on("close", () => {
-        console.log(
-          `user ${caller.username} disconnected from project ${projectId}`,
-        );
         RoomManager.leave(projectId, member);
         RoomManager.broadcast(projectId, {
-          type: "user.left",
+          type: WsEventName.userLeft,
           userId: caller.id,
           username: caller.username,
         });
