@@ -10,10 +10,13 @@ interface TreeNodeProps extends IDraggable {
   size?: number;
   depth?: number;
   selected?: string[];
-  isDragOver?: string;
+  editingId?: string;
   onSelect?: (id: string) => void;
   onOpen?: (item: TreeItem) => void;
   onExpand?: (id: string) => void;
+  onContextMenu?: (item: TreeItem, e: React.MouseEvent) => void;
+  onRenameConfirm?: (item: TreeItem, value: string) => void;
+  onRenameCancel?: () => void;
   getDropProps?: (item: TreeItem) => IDrop;
 }
 
@@ -23,11 +26,14 @@ function TreeNode({
   size = 16,
   depth = 0,
   selected,
-  isDragOver,
+  editingId,
   canDrag = false,
   onSelect,
   onOpen,
   onExpand,
+  onContextMenu,
+  onRenameConfirm,
+  onRenameCancel,
   getDropProps,
 }: TreeNodeProps): React.ReactElement {
   const [expanded, setExpanded] = useState(false);
@@ -66,10 +72,14 @@ function TreeNode({
             ext={item.ext}
             size={size}
             selected={selected?.includes(item.id)}
+            editing={editingId === item.id}
             canDrag={canDrag}
             dragMeta={item.dragMeta}
             onClick={() => onSelect?.(item.id)}
             onDoubleClick={() => isDirectory && handleToggle()}
+            onContextMenu={(e) => onContextMenu?.(item, e)}
+            onRenameConfirm={(value) => onRenameConfirm?.(item, value)}
+            onRenameCancel={onRenameCancel}
             {...dropProps}
           />
         </div>
@@ -84,11 +94,14 @@ function TreeNode({
               size={size}
               depth={depth + 1}
               selected={selected}
-              isDragOver={isDragOver}
+              editingId={editingId}
               canDrag={canDrag}
               onSelect={onSelect}
               onOpen={onOpen}
               onExpand={onExpand}
+              onContextMenu={onContextMenu}
+              onRenameConfirm={onRenameConfirm}
+              onRenameCancel={onRenameCancel}
               getDropProps={getDropProps}
             />
           ))}
@@ -103,10 +116,13 @@ interface TreeViewProps extends IDraggable {
   icon: React.ComponentType<IconProps>;
   size?: number;
   selected?: string[];
-  isDragOver?: string;
+  editingId?: string;
   onSelect?: (id: string) => void;
   onOpen?: (item: TreeItem) => void;
   onExpand?: (id: string) => void;
+  onContextMenu?: (item: TreeItem, e: React.MouseEvent) => void;
+  onRenameConfirm?: (item: TreeItem, value: string) => void;
+  onRenameCancel?: () => void;
   getDropProps?: (item: TreeItem) => IDrop;
 }
 
@@ -115,11 +131,14 @@ export function TreeView({
   icon,
   size = 16,
   selected,
-  isDragOver,
+  editingId,
   canDrag = false,
   onSelect,
   onOpen,
   onExpand,
+  onContextMenu,
+  onRenameConfirm,
+  onRenameCancel,
   getDropProps,
 }: TreeViewProps): React.ReactElement {
   return (
@@ -131,11 +150,14 @@ export function TreeView({
           icon={icon}
           size={size}
           selected={selected}
-          isDragOver={isDragOver}
+          editingId={editingId}
           canDrag={canDrag}
           onSelect={onSelect}
           onOpen={onOpen}
           onExpand={onExpand}
+          onContextMenu={onContextMenu}
+          onRenameConfirm={onRenameConfirm}
+          onRenameCancel={onRenameCancel}
           getDropProps={getDropProps}
         />
       ))}

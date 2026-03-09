@@ -14,6 +14,7 @@ import { FileService } from "./services/FileService.js";
 import { MetaService } from "./services/MetaService.js";
 import { fileRoutes } from "./routes/files.js";
 import { scanAndEnsureMeta } from "./utils/scanAndEnsureMeta.js";
+import fastifyMultipart from "@fastify/multipart";
 
 const app = Fastify({ logger: true });
 
@@ -32,6 +33,7 @@ const start = async () => {
       methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
     });
     await app.register(fastifyWebSocket);
+    await app.register(fastifyMultipart);
 
     await authRoutes(app, db, config);
     await projectRoutes(app, db, config);

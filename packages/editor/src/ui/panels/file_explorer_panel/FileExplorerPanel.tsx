@@ -1,15 +1,26 @@
-import { FileIcon, IconRowSpace, IconTileSpace, Spinner } from "@proton/ui";
+import { useState } from "react";
+import {
+  FileIcon,
+  IconRowSpace,
+  IconTileSpace,
+  ContextMenu,
+  FileExplorerContextMenuService,
+} from "@proton/ui";
 import type { IconSpaceItem, TreeItem, IDrop } from "@proton/ui";
 import { useFileExplorer } from "../../../hooks/useFileExplorer";
 import { useProjectStore } from "../../../store/project_store";
-import type { useEditorStore } from "../../../store/editor_store";
+import { useEditorStore } from "../../../store/editor_store";
 import { filesApi } from "../../../api/files";
-import { Debug } from "@proton/engine";
-import { useEffect } from "react";
 
 const DIRECTORY_DROP_ACCEPTS = {
   file_explorer: "file_explorer",
 };
+
+interface ContextMenuState {
+  item: TreeItem;
+  x: number;
+  y: number;
+}
 
 function Breadcrumb({
   path,
@@ -26,7 +37,7 @@ function Breadcrumb({
         className="cursor-pointer hover:text-primary transition-colors"
         onClick={() => onNavigate("")}
       >
-        Root
+        Assets
       </span>
       {parts.map((part, i) => {
         const partPath = parts.slice(0, i + 1).join("/");
@@ -66,16 +77,10 @@ export function FileExplorerPanel(): React.ReactElement {
   } = useFileExplorer();
 
   const projectId = useProjectStore((s) => s.activeProject?.id);
-
-  const rootTreeItems: TreeItem[] = [
-    {
-      id: "",
-      label: "Assets",
-      ext: "directory",
-      dragMeta: undefined,
-      children: treeItems,
-    },
-  ];
+  const editingId = useEditorStore((s) => s.editingId);
+  const setEditingId = useEditorStore((s) => s.setEditingId);
+  //const dragMeta = useEditorStore((s) => s.dragMeta);
+  const [contextMenu, setContextMenu] = useState<ContextMenuState | null>(null);
 
   const handleDrop = async (
     source: ReturnType<typeof useEditorStore.getState>["dragMeta"],
@@ -89,17 +94,12 @@ export function FileExplorerPanel(): React.ReactElement {
     const toPath = targetPath ? `${targetPath}/${fileName}` : fileName;
     try {
       if (isDir) {
-        Debug.Debug(` DIR: fromPath:${sourcePath} toPath:${toPath}`);
         await filesApi.moveDirectory(projectId, {
           fromPath: sourcePath,
-          toPath: toPath,
+          toPath,
         });
       } else {
-        Debug.Debug(` FILE: fromPath:${sourcePath} toPath:${toPath}`);
-        await filesApi.moveFile(projectId, {
-          fromPath: sourcePath,
-          toPath: toPath,
-        });
+        await filesApi.moveFile(projectId, { fromPath: sourcePath, toPath });
       }
       reload();
     } catch {
@@ -107,11 +107,45 @@ export function FileExplorerPanel(): React.ReactElement {
     }
   };
 
+  const handleNativeDrop = async (files: FileList, targetPath: string) => {
+    if (!projectId) return;
+    const uploads = Array.from(files).map((file) => {
+      const uploadPath = targetPath ? `${targetPath}/${file.name}` : file.name;
+      return filesApi.uploadFile(projectId, uploadPath, file);
+    });
+    try {
+      await Promise.all(uploads);
+      reload();
+    } catch {
+      // silently ignore
+    }
+  };
+
+  const handleRenameConfirm = async (item: TreeItem, newName: string) => {
+    setEditingId(null);
+    if (!projectId || newName === item.label) return;
+    try {
+      if (item.ext === "directory") {
+        await filesApi.renameDirectory(projectId, { path: item.id, newName });
+      } else {
+        await filesApi.renameFile(projectId, { path: item.id, newName });
+      }
+      reload();
+    } catch {
+      // silently ignore
+    }
+  };
+
+  const handleContextMenu = (item: TreeItem, e: React.MouseEvent) => {
+    setContextMenu({ item, x: e.clientX, y: e.clientY });
+  };
+
   const getTileDropProps = (item: IconSpaceItem): IDrop => {
     if (item.ext !== "directory") return {};
     return {
       accepts: DIRECTORY_DROP_ACCEPTS,
       onDrop: (source) => handleDrop(source, item.id),
+      onNativeDrop: (files) => handleNativeDrop(files, item.id),
     };
   };
 
@@ -120,12 +154,23 @@ export function FileExplorerPanel(): React.ReactElement {
     return {
       accepts: DIRECTORY_DROP_ACCEPTS,
       onDrop: (source) => handleDrop(source, item.id),
+      onNativeDrop: (files) => handleNativeDrop(files, item.id),
     };
   };
 
   const handleTileOpen = (item: IconSpaceItem) => {
     if (item.ext === "directory") navigateTo(item.id);
   };
+
+  const rootTreeItems: TreeItem[] = [
+    {
+      id: "",
+      label: "Assets",
+      ext: "directory",
+      dragMeta: undefined,
+      children: treeItems,
+    },
+  ];
 
   return (
     <div className="flex flex-col w-full h-full bg-panel overflow-hidden">
@@ -177,7 +222,6 @@ export function FileExplorerPanel(): React.ReactElement {
       <div className="flex-1 overflow-hidden p-1">
         {loading && (
           <div className="flex items-center justify-center w-full h-full text-secondary text-xs">
-            <Spinner size={40} />
             Loading...
           </div>
         )}
@@ -192,9 +236,13 @@ export function FileExplorerPanel(): React.ReactElement {
             icon={FileIcon}
             size={16}
             selected={selectedIds}
+            editingId={editingId ?? undefined}
             canDrag
             onSelect={select}
             onExpand={expandNode}
+            onContextMenu={handleContextMenu}
+            onRenameConfirm={handleRenameConfirm}
+            onRenameCancel={() => setEditingId(null)}
             getDropProps={getTreeDropProps}
           />
         )}
@@ -205,13 +253,28 @@ export function FileExplorerPanel(): React.ReactElement {
             size={tileSize}
             gap={8}
             selected={selectedIds}
+            editingId={editingId ?? undefined}
             canDrag
             onSelect={select}
             onOpen={handleTileOpen}
+            onContextMenu={handleContextMenu}
+            onRenameConfirm={(item, value) =>
+              handleRenameConfirm(item as unknown as TreeItem, value)
+            }
+            onRenameCancel={() => setEditingId(null)}
             getDropProps={getTileDropProps}
           />
         )}
       </div>
+
+      {contextMenu && (
+        <ContextMenu
+          items={FileExplorerContextMenuService.getItems(contextMenu.item)}
+          position={{ x: contextMenu.x, y: contextMenu.y }}
+          treeItem={contextMenu.item}
+          onClose={() => setContextMenu(null)}
+        />
+      )}
     </div>
   );
 }

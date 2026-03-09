@@ -7,10 +7,13 @@ interface IconRowSpaceProps extends IDraggable {
   icon: React.ComponentType<IconProps>;
   size?: number;
   selected?: string[];
-  isDragOver?: string;
+  editingId?: string;
   onSelect?: (id: string) => void;
   onOpen?: (item: TreeItem) => void;
   onExpand?: (id: string) => void;
+  onContextMenu?: (item: TreeItem, e: React.MouseEvent) => void;
+  onRenameConfirm?: (item: TreeItem, value: string) => void;
+  onRenameCancel?: () => void;
   sortFn?: (a: TreeItem, b: TreeItem) => number;
   getDropProps?: (item: TreeItem) => IDrop;
 }
@@ -20,11 +23,14 @@ export function IconRowSpace({
   icon,
   size = 16,
   selected,
-  isDragOver,
+  editingId,
   canDrag = false,
   onSelect,
   onOpen,
   onExpand,
+  onContextMenu,
+  onRenameConfirm,
+  onRenameCancel,
   sortFn,
   getDropProps,
 }: IconRowSpaceProps): React.ReactElement {
@@ -36,11 +42,14 @@ export function IconRowSpace({
       icon={icon}
       size={size}
       selected={selected}
-      isDragOver={isDragOver}
+      editingId={editingId}
       canDrag={canDrag}
       onSelect={onSelect}
       onOpen={onOpen}
       onExpand={onExpand}
+      onContextMenu={onContextMenu}
+      onRenameConfirm={onRenameConfirm}
+      onRenameCancel={onRenameCancel}
       getDropProps={getDropProps}
     />
   );

@@ -39,4 +39,5 @@ export interface IDraggable {
 export interface IDrop {
   accepts?: DropAccepts;
   onDrop?: (source: DragMeta) => void;
+  onNativeDrop?: (files: FileList) => void;
 }

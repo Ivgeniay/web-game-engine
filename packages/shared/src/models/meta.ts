@@ -187,6 +187,8 @@ export type AnyMeta =
   | UnknownMeta;
 
 export const metaExtensionMap: Record<string, MetaType> = {
+  "": "unknown",
+  ".directory": "directory",
   ".png": "texture",
   ".jpg": "texture",
   ".jpeg": "texture",

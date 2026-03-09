@@ -182,6 +182,24 @@ export class MetaService {
     } catch {
       throw new Error(`Failed to rename meta: ${relativePath} -> ${newName}`);
     }
+
+    const oldExt = path.extname(relativePath);
+    const newExt = path.extname(newName);
+
+    if (oldExt.toLowerCase() === newExt.toLowerCase()) return;
+
+    const newType = getMetaType(newExt);
+    const newRelative = path.join(path.dirname(relativePath), newName);
+    const existing = await this.read(projectId, newRelative);
+    if (!existing) return;
+
+    const hash = await computeHash(absNew);
+    const updated = buildDefaultMeta(newType, hash);
+    updated.guid = existing.guid;
+    updated.createdAt = existing.createdAt;
+    updated.updatedAt = new Date().toISOString();
+
+    await fs.writeFile(metaFilePath(absNew), JSON.stringify(updated, null, 2));
   }
 }
 

@@ -44,6 +44,13 @@ export {
   SOURCE_VALUES,
 } from "./components/dnd/types";
 export { checkDrop } from "./components/dnd/checkDrop";
+export type {
+  MergeMode,
+  ContextMenuItem,
+  ContextMenuPosition,
+} from "./components/context_menu/types";
+export { FileExplorerContextMenuService } from "./components/context_menu/FileExplorerContextMenuService";
+export { ContextMenu } from "./components/context_menu/ContextMenu";
 
 export { useDraggable } from "./hooks/useDraggable";
 export { UILibConfiguration } from "./config/UILibConfiguration";

@@ -42,7 +42,7 @@ export const client = {
   delete: (path: string) =>
     fetch(`${API_URL}${path}`, {
       method: "DELETE",
-      headers: getHeaders(),
+      headers: getAuthHeader(),
     }),
 
   upload: (path: string, file: File) => {
