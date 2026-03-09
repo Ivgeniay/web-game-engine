@@ -31,3 +31,19 @@ export { IconTile } from "./components/icons/IconTile";
 export { IconRowSpace } from "./components/icons/IconRowSpace";
 export { IconRow } from "./components/icons/IconRow";
 export { FileIcon } from "./components/icons/FileIcon";
+export {
+  type IDraggable,
+  type IDrop,
+  type DropAccepts,
+  type DragMeta,
+  type DragType,
+  type kind,
+  type source,
+  EXTRA_DRAG_TYPES,
+  KIND_VALUES,
+  SOURCE_VALUES,
+} from "./components/dnd/types";
+export { checkDrop } from "./components/dnd/checkDrop";
+
+export { useDraggable } from "./hooks/useDraggable";
+export { UILibConfiguration } from "./config/UILibConfiguration";

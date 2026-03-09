@@ -6,6 +6,11 @@ import { SettingsPanel } from "../ui/panels/settings_panel/SettingsPanel";
 import { useProjectStore } from "../store/project_store";
 import { WsService } from "../services/WsService";
 import { useDebugStore } from "../store/debug_store";
+import { FileExplorerPanel } from "../ui/panels/file_explorer_panel/FileExplorerPanel";
+import { ConsolePanel } from "../ui/panels/console_panel/ConsolePanel";
+import { InspectorPanel } from "../ui/panels/inspector_panel/InspectorPanel";
+import { HierarchyPanel } from "../ui/panels/hierarchy_panel/HierarchyPanel";
+import { ScenePanel } from "../ui/panels/scene_panel/ScenePanel";
 
 interface defaultWindowCoef {
   HierarchyWidth: number;
@@ -97,11 +102,76 @@ export const defaultEditorMenu: MenuBarRegistry = {
       id: "window",
       label: "Window",
       children: [
-        { id: "window.scene", label: "Scene" },
-        { id: "window.hierarchy", label: "Hierarchy" },
-        { id: "window.inspector", label: "Inspector" },
-        { id: "window.console", label: "Console" },
-        { id: "window.filesystem", label: "File System" },
+        {
+          id: "window.scene",
+          label: "Scene",
+          onClick: () => {
+            EditorLayoutService.openPanel({
+              id: "scene",
+              title: "Scene",
+              component: ScenePanel,
+              floating: true,
+              initialWidth: 600,
+              initialHeight: 400,
+            });
+          },
+        },
+        {
+          id: "window.hierarchy",
+          label: "Hierarchy",
+          onClick: () => {
+            EditorLayoutService.openPanel({
+              id: "hierarchy",
+              title: "Hierarchy",
+              component: HierarchyPanel,
+              floating: true,
+              initialWidth: 600,
+              initialHeight: 400,
+            });
+          },
+        },
+        {
+          id: "window.inspector",
+          label: "Inspector",
+          onClick: () => {
+            EditorLayoutService.openPanel({
+              id: "inspector",
+              title: "Inspector",
+              component: InspectorPanel,
+              floating: true,
+              initialWidth: 600,
+              initialHeight: 400,
+            });
+          },
+        },
+        {
+          id: "window.console",
+          label: "Console",
+          onClick: () => {
+            EditorLayoutService.openPanel({
+              id: "console",
+              title: "Console",
+              component: ConsolePanel,
+              floating: true,
+              initialWidth: 600,
+              initialHeight: 400,
+            });
+          },
+        },
+        {
+          id: "window.filesystem",
+          label: "File System",
+          onClick: () => {
+            EditorLayoutService.openPanel({
+              id: "fileexplorer",
+              title: "FileExplorer",
+              component: FileExplorerPanel,
+              floating: true,
+              initialWidth: 600,
+              initialHeight: 400,
+            });
+          },
+        },
       ],
     },
     {

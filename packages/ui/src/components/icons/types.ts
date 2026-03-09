@@ -1,3 +1,5 @@
+import type { DragMeta } from "../dnd/types";
+
 export interface IconProps {
   ext?: string;
   size?: number;
@@ -14,5 +16,6 @@ export interface TreeItem {
   id: string;
   label: string;
   ext?: string;
+  dragMeta?: DragMeta;
   children?: TreeItem[];
 }

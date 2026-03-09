@@ -131,12 +131,16 @@ export class FileService {
     fromRelative: string,
     toRelative: string,
   ): Promise<void> {
+    console.log("-----------------------------------------");
     const absFrom = resolveAssetPath(projectId, fromRelative);
+    console.log(absFrom);
     const absTo = resolveAssetPath(projectId, toRelative);
+    console.log(absTo);
+    console.log("-----------------------------------------");
 
     await fsp.mkdir(path.dirname(absTo), { recursive: true });
     await fsp.rename(absFrom, absTo);
-
+    console.log("SUCCESS");
     try {
       await metaService.move(projectId, fromRelative, toRelative);
     } catch {

@@ -1,9 +1,10 @@
 import { useState } from "react";
 import type { IconProps, TreeItem } from "./types";
+import type { IDraggable, IDrop } from "../dnd/types";
 import { IconRow } from "./IconRow";
 import { ChevronIcon } from "./ChevronIcon";
 
-interface TreeNodeProps {
+interface TreeNodeProps extends IDraggable {
   item: TreeItem;
   icon: React.ComponentType<IconProps>;
   size?: number;
@@ -12,6 +13,8 @@ interface TreeNodeProps {
   isDragOver?: string;
   onSelect?: (id: string) => void;
   onOpen?: (item: TreeItem) => void;
+  onExpand?: (id: string) => void;
+  getDropProps?: (item: TreeItem) => IDrop;
 }
 
 function TreeNode({
@@ -21,17 +24,24 @@ function TreeNode({
   depth = 0,
   selected,
   isDragOver,
+  canDrag = false,
   onSelect,
   onOpen,
-}: TreeNodeProps): React.ReactNode {
+  onExpand,
+  getDropProps,
+}: TreeNodeProps): React.ReactElement {
   const [expanded, setExpanded] = useState(false);
   const hasChildren = item.children && item.children.length > 0;
-  const isDirectory = item.ext === "directory" || hasChildren;
+  const isDirectory = item.ext === "directory";
 
-  const handleClick = () => {
-    if (isDirectory) setExpanded((prev) => !prev);
-    onSelect?.(item.id);
+  const handleToggle = () => {
+    if (!isDirectory) return;
+    const next = !expanded;
+    setExpanded(next);
+    if (next && !hasChildren) onExpand?.(item.id);
   };
+
+  const dropProps = getDropProps?.(item) ?? {};
 
   return (
     <div className="flex flex-col w-full">
@@ -41,7 +51,7 @@ function TreeNode({
       >
         <span
           className="shrink-0 w-4 select-none cursor-pointer"
-          onClick={() => isDirectory && setExpanded((prev) => !prev)}
+          onClick={handleToggle}
         >
           {isDirectory ? (
             <ChevronIcon ext={expanded ? "open" : "close"} size={size} />
@@ -56,9 +66,11 @@ function TreeNode({
             ext={item.ext}
             size={size}
             selected={selected?.includes(item.id)}
-            isDragOver={isDragOver === item.id}
-            onClick={handleClick}
-            onDoubleClick={() => onOpen?.(item)}
+            canDrag={canDrag}
+            dragMeta={item.dragMeta}
+            onClick={() => onSelect?.(item.id)}
+            onDoubleClick={() => isDirectory && handleToggle()}
+            {...dropProps}
           />
         </div>
       </div>
@@ -73,8 +85,11 @@ function TreeNode({
               depth={depth + 1}
               selected={selected}
               isDragOver={isDragOver}
+              canDrag={canDrag}
               onSelect={onSelect}
               onOpen={onOpen}
+              onExpand={onExpand}
+              getDropProps={getDropProps}
             />
           ))}
         </div>
@@ -83,7 +98,7 @@ function TreeNode({
   );
 }
 
-interface TreeViewProps {
+interface TreeViewProps extends IDraggable {
   items: TreeItem[];
   icon: React.ComponentType<IconProps>;
   size?: number;
@@ -91,6 +106,8 @@ interface TreeViewProps {
   isDragOver?: string;
   onSelect?: (id: string) => void;
   onOpen?: (item: TreeItem) => void;
+  onExpand?: (id: string) => void;
+  getDropProps?: (item: TreeItem) => IDrop;
 }
 
 export function TreeView({
@@ -99,9 +116,12 @@ export function TreeView({
   size = 16,
   selected,
   isDragOver,
+  canDrag = false,
   onSelect,
   onOpen,
-}: TreeViewProps): React.ReactNode {
+  onExpand,
+  getDropProps,
+}: TreeViewProps): React.ReactElement {
   return (
     <div className="flex flex-col w-full h-full overflow-y-auto overflow-x-hidden">
       {items.map((item) => (
@@ -112,8 +132,11 @@ export function TreeView({
           size={size}
           selected={selected}
           isDragOver={isDragOver}
+          canDrag={canDrag}
           onSelect={onSelect}
           onOpen={onOpen}
+          onExpand={onExpand}
+          getDropProps={getDropProps}
         />
       ))}
     </div>

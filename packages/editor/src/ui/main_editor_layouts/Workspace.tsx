@@ -12,7 +12,7 @@ import { EditorLayoutService } from "../../services/EditorLayoutService";
 import { useProjectStore } from "../../store/project_store";
 import { client } from "../../api/client";
 import { PersonalSettingsKeys } from "@proton/shared";
-import { Debug, MessageStyle } from "@proton/engine";
+import { FileExplorerPanel } from "../panels/file_explorer_panel/FileExplorerPanel";
 
 type LayoutState =
   | { status: "loading" }
@@ -30,6 +30,7 @@ export function Workspace() {
   EditorLayoutService.registerComponent("inspector", InspectorPanel);
   EditorLayoutService.registerComponent("console", ConsolePanel);
   EditorLayoutService.registerComponent("settings", SettingsPanel);
+  EditorLayoutService.registerComponent("fileexplorer", FileExplorerPanel);
 
   useEffect(() => {
     if (!projectId) return;

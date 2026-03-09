@@ -31,7 +31,6 @@ export function InspectorPanel() {
   //     disabled={false}
   //   />
   // );
-
   // const items2: TreeItem[] = [
   //   {
   //     id: "1",
@@ -118,7 +117,6 @@ export function InspectorPanel() {
   //     ],
   //   },
   // ];
-
   // return (
   //   <IconRowSpace
   //     items={items2}
@@ -128,48 +126,45 @@ export function InspectorPanel() {
   //     selected={["34", "35", "31", "33"]}
   //   />
   // );
-
-  const items: IconSpaceItem[] = [
-    { label: "Textures", ext: "directory", id: "1" },
-    { label: "Scripts", ext: "directory", id: "2" },
-    { label: "player.ts", ext: "ts", id: "3" },
-    { label: "enemy.ts", ext: "ts", id: "4" },
-    { label: "physics.ts", ext: "ts", id: "5" },
-    { label: "albedo.png", ext: "png", id: "6" },
-    { label: "Assets", ext: "directory", id: "7" },
-    {
-      label:
-        "very_long_very_long_very_long_very_long_very_long_very_long_filename_that_wont_fit",
-      ext: "",
-      id: "8",
-    },
-    { label: "normal.png", ext: "png", id: "9" },
-    { label: "skybox.hdr", ext: "hdr", id: "10" },
-    { label: "explosion.wav", ext: "wav", id: "11" },
-    { label: "soundtrack.mp3", ext: "mp3", id: "12" },
-    { label: "player.glb", ext: "glb", id: "13" },
-    { label: "environment.gltf", ext: "gltf", id: "14" },
-    { label: "main.scene", ext: "scene", id: "15" },
-    { label: "player.prefab", ext: "prefab", id: "16" },
-    {
-      label:
-        "very_long_very_long_very_long_very_long_very_long_very_long_filename_that_wont_fit.mat",
-      ext: "mat",
-      id: "17",
-    },
-  ];
-
-  return (
-    <IconTileSpace
-      items={items}
-      icon={FileIcon}
-      size={180}
-      gap={10}
-      isDragOver={true}
-      selected={["4", "1", "2", "17", "18"]}
-    />
-  );
-
+  // const items: IconSpaceItem[] = [
+  //   { label: "Textures", ext: "directory", id: "1" },
+  //   { label: "Scripts", ext: "directory", id: "2" },
+  //   { label: "player.ts", ext: "ts", id: "3" },
+  //   { label: "enemy.ts", ext: "ts", id: "4" },
+  //   { label: "physics.ts", ext: "ts", id: "5" },
+  //   { label: "albedo.png", ext: "png", id: "6" },
+  //   { label: "Assets", ext: "directory", id: "7" },
+  //   {
+  //     label:
+  //       "very_long_very_long_very_long_very_long_very_long_very_long_filename_that_wont_fit",
+  //     ext: "",
+  //     id: "8",
+  //   },
+  //   { label: "normal.png", ext: "png", id: "9" },
+  //   { label: "skybox.hdr", ext: "hdr", id: "10" },
+  //   { label: "explosion.wav", ext: "wav", id: "11" },
+  //   { label: "soundtrack.mp3", ext: "mp3", id: "12" },
+  //   { label: "player.glb", ext: "glb", id: "13" },
+  //   { label: "environment.gltf", ext: "gltf", id: "14" },
+  //   { label: "main.scene", ext: "scene", id: "15" },
+  //   { label: "player.prefab", ext: "prefab", id: "16" },
+  //   {
+  //     label:
+  //       "very_long_very_long_very_long_very_long_very_long_very_long_filename_that_wont_fit.mat",
+  //     ext: "mat",
+  //     id: "17",
+  //   },
+  // ];
+  // return (
+  //   <IconTileSpace
+  //     items={items}
+  //     icon={FileIcon}
+  //     size={180}
+  //     gap={10}
+  //     isDragOver={true}
+  //     selected={["4", "1", "2", "17", "18"]}
+  //   />
+  // );
   return (
     <div className="w-full h-full bg-panel text-primary flex items-center justify-center">
       Inspector panel content

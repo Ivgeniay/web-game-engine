@@ -1,7 +1,8 @@
 import type { IconProps, TreeItem } from "./types";
+import type { IDraggable, IDrop } from "../dnd/types";
 import { TreeView } from "./TreeView";
 
-interface IconRowSpaceProps {
+interface IconRowSpaceProps extends IDraggable {
   items: TreeItem[];
   icon: React.ComponentType<IconProps>;
   size?: number;
@@ -9,7 +10,9 @@ interface IconRowSpaceProps {
   isDragOver?: string;
   onSelect?: (id: string) => void;
   onOpen?: (item: TreeItem) => void;
+  onExpand?: (id: string) => void;
   sortFn?: (a: TreeItem, b: TreeItem) => number;
+  getDropProps?: (item: TreeItem) => IDrop;
 }
 
 export function IconRowSpace({
@@ -18,10 +21,13 @@ export function IconRowSpace({
   size = 16,
   selected,
   isDragOver,
+  canDrag = false,
   onSelect,
   onOpen,
+  onExpand,
   sortFn,
-}: IconRowSpaceProps): React.ReactNode {
+  getDropProps,
+}: IconRowSpaceProps): React.ReactElement {
   const sorted = sortFn ? [...items].sort(sortFn) : items;
 
   return (
@@ -31,8 +37,11 @@ export function IconRowSpace({
       size={size}
       selected={selected}
       isDragOver={isDragOver}
+      canDrag={canDrag}
       onSelect={onSelect}
       onOpen={onOpen}
+      onExpand={onExpand}
+      getDropProps={getDropProps}
     />
   );
 }

@@ -115,6 +115,15 @@ body,
   }
 }
 
+@keyframes onDrop {
+  0% {
+    padding: 5px;
+  }
+  100% {
+    padding: 10px;
+  }
+}
+
 @keyframes indeterminate {
   0% {
     transform: translateX(-100%);
@@ -148,7 +157,9 @@ body,
 
 .drag-over {
   outline: 2px solid var(--color-drop);
+  padding: 15px;
   outline-offset: -5px;
   background-color: color-mix(in srgb, var(--color-drop) 15%, transparent);
-  border-radius: 15px;
+  border-radius: 5px;
+  animation: onDrop 0.1s ease-in-out;
 }
