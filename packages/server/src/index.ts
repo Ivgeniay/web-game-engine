@@ -13,6 +13,7 @@ import { wsRoutes } from "./routes/ws.js";
 import { FileService } from "./services/FileService.js";
 import { MetaService } from "./services/MetaService.js";
 import { fileRoutes } from "./routes/files.js";
+import { scanAndEnsureMeta } from "./utils/scanAndEnsureMeta.js";
 
 const app = Fastify({ logger: true });
 
@@ -43,6 +44,7 @@ const start = async () => {
       return { status: "ok" };
     });
 
+    await scanAndEnsureMeta(config.projectsPath);
     await app.listen({ port: config.port, host: config.host });
   } catch (err) {
     app.log.error(err);

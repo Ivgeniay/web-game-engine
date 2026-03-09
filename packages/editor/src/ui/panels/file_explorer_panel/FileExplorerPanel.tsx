@@ -1,4 +1,4 @@
-import { FileIcon, IconRowSpace, IconTileSpace } from "@proton/ui";
+import { FileIcon, IconRowSpace, IconTileSpace, Spinner } from "@proton/ui";
 import type { IconSpaceItem, TreeItem, IDrop } from "@proton/ui";
 import { useFileExplorer } from "../../../hooks/useFileExplorer";
 import { useProjectStore } from "../../../store/project_store";
@@ -18,7 +18,7 @@ function Breadcrumb({
   path: string;
   onNavigate: (p: string) => void;
 }): React.ReactElement {
-  const parts = path.split("/").filter(Boolean);
+  const parts = path.split(/[\\/]/).filter(Boolean);
 
   return (
     <div className="flex items-center gap-1 text-xs text-secondary overflow-x-auto shrink-0">
@@ -26,7 +26,7 @@ function Breadcrumb({
         className="cursor-pointer hover:text-primary transition-colors"
         onClick={() => onNavigate("")}
       >
-        Assets
+        Root
       </span>
       {parts.map((part, i) => {
         const partPath = parts.slice(0, i + 1).join("/");
@@ -67,30 +67,39 @@ export function FileExplorerPanel(): React.ReactElement {
 
   const projectId = useProjectStore((s) => s.activeProject?.id);
 
+  const rootTreeItems: TreeItem[] = [
+    {
+      id: "",
+      label: "Assets",
+      ext: "directory",
+      dragMeta: undefined,
+      children: treeItems,
+    },
+  ];
+
   const handleDrop = async (
     source: ReturnType<typeof useEditorStore.getState>["dragMeta"],
     targetPath: string,
   ) => {
-    Debug.Debug(`!`);
-
     if (!source || !projectId) return;
     const isDir = !!source.directory;
     const sourcePath = source.file ?? source.directory;
     if (!sourcePath) return;
-    const fileName = sourcePath.split("/").pop()!;
+    const fileName = sourcePath.split(/[\\/]/).pop()!;
+    const toPath = targetPath ? `${targetPath}/${fileName}` : fileName;
     try {
       if (isDir) {
+        Debug.Debug(` DIR: fromPath:${sourcePath} toPath:${toPath}`);
         await filesApi.moveDirectory(projectId, {
           fromPath: sourcePath,
-          toPath: `${targetPath}/${fileName}`,
+          toPath: toPath,
         });
       } else {
-        Debug.Debug(`fromPath:${sourcePath} toPath:${targetPath}/${fileName}`);
-        const res = await filesApi.moveFile(projectId, {
+        Debug.Debug(` FILE: fromPath:${sourcePath} toPath:${toPath}`);
+        await filesApi.moveFile(projectId, {
           fromPath: sourcePath,
-          toPath: `${targetPath}/${fileName}`,
+          toPath: toPath,
         });
-        Debug.Debug(`Result: ${res}`);
       }
       reload();
     } catch {
@@ -168,6 +177,7 @@ export function FileExplorerPanel(): React.ReactElement {
       <div className="flex-1 overflow-hidden p-1">
         {loading && (
           <div className="flex items-center justify-center w-full h-full text-secondary text-xs">
+            <Spinner size={40} />
             Loading...
           </div>
         )}
@@ -178,7 +188,7 @@ export function FileExplorerPanel(): React.ReactElement {
         )}
         {!loading && !error && viewMode === "tree" && (
           <IconRowSpace
-            items={treeItems}
+            items={rootTreeItems}
             icon={FileIcon}
             size={16}
             selected={selectedIds}
