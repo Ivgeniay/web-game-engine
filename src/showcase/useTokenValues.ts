@@ -1,4 +1,4 @@
-import { useThemeStore } from '@/state/theme/useThemeStore';
+import { useRerenderOnThemeChange } from '@/state/theme/useRerenderOnThemeChange';
 
 export type TokenValues = ReadonlyMap<string, string>;
 
@@ -9,7 +9,7 @@ function readTokenValues(names: readonly string[]): TokenValues {
 }
 
 export function useTokenValues(names: readonly string[]): TokenValues {
-  useThemeStore((state) => state.resolvedTheme);
+  useRerenderOnThemeChange();
 
   return readTokenValues(names);
 }

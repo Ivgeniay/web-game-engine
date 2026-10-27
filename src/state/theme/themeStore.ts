@@ -8,7 +8,7 @@ import type { ThemeStorage } from './themeStorage';
 export interface ThemeState {
   readonly mode: ThemeMode;
   readonly resolvedTheme: ResolvedTheme;
-  setMode(mode: ThemeMode): void;
+  readonly setMode: (mode: ThemeMode) => void;
 }
 
 export type ThemeStore = StoreApi<ThemeState>;
