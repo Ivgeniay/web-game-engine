@@ -22,6 +22,22 @@ const noCommentsRule = {
   },
 };
 
+const parentPathImportPattern = {
+  regex: '(^|/)\\.\\.(/|$)',
+  message: 'Use ./ within the same folder and @/ across folders.',
+};
+
+const showcaseImportPatterns = [
+  {
+    regex: '^@/showcase(/|$)',
+    message: 'Examples must not depend on the showcase.',
+  },
+  {
+    regex: '^\\./(?!.*Example)',
+    message: 'Examples may import only their own *Example files relatively.',
+  },
+];
+
 const localPlugin = {
   rules: {
     'no-comments': noCommentsRule,
@@ -85,12 +101,18 @@ export default defineConfig([
       'no-restricted-imports': [
         'error',
         {
-          patterns: [
-            {
-              regex: '(^|/)\\.\\.(/|$)',
-              message: 'Use ./ within the same folder and @/ across folders.',
-            },
-          ],
+          patterns: [parentPathImportPattern],
+        },
+      ],
+    },
+  },
+  {
+    files: ['src/**/*Example.tsx'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [parentPathImportPattern, ...showcaseImportPatterns],
         },
       ],
     },

@@ -9,7 +9,14 @@ export interface ClipboardCopy {
   readonly copy: (text: string) => void;
 }
 
+interface CopyResult {
+  readonly status: CopyStatus;
+  readonly attempt: number;
+}
+
 const STATUS_RESET_DELAY_MS = 1500;
+
+const INITIAL_RESULT: CopyResult = { status: 'idle', attempt: 0 };
 
 async function writeToClipboard(text: string): Promise<CopyStatus> {
   try {
@@ -22,25 +29,27 @@ async function writeToClipboard(text: string): Promise<CopyStatus> {
 }
 
 export function useCopyToClipboard(): ClipboardCopy {
-  const [status, setStatus] = useState<CopyStatus>('idle');
+  const [result, setResult] = useState<CopyResult>(INITIAL_RESULT);
 
   useEffect(() => {
-    if (status === 'idle') {
+    if (result.status === 'idle') {
       return undefined;
     }
 
     const timer = window.setTimeout(() => {
-      setStatus('idle');
+      setResult((current) => ({ ...current, status: 'idle' }));
     }, STATUS_RESET_DELAY_MS);
 
     return () => {
       window.clearTimeout(timer);
     };
-  }, [status]);
+  }, [result]);
 
   const copy = useCallback((text: string) => {
-    void writeToClipboard(text).then(setStatus);
+    void writeToClipboard(text).then((status) => {
+      setResult((current) => ({ status, attempt: current.attempt + 1 }));
+    });
   }, []);
 
-  return { status, copy };
+  return { status: result.status, copy };
 }

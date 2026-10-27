@@ -90,7 +90,7 @@
 | `border-control` | #4a4a4a | #9a9a9a |
 | `border-focus` | #4a8fe7 | #2a63bb (было #2f6fd1, скорректировано по контрасту в 1.4) |
 | `text-primary` | #dcdcdc | #1a1a1a |
-| `text-secondary` | #a0a0a0 | #444444 |
+| `text-secondary` | #a5a5a5 (было #a0a0a0, скорректировано по контрасту на bg-control в этапе 2) | #444444 |
 | `text-disabled` | #6b6b6b | #8a8a8a |
 | `text-on-accent` | #ffffff | #ffffff |
 | `accent` | #3874cc (было #3b7bd8, скорректировано по контрасту в 1.4) | #2f6fd1 |

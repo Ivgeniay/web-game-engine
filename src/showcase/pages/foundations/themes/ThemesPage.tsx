@@ -1,4 +1,4 @@
-import { Example } from '@/showcase/template/Example';
+import { ExampleBlock } from '@/showcase/template/ExampleBlock';
 import { PageSection } from '@/showcase/template/PageSection';
 import { CurrentThemeExample } from './CurrentThemeExample';
 import currentThemeSource from './CurrentThemeExample.tsx?raw';
@@ -43,23 +43,23 @@ export function ThemesPage() {
           Most components never need this: differences between themes belong in token values, not in
           component code.
         </p>
-        <Example sources={[{ fileName: 'CurrentThemeExample.tsx', code: currentThemeSource }]}>
+        <ExampleBlock sources={[{ fileName: 'CurrentThemeExample.tsx', code: currentThemeSource }]}>
           <CurrentThemeExample />
-        </Example>
+        </ExampleBlock>
       </PageSection>
       <PageSection title="Changing the mode">
         <p>
           Call <code>setMode</code> from the store. It saves the mode, resolves the theme and starts
           or stops following the system preference. <code>THEME_MODES</code> lists every mode.
         </p>
-        <Example
+        <ExampleBlock
           sources={[
             { fileName: 'ThemeModeExample.tsx', code: themeModeSource },
             { fileName: 'ThemeModeExample.module.css', code: themeModeStyles },
           ]}
         >
           <ThemeModeExample />
-        </Example>
+        </ExampleBlock>
         <p>
           Outside React, use <code>themeStore</code> from <code>@/state/theme/theme</code>:{' '}
           <code>getState()</code> reads the state and <code>subscribe()</code> listens to changes.
@@ -84,14 +84,14 @@ export function ThemesPage() {
             Text always uses <code>--color-text-*</code>.
           </li>
         </ul>
-        <Example
+        <ExampleBlock
           sources={[
             { fileName: 'TokenStyledPanelExample.tsx', code: tokenStyledPanelSource },
             { fileName: 'TokenStyledPanelExample.module.css', code: tokenStyledPanelStyles },
           ]}
         >
           <TokenStyledPanelExample />
-        </Example>
+        </ExampleBlock>
       </PageSection>
     </>
   );
