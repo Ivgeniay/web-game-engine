@@ -19,6 +19,7 @@ export const MIN_CONTRAST_BY_KIND: Readonly<Record<ContrastPairKind, number>> = 
 
 const SURFACE_BACKGROUNDS = ['bg-panel', 'bg-header', 'bg-field', 'bg-popup'];
 const TEXT_ON_SURFACES = ['text-primary', 'text-secondary'];
+const CONTROL_BACKGROUNDS = ['bg-control'];
 const SELECTION_BACKGROUNDS = ['bg-selection', 'bg-selection-inactive'];
 const ACCENT_BACKGROUNDS = ['accent', 'accent-hover'];
 const STATUS_INDICATORS = ['status-error', 'status-warning', 'status-success', 'status-info'];
@@ -36,6 +37,7 @@ function combinePairs(
 
 export const CONTRAST_PAIRS: readonly ContrastPair[] = [
   ...combinePairs(TEXT_ON_SURFACES, SURFACE_BACKGROUNDS, 'text'),
+  ...combinePairs(TEXT_ON_SURFACES, CONTROL_BACKGROUNDS, 'text'),
   ...combinePairs(['text-primary'], SELECTION_BACKGROUNDS, 'text'),
   ...combinePairs(['text-on-accent'], ACCENT_BACKGROUNDS, 'text'),
   ...combinePairs(STATUS_INDICATORS, SURFACE_BACKGROUNDS, 'indicator'),
