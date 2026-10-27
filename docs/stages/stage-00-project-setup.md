@@ -40,7 +40,7 @@ ESLint в формате flat config. Правила должны автомат
 
 - ошибка на `any`
 - ошибка на non-null assertion
-- ошибка на `@ts-ignore`; `@ts-expect-error` допускается только с описанием
+- ошибка на любые директивы `@ts-*`
 - ошибка на `export default` в `src/`; конфигурационные файлы в корне — исключение
 - правила `react-hooks` и `react-refresh`
 
