@@ -2,7 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { startThemeController } from '@/state/theme/themeController';
 import { App } from './App';
-import './global.css';
+import '@/themes/global.css';
 
 const ROOT_ELEMENT_ID = 'root';
 

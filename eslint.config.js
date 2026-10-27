@@ -82,6 +82,17 @@ export default defineConfig([
           message: 'Use named exports only.',
         },
       ],
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            {
+              regex: '(^|/)\\.\\.(/|$)',
+              message: 'Use ./ within the same folder and @/ across folders.',
+            },
+          ],
+        },
+      ],
     },
   },
 ]);

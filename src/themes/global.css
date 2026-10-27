@@ -1,6 +1,6 @@
-@import '../themes/tokens.css';
-@import '../themes/dark.css';
-@import '../themes/light.css';
+@import './tokens.css';
+@import './dark.css';
+@import './light.css';
 
 html,
 body,
