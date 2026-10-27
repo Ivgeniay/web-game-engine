@@ -38,6 +38,31 @@ const showcaseImportPatterns = [
   },
 ];
 
+const namedExportsOnlySelectors = [
+  {
+    selector: 'ExportDefaultDeclaration',
+    message: 'Use named exports only.',
+  },
+  {
+    selector: 'ExportSpecifier[exported.name="default"]',
+    message: 'Use named exports only.',
+  },
+];
+
+const uiTextMessage =
+  'Interface texts must come from a translation: use useMessages or useTranslate.';
+
+const textAttributePattern =
+  '/^(alt|aria-description|aria-label|aria-placeholder|aria-roledescription|aria-valuetext|label|placeholder|title)$/';
+
+const uiTextSelectors = [
+  'JSXText[value=/\\S/]',
+  ':matches(JSXElement, JSXFragment) > JSXExpressionContainer > Literal[value=/\\S/]',
+  ':matches(JSXElement, JSXFragment) > JSXExpressionContainer > TemplateLiteral',
+  `JSXAttribute[name.name=${textAttributePattern}] > Literal`,
+  `JSXAttribute[name.name=${textAttributePattern}] > JSXExpressionContainer > :matches(Literal, TemplateLiteral)`,
+].map((selector) => ({ selector, message: uiTextMessage }));
+
 const localPlugin = {
   rules: {
     'no-comments': noCommentsRule,
@@ -87,23 +112,20 @@ export default defineConfig([
   {
     files: ['src/**/*.{ts,tsx}'],
     rules: {
-      'no-restricted-syntax': [
-        'error',
-        {
-          selector: 'ExportDefaultDeclaration',
-          message: 'Use named exports only.',
-        },
-        {
-          selector: 'ExportSpecifier[exported.name="default"]',
-          message: 'Use named exports only.',
-        },
-      ],
+      'no-restricted-syntax': ['error', ...namedExportsOnlySelectors],
       'no-restricted-imports': [
         'error',
         {
           patterns: [parentPathImportPattern],
         },
       ],
+    },
+  },
+  {
+    files: ['src/**/*.{ts,tsx}'],
+    ignores: ['src/showcase/**'],
+    rules: {
+      'no-restricted-syntax': ['error', ...namedExportsOnlySelectors, ...uiTextSelectors],
     },
   },
   {

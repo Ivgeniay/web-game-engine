@@ -10,6 +10,11 @@ export interface MessageRef {
   readonly params: RuntimeParams | undefined;
 }
 
+export type Translator<S extends SourceMessages> = <K extends keyof S & string>(
+  key: K,
+  ...args: ParamsArgs<S[K]>
+) => string;
+
 const PLACEHOLDER_PATTERN = /\{([^{}]+)\}/g;
 
 function cachedPerLanguage<T>(create: (language: Language) => T): (language: Language) => T {
