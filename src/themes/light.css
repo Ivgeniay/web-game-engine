@@ -16,7 +16,7 @@
 
   --color-border-separator: #8c8c8c;
   --color-border-control: #9a9a9a;
-  --color-border-focus: #2f6fd1;
+  --color-border-focus: #2a63bb;
 
   --color-text-primary: #1a1a1a;
   --color-text-secondary: #444444;
@@ -24,12 +24,12 @@
   --color-text-on-accent: #ffffff;
 
   --color-accent: #2f6fd1;
-  --color-accent-hover: #3d7ce0;
+  --color-accent-hover: #285eb2;
 
-  --color-status-error: #c4342d;
-  --color-status-warning: #9a6a0c;
-  --color-status-success: #3a7f32;
-  --color-status-info: #2f6fd1;
+  --color-status-error: #bb322b;
+  --color-status-warning: #875d0b;
+  --color-status-success: #34722d;
+  --color-status-info: #2a63bb;
 
   --color-playmode-tint: color-mix(in srgb, var(--color-accent) 8%, transparent);
 
