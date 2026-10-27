@@ -1,25 +1,7 @@
-import { describe, expect, it, vi } from 'vitest';
+import { describe, expect, it } from 'vitest';
 import { OVERVIEW_PAGE_ID, SHOWCASE_PAGES } from './pages';
 import { findPage, pageHref, parseHash } from './routing';
 import { SHOWCASE_SECTION_IDS } from './showcasePage';
-
-vi.mock('@/state/theme/theme', async () => {
-  const { DEFAULT_THEME_MODE } = await import('@/state/theme/themeMode');
-  const { createThemeStore } = await import('@/state/theme/themeStore');
-
-  return {
-    themeStore: createThemeStore({
-      storage: {
-        loadThemeMode: () => DEFAULT_THEME_MODE,
-        saveThemeMode: () => undefined,
-      },
-      systemTheme: {
-        prefersLight: () => false,
-        subscribe: () => () => undefined,
-      },
-    }),
-  };
-});
 
 const SECTION_SEPARATOR = '/';
 

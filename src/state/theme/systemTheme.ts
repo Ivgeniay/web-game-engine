@@ -1,3 +1,5 @@
+import type { Unsubscribe } from '@/core/unsubscribe';
+
 export const SYSTEM_LIGHT_THEME_QUERY = '(prefers-color-scheme: light)';
 
 const MEDIA_CHANGE_EVENT = 'change';
@@ -17,8 +19,6 @@ export interface MediaQuery {
 export type MediaQueryProvider = (query: string) => MediaQuery;
 
 export type SystemThemeListener = (prefersLight: boolean) => void;
-
-export type Unsubscribe = () => void;
 
 export interface SystemTheme {
   prefersLight(): boolean;

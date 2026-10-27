@@ -2,8 +2,9 @@ import { createStore } from 'zustand/vanilla';
 import type { StoreApi } from 'zustand/vanilla';
 import { resolveTheme } from './themeMode';
 import type { ResolvedTheme, ThemeMode } from './themeMode';
-import type { SystemTheme, Unsubscribe } from './systemTheme';
-import type { ThemeStorage } from './themeStorage';
+import type { Unsubscribe } from '@/core/unsubscribe';
+import type { SettingStorage } from '@/state/storage/settingStorage';
+import type { SystemTheme } from './systemTheme';
 
 export interface ThemeState {
   readonly mode: ThemeMode;
@@ -14,7 +15,7 @@ export interface ThemeState {
 export type ThemeStore = StoreApi<ThemeState>;
 
 export interface ThemeStoreDependencies {
-  readonly storage: ThemeStorage;
+  readonly storage: SettingStorage<ThemeMode>;
   readonly systemTheme: SystemTheme;
 }
 
@@ -36,14 +37,14 @@ export function createThemeStore({ storage, systemTheme }: ThemeStoreDependencie
       }
     }
 
-    const initialMode = storage.loadThemeMode();
+    const initialMode = storage.load();
     followSystemTheme(initialMode);
 
     return {
       mode: initialMode,
       resolvedTheme: resolveTheme(initialMode, systemTheme.prefersLight()),
       setMode(mode) {
-        storage.saveThemeMode(mode);
+        storage.save(mode);
         set({ mode, resolvedTheme: resolveTheme(mode, systemTheme.prefersLight()) });
         followSystemTheme(mode);
       },

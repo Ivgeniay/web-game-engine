@@ -1,12 +1,12 @@
 import { describe, expect, it } from 'vitest';
-import { DEFAULT_THEME_MODE, RESOLVED_THEMES } from './themeMode';
+import { createSettingStorage } from '@/state/storage/settingStorage';
+import type { SettingStorage } from '@/state/storage/settingStorage';
+import { DEFAULT_THEME_MODE, RESOLVED_THEMES, THEME_MODE_SETTING } from './themeMode';
 import type { ThemeMode } from './themeMode';
 import type { SystemTheme, SystemThemeListener } from './systemTheme';
-import { createThemeStorage } from './themeStorage';
-import type { ThemeStorage } from './themeStorage';
 import { createThemeStore } from './themeStore';
 
-interface FakeThemeStorage extends ThemeStorage {
+interface FakeThemeStorage extends SettingStorage<ThemeMode> {
   readonly savedModes: readonly ThemeMode[];
 }
 
@@ -21,8 +21,8 @@ function createFakeThemeStorage(storedMode: ThemeMode = DEFAULT_THEME_MODE): Fak
 
   return {
     savedModes,
-    loadThemeMode: () => currentMode,
-    saveThemeMode: (mode) => {
+    load: () => currentMode,
+    save: (mode) => {
       currentMode = mode;
       savedModes.push(mode);
     },
@@ -86,7 +86,7 @@ describe('createThemeStore', () => {
 
   it('starts with the dark theme when the storage is unavailable', () => {
     const store = createThemeStore({
-      storage: createThemeStorage(throwStorageError),
+      storage: createSettingStorage(THEME_MODE_SETTING, throwStorageError),
       systemTheme: createFakeSystemTheme(true),
     });
 
@@ -96,7 +96,7 @@ describe('createThemeStore', () => {
 
   it('keeps working when saving to an unavailable storage', () => {
     const store = createThemeStore({
-      storage: createThemeStorage(throwStorageError),
+      storage: createSettingStorage(THEME_MODE_SETTING, throwStorageError),
       systemTheme: createFakeSystemTheme(false),
     });
 

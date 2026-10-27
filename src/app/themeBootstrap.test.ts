@@ -3,9 +3,9 @@ import indexHtml from '/index.html?raw';
 import showcaseHtml from '/showcase.html?raw';
 import { SYSTEM_LIGHT_THEME_QUERY } from '@/state/theme/systemTheme';
 import { THEME_ATTRIBUTE } from '@/state/theme/themeApplier';
-import { THEME_STORAGE_KEY, resolveTheme } from '@/state/theme/themeMode';
-import { createThemeStorage } from '@/state/theme/themeStorage';
-import type { KeyValueStorage } from '@/state/theme/themeStorage';
+import { createSettingStorage } from '@/state/storage/settingStorage';
+import type { KeyValueStorage } from '@/state/storage/settingStorage';
+import { THEME_MODE_SETTING, THEME_STORAGE_KEY, resolveTheme } from '@/state/theme/themeMode';
 
 const INLINE_SCRIPT_PATTERN = /<script>([\s\S]*?)<\/script>/g;
 
@@ -112,11 +112,11 @@ function runBootstrapScript(source: string, testCase: BootstrapCase): BootstrapR
 }
 
 function expectedTheme(testCase: BootstrapCase): string {
-  const storage = createThemeStorage(() =>
+  const storage = createSettingStorage(THEME_MODE_SETTING, () =>
     testCase.storage === 'throws-on-access' ? throwStorageError() : createCaseStorage(testCase, []),
   );
 
-  return resolveTheme(storage.loadThemeMode(), testCase.prefersLight);
+  return resolveTheme(storage.load(), testCase.prefersLight);
 }
 
 const [bootstrapScript = ''] = extractInlineScripts(indexHtml);
