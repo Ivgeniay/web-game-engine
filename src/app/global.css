@@ -64,3 +64,10 @@ textarea,
 :focus:not(:focus-visible) {
   outline: none;
 }
+
+:root[data-theme-switching],
+:root[data-theme-switching] *,
+:root[data-theme-switching] *::before,
+:root[data-theme-switching] *::after {
+  transition: none !important;
+}
