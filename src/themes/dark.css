@@ -1,0 +1,45 @@
+:root,
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  --color-bg-app: #181818;
+  --color-bg-panel: #232323;
+  --color-bg-header: #2b2b2b;
+  --color-bg-control: #3a3a3a;
+  --color-bg-field: #1e1e1e;
+  --color-bg-popup: #2f2f2f;
+
+  --color-overlay-hover: rgb(255 255 255 / 6%);
+  --color-overlay-active: rgb(255 255 255 / 12%);
+
+  --color-bg-selection: #2d5a8c;
+  --color-bg-selection-inactive: #464646;
+
+  --color-border-separator: #111111;
+  --color-border-control: #4a4a4a;
+  --color-border-focus: #4a8fe7;
+
+  --color-text-primary: #dcdcdc;
+  --color-text-secondary: #a0a0a0;
+  --color-text-disabled: #6b6b6b;
+  --color-text-on-accent: #ffffff;
+
+  --color-accent: #3b7bd8;
+  --color-accent-hover: #4a8fe7;
+
+  --color-status-error: #e5534b;
+  --color-status-warning: #d9a33a;
+  --color-status-success: #57a64a;
+  --color-status-info: #4a8fe7;
+
+  --color-playmode-tint: color-mix(in srgb, var(--color-accent) 8%, transparent);
+
+  --color-axis-x: #e0524a;
+  --color-axis-y: #7ac043;
+  --color-axis-z: #4a8fe7;
+
+  --color-scrollbar-thumb: #4a4a4a;
+  --color-scrollbar-track: transparent;
+
+  --color-shadow: rgb(0 0 0 / 50%);
+}
