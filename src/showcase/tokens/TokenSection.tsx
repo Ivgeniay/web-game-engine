@@ -75,8 +75,7 @@ export function TokenSection({ group, names }: TokenSectionProps) {
   const values = useTokenValues(names);
 
   return (
-    <section className={styles.root}>
-      <h2 className={styles.title}>{group}</h2>
+    <div className={styles.root}>
       <table className={styles.table}>
         <thead>
           <tr>
@@ -99,6 +98,6 @@ export function TokenSection({ group, names }: TokenSectionProps) {
           ))}
         </tbody>
       </table>
-    </section>
+    </div>
   );
 }

@@ -4,12 +4,6 @@
   gap: var(--space-8);
 }
 
-.title {
-  margin: 0;
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-semibold);
-}
-
 .table {
   border-collapse: collapse;
   background-color: var(--color-bg-panel);

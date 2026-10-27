@@ -1,0 +1,22 @@
+.root {
+  display: flex;
+  gap: var(--space-4);
+}
+
+.button {
+  height: var(--size-control-height-md);
+  padding: 0 var(--space-12);
+  border: var(--size-border-width) solid var(--color-border-control);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-bg-control);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-md);
+  cursor: pointer;
+}
+
+.button[aria-pressed='true'] {
+  border-color: var(--color-accent);
+  background-color: var(--color-accent);
+  color: var(--color-text-on-accent);
+}

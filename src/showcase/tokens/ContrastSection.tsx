@@ -3,7 +3,6 @@ import type { ContrastPairKind } from '@/themes/contrastPairs';
 import styles from './ContrastSection.module.css';
 import { getContrastRows } from './contrastRows';
 
-const TITLE = 'contrast';
 const COLUMN_TITLES = ['sample', 'kind', 'foreground', 'background', 'ratio', 'min', 'result'];
 const TEXT_SAMPLE = 'Text sample';
 const RATIO_FRACTION_DIGITS = 2;
@@ -44,8 +43,7 @@ export function ContrastSection() {
   const rows = getContrastRows(resolvedTheme);
 
   return (
-    <section className={styles.root}>
-      <h2 className={styles.title}>{TITLE}</h2>
+    <div className={styles.root}>
       <table className={styles.table}>
         <thead>
           <tr>
@@ -81,6 +79,6 @@ export function ContrastSection() {
           ))}
         </tbody>
       </table>
-    </section>
+    </div>
   );
 }
