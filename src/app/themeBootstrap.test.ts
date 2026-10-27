@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import indexHtml from '/index.html?raw';
+import showcaseHtml from '/showcase.html?raw';
 import { SYSTEM_LIGHT_THEME_QUERY } from '@/state/theme/systemTheme';
 import { THEME_ATTRIBUTE } from '@/state/theme/themeApplier';
 import { THEME_STORAGE_KEY, resolveTheme } from '@/state/theme/themeMode';
@@ -123,6 +124,10 @@ const [bootstrapScript = ''] = extractInlineScripts(indexHtml);
 describe('index.html theme bootstrap script', () => {
   it('is the only inline script in index.html', () => {
     expect(extractInlineScripts(indexHtml)).toHaveLength(1);
+  });
+
+  it('is repeated without changes as the only inline script in showcase.html', () => {
+    expect(extractInlineScripts(showcaseHtml)).toEqual([bootstrapScript]);
   });
 
   it.each(BOOTSTRAP_CASES)('applies the same theme as the store for $name', (testCase) => {
