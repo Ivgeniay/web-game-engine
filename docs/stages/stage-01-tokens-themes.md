@@ -88,17 +88,17 @@
 | `bg-selection-inactive` | #464646 | #a8a8a8 |
 | `border-separator` | #111111 | #8c8c8c |
 | `border-control` | #4a4a4a | #9a9a9a |
-| `border-focus` | #4a8fe7 | #2f6fd1 |
+| `border-focus` | #4a8fe7 | #2a63bb (было #2f6fd1, скорректировано по контрасту в 1.4) |
 | `text-primary` | #dcdcdc | #1a1a1a |
 | `text-secondary` | #a0a0a0 | #444444 |
 | `text-disabled` | #6b6b6b | #8a8a8a |
 | `text-on-accent` | #ffffff | #ffffff |
-| `accent` | #3b7bd8 | #2f6fd1 |
-| `accent-hover` | #4a8fe7 | #3d7ce0 |
-| `status-error` | #e5534b | #c4342d |
-| `status-warning` | #d9a33a | #9a6a0c |
-| `status-success` | #57a64a | #3a7f32 |
-| `status-info` | #4a8fe7 | #2f6fd1 |
+| `accent` | #3874cc (было #3b7bd8, скорректировано по контрасту в 1.4) | #2f6fd1 |
+| `accent-hover` | #3063ad (было #4a8fe7, скорректировано по контрасту в 1.4) | #285eb2 (было #3d7ce0, скорректировано по контрасту в 1.4) |
+| `status-error` | #e5534b | #bb322b (было #c4342d, скорректировано по контрасту в 1.4) |
+| `status-warning` | #d9a33a | #875d0b (было #9a6a0c, скорректировано по контрасту в 1.4) |
+| `status-success` | #57a64a | #34722d (было #3a7f32, скорректировано по контрасту в 1.4) |
+| `status-info` | #4a8fe7 | #2a63bb (было #2f6fd1, скорректировано по контрасту в 1.4) |
 | `playmode-tint` | `accent` темы, 8% | `accent` темы, 8% |
 | `axis-x` | #e0524a | #c8342c |
 | `axis-y` | #7ac043 | #4f9a1f |
