@@ -95,4 +95,10 @@ export default defineConfig([
       ],
     },
   },
+  {
+    files: ['src/app/themeBootstrap.test.ts'],
+    rules: {
+      '@typescript-eslint/no-implied-eval': 'off',
+    },
+  },
 ]);
