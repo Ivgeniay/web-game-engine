@@ -6,7 +6,6 @@ export interface ContrastPair {
   readonly foreground: string;
   readonly background: string;
   readonly kind: ContrastPairKind;
-  readonly minContrast: number;
 }
 
 const TEXT_MIN_CONTRAST = 4.5;
@@ -31,12 +30,7 @@ function combinePairs(
   kind: ContrastPairKind,
 ): ContrastPair[] {
   return foregrounds.flatMap((foreground) =>
-    backgrounds.map((background) => ({
-      foreground,
-      background,
-      kind,
-      minContrast: MIN_CONTRAST_BY_KIND[kind],
-    })),
+    backgrounds.map((background) => ({ foreground, background, kind })),
   );
 }
 

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { contrastRatio, parseColorTokens } from './contrast';
 import type { ColorTokens } from './contrast';
-import { CONTRAST_PAIRS } from './contrastPairs';
+import { CONTRAST_PAIRS, MIN_CONTRAST_BY_KIND } from './contrastPairs';
 import type { ContrastPair } from './contrastPairs';
 import darkCss from './dark.css?raw';
 import lightCss from './light.css?raw';
@@ -89,8 +89,9 @@ describe('theme token sets', () => {
 
 describe('theme contrast', () => {
   it.each(CONTRAST_CASES)(
-    '$theme.name: $foreground on $background is at least $minContrast',
-    ({ theme, foreground, background, minContrast }) => {
+    '$theme.name: $kind $foreground on $background meets the contrast threshold',
+    ({ theme, foreground, background, kind }) => {
+      const minContrast = MIN_CONTRAST_BY_KIND[kind];
       const foregroundValue = getToken(theme, foreground);
       const backgroundValue = getToken(theme, background);
       const ratio = contrastRatio(foregroundValue, backgroundValue);
