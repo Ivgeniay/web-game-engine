@@ -34,6 +34,8 @@
   --size-statusbar-height: 20px;
   --size-icon-sm: 12px;
   --size-icon-md: 16px;
+  --size-border-width: 1px;
+  --size-scrollbar: 8px;
 
   --radius-none: 0;
   --radius-sm: 2px;
