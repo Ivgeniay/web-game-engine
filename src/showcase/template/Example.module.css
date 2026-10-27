@@ -1,0 +1,13 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  overflow: hidden;
+  border: var(--size-border-width) solid var(--color-border-separator);
+  border-radius: var(--radius-md);
+}
+
+.demo {
+  padding: var(--space-16);
+  background-color: var(--color-bg-panel);
+}

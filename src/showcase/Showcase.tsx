@@ -1,31 +1,42 @@
-import { TOKEN_GROUPS, groupTokenNames, parseCustomPropertyNames } from '@/themes/customProperties';
-import darkCss from '@/themes/dark.css?raw';
-import tokensCss from '@/themes/tokens.css?raw';
-import { ContrastSection } from './ContrastSection';
+import { useLayoutEffect, useRef } from 'react';
+import { useCurrentPage } from '@/showcase/navigation/useCurrentPage';
+import { Sidebar } from '@/showcase/shell/Sidebar';
+import { ThemeSwitcher } from '@/showcase/shell/ThemeSwitcher';
+import { useDocumentTitle } from '@/showcase/shell/useDocumentTitle';
 import styles from './Showcase.module.css';
-import { ThemeSwitcher } from './ThemeSwitcher';
-import { TokenSection } from './TokenSection';
 
-const TITLE = 'showcase';
-
-const GROUPED_TOKEN_NAMES = groupTokenNames([
-  ...parseCustomPropertyNames(darkCss),
-  ...parseCustomPropertyNames(tokensCss),
-]);
+const SHOWCASE_TITLE = 'Showcase';
+const DOCUMENT_TITLE_SEPARATOR = ' · ';
 
 export function Showcase() {
+  const page = useCurrentPage();
+  const contentRef = useRef<HTMLElement>(null);
+  const PageContent = page.component;
+
+  useDocumentTitle(`${page.title}${DOCUMENT_TITLE_SEPARATOR}${SHOWCASE_TITLE}`);
+
+  useLayoutEffect(() => {
+    contentRef.current?.scrollTo({ top: 0 });
+  }, [page.id]);
+
   return (
     <div className={styles.root}>
       <header className={styles.header}>
-        <h1 className={styles.title}>{TITLE}</h1>
+        <span className={styles.title}>{SHOWCASE_TITLE}</span>
         <ThemeSwitcher />
       </header>
-      <main className={styles.content}>
-        {TOKEN_GROUPS.map((group) => (
-          <TokenSection key={group} group={group} names={GROUPED_TOKEN_NAMES[group]} />
-        ))}
-        <ContrastSection />
-      </main>
+      <div className={styles.body}>
+        <Sidebar currentPageId={page.id} />
+        <main ref={contentRef} className={styles.content}>
+          <article className={styles.page}>
+            <header className={styles.pageHeader}>
+              <h1 className={styles.pageTitle}>{page.title}</h1>
+              <p className={styles.pageDescription}>{page.description}</p>
+            </header>
+            <PageContent key={page.id} />
+          </article>
+        </main>
+      </div>
     </div>
   );
 }
