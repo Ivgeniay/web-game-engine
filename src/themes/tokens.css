@@ -25,9 +25,9 @@
   --space-16: 16px;
   --space-24: 24px;
 
-  --size-control-sm: 18px;
-  --size-control-md: 20px;
-  --size-control-lg: 24px;
+  --size-control-height-sm: 18px;
+  --size-control-height-md: 20px;
+  --size-control-height-lg: 24px;
   --size-menubar-height: 22px;
   --size-toolbar-height: 30px;
   --size-tab-height: 22px;
@@ -41,17 +41,16 @@
   --radius-lg: 4px;
   --radius-full: 9999px;
 
-  --shadow-dropdown: 0 4px 12px var(--color-shadow);
+  --shadow-popup: 0 4px 12px var(--color-shadow);
   --shadow-tooltip: 0 2px 6px var(--color-shadow);
-  --shadow-context-menu: 0 4px 12px var(--color-shadow);
 
   --z-base: 0;
   --z-docking: 100;
   --z-floating-panel: 200;
-  --z-dropdown: 300;
-  --z-tooltip: 400;
-  --z-modal: 500;
-  --z-notification: 600;
+  --z-modal: 300;
+  --z-dropdown: 400;
+  --z-notification: 500;
+  --z-tooltip: 600;
 
   --duration-fast: 80ms;
   --duration-normal: 150ms;
