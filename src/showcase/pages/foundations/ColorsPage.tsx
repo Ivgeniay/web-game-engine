@@ -27,7 +27,9 @@ export function ColorsPage() {
             <code>status-*</code> are for icons, borders and indicators only, never for text.
           </li>
           <li>
-            <code>overlay-*</code> are translucent layers for hover and pressed states.
+            <code>overlay-*</code> are translucent layers: <code>overlay-hover</code> and{' '}
+            <code>overlay-active</code> for hover and pressed states, <code>overlay-backdrop</code>{' '}
+            to dim the editor behind a dialog.
           </li>
           <li>
             <code>axis-*</code>, <code>playmode-tint</code>, <code>scrollbar-*</code> and{' '}

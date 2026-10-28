@@ -1,11 +1,13 @@
 import { cleanup, render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { createRef } from 'react';
+import type { SubmitEvent } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { frameworkIcons } from '@/icons/frameworkIcons';
 import { Button } from './Button';
 
 const LABEL = 'Apply';
+const SUBMIT_LABEL = 'Save';
 const SMALL_ICON_VIEW_BOX = '0 0 12 12';
 const MEDIUM_ICON_VIEW_BOX = '0 0 16 16';
 
@@ -89,6 +91,26 @@ describe('Button', () => {
     const icon = screen.getByRole('button').querySelector('svg');
 
     expect(icon?.getAttribute('viewBox')).toBe(viewBox);
+  });
+
+  it('submits its form only as a submit button', async () => {
+    const user = userEvent.setup();
+    const onSubmit = vi.fn((event: SubmitEvent) => {
+      event.preventDefault();
+    });
+    render(
+      <form onSubmit={onSubmit}>
+        <Button>{LABEL}</Button>
+        <Button type="submit">{SUBMIT_LABEL}</Button>
+      </form>,
+    );
+
+    await user.click(screen.getByRole('button', { name: LABEL }));
+    expect(onSubmit).not.toHaveBeenCalled();
+
+    await user.click(screen.getByRole('button', { name: SUBMIT_LABEL }));
+    expect(onSubmit).toHaveBeenCalledOnce();
+    expect(screen.getByRole('button', { name: SUBMIT_LABEL }).getAttribute('type')).toBe('submit');
   });
 
   it('passes the DOM element to ref and native attributes to the button', () => {

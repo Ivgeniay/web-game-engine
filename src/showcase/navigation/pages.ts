@@ -1,5 +1,6 @@
 import { ButtonPage } from '@/showcase/pages/components/button/ButtonPage';
 import { CheckboxPage } from '@/showcase/pages/components/checkbox/CheckboxPage';
+import { DialogPage } from '@/showcase/pages/components/dialog/DialogPage';
 import { IconButtonPage } from '@/showcase/pages/components/iconButton/IconButtonPage';
 import { KbdPage } from '@/showcase/pages/components/kbd/KbdPage';
 import { LabelPage } from '@/showcase/pages/components/label/LabelPage';
@@ -211,6 +212,13 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     title: 'Popover',
     description: 'A floating panel with any content next to its trigger.',
     component: PopoverPage,
+  },
+  {
+    id: 'components/dialog',
+    section: 'components',
+    title: 'Dialog',
+    description: 'A modal window with a title, content and actions, above a dimmed editor.',
+    component: DialogPage,
   },
   {
     id: 'components/roving-focus',

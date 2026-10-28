@@ -7,8 +7,11 @@ import type { ButtonSize, ButtonVariant } from './buttonClassName';
 
 type NativeButtonProps = Omit<ComponentPropsWithRef<'button'>, 'style' | 'type' | 'children'>;
 
+export type ButtonType = 'button' | 'submit';
+
 interface ButtonProps extends NativeButtonProps {
   readonly children: string;
+  readonly type?: ButtonType;
   readonly variant?: ButtonVariant;
   readonly size?: ButtonSize;
   readonly icon?: IconSource;
@@ -19,6 +22,7 @@ export function Button({
   variant = 'default',
   size = 'md',
   icon,
+  type = 'button',
   className,
   ref,
   tabIndex,
@@ -37,7 +41,7 @@ export function Button({
     <button
       {...buttonProps}
       {...rovingProps}
-      type="button"
+      type={type}
       className={buttonClassName({ variant, size, shape: 'text', className })}
     >
       {icon !== undefined && <Icon icon={icon} size={BUTTON_ICON_SIZES[size]} />}

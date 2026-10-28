@@ -29,6 +29,7 @@ const EXPECTED_TOKEN_NAMES: readonly string[] = [
   'bg-popup',
   'overlay-hover',
   'overlay-active',
+  'overlay-backdrop',
   'bg-selection',
   'bg-selection-inactive',
   'border-separator',

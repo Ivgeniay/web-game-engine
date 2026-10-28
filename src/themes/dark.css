@@ -11,6 +11,7 @@
 
   --color-overlay-hover: rgb(255 255 255 / 6%);
   --color-overlay-active: rgb(255 255 255 / 12%);
+  --color-overlay-backdrop: rgb(0 0 0 / 50%);
 
   --color-bg-selection: #2d5a8c;
   --color-bg-selection-inactive: #464646;
