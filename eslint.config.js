@@ -22,6 +22,25 @@ const noCommentsRule = {
   },
 };
 
+const noRawSvgRule = {
+  meta: {
+    type: 'problem',
+    schema: [],
+    messages: {
+      forbidden: 'SVG markup lives only in src/icons/. Show icons with the Icon component.',
+    },
+  },
+  create(context) {
+    return {
+      JSXOpeningElement(node) {
+        if (node.name.type === 'JSXIdentifier' && node.name.name === 'svg') {
+          context.report({ node, messageId: 'forbidden' });
+        }
+      },
+    };
+  },
+};
+
 const parentPathImportPattern = {
   regex: '(^|/)\\.\\.(/|$)',
   message: 'Use ./ within the same folder and @/ across folders.',
@@ -66,6 +85,7 @@ const uiTextSelectors = [
 const localPlugin = {
   rules: {
     'no-comments': noCommentsRule,
+    'no-raw-svg': noRawSvgRule,
   },
 };
 
@@ -126,6 +146,13 @@ export default defineConfig([
     ignores: ['src/showcase/**'],
     rules: {
       'no-restricted-syntax': ['error', ...namedExportsOnlySelectors, ...uiTextSelectors],
+    },
+  },
+  {
+    files: ['src/**/*.tsx'],
+    ignores: ['src/icons/**', 'src/ui/icon/Icon.tsx'],
+    rules: {
+      'local/no-raw-svg': 'error',
     },
   },
   {
