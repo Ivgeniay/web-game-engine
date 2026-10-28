@@ -40,6 +40,7 @@ const EXPECTED_TOKEN_NAMES: readonly string[] = [
   'text-on-accent',
   'accent',
   'accent-hover',
+  'accent-active',
   'status-error',
   'status-warning',
   'status-success',

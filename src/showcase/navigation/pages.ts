@@ -1,3 +1,5 @@
+import { ButtonPage } from '@/showcase/pages/components/button/ButtonPage';
+import { IconButtonPage } from '@/showcase/pages/components/iconButton/IconButtonPage';
 import { ColorsPage } from '@/showcase/pages/foundations/ColorsPage';
 import { ContrastPage } from '@/showcase/pages/foundations/ContrastPage';
 import { IconsPage } from '@/showcase/pages/foundations/icons/IconsPage';
@@ -94,5 +96,19 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     title: 'Contrast',
     description: 'Contrast ratios of the color pairs used in the interface, for the current theme.',
     component: ContrastPage,
+  },
+  {
+    id: 'components/button',
+    section: 'components',
+    title: 'Button',
+    description: 'A button with text and an optional icon that runs an action.',
+    component: ButtonPage,
+  },
+  {
+    id: 'components/icon-button',
+    section: 'components',
+    title: 'IconButton',
+    description: 'A square button with only an icon and a required label.',
+    component: IconButtonPage,
   },
 ];

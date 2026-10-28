@@ -21,7 +21,7 @@ const SURFACE_BACKGROUNDS = ['bg-panel', 'bg-header', 'bg-field', 'bg-popup'];
 const TEXT_ON_SURFACES = ['text-primary', 'text-secondary'];
 const CONTROL_BACKGROUNDS = ['bg-control'];
 const SELECTION_BACKGROUNDS = ['bg-selection', 'bg-selection-inactive'];
-const ACCENT_BACKGROUNDS = ['accent', 'accent-hover'];
+const ACCENT_BACKGROUNDS = ['accent', 'accent-hover', 'accent-active'];
 const STATUS_INDICATORS = ['status-error', 'status-warning', 'status-success', 'status-info'];
 const FOCUS_BORDERS = ['border-focus'];
 

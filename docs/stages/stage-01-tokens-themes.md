@@ -65,7 +65,7 @@
 | `text-secondary` | подписи, второстепенный текст |
 | `text-disabled` | недоступные элементы |
 | `text-on-accent` | текст на акцентном фоне |
-| `accent` и `accent-hover` | акцентный цвет: активные элементы, переключатели |
+| `accent`, `accent-hover` и `accent-active` | акцентный цвет: активные элементы, переключатели; наведение и нажатие |
 | `status-error`, `status-warning`, `status-success`, `status-info` | статусы: консоль, валидация |
 | `playmode-tint` | полупрозрачная подкраска интерфейса в режиме Play |
 | `axis-x`, `axis-y`, `axis-z` | цвета осей для гизмо и трансформаций |
@@ -95,6 +95,7 @@
 | `text-on-accent` | #ffffff | #ffffff |
 | `accent` | #3874cc (было #3b7bd8, скорректировано по контрасту в 1.4) | #2f6fd1 |
 | `accent-hover` | #3063ad (было #4a8fe7, скорректировано по контрасту в 1.4) | #285eb2 (было #3d7ce0, скорректировано по контрасту в 1.4) |
+| `accent-active` | #295595 (добавлен в 5.2) | #225199 (добавлен в 5.2) |
 | `status-error` | #e5534b | #bb322b (было #c4342d, скорректировано по контрасту в 1.4) |
 | `status-warning` | #d9a33a | #875d0b (было #9a6a0c, скорректировано по контрасту в 1.4) |
 | `status-success` | #57a64a | #34722d (было #3a7f32, скорректировано по контрасту в 1.4) |
@@ -129,7 +130,7 @@
 
 - `text-primary` и `text-secondary` на `bg-panel`, `bg-header`, `bg-field`, `bg-popup`;
 - `text-primary` на `bg-selection` и `bg-selection-inactive`;
-- `text-on-accent` на `accent` и `accent-hover`.
+- `text-on-accent` на `accent`, `accent-hover` и `accent-active`.
 
 Нетекстовые элементы, порог 3:1:
 

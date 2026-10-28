@@ -19,7 +19,8 @@ export function ColorsPage() {
             <code>border-*</code> are separators, control borders and the focus outline.
           </li>
           <li>
-            <code>accent</code> and <code>accent-hover</code> mark the primary action, with{' '}
+            <code>accent</code>, <code>accent-hover</code> and <code>accent-active</code> mark the
+            primary action in its normal, hovered and pressed states, with{' '}
             <code>text-on-accent</code> on top.
           </li>
           <li>

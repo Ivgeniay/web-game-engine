@@ -1,0 +1,112 @@
+.root {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-4);
+  box-sizing: border-box;
+  max-width: 100%;
+  margin: 0;
+  border: var(--size-border-width) solid transparent;
+  border-radius: var(--radius-sm);
+  background-color: transparent;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--font-line-height-compact);
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sm {
+  height: var(--size-control-height-sm);
+  font-size: var(--font-size-sm);
+}
+
+.md {
+  height: var(--size-control-height-md);
+}
+
+.lg {
+  height: var(--size-control-height-lg);
+}
+
+.text {
+  padding: 0 var(--space-8);
+}
+
+.sm.text {
+  padding: 0 var(--space-6);
+}
+
+.lg.text {
+  padding: 0 var(--space-12);
+}
+
+.square {
+  padding: 0;
+}
+
+.sm.square {
+  width: var(--size-control-height-sm);
+}
+
+.md.square {
+  width: var(--size-control-height-md);
+}
+
+.lg.square {
+  width: var(--size-control-height-lg);
+}
+
+.default {
+  border-color: var(--color-border-control);
+  background-color: var(--color-bg-control);
+}
+
+.accent {
+  border-color: var(--color-accent);
+  background-color: var(--color-accent);
+  color: var(--color-text-on-accent);
+}
+
+.default:enabled:hover,
+.flat:enabled:hover {
+  background-image: linear-gradient(var(--color-overlay-hover), var(--color-overlay-hover));
+}
+
+.default:enabled:active,
+.flat:enabled:active {
+  background-image: linear-gradient(var(--color-overlay-active), var(--color-overlay-active));
+}
+
+.accent:enabled:hover {
+  border-color: var(--color-accent-hover);
+  background-color: var(--color-accent-hover);
+}
+
+.accent:enabled:active {
+  border-color: var(--color-accent-active);
+  background-color: var(--color-accent-active);
+}
+
+.accent:focus-visible {
+  outline-offset: var(--size-border-width);
+}
+
+.root:disabled {
+  color: var(--color-text-disabled);
+  cursor: default;
+}
+
+.accent:disabled {
+  border-color: var(--color-border-control);
+  background-color: var(--color-bg-control);
+}

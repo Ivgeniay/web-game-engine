@@ -1,4 +1,5 @@
-import styles from './CopyButton.module.css';
+import { frameworkIcons } from '@/icons/frameworkIcons';
+import { Button } from '@/ui/button/Button';
 import { useCopyToClipboard } from './useCopyToClipboard';
 import type { CopyStatus } from './useCopyToClipboard';
 
@@ -16,15 +17,16 @@ export function CopyButton({ text }: CopyButtonProps) {
   const { status, copy } = useCopyToClipboard();
 
   return (
-    <button
-      className={styles.root}
-      type="button"
+    <Button
+      variant="flat"
+      size="sm"
+      icon={frameworkIcons.copy}
       aria-live="polite"
       onClick={() => {
         copy(text);
       }}
     >
       {STATUS_LABELS[status]}
-    </button>
+    </Button>
   );
 }
