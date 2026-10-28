@@ -1,0 +1,22 @@
+.line {
+  flex: none;
+  background-color: var(--color-border-separator);
+}
+
+.horizontal {
+  align-self: stretch;
+  height: var(--size-border-width);
+  margin: var(--space-4) 0;
+}
+
+.vertical {
+  align-self: center;
+  width: var(--size-border-width);
+  height: var(--size-control-height-md);
+  margin: 0 var(--space-4);
+}
+
+.flexible {
+  flex: 1 1 auto;
+  align-self: stretch;
+}

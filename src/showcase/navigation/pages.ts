@@ -1,10 +1,14 @@
 import { ButtonPage } from '@/showcase/pages/components/button/ButtonPage';
 import { CheckboxPage } from '@/showcase/pages/components/checkbox/CheckboxPage';
 import { IconButtonPage } from '@/showcase/pages/components/iconButton/IconButtonPage';
+import { KbdPage } from '@/showcase/pages/components/kbd/KbdPage';
+import { LabelPage } from '@/showcase/pages/components/label/LabelPage';
 import { RadioGroupPage } from '@/showcase/pages/components/radioGroup/RadioGroupPage';
 import { RovingFocusPage } from '@/showcase/pages/components/rovingFocus/RovingFocusPage';
+import { SeparatorPage } from '@/showcase/pages/components/separator/SeparatorPage';
 import { ToggleButtonPage } from '@/showcase/pages/components/toggleButton/ToggleButtonPage';
 import { ToggleButtonGroupPage } from '@/showcase/pages/components/toggleButtonGroup/ToggleButtonGroupPage';
+import { ToolbarPage } from '@/showcase/pages/components/toolbar/ToolbarPage';
 import { ColorsPage } from '@/showcase/pages/foundations/ColorsPage';
 import { ContrastPage } from '@/showcase/pages/foundations/ContrastPage';
 import { IconsPage } from '@/showcase/pages/foundations/icons/IconsPage';
@@ -144,6 +148,34 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     description:
       'A list of labelled options to choose one value, with arrow keys that choose at once.',
     component: RadioGroupPage,
+  },
+  {
+    id: 'components/toolbar',
+    section: 'components',
+    title: 'Toolbar',
+    description: 'A row of controls along the edge of a window that is one Tab stop.',
+    component: ToolbarPage,
+  },
+  {
+    id: 'components/separator',
+    section: 'components',
+    title: 'Separator',
+    description: 'A horizontal or vertical line between groups, or a flexible gap.',
+    component: SeparatorPage,
+  },
+  {
+    id: 'components/label',
+    section: 'components',
+    title: 'Label',
+    description: 'A text in one of the text tones, with truncation and optional selection.',
+    component: LabelPage,
+  },
+  {
+    id: 'components/kbd',
+    section: 'components',
+    title: 'Kbd',
+    description: 'A keyboard shortcut shown as text.',
+    component: KbdPage,
   },
   {
     id: 'components/roving-focus',

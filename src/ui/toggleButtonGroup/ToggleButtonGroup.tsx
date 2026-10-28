@@ -23,7 +23,7 @@ interface ToggleButtonGroupBaseProps<T extends string> {
   readonly variant?: ToggleButtonVariant;
   readonly size?: ButtonSize;
   readonly disabled?: boolean;
-  readonly className?: string;
+  readonly className?: string | undefined;
 }
 
 interface SingleSelectionProps<T extends string> extends ToggleButtonGroupBaseProps<T> {

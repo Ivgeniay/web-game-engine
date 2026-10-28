@@ -1,0 +1,8 @@
+.root {
+  border-bottom: var(--size-border-width) solid var(--color-border-separator);
+}
+
+.sceneName {
+  flex: 0 1 auto;
+  min-width: 0;
+}

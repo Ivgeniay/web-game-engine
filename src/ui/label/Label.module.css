@@ -1,0 +1,30 @@
+.root {
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-md);
+  line-height: var(--font-line-height-compact);
+}
+
+.primary {
+  color: var(--color-text-primary);
+}
+
+.secondary {
+  color: var(--color-text-secondary);
+}
+
+.disabled {
+  color: var(--color-text-disabled);
+}
+
+.truncate {
+  display: inline-block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  vertical-align: top;
+}
+
+.selectable {
+  user-select: text;
+}

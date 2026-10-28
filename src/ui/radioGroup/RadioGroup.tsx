@@ -21,7 +21,7 @@ interface RadioGroupProps<T extends string> {
   readonly onValueChange: (value: NoInfer<T>) => void;
   readonly orientation?: RadioGroupOrientation;
   readonly disabled?: boolean;
-  readonly className?: string;
+  readonly className?: string | undefined;
 }
 
 interface RadioOptionProps<T extends string> {
