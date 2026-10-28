@@ -13,8 +13,10 @@ export function createDockviewAdapter(api: DockviewApi): DockAdapter {
   return {
     getWindows: () => api.panels.flatMap(dockWindowsOf),
     getActiveWindowId: () => api.activePanel?.id ?? null,
-    addWindow({ id, windowType }) {
-      const group = api.activeGroup;
+    getGroupWindowIds: (windowId) => api.getPanel(windowId)?.group.panels.map(({ id }) => id) ?? [],
+    addWindow({ id, windowType }, besideWindow) {
+      const group =
+        (besideWindow === null ? undefined : api.getPanel(besideWindow)?.group) ?? api.activeGroup;
       const params = windowPanelParams(windowType);
 
       api.addPanel(

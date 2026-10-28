@@ -8,10 +8,17 @@ export interface DockWindow {
   readonly windowType: string;
 }
 
+export interface OpenWindowOptions {
+  readonly besideWindow?: string | undefined;
+}
+
+export type TabStep = 1 | -1;
+
 export interface DockAdapter {
   readonly getWindows: () => readonly DockWindow[];
   readonly getActiveWindowId: () => string | null;
-  readonly addWindow: (window: DockWindow) => void;
+  readonly getGroupWindowIds: (windowId: string) => readonly string[];
+  readonly addWindow: (window: DockWindow, besideWindow: string | null) => void;
   readonly activateWindow: (windowId: string) => void;
   readonly closeWindow: (windowId: string) => void;
   readonly applyLayout: (layout: LayoutNode) => void;
@@ -24,7 +31,8 @@ export interface DockAdapter {
 export interface Workspace {
   readonly attach: (adapter: DockAdapter) => Unsubscribe;
   readonly isAttached: () => boolean;
-  readonly open: (windowType: WindowType) => string | null;
+  readonly open: (windowType: WindowType, options?: OpenWindowOptions) => string | null;
+  readonly activateAdjacentTab: (step: TabStep) => boolean;
   readonly close: (windowId: string) => void;
   readonly isOpen: (windowType: WindowType) => boolean;
   readonly getWindows: () => readonly DockWindow[];
@@ -115,7 +123,7 @@ export function createWorkspace(): Workspace {
       };
     },
     isAttached: () => adapter !== null,
-    open(windowType) {
+    open(windowType, { besideWindow } = {}) {
       if (adapter === null) {
         return null;
       }
@@ -131,13 +139,32 @@ export function createWorkspace(): Workspace {
       const id = windowType.multiInstance
         ? nextInstanceId(windowType, getWindows())
         : windowType.id;
-      adapter.addWindow({ id, windowType: windowType.id });
+      adapter.addWindow({ id, windowType: windowType.id }, besideWindow ?? null);
       requestFocus(id);
 
       return id;
     },
     close(windowId) {
       adapter?.closeWindow(windowId);
+    },
+    activateAdjacentTab(step) {
+      const activeId = adapter?.getActiveWindowId() ?? null;
+
+      if (adapter === null || activeId === null) {
+        return false;
+      }
+
+      const groupIds = adapter.getGroupWindowIds(activeId);
+      const index = groupIds.indexOf(activeId);
+      const nextId = groupIds[(index + step + groupIds.length) % groupIds.length];
+
+      if (nextId === undefined || nextId === activeId) {
+        return false;
+      }
+
+      adapter.activateWindow(nextId);
+      requestFocus(nextId);
+      return true;
     },
     isOpen: (windowType) => windowsOfType(windowType).length > 0,
     getWindows,

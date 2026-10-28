@@ -34,6 +34,7 @@ import { HotkeysPage } from '@/showcase/pages/shell/hotkeys/HotkeysPage';
 import { LayoutPage } from '@/showcase/pages/shell/layout/LayoutPage';
 import { MenuBarPage } from '@/showcase/pages/shell/menuBar/MenuBarPage';
 import { ToolbarStatusBarPage } from '@/showcase/pages/shell/toolbarStatusBar/ToolbarStatusBarPage';
+import { WindowTabMenuPage } from '@/showcase/pages/shell/windowTabMenu/WindowTabMenuPage';
 import type { ShowcasePage } from './showcasePage';
 
 export const OVERVIEW_PAGE_ID = 'overview';
@@ -306,5 +307,13 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     description:
       'The default layout of the integration, saving and restoring the layout, and resetting it.',
     component: LayoutPage,
+  },
+  {
+    id: 'shell/window-tab-menu',
+    section: 'shell',
+    title: 'Window tab menu',
+    description:
+      'The menu of a tab with the items of the window and the framework, the Window menu and the docking shortcuts.',
+    component: WindowTabMenuPage,
   },
 ];

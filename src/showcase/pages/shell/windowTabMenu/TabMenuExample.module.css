@@ -1,0 +1,8 @@
+.dock {
+  height: var(--showcase-dock-example-height);
+  border: var(--size-border-width) solid var(--color-border-separator);
+}
+
+.content {
+  padding: var(--space-8);
+}

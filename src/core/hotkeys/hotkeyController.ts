@@ -1,4 +1,5 @@
 import type { CommandRegistry, HandledCommand } from '@/core/commands/commandRegistry';
+import { isKeyActivatedElement } from '@/core/keyActivatedElement';
 import { isTextInput } from '@/core/textInput';
 import { combineUnsubscribes } from '@/core/unsubscribe';
 import type { Unsubscribe } from '@/core/unsubscribe';
@@ -22,6 +23,7 @@ function contextOf(target: Element, globalBlocked: boolean): HotkeyContext {
   return {
     scopes: hotkeyScopesOf(target),
     inTextInput: isTextInput(target),
+    onKeyActivatedElement: isKeyActivatedElement(target),
     globalBlocked,
   };
 }

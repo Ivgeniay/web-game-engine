@@ -16,6 +16,8 @@ import type { LayoutStorage } from './layoutPersistence';
 import { WindowPanel } from './WindowPanel';
 import { WINDOW_PANEL_COMPONENT } from './windowPanelParams';
 import { WindowTab } from './WindowTab';
+import { registerWindowCommands } from './windowCommands';
+import { WindowTabMenu } from './WindowTabMenu';
 
 interface DockLayoutProps {
   readonly layoutStorage?: LayoutStorage | undefined;
@@ -42,6 +44,7 @@ export function DockLayout({ layoutStorage, className }: DockLayoutProps) {
   const [api, setApi] = useState<DockviewApi | null>(null);
 
   useRegistration(registerLayoutCommands, []);
+  useRegistration(registerWindowCommands, []);
 
   useEffect(() => {
     if (api === null) {
@@ -76,6 +79,7 @@ export function DockLayout({ layoutStorage, className }: DockLayoutProps) {
         theme={EDITOR_DOCK_THEME}
         components={PANEL_COMPONENTS}
         defaultTabComponent={WindowTab}
+        rightHeaderActionsComponent={WindowTabMenu}
         watermarkComponent={EmptyWorkspace}
         disableFloatingGroups
         announcements={false}

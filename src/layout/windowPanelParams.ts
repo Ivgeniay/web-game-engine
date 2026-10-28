@@ -1,3 +1,6 @@
+import type { IDockviewPanel } from 'dockview-react';
+import type { WindowTabTarget } from '@/core/windows/windowType';
+
 export const WINDOW_PANEL_COMPONENT = 'editor-window';
 
 export type WindowPanelParams = {
@@ -16,4 +19,8 @@ export function windowTypeOfParams(params: unknown): string | null {
   const { windowType } = params;
 
   return typeof windowType === 'string' ? windowType : null;
+}
+
+export function windowTabTargetOf(panel: IDockviewPanel): WindowTabTarget {
+  return { windowId: panel.id, windowType: windowTypeOfParams(panel.params) ?? panel.id };
 }

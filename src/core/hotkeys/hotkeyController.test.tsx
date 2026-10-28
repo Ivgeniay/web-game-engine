@@ -24,10 +24,13 @@ const saveScene = command('scene.save', { keys: 'Mod+KeyS' });
 const deleteObject = command('scene.delete', { keys: 'Delete' });
 const deleteInHierarchy = command('hierarchy.delete', { keys: 'Delete', scope: 'hierarchy' });
 const runLine = command('console.run', { keys: 'Mod+Enter', allowInTextInput: true });
+const maximizeWindow = command('layout.maximize', { keys: 'Shift+Space' });
+const nextRegion = command('editor.nextRegion', { keys: 'F6', allowInTextInput: true });
 
 const OUTSIDE = 'Outside';
 const IN_HIERARCHY = 'Cube';
 const FIELD = 'Name';
+const AREA = 'Scene view';
 const CTRL_S = { key: 's', code: 'KeyS', ctrlKey: true };
 const DELETE = { key: 'Delete', code: 'Delete' };
 
@@ -50,6 +53,7 @@ function renderEditor() {
       <div {...hotkeyScopeProps('hierarchy')}>
         <button type="button">{IN_HIERARCHY}</button>
         <input aria-label={FIELD} />
+        <section aria-label={AREA} tabIndex={-1} />
       </div>
     </div>,
   );
@@ -158,6 +162,34 @@ describe('startHotkeyController', () => {
 
     expect(remove).not.toHaveBeenCalled();
     expect(save).not.toHaveBeenCalled();
+    expect(run).toHaveBeenCalledTimes(1);
+  });
+
+  it('runs a function key shortcut in a field when the command allows it', () => {
+    const commands = createCommandRegistry();
+    const run = vi.fn();
+    commands.handle(nextRegion, { run });
+    start(commands);
+    renderEditor();
+
+    fireEvent.keyDown(screen.getByRole('textbox', { name: FIELD }), { key: 'F6', code: 'F6' });
+
+    expect(run).toHaveBeenCalledTimes(1);
+  });
+
+  it('leaves Shift+Space to a focused button and runs it elsewhere', () => {
+    const commands = createCommandRegistry();
+    const run = vi.fn();
+    commands.handle(maximizeWindow, { run });
+    start(commands);
+    renderEditor();
+    const shiftSpace = { key: ' ', code: 'Space', shiftKey: true };
+
+    expect(fireEvent.keyDown(button(IN_HIERARCHY), shiftSpace)).toBe(true);
+    expect(run).not.toHaveBeenCalled();
+
+    fireEvent.keyDown(screen.getByRole('region', { name: AREA }), shiftSpace);
+
     expect(run).toHaveBeenCalledTimes(1);
   });
 

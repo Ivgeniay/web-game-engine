@@ -117,6 +117,10 @@ const inspectorDelete = command('inspector.delete', { keys: 'Delete', scope: 'in
 const save = command('scene.save', { keys: 'Mod+KeyS' });
 const runLine = command('console.run', { keys: 'Mod+Enter', allowInTextInput: true });
 const clearLine = command('console.clear', { keys: 'Escape', allowInTextInput: true });
+const nextRegion = command('editor.nextRegion', { keys: 'F6', allowInTextInput: true });
+const rename = command('hierarchy.rename', { keys: 'F2' });
+const maximize = command('layout.maximize', { keys: 'Shift+Space' });
+const confirmSelection = command('list.confirm', { keys: 'Enter' });
 const keymap = createKeymap([
   globalDelete,
   hierarchyDelete,
@@ -124,9 +128,18 @@ const keymap = createKeymap([
   save,
   runLine,
   clearLine,
+  nextRegion,
+  rename,
+  maximize,
+  confirmSelection,
 ]);
 
-const NOWHERE: HotkeyContext = { scopes: [], inTextInput: false, globalBlocked: false };
+const NOWHERE: HotkeyContext = {
+  scopes: [],
+  inTextInput: false,
+  onKeyActivatedElement: false,
+  globalBlocked: false,
+};
 
 function commandsFor(event: HotkeyKeyEvent, context: Partial<HotkeyContext>) {
   return findHotkeyBindings(keymap, event, { ...NOWHERE, ...context }, 'other').map(
@@ -168,6 +181,22 @@ describe('findHotkeyBindings', () => {
   it('never allows shortcuts without Mod or Alt in a text input', () => {
     expect(commandsFor(press('Escape', 'Escape'), { inTextInput: true })).toEqual([]);
     expect(commandsFor(press('Escape', 'Escape'), {})).toEqual([clearLine]);
+  });
+
+  it('allows a function key without modifiers in a text input only when the command allows it', () => {
+    expect(commandsFor(press('F6', 'F6'), { inTextInput: true })).toEqual([nextRegion]);
+    expect(commandsFor(press('F2', 'F2'), { inTextInput: true })).toEqual([]);
+  });
+
+  it('leaves Space and Enter to an element that is activated by them', () => {
+    const shiftSpace = press(' ', 'Space', { shiftKey: true });
+    const enter = press('Enter', 'Enter');
+
+    expect(commandsFor(shiftSpace, { onKeyActivatedElement: true })).toEqual([]);
+    expect(commandsFor(enter, { onKeyActivatedElement: true })).toEqual([]);
+    expect(commandsFor(shiftSpace, {})).toEqual([maximize]);
+    expect(commandsFor(enter, {})).toEqual([confirmSelection]);
+    expect(commandsFor(DELETE, { onKeyActivatedElement: true })).toEqual([globalDelete]);
   });
 
   it('finds nothing for an unbound key', () => {

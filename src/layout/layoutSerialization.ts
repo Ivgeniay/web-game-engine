@@ -19,6 +19,7 @@ type SerializedGridNode = SerializedDockview['grid']['root'];
 
 const REFERENCE_SIZE = 1000;
 const GROUP_ID_PREFIX = 'group-';
+const FIRST_GROUP_NUMBER = 1;
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -170,18 +171,16 @@ export function serializeLayout(layout: LayoutNode): SerializedDockview | null {
   }
 
   const split = root.kind === 'split' ? root : null;
+  const data = serializeChildren(split?.children ?? [root], REFERENCE_SIZE, REFERENCE_SIZE);
 
   return {
     grid: {
-      root: {
-        type: 'branch',
-        data: serializeChildren(split?.children ?? [root], REFERENCE_SIZE, REFERENCE_SIZE),
-        size: REFERENCE_SIZE,
-      },
+      root: { type: 'branch', data, size: REFERENCE_SIZE },
       width: REFERENCE_SIZE,
       height: REFERENCE_SIZE,
       orientation: split === null ? Orientation.HORIZONTAL : orientationOf(split.direction),
     },
     panels,
+    activeGroup: `${GROUP_ID_PREFIX}${String(FIRST_GROUP_NUMBER)}`,
   };
 }

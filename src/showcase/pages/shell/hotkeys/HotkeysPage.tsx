@@ -105,7 +105,14 @@ export function HotkeysPage() {
             While the focus is in a text field, a text area, a select or editable content, shortcuts
             without Mod or Alt never fire: the keys belong to typing. Shortcuts with Mod or Alt fire
             only when the command sets <code>allowInTextInput</code>, like Run the line in the
-            example.
+            example. Function keys F1 to F12 type nothing, so with <code>allowInTextInput</code>{' '}
+            they fire in a field even without modifiers: F6 moves to the next area from a field.
+          </li>
+          <li>
+            Shortcuts on Space and Enter, such as Shift+Space, do not fire while the focus is on an
+            element that these keys activate: a button, a checkbox, a radio button, a link or a menu
+            item. The key stays with the element, so Shift+Space on a focused button does not
+            maximize the window.
           </li>
           <li>
             While global shortcuts are blocked, only the scopes around the focus work. The editor
@@ -117,6 +124,20 @@ export function HotkeysPage() {
             alone, and so are characters typed with AltGr and keys pressed during text composition.
           </li>
         </ul>
+      </PageSection>
+      <PageSection title="Shortcuts of the framework">
+        <ul>
+          <li>Shift+Space maximizes the active window and restores the layout.</li>
+          <li>Alt+PageDown and Alt+PageUp switch to the next and previous tab of the group.</li>
+          <li>
+            F6 and Shift+F6 move the focus between the menu, the toolbar, the active window and the
+            status bar. They work in fields too.
+          </li>
+        </ul>
+        <p>
+          Ctrl+Tab and Ctrl+PageUp/PageDown, which other editors use for tabs, are taken by the
+          browser and cannot be used.
+        </p>
       </PageSection>
       <PageSection title="Starting the controller">
         <p>

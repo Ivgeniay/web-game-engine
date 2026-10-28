@@ -1,0 +1,9 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  border: var(--size-border-width) solid var(--color-border-separator);
+}
+
+.dock {
+  height: var(--showcase-dock-example-height);
+}

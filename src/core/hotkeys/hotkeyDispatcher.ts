@@ -15,11 +15,14 @@ export interface HotkeyKeyEvent {
 export interface HotkeyContext {
   readonly scopes: readonly string[];
   readonly inTextInput: boolean;
+  readonly onKeyActivatedElement: boolean;
   readonly globalBlocked: boolean;
 }
 
 const LETTER_CODE_PREFIX = 'Key';
 const LATIN_LETTER_PATTERN = /^[a-z]$/i;
+const FUNCTION_KEY_PATTERN = /^F\d+$/;
+const ELEMENT_ACTIVATION_CODES: ReadonlySet<string> = new Set(['Space', 'Enter']);
 
 function modifiersMatch(
   event: HotkeyKeyEvent,
@@ -55,14 +58,18 @@ export function matchesShortcut(
   return modifiersMatch(event, shortcut, platform) && keyMatches(event, shortcut);
 }
 
-function worksInContext(binding: KeyBinding, inTextInput: boolean): boolean {
-  if (!inTextInput) {
-    return true;
+function worksInTextInput(binding: KeyBinding): boolean {
+  const { mod, alt, code } = binding.shortcut;
+
+  return binding.allowInTextInput && (mod || alt || FUNCTION_KEY_PATTERN.test(code));
+}
+
+function worksInContext(binding: KeyBinding, context: HotkeyContext): boolean {
+  if (context.onKeyActivatedElement && ELEMENT_ACTIVATION_CODES.has(binding.shortcut.code)) {
+    return false;
   }
 
-  const { mod, alt } = binding.shortcut;
-
-  return binding.allowInTextInput && (mod || alt);
+  return !context.inTextInput || worksInTextInput(binding);
 }
 
 export function findHotkeyBindings(
@@ -76,8 +83,7 @@ export function findHotkeyBindings(
   return scopes.flatMap((scope) =>
     (keymap.get(scope) ?? []).filter(
       (binding) =>
-        worksInContext(binding, context.inTextInput) &&
-        matchesShortcut(event, binding.shortcut, platform),
+        worksInContext(binding, context) && matchesShortcut(event, binding.shortcut, platform),
     ),
   );
 }

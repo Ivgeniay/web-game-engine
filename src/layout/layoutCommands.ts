@@ -17,6 +17,7 @@ export const toggleMaximizeCommand = defineCommand({
   id: 'layout.toggleMaximize',
   label: messageRef(layoutMessages, 'maximize'),
   icon: frameworkIcons.maximize,
+  shortcut: { keys: 'Shift+Space' },
 });
 
 export function registerLayoutCommands({

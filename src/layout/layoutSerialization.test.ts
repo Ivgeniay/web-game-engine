@@ -46,6 +46,14 @@ describe('serializeLayout', () => {
     });
   });
 
+  it('makes the first group active', () => {
+    const serialized = serializeLayout(
+      splitLayout('row', [tabsLayout([hierarchyWindow]), tabsLayout([sceneWindow])]),
+    );
+
+    expect(serialized?.activeGroup).toBe('group-1');
+  });
+
   it('describes every window as a panel with its type in the parameters', () => {
     const serialized = serializeLayout(tabsLayout([sceneWindow]));
 

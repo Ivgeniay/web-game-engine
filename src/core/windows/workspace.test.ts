@@ -33,6 +33,7 @@ interface FakeDock extends DockAdapter {
   readonly emit: () => void;
   readonly getAppliedLayout: () => LayoutNode | null;
   readonly getMaximizedId: () => string | null;
+  readonly getAddedBeside: () => string | null;
 }
 
 function createFakeDock(initial: readonly DockWindow[] = []): FakeDock {
@@ -40,6 +41,7 @@ function createFakeDock(initial: readonly DockWindow[] = []): FakeDock {
   let activeId: string | null = windows.at(-1)?.id ?? null;
   let appliedLayout: LayoutNode | null = null;
   let maximizedId: string | null = null;
+  let addedBeside: string | null = null;
   const listeners = new Set<() => void>();
 
   function emit(): void {
@@ -51,7 +53,9 @@ function createFakeDock(initial: readonly DockWindow[] = []): FakeDock {
   return {
     getWindows: () => windows,
     getActiveWindowId: () => activeId,
-    addWindow(window) {
+    getGroupWindowIds: () => windows.map(({ id }) => id),
+    addWindow(window, besideWindow) {
+      addedBeside = besideWindow;
       windows = [...windows, window];
       activeId = window.id;
       emit();
@@ -88,6 +92,7 @@ function createFakeDock(initial: readonly DockWindow[] = []): FakeDock {
     emit,
     getAppliedLayout: () => appliedLayout,
     getMaximizedId: () => maximizedId,
+    getAddedBeside: () => addedBeside,
   };
 }
 
@@ -226,5 +231,38 @@ describe('createWorkspace', () => {
     workspace.restore();
 
     expect(workspace.isMaximized()).toBe(false);
+  });
+
+  it('opens a window beside another one', () => {
+    const workspace = createWorkspace();
+    const dock = createFakeDock([{ id: 'test.scene', windowType: 'test.scene' }]);
+    workspace.attach(dock);
+    workspace.open(inspectorWindow, { besideWindow: 'test.scene' });
+
+    expect(dock.getAddedBeside()).toBe('test.scene');
+  });
+
+  it('activates the neighbouring tab of the group in a circle and focuses it', () => {
+    const workspace = createWorkspace();
+    workspace.attach(
+      createFakeDock([
+        { id: 'test.scene', windowType: 'test.scene' },
+        { id: 'test.inspector:1', windowType: 'test.inspector' },
+        { id: 'test.inspector:2', windowType: 'test.inspector' },
+      ]),
+    );
+
+    expect(workspace.activateAdjacentTab(1)).toBe(true);
+    expect(workspace.getActiveWindow()?.id).toBe('test.scene');
+    expect(workspace.takeFocusRequest('test.scene')).toBe(true);
+    expect(workspace.activateAdjacentTab(-1)).toBe(true);
+    expect(workspace.getActiveWindow()?.id).toBe('test.inspector:2');
+  });
+
+  it('does not switch tabs in a group of one window', () => {
+    const workspace = createWorkspace();
+    workspace.attach(createFakeDock([{ id: 'test.scene', windowType: 'test.scene' }]));
+
+    expect(workspace.activateAdjacentTab(1)).toBe(false);
   });
 });

@@ -15,7 +15,7 @@ export interface MenuBuildContext<TTarget> {
 
 const RUN_AFTER_MENU_CLOSE_DELAY_MS = 0;
 
-function runAfterMenuCloses(action: () => void): void {
+export function runAfterMenuCloses(action: () => void): void {
   setTimeout(action, RUN_AFTER_MENU_CLOSE_DELAY_MS);
 }
 
