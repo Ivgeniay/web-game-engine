@@ -9,8 +9,10 @@ import { PopoverPage } from '@/showcase/pages/components/popover/PopoverPage';
 import { PopupLayerPage } from '@/showcase/pages/components/popupLayer/PopupLayerPage';
 import { RadioGroupPage } from '@/showcase/pages/components/radioGroup/RadioGroupPage';
 import { RovingFocusPage } from '@/showcase/pages/components/rovingFocus/RovingFocusPage';
+import { SearchFieldPage } from '@/showcase/pages/components/searchField/SearchFieldPage';
 import { SelectPage } from '@/showcase/pages/components/select/SelectPage';
 import { SeparatorPage } from '@/showcase/pages/components/separator/SeparatorPage';
+import { TextFieldPage } from '@/showcase/pages/components/textField/TextFieldPage';
 import { ToggleButtonPage } from '@/showcase/pages/components/toggleButton/ToggleButtonPage';
 import { ToggleButtonGroupPage } from '@/showcase/pages/components/toggleButtonGroup/ToggleButtonGroupPage';
 import { TooltipPage } from '@/showcase/pages/components/tooltip/TooltipPage';
@@ -172,6 +174,20 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     description:
       'A list of labelled options to choose one value, with arrow keys that choose at once.',
     component: RadioGroupPage,
+  },
+  {
+    id: 'components/text-field',
+    section: 'components',
+    title: 'TextField',
+    description: 'A one-line text input that commits on Enter or blur and reverts on Esc.',
+    component: TextFieldPage,
+  },
+  {
+    id: 'components/search-field',
+    section: 'components',
+    title: 'SearchField',
+    description: 'A query input that filters a window, with a clear button.',
+    component: SearchFieldPage,
   },
   {
     id: 'components/toolbar',

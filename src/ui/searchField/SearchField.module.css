@@ -1,0 +1,22 @@
+.clearable {
+  padding-inline-end: 0;
+}
+
+.searchIcon {
+  display: flex;
+  flex: none;
+  color: var(--color-text-secondary);
+}
+
+.input::-webkit-search-cancel-button,
+.input::-webkit-search-decoration {
+  appearance: none;
+}
+
+.input {
+  appearance: none;
+}
+
+.clear {
+  flex: none;
+}
