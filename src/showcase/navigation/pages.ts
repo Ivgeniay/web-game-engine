@@ -26,6 +26,7 @@ import { SpacingPage } from '@/showcase/pages/foundations/SpacingPage';
 import { ThemesPage } from '@/showcase/pages/foundations/themes/ThemesPage';
 import { TypographyPage } from '@/showcase/pages/foundations/TypographyPage';
 import { OverviewPage } from '@/showcase/pages/overview/OverviewPage';
+import { CommandsPage } from '@/showcase/pages/shell/commands/CommandsPage';
 import type { ShowcasePage } from './showcasePage';
 
 export const OVERVIEW_PAGE_ID = 'overview';
@@ -235,5 +236,13 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     description:
       'The shared layer for tooltips, menus, lists, popovers and dialogs: z-index and position.',
     component: PopupLayerPage,
+  },
+  {
+    id: 'shell/commands',
+    section: 'shell',
+    title: 'Commands',
+    description:
+      'Command definitions and handlers, the integration entry point and registration for the lifetime of a component.',
+    component: CommandsPage,
   },
 ];

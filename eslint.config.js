@@ -118,6 +118,7 @@ export default defineConfig([
     rules: {
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/no-non-null-assertion': 'error',
+      'react-hooks/exhaustive-deps': ['warn', { additionalHooks: '^useRegistration$' }],
       '@typescript-eslint/ban-ts-comment': [
         'error',
         {
