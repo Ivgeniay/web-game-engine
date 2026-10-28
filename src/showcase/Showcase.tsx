@@ -1,5 +1,6 @@
 import { useLayoutEffect, useRef } from 'react';
 import { useCurrentPage } from '@/showcase/navigation/useCurrentPage';
+import { LanguageSwitcher } from '@/showcase/shell/LanguageSwitcher';
 import { Sidebar } from '@/showcase/shell/Sidebar';
 import { ThemeSwitcher } from '@/showcase/shell/ThemeSwitcher';
 import { useDocumentTitle } from '@/showcase/shell/useDocumentTitle';
@@ -23,7 +24,10 @@ export function Showcase() {
     <div className={styles.root}>
       <header className={styles.header}>
         <span className={styles.title}>{SHOWCASE_TITLE}</span>
-        <ThemeSwitcher />
+        <div className={styles.controls}>
+          <ThemeSwitcher />
+          <LanguageSwitcher />
+        </div>
       </header>
       <div className={styles.body}>
         <Sidebar currentPageId={page.id} />

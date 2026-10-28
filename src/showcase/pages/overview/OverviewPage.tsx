@@ -35,7 +35,7 @@ export function OverviewPage() {
             <code>showcase.html#/foundations/colors</code>. Links can be shared, and the browser
             back and forward buttons work.
           </li>
-          <li>The theme switcher in the header applies to every page.</li>
+          <li>The theme and language switchers in the header apply to every page.</li>
           <li>
             The showcase runs only in <code>pnpm dev</code> and is not part of the production build.
           </li>

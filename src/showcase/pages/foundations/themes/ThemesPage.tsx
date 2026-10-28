@@ -29,8 +29,8 @@ export function ThemesPage() {
           The mode is stored in <code>localStorage</code> under the <code>editor-theme-mode</code>{' '}
           key. The resolved theme, <code>dark</code> or <code>light</code>, is written to the{' '}
           <code>data-theme</code> attribute of the root element. An inline script in the HTML file
-          sets it before the first paint, and <code>startThemeController()</code> keeps it in sync
-          afterwards. The editor and the showcase entry points already call it.
+          sets it before the first paint, and <code>startThemeController(stores.theme)</code> keeps
+          it in sync afterwards. The editor and the showcase entry points already call it.
         </p>
       </PageSection>
       <PageSection title="Reading the current theme">
@@ -61,8 +61,11 @@ export function ThemesPage() {
           <ThemeModeExample />
         </ExampleBlock>
         <p>
-          Outside React, use <code>themeStore</code> from <code>@/state/theme/theme</code>:{' '}
-          <code>getState()</code> reads the state and <code>subscribe()</code> listens to changes.
+          There is no global theme store. The entry point creates the stores with{' '}
+          <code>createBrowserStores()</code> and passes them to <code>StoresProvider</code>, where{' '}
+          <code>useThemeStore</code> finds them. Code outside React receives the store as a
+          parameter: <code>getState()</code> reads the state and <code>subscribe()</code> listens to
+          changes.
         </p>
       </PageSection>
       <PageSection title="Styling with tokens">

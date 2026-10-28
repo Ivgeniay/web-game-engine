@@ -12,6 +12,11 @@ export const DEFAULT_LANGUAGE: Language = 'en';
 
 export const LANGUAGE_STORAGE_KEY = 'editor-language';
 
+export const LANGUAGE_NAMES: Readonly<Record<Language, string>> = {
+  en: 'English',
+  ru: 'Русский',
+};
+
 export const PLURAL_CATEGORIES = {
   en: ['one', 'other'],
   ru: ['one', 'few', 'many', 'other'],

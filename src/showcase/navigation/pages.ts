@@ -1,5 +1,6 @@
 import { ColorsPage } from '@/showcase/pages/foundations/ColorsPage';
 import { ContrastPage } from '@/showcase/pages/foundations/ContrastPage';
+import { LocalizationPage } from '@/showcase/pages/foundations/localization/LocalizationPage';
 import { LayersAndMotionPage } from '@/showcase/pages/foundations/LayersAndMotionPage';
 import { RadiusAndShadowsPage } from '@/showcase/pages/foundations/RadiusAndShadowsPage';
 import { SizesPage } from '@/showcase/pages/foundations/SizesPage';
@@ -27,6 +28,14 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     description:
       'Theme modes, reading and changing the theme from code, and styling components with tokens.',
     component: ThemesPage,
+  },
+  {
+    id: 'foundations/localization',
+    section: 'foundations',
+    title: 'Localization',
+    description:
+      'Languages, dictionaries, substitutions, plural forms and message references for interface texts.',
+    component: LocalizationPage,
   },
   {
     id: 'foundations/colors',
