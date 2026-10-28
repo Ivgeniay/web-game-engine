@@ -12,12 +12,7 @@ import {
   startLayoutSaving,
 } from './layoutPersistence';
 import type { LayoutStorage } from './layoutPersistence';
-import {
-  LAYOUT_STORAGE_KEY,
-  isStoredLayout,
-  serializeLayout,
-  storedLayoutOf,
-} from './layoutSerialization';
+import { isStoredLayout, serializeLayout, storedLayoutOf } from './layoutSerialization';
 import type { StoredLayout } from './layoutSerialization';
 import { createTestDock, TEST_DOCK_WIDTH } from './testDock';
 
@@ -38,6 +33,8 @@ const hierarchyWindow = testWindow('test.hierarchy');
 const sceneWindow = testWindow('test.scene');
 const gameWindow = testWindow('test.game');
 const removedWindow = testWindow('test.removed');
+
+const TEST_LAYOUT_KEY = 'test-layout';
 
 const KNOWN_WINDOW_TYPES = new Set(['test.hierarchy', 'test.scene', 'test.game']);
 
@@ -68,7 +65,7 @@ function createMemoryStorage(): KeyValueStorage {
 function createTestLayoutStorage(): LayoutStorage {
   const memory = createMemoryStorage();
 
-  return createLayoutStorage(() => memory);
+  return createLayoutStorage(() => memory, TEST_LAYOUT_KEY);
 }
 
 function storedOf(layout: Parameters<typeof serializeLayout>[0]): StoredLayout {
@@ -233,7 +230,7 @@ describe('startLayoutSaving', () => {
   it('round-trips the layout through the browser storage key', async () => {
     vi.useFakeTimers();
     const memory = createMemoryStorage();
-    const storage = createLayoutStorage(() => memory);
+    const storage = createLayoutStorage(() => memory, TEST_LAYOUT_KEY);
     const first = createTestDock();
     const stop = startSaving(first, storage);
     restore(first, null);
@@ -242,7 +239,7 @@ describe('startLayoutSaving', () => {
     stop();
     const second = createTestDock();
 
-    expect(memory.getItem(LAYOUT_STORAGE_KEY)).not.toBeNull();
+    expect(memory.getItem(TEST_LAYOUT_KEY)).not.toBeNull();
     expect(restore(second, storage.load())).toBe('stored');
     expect(panelIds(second)).toEqual(['test.hierarchy', 'test.scene']);
   });

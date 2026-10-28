@@ -1,4 +1,5 @@
 import { defineCommand } from '@/core/commands/command';
+import { commonMessages } from '@/core/i18n/commonMessages';
 import { messageRef } from '@/core/i18n/translate';
 import { combineUnsubscribes } from '@/core/unsubscribe';
 import type { Unsubscribe } from '@/core/unsubscribe';
@@ -22,7 +23,7 @@ export const previousTabCommand = defineCommand({
 
 export const maximizeTabCommand = defineCommand<WindowTabTarget>({
   id: 'windowTab.maximize',
-  label: messageRef(layoutMessages, 'maximize'),
+  label: messageRef(commonMessages, 'maximize'),
   icon: frameworkIcons.maximize,
 });
 

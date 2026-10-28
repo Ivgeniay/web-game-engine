@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:," />
+    <title>Demo scene</title>
+    <script>
+      (function () {
+        var theme = 'dark';
+        try {
+          var mode = window.localStorage.getItem('editor-theme-mode');
+          if (mode === 'light') {
+            theme = 'light';
+          } else if (
+            mode === 'system' &&
+            window.matchMedia('(prefers-color-scheme: light)').matches
+          ) {
+            theme = 'light';
+          }
+        } catch {
+          theme = 'dark';
+        }
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/demo/main.tsx"></script>
+  </body>
+</html>

@@ -15,7 +15,7 @@ export const resetLayoutCommand = defineCommand({
 
 export const toggleMaximizeCommand = defineCommand({
   id: 'layout.toggleMaximize',
-  label: messageRef(layoutMessages, 'maximize'),
+  label: messageRef(commonMessages, 'maximize'),
   icon: frameworkIcons.maximize,
   shortcut: { keys: 'Shift+Space' },
 });

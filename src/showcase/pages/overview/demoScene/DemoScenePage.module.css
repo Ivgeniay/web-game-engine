@@ -1,0 +1,8 @@
+.link a {
+  color: var(--color-text-primary);
+  text-decoration: underline;
+}
+
+.link a:focus-visible {
+  outline: var(--size-border-width) solid var(--color-border-focus);
+}

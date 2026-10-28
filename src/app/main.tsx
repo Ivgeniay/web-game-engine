@@ -17,6 +17,7 @@ import { App } from './App';
 import '@/themes/global.css';
 
 const ROOT_ELEMENT_ID = 'root';
+const LAYOUT_STORAGE_KEY = 'editor-layout';
 
 const rootElement = document.getElementById(ROOT_ELEMENT_ID);
 
@@ -27,7 +28,7 @@ if (rootElement === null) {
 const stores = createBrowserStores();
 const platform = detectPlatform(navigator);
 const registries = createEditorRegistries();
-const layoutStorage = createLayoutStorage(browserStorage);
+const layoutStorage = createLayoutStorage(browserStorage, LAYOUT_STORAGE_KEY);
 
 startThemeController(stores.theme);
 startLanguageController(stores.language, document.documentElement);

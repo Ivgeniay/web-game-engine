@@ -33,9 +33,13 @@ export function LayoutPage() {
       </PageSection>
       <PageSection title="Saving and restoring">
         <p>
-          <code>DockLayout</code> takes a <code>layoutStorage</code>. The entry point of the editor
-          creates it with <code>createLayoutStorage(browserStorage)</code> under the key{' '}
-          <code>editor-layout</code>; the example below uses a key of its own. Without a storage the
+          <code>DockLayout</code> takes a <code>layoutStorage</code>, created with{' '}
+          <code>createLayoutStorage(browserStorage, key)</code>. The key is chosen by the entry
+          point, and every application on the same address has its own key: the editor uses{' '}
+          <code>editor-layout</code>, the demo scene <code>demo-layout</code>, the example below a
+          key of its own. Otherwise one application would restore, and then overwrite, the layout of
+          another one with windows it does not know. The theme and the language, on the contrary,
+          are shared by all applications on the same address on purpose. Without a storage the
           layout lives only until the page is reloaded.
         </p>
         <ul>

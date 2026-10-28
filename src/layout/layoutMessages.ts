@@ -4,7 +4,6 @@ export const layoutMessages = defineMessages({
   en: {
     noOpenWindows: 'No open windows',
     windowUnavailable: 'This window is not available',
-    maximize: 'Maximize',
     closeTab: 'Close tab',
     addTab: 'Add tab',
     nextTab: 'Next tab',
@@ -17,7 +16,6 @@ export const layoutMessages = defineMessages({
   ru: {
     noOpenWindows: 'Нет открытых окон',
     windowUnavailable: 'Это окно недоступно',
-    maximize: 'Развернуть',
     closeTab: 'Закрыть вкладку',
     addTab: 'Добавить вкладку',
     nextTab: 'Следующая вкладка',

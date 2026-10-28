@@ -166,7 +166,10 @@ export function HotkeysPage() {
           <li>
             A default shortcut that the browser or the operating system keeps for itself. Such a
             shortcut would work on some machines and silently fail on others. The list is{' '}
-            <code>RESERVED_SHORTCUTS</code> in <code>@/core/hotkeys/reservedShortcuts</code>:
+            <code>RESERVED_SHORTCUTS</code> in <code>@/core/hotkeys/reservedShortcuts</code>. It
+            follows the reserved commands in the sources of Chromium and Firefox and the known
+            behavior of Safari. Mod+P is not reserved: all three browsers let the page take it from
+            printing.
           </li>
         </ul>
         {PLATFORMS.map((platform) => (

@@ -12,8 +12,18 @@ import type { MenuItem } from '@/ui/menu/menuItems';
 import { layoutMessages } from './layoutMessages';
 
 const NO_ITEMS: readonly MenuItem[] = [];
+const WINDOW_ITEM_ID_PREFIX = 'window:';
+const FRAMEWORK_ITEM_ID_PREFIX = 'framework:';
 const ADD_TAB_ID = 'add-tab';
 const SEPARATOR_ID_PREFIX = 'window-tab-separator-';
+
+function withIdPrefix(items: readonly MenuItem[], prefix: string): MenuItem[] {
+  return items.map((item) =>
+    item.kind === 'submenu'
+      ? { ...item, id: `${prefix}${item.id}`, items: withIdPrefix(item.items, prefix) }
+      : { ...item, id: `${prefix}${item.id}` },
+  );
+}
 
 function joinSections(sections: readonly (readonly MenuItem[])[]): MenuItem[] {
   return sections
@@ -79,5 +89,8 @@ export function useWindowTabMenuItems(target: WindowTabTarget | null): readonly 
     items: windowTypes.map(addTabItem),
   };
 
-  return joinSections([windowItems, [...frameworkItems, addTab]]);
+  return joinSections([
+    withIdPrefix(windowItems, WINDOW_ITEM_ID_PREFIX),
+    withIdPrefix([...frameworkItems, addTab], FRAMEWORK_ITEM_ID_PREFIX),
+  ]);
 }

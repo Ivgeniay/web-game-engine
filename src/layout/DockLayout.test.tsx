@@ -57,6 +57,7 @@ const frameSelected = defineCommand({
 });
 
 const OUTSIDE_LABEL = 'outside';
+const TEST_LAYOUT_KEY = 'test-layout';
 
 class FakeResizeObserver {
   observe(): void {}
@@ -87,12 +88,15 @@ function renderDock(editor: TestEditor, layoutStorage?: LayoutStorage) {
 function createMemoryLayoutStorage(): LayoutStorage {
   const entries = new Map<string, string>();
 
-  return createLayoutStorage(() => ({
-    getItem: (key) => entries.get(key) ?? null,
-    setItem: (key, value) => {
-      entries.set(key, value);
-    },
-  }));
+  return createLayoutStorage(
+    () => ({
+      getItem: (key) => entries.get(key) ?? null,
+      setItem: (key, value) => {
+        entries.set(key, value);
+      },
+    }),
+    TEST_LAYOUT_KEY,
+  );
 }
 
 function windowIds(editor: TestEditor): string[] {

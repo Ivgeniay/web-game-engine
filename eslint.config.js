@@ -57,6 +57,22 @@ const showcaseImportPatterns = [
   },
 ];
 
+const integrationImportPattern = {
+  regex: '^@/(engine|demo)(/|$)',
+  message: 'Framework code does not import the integration in src/engine and src/demo.',
+};
+
+const showcaseIntegrationImportPatterns = [
+  {
+    regex: '^@/engine(/|$)',
+    message: 'The showcase does not import the engine integration.',
+  },
+  {
+    regex: '^@/demo(/|$)(?!.*\\?raw$)',
+    message: 'The showcase imports the demo integration only as source text with ?raw.',
+  },
+];
+
 const coreImportPatterns = [
   {
     regex: '^@/(ui|state|shell)(/|$)',
@@ -150,12 +166,35 @@ export default defineConfig([
     },
   },
   {
+    files: ['src/**/*.{ts,tsx}'],
+    ignores: ['src/engine/**', 'src/demo/**', 'src/showcase/**'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [parentPathImportPattern, integrationImportPattern],
+        },
+      ],
+    },
+  },
+  {
+    files: ['src/showcase/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [parentPathImportPattern, ...showcaseIntegrationImportPatterns],
+        },
+      ],
+    },
+  },
+  {
     files: ['src/core/**/*.{ts,tsx}'],
     rules: {
       'no-restricted-imports': [
         'error',
         {
-          patterns: [parentPathImportPattern, ...coreImportPatterns],
+          patterns: [parentPathImportPattern, integrationImportPattern, ...coreImportPatterns],
         },
       ],
     },
@@ -180,7 +219,7 @@ export default defineConfig([
       'no-restricted-imports': [
         'error',
         {
-          patterns: [parentPathImportPattern, ...showcaseImportPatterns],
+          patterns: [parentPathImportPattern, integrationImportPattern, ...showcaseImportPatterns],
         },
       ],
     },

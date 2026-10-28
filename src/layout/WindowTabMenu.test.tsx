@@ -61,6 +61,7 @@ beforeEach(() => {
 afterEach(() => {
   cleanup();
   vi.unstubAllGlobals();
+  vi.restoreAllMocks();
 });
 
 async function renderEditor(): Promise<TestEditor> {
@@ -127,14 +128,15 @@ describe('WindowTabMenu', () => {
     expect(await screen.findByRole('menuitem', { name: 'Close tab' })).toBeDefined();
   });
 
-  it('shows the items of the window before the framework items', async () => {
+  it('shows the items of the window before the framework items, even on the same path', async () => {
     const user = userEvent.setup();
     const editor = await renderEditor();
     const { commands, contextMenus, workspace } = editor.registries;
     const lock = vi.fn();
+    const consoleError = vi.spyOn(console, 'error');
     commands.handle(lockInspector, { run: lock });
     contextMenus.registerItem(inspectorWindow.tabMenu, {
-      path: 'lock',
+      path: 'maximize',
       command: lockInspector,
       group: 0,
       order: 0,
@@ -147,6 +149,7 @@ describe('WindowTabMenu', () => {
     await screen.findByRole('menuitem', { name: 'Lock' });
 
     expect(menuItemNames()).toEqual(['Lock', 'Maximize', 'Close tab', 'Add tab']);
+    expect(consoleError).not.toHaveBeenCalled();
 
     await user.click(screen.getByRole('menuitem', { name: 'Lock' }));
 

@@ -20,7 +20,8 @@ export function OverviewPage() {
           <code>src/engine/</code>, talks to the engine through interfaces from{' '}
           <code>src/contracts/</code> and extends the framework through registries, never by editing
           framework files. The framework never imports from <code>src/engine/</code>, so framework
-          updates arrive through git without conflicts.
+          updates arrive through git without conflicts. A demonstration integration with mock data
+          lives next to it in <code>src/demo/</code>; the Demo scene page shows how it is built.
         </p>
       </PageSection>
       <PageSection title="How the showcase is organized">

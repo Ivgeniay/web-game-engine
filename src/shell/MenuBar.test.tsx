@@ -255,6 +255,22 @@ describe('MenuBar', () => {
     expect(document.activeElement).toBe(screen.getByRole('button', { name: OUTSIDE }));
   });
 
+  it('returns with Escape to the element focused before the focus moved to the bar', async () => {
+    const user = userEvent.setup();
+    const editor = setUp();
+    act(() => {
+      handleAll(editor);
+    });
+    screen.getByRole('button', { name: OUTSIDE }).focus();
+    act(() => {
+      trigger('File').focus();
+    });
+
+    await user.keyboard('{Escape}');
+
+    expect(document.activeElement).toBe(screen.getByRole('button', { name: OUTSIDE }));
+  });
+
   it('leaves the menu bar with F10', async () => {
     const user = userEvent.setup();
     const editor = setUp();

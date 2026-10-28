@@ -25,6 +25,7 @@ import { SizesPage } from '@/showcase/pages/foundations/SizesPage';
 import { SpacingPage } from '@/showcase/pages/foundations/SpacingPage';
 import { ThemesPage } from '@/showcase/pages/foundations/themes/ThemesPage';
 import { TypographyPage } from '@/showcase/pages/foundations/TypographyPage';
+import { DemoScenePage } from '@/showcase/pages/overview/demoScene/DemoScenePage';
 import { OverviewPage } from '@/showcase/pages/overview/OverviewPage';
 import { CommandsPage } from '@/showcase/pages/shell/commands/CommandsPage';
 import { ConfirmDialogPage } from '@/showcase/pages/shell/confirmDialog/ConfirmDialogPage';
@@ -47,6 +48,14 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     description:
       'What the editor framework is, how this showcase is organized and how to read its pages.',
     component: OverviewPage,
+  },
+  {
+    id: 'overview/demo-scene',
+    section: 'overview',
+    title: 'Demo scene',
+    description:
+      'The demonstration integration in src/demo: every extension point together in a Unity-style editor.',
+    component: DemoScenePage,
   },
   {
     id: 'foundations/themes',

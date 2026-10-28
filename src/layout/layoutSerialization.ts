@@ -6,8 +6,6 @@ import type { WindowType } from '@/core/windows/windowType';
 import type { SettingDefinition } from '@/state/storage/settingStorage';
 import { WINDOW_PANEL_COMPONENT, windowPanelParams } from './windowPanelParams';
 
-export const LAYOUT_STORAGE_KEY = 'editor-layout';
-
 export const LAYOUT_FORMAT_VERSION = 1;
 
 export interface StoredLayout {

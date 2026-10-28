@@ -33,8 +33,8 @@ export function WindowTabMenuPage() {
           items into it with <code>contextMenus.registerItem</code>, the same way as into any
           context menu. The target of the menu is <code>{'{ windowId, windowType }'}</code>, so a
           command declared as <code>{'defineCommand<WindowTabTarget>'}</code> knows which instance
-          it serves. The paths <code>maximize</code>, <code>close-tab</code> and{' '}
-          <code>add-tab</code> belong to the framework.
+          it serves. The items of the window and of the framework are built as separate menus, so a
+          window may use any path, including the paths of the framework items.
         </p>
         <p>
           A multi-instance window registers the handler of its items once, together with the window

@@ -113,11 +113,23 @@ export function useMenuBarActivation({
       altTapPending = false;
     }
 
+    function rememberFocusBeforeBar(event: FocusEvent): void {
+      const { relatedTarget } = event;
+
+      if (relatedTarget instanceof Node && bar?.contains(relatedTarget) === true) {
+        return;
+      }
+
+      previousFocus.current = relatedTarget instanceof HTMLElement ? relatedTarget : null;
+    }
+
     document.addEventListener('keydown', handleKeyDown);
     document.addEventListener('keyup', handleKeyUp);
     document.addEventListener('pointerdown', cancelAltTap);
+    bar.addEventListener('focusin', rememberFocusBeforeBar);
 
     return () => {
+      bar.removeEventListener('focusin', rememberFocusBeforeBar);
       document.removeEventListener('keydown', handleKeyDown);
       document.removeEventListener('keyup', handleKeyUp);
       document.removeEventListener('pointerdown', cancelAltTap);

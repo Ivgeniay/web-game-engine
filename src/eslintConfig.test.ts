@@ -10,6 +10,8 @@ const EXAMPLE_FILE = 'src/showcase/pages/foundations/themes/ThemeModeExample.tsx
 const ICON_COMPONENT_FILE = 'src/ui/icon/Icon.tsx';
 const CORE_FILE = 'src/core/unsubscribe.ts';
 const CORE_TEST_FILE = 'src/core/registry/registry.test.ts';
+const SHELL_FILE = 'src/shell/EditorFrame.tsx';
+const DEMO_FILE = 'src/demo/demoExtension.ts';
 
 interface ForbiddenCase {
   readonly name: string;
@@ -160,6 +162,48 @@ const FORBIDDEN_CASES: readonly ForbiddenCase[] = [
     ruleId: 'no-restricted-imports',
   },
   {
+    name: 'framework code importing the demo integration',
+    filePath: SHELL_FILE,
+    code: "import { installDemo } from '@/demo/demoExtension';\nexport const value = installDemo;\n",
+    ruleId: 'no-restricted-imports',
+  },
+  {
+    name: 'framework code importing the engine integration',
+    filePath: FRAMEWORK_TS_FILE,
+    code: "import { engine } from '@/engine/engine';\nexport const value = engine;\n",
+    ruleId: 'no-restricted-imports',
+  },
+  {
+    name: 'framework code importing the demo integration as source text',
+    filePath: FRAMEWORK_TS_FILE,
+    code: "import source from '@/demo/demoExtension.ts?raw';\nexport const value = source;\n",
+    ruleId: 'no-restricted-imports',
+  },
+  {
+    name: 'a core module importing the demo integration',
+    filePath: CORE_FILE,
+    code: "import { installDemo } from '@/demo/demoExtension';\nexport const value = installDemo;\n",
+    ruleId: 'no-restricted-imports',
+  },
+  {
+    name: 'the showcase importing demo code without ?raw',
+    filePath: SHOWCASE_TSX_FILE,
+    code: "import { installDemo } from '@/demo/demoExtension';\nexport const value = installDemo;\n",
+    ruleId: 'no-restricted-imports',
+  },
+  {
+    name: 'the showcase importing the engine integration as source text',
+    filePath: SHOWCASE_TSX_FILE,
+    code: "import source from '@/engine/engine.ts?raw';\nexport const value = source;\n",
+    ruleId: 'no-restricted-imports',
+  },
+  {
+    name: 'an example importing the demo integration as source text',
+    filePath: EXAMPLE_FILE,
+    code: "import source from '@/demo/demoExtension.ts?raw';\nexport const value = source;\n",
+    ruleId: 'no-restricted-imports',
+  },
+  {
     name: 'a core module importing through ../',
     filePath: CORE_FILE,
     code: "import { createRegistry } from '../core/registry/registry';\nexport const value = createRegistry;\n",
@@ -187,6 +231,16 @@ const ALLOWED_CASES: readonly AllowedCase[] = [
     name: 'an example importing the framework and its own example files',
     filePath: EXAMPLE_FILE,
     code: "import { Kbd } from '@/ui/kbd/Kbd';\nimport { CurrentThemeExample } from './CurrentThemeExample';\n\nconst SHORTCUT = 'Ctrl+S';\n\nexport function ShortcutExample() {\n  return (\n    <>\n      <CurrentThemeExample />\n      <Kbd>{SHORTCUT}</Kbd>\n    </>\n  );\n}\n",
+  },
+  {
+    name: 'the showcase importing demo code as source text',
+    filePath: SHOWCASE_TSX_FILE,
+    code: "import source from '@/demo/demoExtension.ts?raw';\nexport const value = source;\n",
+  },
+  {
+    name: 'the demo integration importing the framework and itself',
+    filePath: DEMO_FILE,
+    code: "import { combineUnsubscribes } from '@/core/unsubscribe';\nimport { demoMessages } from '@/demo/demoMessages';\n\nexport const values = [combineUnsubscribes, demoMessages];\n",
   },
   {
     name: 'a core module importing core and icons',

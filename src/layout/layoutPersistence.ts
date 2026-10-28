@@ -4,7 +4,6 @@ import type { Unsubscribe } from '@/core/unsubscribe';
 import { createJsonSettingStorage } from '@/state/storage/settingStorage';
 import type { SettingStorage, StorageProvider } from '@/state/storage/settingStorage';
 import {
-  LAYOUT_STORAGE_KEY,
   dockedPartOf,
   layoutSetting,
   serializeLayout,
@@ -34,10 +33,7 @@ export interface LayoutSavingOptions {
   readonly pageLifecycle: EventTarget;
 }
 
-export function createLayoutStorage(
-  getStorage: StorageProvider,
-  key: string = LAYOUT_STORAGE_KEY,
-): LayoutStorage {
+export function createLayoutStorage(getStorage: StorageProvider, key: string): LayoutStorage {
   return createJsonSettingStorage(layoutSetting(key), getStorage);
 }
 
