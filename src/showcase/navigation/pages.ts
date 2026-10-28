@@ -20,6 +20,7 @@ import { ToggleButtonGroupPage } from '@/showcase/pages/components/toggleButtonG
 import { TooltipPage } from '@/showcase/pages/components/tooltip/TooltipPage';
 import { ToolbarPage } from '@/showcase/pages/components/toolbar/ToolbarPage';
 import { ValueDragPage } from '@/showcase/pages/components/valueDrag/ValueDragPage';
+import { VectorFieldPage } from '@/showcase/pages/components/vectorField/VectorFieldPage';
 import { ColorsPage } from '@/showcase/pages/foundations/ColorsPage';
 import { ContrastPage } from '@/showcase/pages/foundations/ContrastPage';
 import { IconsPage } from '@/showcase/pages/foundations/icons/IconsPage';
@@ -213,6 +214,13 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     title: 'PropertyRow',
     description: 'An inspector line with a caption, a field and a shared caption column.',
     component: PropertyRowPage,
+  },
+  {
+    id: 'components/vector-field',
+    section: 'components',
+    title: 'VectorField',
+    description: 'Several numbers in one row with draggable axis captions.',
+    component: VectorFieldPage,
   },
   {
     id: 'components/toolbar',

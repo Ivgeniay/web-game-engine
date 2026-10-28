@@ -1,0 +1,62 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+.component {
+  display: flex;
+  flex: 1 1 0;
+  align-items: center;
+  gap: var(--space-2);
+  min-width: 0;
+}
+
+.axis {
+  position: relative;
+  flex: none;
+  padding-inline: var(--space-2);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-md);
+  line-height: var(--font-line-height-compact);
+}
+
+.axis.disabled {
+  color: var(--color-text-disabled);
+}
+
+.x,
+.y,
+.z {
+  padding-inline-start: var(--space-4);
+}
+
+.x::before,
+.y::before,
+.z::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: var(--space-2);
+  border-radius: var(--radius-sm);
+  content: '';
+}
+
+.x::before {
+  background-color: var(--color-axis-x);
+}
+
+.y::before {
+  background-color: var(--color-axis-y);
+}
+
+.z::before {
+  background-color: var(--color-axis-z);
+}
+
+.field {
+  flex: 1 1 auto;
+  min-width: 0;
+}

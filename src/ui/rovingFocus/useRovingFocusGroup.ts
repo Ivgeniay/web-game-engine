@@ -1,5 +1,6 @@
 import { useCallback, useContext, useState } from 'react';
 import type { KeyboardEvent } from 'react';
+import { isTextEntry } from '@/ui/textEntry';
 import { findRovingTarget, rovingMoveForKey } from './rovingFocus';
 import type { RovingOrientation } from './rovingFocus';
 import { RovingFocusContext } from './rovingFocusContext';
@@ -26,18 +27,6 @@ interface RovingFocusItems {
 
 const NO_ITEM = -1;
 
-const NON_TEXT_INPUT_TYPES: ReadonlySet<string> = new Set([
-  'button',
-  'checkbox',
-  'color',
-  'file',
-  'image',
-  'radio',
-  'range',
-  'reset',
-  'submit',
-]);
-
 function compareDocumentOrder(first: HTMLElement, second: HTMLElement): number {
   if (first === second) {
     return 0;
@@ -47,18 +36,6 @@ function compareDocumentOrder(first: HTMLElement, second: HTMLElement): number {
     (first.compareDocumentPosition(second) & Node.DOCUMENT_POSITION_FOLLOWING) !== 0;
 
   return secondFollows ? -1 : 1;
-}
-
-function isTextEntry(target: EventTarget): boolean {
-  if (target instanceof HTMLInputElement) {
-    return !NON_TEXT_INPUT_TYPES.has(target.type);
-  }
-
-  return (
-    target instanceof HTMLTextAreaElement ||
-    target instanceof HTMLSelectElement ||
-    (target instanceof HTMLElement && target.isContentEditable)
-  );
 }
 
 function isInsideGroup(event: KeyboardEvent<HTMLElement>): boolean {
