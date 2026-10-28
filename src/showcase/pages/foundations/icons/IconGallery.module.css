@@ -1,0 +1,104 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--showcase-icon-tile-width), 1fr));
+  gap: var(--space-8);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-6);
+  width: 100%;
+  padding: var(--space-8);
+  border: var(--size-border-width) solid var(--color-border-control);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg-panel);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-ui);
+  cursor: pointer;
+}
+
+.tile:hover {
+  background-image: linear-gradient(var(--color-overlay-hover), var(--color-overlay-hover));
+}
+
+.tile[aria-pressed='true'] {
+  border-color: var(--color-border-focus);
+  background-color: var(--color-bg-selection);
+}
+
+.samples {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.name {
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+}
+
+.badge {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+}
+
+.details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-12);
+  border: var(--size-border-width) solid var(--color-border-separator);
+  border-radius: var(--radius-md);
+  padding: var(--space-12);
+  background-color: var(--color-bg-panel);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-12);
+}
+
+.title {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+}
+
+.option {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-md);
+}
+
+.previews {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-24);
+}
+
+.preview {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.caption {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+}

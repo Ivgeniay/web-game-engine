@@ -2,4 +2,7 @@
   --showcase-sidebar-width: 240px;
   --showcase-page-max-width: 960px;
   --showcase-code-max-height: 480px;
+  --showcase-icon-zoom: 16;
+  --showcase-icon-zoom-cell: calc(var(--showcase-icon-zoom) * 1px);
+  --showcase-icon-tile-width: 112px;
 }

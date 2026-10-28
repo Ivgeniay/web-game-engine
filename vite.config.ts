@@ -7,8 +7,24 @@ export default defineConfig({
     tsconfigPaths: true,
   },
   test: {
-    include: ['src/**/*.test.{ts,tsx}'],
-    environment: 'node',
     css: { include: [/src\/themes\/.+\.css/] },
+    projects: [
+      {
+        extends: true,
+        test: {
+          name: 'logic',
+          include: ['src/**/*.test.ts'],
+          environment: 'node',
+        },
+      },
+      {
+        extends: true,
+        test: {
+          name: 'components',
+          include: ['src/**/*.test.tsx'],
+          environment: 'jsdom',
+        },
+      },
+    ],
   },
 });

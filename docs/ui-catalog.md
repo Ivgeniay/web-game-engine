@@ -1012,7 +1012,7 @@
 
 ### Этап 5. Кнопки и выбор
 
-1. Подключение jsdom и Testing Library, Button и IconButton.
+1. Button и IconButton.
 2. ToggleButton и ToggleButtonGroup, перевод переключателей темы и языка витрины на них.
 3. Checkbox и RadioGroup.
 4. Toolbar с роуминговым фокусом, Separator.

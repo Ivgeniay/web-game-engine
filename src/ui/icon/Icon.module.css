@@ -1,0 +1,15 @@
+.sm,
+.md {
+  display: block;
+  flex: none;
+}
+
+.sm {
+  width: var(--size-icon-sm);
+  height: var(--size-icon-sm);
+}
+
+.md {
+  width: var(--size-icon-md);
+  height: var(--size-icon-md);
+}

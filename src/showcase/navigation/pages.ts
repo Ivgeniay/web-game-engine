@@ -1,5 +1,6 @@
 import { ColorsPage } from '@/showcase/pages/foundations/ColorsPage';
 import { ContrastPage } from '@/showcase/pages/foundations/ContrastPage';
+import { IconsPage } from '@/showcase/pages/foundations/icons/IconsPage';
 import { LocalizationPage } from '@/showcase/pages/foundations/localization/LocalizationPage';
 import { LayersAndMotionPage } from '@/showcase/pages/foundations/LayersAndMotionPage';
 import { RadiusAndShadowsPage } from '@/showcase/pages/foundations/RadiusAndShadowsPage';
@@ -36,6 +37,14 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     description:
       'Languages, dictionaries, substitutions, plural forms and message references for interface texts.',
     component: LocalizationPage,
+  },
+  {
+    id: 'foundations/icons',
+    section: 'foundations',
+    title: 'Icons',
+    description:
+      'Framework icons, the Icon component, icons in data, integration icon sets and drawing rules.',
+    component: IconsPage,
   },
   {
     id: 'foundations/colors',
