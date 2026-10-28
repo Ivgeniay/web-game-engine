@@ -78,7 +78,9 @@ export function ButtonPage() {
         <p>
           <code>disabled</code> is the native attribute. A disabled button ignores the mouse and the
           keyboard, leaves the Tab order and shows its text in <code>--color-text-disabled</code>. A
-          disabled accent button looks like a disabled default one.
+          disabled accent button looks like a disabled default one. In toolbars, add{' '}
+          <code>focusableWhenDisabled</code> to keep a disabled button reachable from the keyboard:
+          see the Toolbar page.
         </p>
         <ExampleBlock
           sources={[

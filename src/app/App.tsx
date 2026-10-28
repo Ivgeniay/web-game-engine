@@ -1,5 +1,5 @@
-import styles from './App.module.css';
+import { EditorFrame } from '@/shell/EditorFrame';
 
 export function App() {
-  return <div className={styles.root} />;
+  return <EditorFrame />;
 }

@@ -53,7 +53,8 @@ export function ToggleButtonPage() {
       <PageSection title="Disabled">
         <p>
           A disabled toggle ignores the mouse and the keyboard and leaves the Tab order. A pressed
-          disabled toggle keeps a dimmed selection background, so its state stays visible.
+          disabled toggle keeps a dimmed selection background, so its state stays visible. With{' '}
+          <code>focusableWhenDisabled</code> it stays reachable in a toolbar: see the Toolbar page.
         </p>
         <ExampleBlock
           sources={[

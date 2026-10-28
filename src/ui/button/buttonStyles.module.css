@@ -77,22 +77,22 @@
   color: var(--color-text-on-accent);
 }
 
-.default:enabled:hover,
-.flat:enabled:hover {
+.default:enabled:not([aria-disabled='true']):hover,
+.flat:enabled:not([aria-disabled='true']):hover {
   background-image: linear-gradient(var(--color-overlay-hover), var(--color-overlay-hover));
 }
 
-.default:enabled:active,
-.flat:enabled:active {
+.default:enabled:not([aria-disabled='true']):active,
+.flat:enabled:not([aria-disabled='true']):active {
   background-image: linear-gradient(var(--color-overlay-active), var(--color-overlay-active));
 }
 
-.accent:enabled:hover {
+.accent:enabled:not([aria-disabled='true']):hover {
   border-color: var(--color-accent-hover);
   background-color: var(--color-accent-hover);
 }
 
-.accent:enabled:active {
+.accent:enabled:not([aria-disabled='true']):active {
   border-color: var(--color-accent-active);
   background-color: var(--color-accent-active);
 }
@@ -101,12 +101,14 @@
   outline-offset: var(--size-border-width);
 }
 
-.root:disabled {
+.root:disabled,
+.root[aria-disabled='true'] {
   color: var(--color-text-disabled);
   cursor: default;
 }
 
-.accent:disabled {
+.accent:disabled,
+.accent[aria-disabled='true'] {
   border-color: var(--color-border-control);
   background-color: var(--color-bg-control);
 }

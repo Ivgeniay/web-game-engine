@@ -6,6 +6,7 @@ import {
   buttonLabelClassName,
 } from '@/ui/button/buttonClassName';
 import type { ButtonSize, ButtonVariant } from '@/ui/button/buttonClassName';
+import { disabledButtonProps } from '@/ui/button/disabledButton';
 import { classNames } from '@/ui/classNames';
 import { Icon } from '@/ui/icon/Icon';
 import { useRovingFocusItem } from '@/ui/rovingFocus/useRovingFocusItem';
@@ -26,6 +27,7 @@ interface ToggleButtonBaseProps extends NativeButtonProps {
   readonly onPressedChange: (pressed: boolean) => void;
   readonly variant?: ToggleButtonVariant;
   readonly size?: ButtonSize;
+  readonly focusableWhenDisabled?: boolean | undefined;
 }
 
 interface ToggleButtonTextContent {
@@ -55,8 +57,17 @@ export function ToggleButton({
   ref,
   tabIndex,
   onFocus,
+  disabled,
+  focusableWhenDisabled,
   ...buttonProps
 }: ToggleButtonProps) {
+  const disabledProps = disabledButtonProps({
+    disabled,
+    focusableWhenDisabled,
+    onClick: () => {
+      onPressedChange(!pressed);
+    },
+  });
   const tooltip = useTooltip({
     content: label ?? '',
     describe: false,
@@ -67,14 +78,14 @@ export function ToggleButton({
     ref: triggerRef,
     tabIndex,
     onFocus,
-    disabled: buttonProps.disabled ?? false,
+    disabled: disabledProps.disabled ?? false,
     preferred: pressed,
   });
 
   return (
     <>
       <button
-        {...tooltip.getTriggerProps({ ...buttonProps, ...rovingProps })}
+        {...tooltip.getTriggerProps({ ...buttonProps, ...disabledProps, ...rovingProps })}
         ref={rovingRef}
         type="button"
         className={buttonClassName({
@@ -85,9 +96,6 @@ export function ToggleButton({
         })}
         aria-pressed={pressed}
         aria-label={label}
-        onClick={() => {
-          onPressedChange(!pressed);
-        }}
       >
         {icon !== undefined && <Icon icon={icon} size={BUTTON_ICON_SIZES[size]} />}
         {children !== undefined && <span className={buttonLabelClassName}>{children}</span>}

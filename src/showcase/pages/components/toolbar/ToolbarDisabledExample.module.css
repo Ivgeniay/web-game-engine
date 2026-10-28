@@ -1,0 +1,3 @@
+.root {
+  border-bottom: var(--size-border-width) solid var(--color-border-separator);
+}

@@ -1,0 +1,16 @@
+.root {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  height: 100%;
+  background-color: var(--color-bg-app);
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  border-bottom: var(--size-border-width) solid var(--color-border-separator);
+}
+
+.workspace {
+  min-height: 0;
+}

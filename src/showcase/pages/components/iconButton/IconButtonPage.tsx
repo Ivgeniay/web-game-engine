@@ -22,7 +22,8 @@ export function IconButtonPage() {
           <code>icon</code> takes an icon of a set or an <code>iconRef</code>. <code>variant</code>{' '}
           is the same as for <code>Button</code>, with <code>flat</code> as the default, since icon
           buttons usually sit in toolbars and headers. Disabled icon buttons behave like disabled
-          buttons.
+          buttons, including <code>focusableWhenDisabled</code>, which keeps the tooltip of a
+          disabled button in a toolbar.
         </p>
         <ExampleBlock
           sources={[

@@ -27,9 +27,11 @@ import { ThemesPage } from '@/showcase/pages/foundations/themes/ThemesPage';
 import { TypographyPage } from '@/showcase/pages/foundations/TypographyPage';
 import { OverviewPage } from '@/showcase/pages/overview/OverviewPage';
 import { CommandsPage } from '@/showcase/pages/shell/commands/CommandsPage';
+import { ConfirmDialogPage } from '@/showcase/pages/shell/confirmDialog/ConfirmDialogPage';
 import { ContextMenuPage } from '@/showcase/pages/shell/contextMenu/ContextMenuPage';
 import { HotkeysPage } from '@/showcase/pages/shell/hotkeys/HotkeysPage';
 import { MenuBarPage } from '@/showcase/pages/shell/menuBar/MenuBarPage';
+import { ToolbarStatusBarPage } from '@/showcase/pages/shell/toolbarStatusBar/ToolbarStatusBarPage';
 import type { ShowcasePage } from './showcasePage';
 
 export const OVERVIEW_PAGE_ID = 'overview';
@@ -271,5 +273,20 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     description:
       'Menus assembled for a context and its target, opened by right click, Shift+F10 or the menu key.',
     component: ContextMenuPage,
+  },
+  {
+    id: 'shell/toolbar-and-status-bar',
+    section: 'shell',
+    title: 'Toolbar and status bar',
+    description:
+      'The main toolbar and the status bar built from registered commands and components, and the editor frame.',
+    component: ToolbarStatusBarPage,
+  },
+  {
+    id: 'shell/confirm-dialog',
+    section: 'shell',
+    title: 'Confirm dialog',
+    description: 'Asking the user from code and getting the answer as a promise, with a queue.',
+    component: ConfirmDialogPage,
   },
 ];

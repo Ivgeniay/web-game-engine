@@ -67,6 +67,44 @@ describe('Button', () => {
     expect(onClick).not.toHaveBeenCalled();
   });
 
+  it('stays focusable but inert when disabled with focusableWhenDisabled', async () => {
+    const user = userEvent.setup();
+    const onClick = vi.fn();
+    render(
+      <Button disabled focusableWhenDisabled onClick={onClick}>
+        {LABEL}
+      </Button>,
+    );
+    const button = screen.getByRole('button', { name: LABEL });
+
+    await user.tab();
+    await user.keyboard('{Enter} ');
+    await user.click(button);
+
+    expect(document.activeElement).toBe(button);
+    expect(button).toHaveProperty('disabled', false);
+    expect(button.getAttribute('aria-disabled')).toBe('true');
+    expect(onClick).not.toHaveBeenCalled();
+  });
+
+  it('does not submit its form while disabled with focusableWhenDisabled', async () => {
+    const user = userEvent.setup();
+    const onSubmit = vi.fn((event: SubmitEvent<HTMLFormElement>) => {
+      event.preventDefault();
+    });
+    render(
+      <form onSubmit={onSubmit}>
+        <Button type="submit" disabled focusableWhenDisabled>
+          {SUBMIT_LABEL}
+        </Button>
+      </form>,
+    );
+
+    await user.click(screen.getByRole('button', { name: SUBMIT_LABEL }));
+
+    expect(onSubmit).not.toHaveBeenCalled();
+  });
+
   it('shows a decorative icon before the text', () => {
     render(<Button icon={frameworkIcons.settings}>{LABEL}</Button>);
 

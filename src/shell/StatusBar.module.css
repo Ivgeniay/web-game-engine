@@ -1,0 +1,28 @@
+.root {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-8);
+  box-sizing: border-box;
+  height: var(--size-statusbar-height);
+  padding: 0 var(--space-8);
+  background-color: var(--color-bg-header);
+  font-size: var(--font-size-sm);
+}
+
+.zone {
+  display: flex;
+  align-items: center;
+  gap: var(--space-12);
+  min-width: 0;
+}
+
+.right {
+  justify-content: flex-end;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}

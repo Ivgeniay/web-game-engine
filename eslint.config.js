@@ -57,6 +57,13 @@ const showcaseImportPatterns = [
   },
 ];
 
+const coreImportPatterns = [
+  {
+    regex: '^@/(ui|state|shell)(/|$)',
+    message: 'core does not depend on ui, state and shell. Pass the knowledge as a parameter.',
+  },
+];
+
 const namedExportsOnlySelectors = [
   {
     selector: 'ExportDefaultDeclaration',
@@ -138,6 +145,17 @@ export default defineConfig([
         'error',
         {
           patterns: [parentPathImportPattern],
+        },
+      ],
+    },
+  },
+  {
+    files: ['src/core/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [parentPathImportPattern, ...coreImportPatterns],
         },
       ],
     },

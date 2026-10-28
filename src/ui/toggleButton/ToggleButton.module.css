@@ -3,7 +3,8 @@
   background-color: var(--color-bg-selection);
 }
 
-.root[aria-pressed='true']:disabled {
+.root[aria-pressed='true']:disabled,
+.root[aria-pressed='true'][aria-disabled='true'] {
   border-color: var(--color-bg-selection-inactive);
   background-color: var(--color-bg-selection-inactive);
 }

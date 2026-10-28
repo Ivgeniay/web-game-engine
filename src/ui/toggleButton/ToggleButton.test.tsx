@@ -75,6 +75,26 @@ describe('ToggleButton', () => {
     expect(onPressedChange).not.toHaveBeenCalled();
   });
 
+  it('stays focusable but keeps its state when disabled with focusableWhenDisabled', async () => {
+    const user = userEvent.setup();
+    const onPressedChange = vi.fn();
+    render(
+      <ToggleButton pressed onPressedChange={onPressedChange} disabled focusableWhenDisabled>
+        {TEXT}
+      </ToggleButton>,
+    );
+    const button = screen.getByRole('button', { name: TEXT });
+
+    await user.tab();
+    await user.keyboard('{Enter} ');
+    await user.click(button);
+
+    expect(document.activeElement).toBe(button);
+    expect(button.getAttribute('aria-disabled')).toBe('true');
+    expect(button.getAttribute('aria-pressed')).toBe('true');
+    expect(onPressedChange).not.toHaveBeenCalled();
+  });
+
   it('names an icon-only toggle by its label', () => {
     render(
       <ToggleButton

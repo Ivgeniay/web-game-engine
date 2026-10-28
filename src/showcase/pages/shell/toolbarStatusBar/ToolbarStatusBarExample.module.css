@@ -1,0 +1,10 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  border: var(--size-border-width) solid var(--color-border-separator);
+}
+
+.workspace {
+  height: var(--size-control-height-lg);
+  background-color: var(--color-bg-app);
+}

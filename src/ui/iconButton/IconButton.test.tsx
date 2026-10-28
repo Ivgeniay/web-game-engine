@@ -102,6 +102,32 @@ describe('IconButton', () => {
     expect(icon?.getAttribute('viewBox')).toBe(viewBox);
   });
 
+  it('stays focusable with its tooltip but inert when disabled with focusableWhenDisabled', async () => {
+    const user = userEvent.setup();
+    const onClick = vi.fn();
+    render(
+      <IconButton
+        label={LABEL}
+        icon={frameworkIcons.settings}
+        disabled
+        focusableWhenDisabled
+        onClick={onClick}
+      />,
+    );
+    const button = screen.getByRole('button', { name: LABEL });
+
+    await user.tab();
+
+    expect(document.activeElement).toBe(button);
+    expect(screen.getByRole('tooltip').textContent).toBe(LABEL);
+
+    await user.keyboard('{Enter} ');
+    await user.click(button);
+
+    expect(button.getAttribute('aria-disabled')).toBe('true');
+    expect(onClick).not.toHaveBeenCalled();
+  });
+
   it('passes the DOM element to ref', () => {
     const ref = createRef<HTMLButtonElement>();
     render(<IconButton ref={ref} label={LABEL} icon={frameworkIcons.settings} />);

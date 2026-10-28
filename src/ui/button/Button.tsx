@@ -4,6 +4,7 @@ import { Icon } from '@/ui/icon/Icon';
 import { useRovingFocusItem } from '@/ui/rovingFocus/useRovingFocusItem';
 import { BUTTON_ICON_SIZES, buttonClassName, buttonLabelClassName } from './buttonClassName';
 import type { ButtonSize, ButtonVariant } from './buttonClassName';
+import { disabledButtonProps } from './disabledButton';
 
 type NativeButtonProps = Omit<ComponentPropsWithRef<'button'>, 'style' | 'type' | 'children'>;
 
@@ -15,6 +16,7 @@ interface ButtonProps extends NativeButtonProps {
   readonly variant?: ButtonVariant;
   readonly size?: ButtonSize;
   readonly icon?: IconSource;
+  readonly focusableWhenDisabled?: boolean | undefined;
 }
 
 export function Button({
@@ -27,19 +29,24 @@ export function Button({
   ref,
   tabIndex,
   onFocus,
+  disabled,
+  focusableWhenDisabled,
+  onClick,
   ...buttonProps
 }: ButtonProps) {
+  const disabledProps = disabledButtonProps({ disabled, focusableWhenDisabled, onClick });
   const rovingProps = useRovingFocusItem({
     ref,
     tabIndex,
     onFocus,
-    disabled: buttonProps.disabled ?? false,
+    disabled: disabledProps.disabled ?? false,
     preferred: false,
   });
 
   return (
     <button
       {...buttonProps}
+      {...disabledProps}
       {...rovingProps}
       type={type}
       className={buttonClassName({ variant, size, shape: 'text', className })}

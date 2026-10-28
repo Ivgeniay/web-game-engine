@@ -8,6 +8,8 @@ const FRAMEWORK_TSX_FILE = 'src/ui/kbd/Kbd.tsx';
 const SHOWCASE_TSX_FILE = 'src/showcase/Showcase.tsx';
 const EXAMPLE_FILE = 'src/showcase/pages/foundations/themes/ThemeModeExample.tsx';
 const ICON_COMPONENT_FILE = 'src/ui/icon/Icon.tsx';
+const CORE_FILE = 'src/core/unsubscribe.ts';
+const CORE_TEST_FILE = 'src/core/registry/registry.test.ts';
 
 interface ForbiddenCase {
   readonly name: string;
@@ -133,6 +135,36 @@ const FORBIDDEN_CASES: readonly ForbiddenCase[] = [
     code: "import { IconsPage } from '../icons/IconsPage';\nexport const value = IconsPage;\n",
     ruleId: 'no-restricted-imports',
   },
+  {
+    name: 'a core module importing ui',
+    filePath: CORE_FILE,
+    code: "import { classNames } from '@/ui/classNames';\nexport const value = classNames;\n",
+    ruleId: 'no-restricted-imports',
+  },
+  {
+    name: 'a core module importing state',
+    filePath: CORE_FILE,
+    code: "import { useTranslate } from '@/state/language/useTranslate';\nexport const value = useTranslate;\n",
+    ruleId: 'no-restricted-imports',
+  },
+  {
+    name: 'a core module importing shell',
+    filePath: CORE_FILE,
+    code: "import { MenuBar } from '@/shell/MenuBar';\nexport const value = MenuBar;\n",
+    ruleId: 'no-restricted-imports',
+  },
+  {
+    name: 'a core test importing ui',
+    filePath: CORE_TEST_FILE,
+    code: "import { POPUP_LAYER_ID } from '@/ui/popup/popupLayerAttributes';\nexport const value = POPUP_LAYER_ID;\n",
+    ruleId: 'no-restricted-imports',
+  },
+  {
+    name: 'a core module importing through ../',
+    filePath: CORE_FILE,
+    code: "import { createRegistry } from '../core/registry/registry';\nexport const value = createRegistry;\n",
+    ruleId: 'no-restricted-imports',
+  },
 ];
 
 const ALLOWED_CASES: readonly AllowedCase[] = [
@@ -155,6 +187,11 @@ const ALLOWED_CASES: readonly AllowedCase[] = [
     name: 'an example importing the framework and its own example files',
     filePath: EXAMPLE_FILE,
     code: "import { Kbd } from '@/ui/kbd/Kbd';\nimport { CurrentThemeExample } from './CurrentThemeExample';\n\nconst SHORTCUT = 'Ctrl+S';\n\nexport function ShortcutExample() {\n  return (\n    <>\n      <CurrentThemeExample />\n      <Kbd>{SHORTCUT}</Kbd>\n    </>\n  );\n}\n",
+  },
+  {
+    name: 'a core module importing core and icons',
+    filePath: CORE_FILE,
+    code: "import { createRegistry } from '@/core/registry/registry';\nimport { frameworkIcons } from '@/icons/frameworkIcons';\n\nexport const values = [createRegistry, frameworkIcons];\n",
   },
 ];
 
