@@ -29,6 +29,17 @@ describe('rovingMoveForKey', () => {
     expect(rovingMoveForKey(key, 'vertical')).toBe(move);
   });
 
+  it.each([
+    { key: 'ArrowLeft', move: 'previous' },
+    { key: 'ArrowUp', move: 'previous' },
+    { key: 'ArrowRight', move: 'next' },
+    { key: 'ArrowDown', move: 'next' },
+    { key: 'Home', move: 'first' },
+    { key: 'End', move: 'last' },
+  ])('maps $key to $move when both axes are used', ({ key, move }) => {
+    expect(rovingMoveForKey(key, 'both')).toBe(move);
+  });
+
   it('ignores other keys', () => {
     expect(rovingMoveForKey('Enter', 'horizontal')).toBeUndefined();
     expect(rovingMoveForKey(' ', 'vertical')).toBeUndefined();

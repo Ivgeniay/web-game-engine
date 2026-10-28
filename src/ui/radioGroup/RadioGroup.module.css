@@ -1,0 +1,104 @@
+.root {
+  display: flex;
+  max-width: 100%;
+}
+
+.vertical {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.horizontal {
+  flex-wrap: wrap;
+  align-items: center;
+  column-gap: var(--space-12);
+}
+
+.option {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-6);
+  max-width: 100%;
+  min-height: var(--size-control-height-md);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-md);
+  cursor: pointer;
+}
+
+.disabled {
+  color: var(--color-text-disabled);
+  cursor: default;
+}
+
+.circle {
+  position: relative;
+  display: inline-flex;
+  flex: none;
+  width: var(--size-icon-md);
+  height: var(--size-icon-md);
+}
+
+.input {
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  margin: 0;
+  border: var(--size-border-width) solid var(--color-border-control);
+  border-radius: var(--radius-full);
+  background-color: var(--color-bg-field);
+  cursor: inherit;
+  appearance: none;
+}
+
+.input:enabled:hover {
+  background-image: linear-gradient(var(--color-overlay-hover), var(--color-overlay-hover));
+}
+
+.input:enabled:active {
+  background-image: linear-gradient(var(--color-overlay-active), var(--color-overlay-active));
+}
+
+.input:focus-visible {
+  outline-offset: var(--size-border-width);
+}
+
+.input:checked {
+  border-color: var(--color-accent);
+  background-color: var(--color-accent);
+  background-image: none;
+}
+
+.input:checked:enabled:hover {
+  border-color: var(--color-accent-hover);
+  background-color: var(--color-accent-hover);
+}
+
+.input:checked:enabled:active {
+  border-color: var(--color-accent-active);
+  background-color: var(--color-accent-active);
+}
+
+.input:disabled {
+  border-color: var(--color-border-control);
+  background-color: var(--color-bg-control);
+}
+
+.dot {
+  position: absolute;
+  inset: var(--space-4);
+  border-radius: var(--radius-full);
+  background-color: var(--color-text-on-accent);
+  pointer-events: none;
+}
+
+.input:disabled + .dot {
+  background-color: var(--color-text-disabled);
+}
+
+.label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

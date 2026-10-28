@@ -1,5 +1,7 @@
 import { ButtonPage } from '@/showcase/pages/components/button/ButtonPage';
+import { CheckboxPage } from '@/showcase/pages/components/checkbox/CheckboxPage';
 import { IconButtonPage } from '@/showcase/pages/components/iconButton/IconButtonPage';
+import { RadioGroupPage } from '@/showcase/pages/components/radioGroup/RadioGroupPage';
 import { RovingFocusPage } from '@/showcase/pages/components/rovingFocus/RovingFocusPage';
 import { ToggleButtonPage } from '@/showcase/pages/components/toggleButton/ToggleButtonPage';
 import { ToggleButtonGroupPage } from '@/showcase/pages/components/toggleButtonGroup/ToggleButtonGroupPage';
@@ -127,6 +129,21 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     title: 'ToggleButtonGroup',
     description: 'A row of toggle buttons to choose one, none or one, or several options.',
     component: ToggleButtonGroupPage,
+  },
+  {
+    id: 'components/checkbox',
+    section: 'components',
+    title: 'Checkbox',
+    description: 'A box that switches a boolean value, with a mixed state for partial values.',
+    component: CheckboxPage,
+  },
+  {
+    id: 'components/radio-group',
+    section: 'components',
+    title: 'RadioGroup',
+    description:
+      'A list of labelled options to choose one value, with arrow keys that choose at once.',
+    component: RadioGroupPage,
   },
   {
     id: 'components/roving-focus',

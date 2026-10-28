@@ -4,20 +4,6 @@
   gap: var(--space-12);
 }
 
-.button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: var(--size-control-height-lg);
-  height: var(--size-control-height-lg);
-  padding: 0;
-  border: var(--size-border-width) solid var(--color-border-control);
-  border-radius: var(--radius-sm);
-  background-color: var(--color-bg-control);
-  color: var(--color-text-primary);
-  cursor: pointer;
-}
-
 .message {
   display: flex;
   align-items: center;

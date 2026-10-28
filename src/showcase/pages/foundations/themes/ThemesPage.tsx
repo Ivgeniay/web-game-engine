@@ -3,7 +3,6 @@ import { PageSection } from '@/showcase/template/PageSection';
 import { CurrentThemeExample } from './CurrentThemeExample';
 import currentThemeSource from './CurrentThemeExample.tsx?raw';
 import { ThemeModeExample } from './ThemeModeExample';
-import themeModeStyles from './ThemeModeExample.module.css?raw';
 import themeModeSource from './ThemeModeExample.tsx?raw';
 import { TokenStyledPanelExample } from './TokenStyledPanelExample';
 import tokenStyledPanelStyles from './TokenStyledPanelExample.module.css?raw';
@@ -52,12 +51,7 @@ export function ThemesPage() {
           Call <code>setMode</code> from the store. It saves the mode, resolves the theme and starts
           or stops following the system preference. <code>THEME_MODES</code> lists every mode.
         </p>
-        <ExampleBlock
-          sources={[
-            { fileName: 'ThemeModeExample.tsx', code: themeModeSource },
-            { fileName: 'ThemeModeExample.module.css', code: themeModeStyles },
-          ]}
-        >
+        <ExampleBlock sources={[{ fileName: 'ThemeModeExample.tsx', code: themeModeSource }]}>
           <ThemeModeExample />
         </ExampleBlock>
         <p>

@@ -18,8 +18,9 @@ export function RovingFocusPage() {
         </p>
         <ul>
           <li>
-            Arrow keys follow the orientation: Left and Right in a horizontal group, Up and Down in
-            a vertical one. Home and End go to the first and the last item.
+            Arrow keys follow the <code>orientation</code>: Left and Right in a{' '}
+            <code>horizontal</code> group, Up and Down in a <code>vertical</code> one, all four with{' '}
+            <code>both</code>, as RadioGroup does. Home and End go to the first and the last item.
           </li>
           <li>
             By default the focus wraps from the last item to the first. Pass{' '}

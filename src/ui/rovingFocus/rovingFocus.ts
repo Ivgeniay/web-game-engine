@@ -1,4 +1,4 @@
-export const ROVING_ORIENTATIONS = ['horizontal', 'vertical'] as const;
+export const ROVING_ORIENTATIONS = ['horizontal', 'vertical', 'both'] as const;
 
 export type RovingOrientation = (typeof ROVING_ORIENTATIONS)[number];
 
@@ -9,6 +9,14 @@ export type RovingMove = (typeof ROVING_MOVES)[number];
 const MOVE_KEYS: Readonly<Record<RovingOrientation, Readonly<Record<string, RovingMove>>>> = {
   horizontal: { ArrowLeft: 'previous', ArrowRight: 'next', Home: 'first', End: 'last' },
   vertical: { ArrowUp: 'previous', ArrowDown: 'next', Home: 'first', End: 'last' },
+  both: {
+    ArrowLeft: 'previous',
+    ArrowUp: 'previous',
+    ArrowRight: 'next',
+    ArrowDown: 'next',
+    Home: 'first',
+    End: 'last',
+  },
 };
 
 const NOT_FOUND = -1;

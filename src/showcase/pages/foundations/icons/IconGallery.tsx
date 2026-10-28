@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { frameworkIcons } from '@/icons/frameworkIcons';
 import type { IconDefinition } from '@/icons/icon';
 import { CodeBlock } from '@/showcase/template/CodeBlock';
+import { Checkbox } from '@/ui/checkbox/Checkbox';
 import { Icon } from '@/ui/icon/Icon';
 import styles from './IconGallery.module.css';
 import { IconPixelPreview } from './IconPixelPreview';
@@ -77,16 +78,7 @@ export function IconGallery() {
       <section className={styles.details}>
         <div className={styles.header}>
           <h3 className={styles.title}>{selected.name}</h3>
-          <label className={styles.option}>
-            <input
-              type="checkbox"
-              checked={showOutline}
-              onChange={(event) => {
-                setShowOutline(event.target.checked);
-              }}
-            />
-            {OUTLINE_LABEL}
-          </label>
+          <Checkbox checked={showOutline} onCheckedChange={setShowOutline} label={OUTLINE_LABEL} />
         </div>
         <div className={styles.previews}>
           <div className={styles.preview}>

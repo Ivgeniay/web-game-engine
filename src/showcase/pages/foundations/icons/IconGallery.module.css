@@ -78,14 +78,6 @@
   font-weight: var(--font-weight-semibold);
 }
 
-.option {
-  display: flex;
-  align-items: center;
-  gap: var(--space-4);
-  color: var(--color-text-primary);
-  font-size: var(--font-size-md);
-}
-
 .previews {
   display: flex;
   flex-wrap: wrap;

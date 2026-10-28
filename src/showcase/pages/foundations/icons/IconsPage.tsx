@@ -41,7 +41,8 @@ export function IconsPage() {
           An icon takes the text color of its parent through <code>currentColor</code>, so color it
           by setting <code>color</code> on the parent. Status colors are allowed for icons. An icon
           is decorative: it is hidden from assistive technologies and has no label of its own. The
-          label belongs to the button that holds the icon.
+          label belongs to the button that holds the icon: <code>IconButton</code> takes it as{' '}
+          <code>label</code> and picks the icon size from its own size.
         </p>
         <ExampleBlock
           sources={[
