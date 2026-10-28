@@ -24,6 +24,7 @@ export interface CommandRegistry {
     command: CommandDefinition<TTarget>,
     handler: CommandHandler<TTarget>,
   ) => Unsubscribe;
+  readonly isHandled: (command: CommandDefinitionBase) => boolean;
   readonly getState: <TTarget>(
     command: CommandDefinition<TTarget>,
     invocation: CommandInvocation<TTarget>,
@@ -88,6 +89,7 @@ export function createCommandRegistry(): CommandRegistry {
 
   return {
     handle: (command, handler) => handledCommands.register({ command, handler }),
+    isHandled: (command) => handlerOf(command) !== undefined,
     getState(command, invocation) {
       const handler = handlerOf(command);
 

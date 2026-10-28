@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { startHotkeyController } from '@/core/hotkeys/hotkeyController';
 import { detectPlatform } from '@/core/hotkeys/platform';
+import { startNativeContextMenuSuppression } from '@/shell/nativeContextMenu';
 import { isKeyboardCapturedByPopup } from '@/shell/popupKeyboardCapture';
 import { startLanguageController } from '@/state/language/languageController';
 import { PlatformProvider } from '@/state/platform/PlatformProvider';
@@ -28,6 +29,7 @@ const registries = createEditorRegistries();
 
 startThemeController(stores.theme);
 startLanguageController(stores.language, document.documentElement);
+startNativeContextMenuSuppression(document);
 startHotkeyController({
   commands: registries.commands,
   target: document,

@@ -1,0 +1,15 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.menuBar {
+  border: var(--size-border-width) solid var(--color-border-separator);
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}

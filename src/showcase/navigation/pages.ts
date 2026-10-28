@@ -27,7 +27,9 @@ import { ThemesPage } from '@/showcase/pages/foundations/themes/ThemesPage';
 import { TypographyPage } from '@/showcase/pages/foundations/TypographyPage';
 import { OverviewPage } from '@/showcase/pages/overview/OverviewPage';
 import { CommandsPage } from '@/showcase/pages/shell/commands/CommandsPage';
+import { ContextMenuPage } from '@/showcase/pages/shell/contextMenu/ContextMenuPage';
 import { HotkeysPage } from '@/showcase/pages/shell/hotkeys/HotkeysPage';
+import { MenuBarPage } from '@/showcase/pages/shell/menuBar/MenuBarPage';
 import type { ShowcasePage } from './showcasePage';
 
 export const OVERVIEW_PAGE_ID = 'overview';
@@ -253,5 +255,21 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     description:
       'Shortcuts of commands: key matching in any layout, scopes, text fields, platform labels and reserved shortcuts.',
     component: HotkeysPage,
+  },
+  {
+    id: 'shell/menu-bar',
+    section: 'shell',
+    title: 'Menu bar',
+    description:
+      'The main menu built from registered paths: groups, separators, commands and keyboard access.',
+    component: MenuBarPage,
+  },
+  {
+    id: 'shell/context-menu',
+    section: 'shell',
+    title: 'Context menu',
+    description:
+      'Menus assembled for a context and its target, opened by right click, Shift+F10 or the menu key.',
+    component: ContextMenuPage,
   },
 ];

@@ -1,4 +1,5 @@
 import type { CommandRegistry, HandledCommand } from '@/core/commands/commandRegistry';
+import { isTextInput } from '@/core/textInput';
 import { combineUnsubscribes } from '@/core/unsubscribe';
 import type { Unsubscribe } from '@/core/unsubscribe';
 import { findHotkeyBindings } from './hotkeyDispatcher';
@@ -16,28 +17,6 @@ export interface HotkeyControllerOptions {
 }
 
 const ALT_GRAPH_MODIFIER = 'AltGraph';
-
-const TEXT_INPUT_TYPES: ReadonlySet<string> = new Set([
-  'text',
-  'search',
-  'email',
-  'url',
-  'tel',
-  'password',
-  'number',
-]);
-
-function isTextInput(element: Element): boolean {
-  if (element instanceof HTMLInputElement) {
-    return TEXT_INPUT_TYPES.has(element.type);
-  }
-
-  return (
-    element instanceof HTMLTextAreaElement ||
-    element instanceof HTMLSelectElement ||
-    (element instanceof HTMLElement && element.isContentEditable)
-  );
-}
 
 function contextOf(target: Element, globalBlocked: boolean): HotkeyContext {
   return {

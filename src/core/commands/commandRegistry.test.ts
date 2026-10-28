@@ -40,6 +40,18 @@ describe('createCommandRegistry', () => {
     expect(registry.execute(saveScene, FROM_TOOLBAR)).toBe(false);
   });
 
+  it('tells whether a command has a handler', () => {
+    const registry = createCommandRegistry();
+    const unhandle = registry.handle(saveScene, { run: vi.fn(), isEnabled: () => false });
+
+    expect(registry.isHandled(saveScene)).toBe(true);
+    expect(registry.isHandled(renameObject)).toBe(false);
+
+    unhandle();
+
+    expect(registry.isHandled(saveScene)).toBe(false);
+  });
+
   it('runs the handler with the invocation', () => {
     const registry = createCommandRegistry();
     const run = vi.fn();
