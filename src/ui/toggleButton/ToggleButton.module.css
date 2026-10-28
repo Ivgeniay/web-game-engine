@@ -1,0 +1,9 @@
+.root[aria-pressed='true'] {
+  border-color: var(--color-bg-selection);
+  background-color: var(--color-bg-selection);
+}
+
+.root[aria-pressed='true']:disabled {
+  border-color: var(--color-bg-selection-inactive);
+  background-color: var(--color-bg-selection-inactive);
+}

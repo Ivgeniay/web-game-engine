@@ -1,5 +1,8 @@
 import { ButtonPage } from '@/showcase/pages/components/button/ButtonPage';
 import { IconButtonPage } from '@/showcase/pages/components/iconButton/IconButtonPage';
+import { RovingFocusPage } from '@/showcase/pages/components/rovingFocus/RovingFocusPage';
+import { ToggleButtonPage } from '@/showcase/pages/components/toggleButton/ToggleButtonPage';
+import { ToggleButtonGroupPage } from '@/showcase/pages/components/toggleButtonGroup/ToggleButtonGroupPage';
 import { ColorsPage } from '@/showcase/pages/foundations/ColorsPage';
 import { ContrastPage } from '@/showcase/pages/foundations/ContrastPage';
 import { IconsPage } from '@/showcase/pages/foundations/icons/IconsPage';
@@ -110,5 +113,27 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     title: 'IconButton',
     description: 'A square button with only an icon and a required label.',
     component: IconButtonPage,
+  },
+  {
+    id: 'components/toggle-button',
+    section: 'components',
+    title: 'ToggleButton',
+    description: 'A button that is switched on and off, with text or only an icon.',
+    component: ToggleButtonPage,
+  },
+  {
+    id: 'components/toggle-button-group',
+    section: 'components',
+    title: 'ToggleButtonGroup',
+    description: 'A row of toggle buttons to choose one, none or one, or several options.',
+    component: ToggleButtonGroupPage,
+  },
+  {
+    id: 'components/roving-focus',
+    section: 'components',
+    title: 'Roving focus',
+    description:
+      'One Tab stop for a group of controls, with arrow keys inside: the mechanism behind toolbars and groups.',
+    component: RovingFocusPage,
   },
 ];

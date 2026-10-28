@@ -1,0 +1,21 @@
+.root {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.tab {
+  height: var(--size-tab-height);
+  padding: 0 var(--space-8);
+  border: none;
+  border-bottom: var(--size-border-width) solid transparent;
+  background-color: transparent;
+  color: var(--color-text-secondary);
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-md);
+  cursor: pointer;
+}
+
+.tab[aria-selected='true'] {
+  border-bottom-color: var(--color-accent);
+  color: var(--color-text-primary);
+}

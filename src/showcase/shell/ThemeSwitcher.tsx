@@ -1,32 +1,34 @@
 import { THEME_MODES } from '@/state/theme/themeMode';
+import type { ThemeMode } from '@/state/theme/themeMode';
 import { useThemeStore } from '@/state/theme/useThemeStore';
-import styles from './ThemeSwitcher.module.css';
+import { ToggleButtonGroup } from '@/ui/toggleButtonGroup/ToggleButtonGroup';
+import type { ToggleButtonGroupOption } from '@/ui/toggleButtonGroup/ToggleButtonGroup';
+import styles from './switcher.module.css';
 
-const RADIO_GROUP_NAME = 'theme-mode';
-const LEGEND = 'theme';
+const CAPTION = 'theme';
+
+const THEME_OPTIONS: readonly ToggleButtonGroupOption<ThemeMode>[] = THEME_MODES.map((mode) => ({
+  value: mode,
+  label: mode,
+}));
 
 export function ThemeSwitcher() {
   const mode = useThemeStore((state) => state.mode);
   const setMode = useThemeStore((state) => state.setMode);
 
   return (
-    <fieldset className={styles.root}>
-      <legend className={styles.legend}>{LEGEND}</legend>
-      {THEME_MODES.map((option) => (
-        <label key={option} className={styles.option}>
-          <input
-            className={styles.radio}
-            type="radio"
-            name={RADIO_GROUP_NAME}
-            value={option}
-            checked={mode === option}
-            onChange={() => {
-              setMode(option);
-            }}
-          />
-          {option}
-        </label>
-      ))}
-    </fieldset>
+    <div className={styles.root}>
+      <span className={styles.caption} aria-hidden="true">
+        {CAPTION}
+      </span>
+      <ToggleButtonGroup
+        label={CAPTION}
+        options={THEME_OPTIONS}
+        selection="single"
+        value={mode}
+        onValueChange={setMode}
+        size="sm"
+      />
+    </div>
   );
 }
