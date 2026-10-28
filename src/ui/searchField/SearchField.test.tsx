@@ -1,13 +1,15 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { createRef, useState } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { Dialog } from '@/ui/dialog/Dialog';
 import { Toolbar } from '@/ui/toolbar/Toolbar';
 import { SearchField } from './SearchField';
 
 const LABEL = 'Search objects';
 const CLEAR_LABEL = 'Clear search';
 const TOOLBAR_LABEL = 'Tools';
+const DIALOG_TITLE = 'Find object';
 const NEXT_LABEL = 'Next';
 const PLACEHOLDER = 'Search';
 
@@ -178,5 +180,41 @@ describe('SearchField', () => {
 
     expect(ref.current).toBe(field());
     expect(field().placeholder).toBe(PLACEHOLDER);
+  });
+});
+
+function DialogWithSearch() {
+  const [open, setOpen] = useState(true);
+
+  return (
+    <Dialog
+      open={open}
+      onClose={() => {
+        setOpen(false);
+      }}
+      title={DIALOG_TITLE}
+      actions={null}
+    >
+      <Harness initial="cam" />
+    </Dialog>
+  );
+}
+
+describe('SearchField inside a popup', () => {
+  it('clears on Esc without closing the dialog, and closes it on the next Esc', async () => {
+    const user = userEvent.setup();
+    render(<DialogWithSearch />);
+    await waitFor(() => {
+      expect(document.activeElement).toBe(field());
+    });
+
+    await user.keyboard('{Escape}');
+
+    expect(field().value).toBe('');
+    expect(screen.getByRole('dialog')).toBeDefined();
+
+    await user.keyboard('{Escape}');
+
+    expect(screen.queryByRole('dialog')).toBeNull();
   });
 });

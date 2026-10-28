@@ -1,14 +1,15 @@
 import { useRef, useState } from 'react';
 import type { ValueChangeHandler } from '@/contracts/valueChange';
 import { cancelTextEdit, editText, finishTextEdit } from './textEditSession';
-import type { TextEditOutcome, TextEditSession } from './textEditSession';
+import type { TextEditOutcome, TextEditSession, TextReading } from './textEditSession';
 
-export interface TextEditOptions {
-  readonly value: string;
+export interface TextEditOptions<T> {
+  readonly value: T;
   readonly mixed: boolean;
   readonly live: boolean;
-  readonly onValueChange: ValueChangeHandler<string> | undefined;
-  readonly validate: ((text: string) => string | undefined) | undefined;
+  readonly onValueChange: ValueChangeHandler<T> | undefined;
+  readonly format: (value: T) => string;
+  readonly read: (text: string) => TextReading<T>;
 }
 
 export interface TextEdit {
@@ -16,61 +17,75 @@ export interface TextEdit {
   readonly editing: boolean;
   readonly invalidMessage: string | undefined;
   readonly change: (draft: string) => void;
-  readonly commit: () => void;
-  readonly cancel: () => void;
+  readonly replace: (draft: string) => void;
+  readonly commit: () => boolean;
+  readonly cancel: () => boolean;
 }
 
-export function useTextEdit({
+export function useTextEdit<T>({
   value,
   mixed,
   live,
   onValueChange,
-  validate,
-}: TextEditOptions): TextEdit {
-  const [session, setSession] = useState<TextEditSession | null>(null);
-  const sessionRef = useRef<TextEditSession | null>(null);
+  format,
+  read,
+}: TextEditOptions<T>): TextEdit {
+  const [session, setSession] = useState<TextEditSession<T> | null>(null);
+  const sessionRef = useRef<TextEditSession<T> | null>(null);
+  const reading = session === null ? null : read(session.draft);
 
-  function replaceSession(next: TextEditSession | null): void {
+  function replaceSession(next: TextEditSession<T> | null): void {
     sessionRef.current = next;
     setSession(next);
   }
 
-  function isValid(text: string): boolean {
-    return validate?.(text) === undefined;
-  }
-
-  function report(outcome: TextEditOutcome): void {
+  function report(outcome: TextEditOutcome<T>): void {
     if (outcome !== null) {
       onValueChange?.(outcome.value, outcome.phase);
     }
   }
 
-  function change(draft: string): void {
-    const step = editText(sessionRef.current, { value, mixed }, draft, live && isValid(draft));
-    replaceSession(step.session);
+  function edit(draft: string, preview: boolean): void {
+    const draftReading = read(draft);
+    const previewed = preview && draftReading.valid;
+    replaceSession(editText(sessionRef.current, { value, mixed }, draft, previewed));
 
-    if (step.preview !== undefined) {
-      onValueChange?.(step.preview, 'preview');
+    if (previewed) {
+      onValueChange?.(draftReading.value, 'preview');
     }
   }
 
-  function commit(): void {
+  function commit(): boolean {
     const current = sessionRef.current;
     replaceSession(null);
-    report(finishTextEdit(current, current === null || isValid(current.draft)));
+
+    if (current === null) {
+      return false;
+    }
+
+    report(finishTextEdit(current, read(current.draft)));
+
+    return true;
   }
 
-  function cancel(): void {
+  function cancel(): boolean {
     const current = sessionRef.current;
     replaceSession(null);
     report(cancelTextEdit(current));
+
+    return current !== null;
   }
 
   return {
-    text: session?.draft ?? value,
+    text: session?.draft ?? format(value),
     editing: session !== null,
-    invalidMessage: session === null ? undefined : validate?.(session.draft),
-    change,
+    invalidMessage: reading?.valid === false ? reading.message : undefined,
+    change: (draft) => {
+      edit(draft, live);
+    },
+    replace: (draft) => {
+      edit(draft, true);
+    },
     commit,
     cancel,
   };

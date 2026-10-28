@@ -5,6 +5,7 @@ import { IconButtonPage } from '@/showcase/pages/components/iconButton/IconButto
 import { KbdPage } from '@/showcase/pages/components/kbd/KbdPage';
 import { LabelPage } from '@/showcase/pages/components/label/LabelPage';
 import { MenuPage } from '@/showcase/pages/components/menu/MenuPage';
+import { NumberFieldPage } from '@/showcase/pages/components/numberField/NumberFieldPage';
 import { PopoverPage } from '@/showcase/pages/components/popover/PopoverPage';
 import { PopupLayerPage } from '@/showcase/pages/components/popupLayer/PopupLayerPage';
 import { RadioGroupPage } from '@/showcase/pages/components/radioGroup/RadioGroupPage';
@@ -188,6 +189,13 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     title: 'SearchField',
     description: 'A query input that filters a window, with a clear button.',
     component: SearchFieldPage,
+  },
+  {
+    id: 'components/number-field',
+    section: 'components',
+    title: 'NumberField',
+    description: 'An integer or float input with a typing filter, a range and arrow steps.',
+    component: NumberFieldPage,
   },
   {
     id: 'components/toolbar',

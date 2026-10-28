@@ -68,6 +68,7 @@ export function SearchField({
     event.preventDefault();
 
     if (canClear) {
+      event.stopPropagation();
       onValueChange(EMPTY_QUERY);
     } else {
       event.currentTarget.blur();

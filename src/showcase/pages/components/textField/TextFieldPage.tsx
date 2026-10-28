@@ -95,12 +95,13 @@ export function TextFieldPage() {
       </PageSection>
       <PageSection title="Keyboard and other props">
         <p>
-          Ctrl+Z inside the field is the browser&apos;s own undo of the typed text. Editor hotkeys
-          do not fire while focus is in the field, except those that allow it. Inside a toolbar the
-          field joins the toolbar&apos;s Tab stop and keeps the arrow keys for the caret.{' '}
-          <code>size</code> takes <code>sm</code>, <code>md</code> or <code>lg</code>.{' '}
-          <code>ref</code> receives the <code>input</code> element, and native input attributes such
-          as <code>id</code>, <code>name</code>, <code>placeholder</code> and{' '}
+          Ctrl+Z inside the field is the browser&apos;s own undo of the typed text. Esc that drops a
+          typed text stays in the field and does not close a dialog, popover or menu around it; the
+          next Esc does. Editor hotkeys do not fire while focus is in the field, except those that
+          allow it. Inside a toolbar the field joins the toolbar&apos;s Tab stop and keeps the arrow
+          keys for the caret. <code>size</code> takes <code>sm</code>, <code>md</code> or{' '}
+          <code>lg</code>. <code>ref</code> receives the <code>input</code> element, and native
+          input attributes such as <code>id</code>, <code>name</code>, <code>placeholder</code> and{' '}
           <code>aria-describedby</code> pass through. <code>className</code> goes to the outer box
           and is meant only for layout.
         </p>

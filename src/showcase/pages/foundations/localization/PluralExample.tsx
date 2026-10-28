@@ -1,12 +1,14 @@
 import { useId, useState } from 'react';
 import { defineMessages } from '@/core/i18n/messages';
+import { useNumberFieldMessages } from '@/state/fields/useNumberFieldMessages';
 import { useMessages } from '@/state/language/useMessages';
+import { Label } from '@/ui/label/Label';
+import { NumberField } from '@/ui/numberField/NumberField';
 import styles from './PluralExample.module.css';
 
-const INITIAL_VALUE = '1';
+const INITIAL_COUNT = 1;
 const MIN_COUNT = 0;
 const COUNT_STEP = 0.5;
-const FALLBACK_COUNT = 0;
 
 const selectionMessages = defineMessages({
   en: {
@@ -24,34 +26,28 @@ const selectionMessages = defineMessages({
   },
 });
 
-function parseCount(value: string): number {
-  const count = Number.parseFloat(value);
-
-  return Number.isFinite(count) ? count : FALLBACK_COUNT;
-}
-
 export function PluralExample() {
   const t = useMessages(selectionMessages);
-  const [value, setValue] = useState(INITIAL_VALUE);
+  const invalidMessages = useNumberFieldMessages({ min: MIN_COUNT });
+  const [count, setCount] = useState(INITIAL_COUNT);
   const inputId = useId();
 
   return (
     <div className={styles.root}>
-      <label className={styles.field} htmlFor={inputId}>
-        {t('countLabel')}
-        <input
+      <div className={styles.field}>
+        <Label htmlFor={inputId}>{t('countLabel')}</Label>
+        <NumberField
           id={inputId}
           className={styles.input}
-          type="number"
+          value={count}
           min={MIN_COUNT}
           step={COUNT_STEP}
-          value={value}
-          onChange={(event) => {
-            setValue(event.target.value);
-          }}
+          updateMode="live"
+          invalidMessages={invalidMessages}
+          onValueChange={setCount}
         />
-      </label>
-      <output htmlFor={inputId}>{t('objects', { count: parseCount(value) })}</output>
+      </div>
+      <output htmlFor={inputId}>{t('objects', { count })}</output>
     </div>
   );
 }

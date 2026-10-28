@@ -1,8 +1,9 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { createRef, useState } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { ValueChangeHandler } from '@/contracts/valueChange';
+import { Dialog } from '@/ui/dialog/Dialog';
 import { Toolbar } from '@/ui/toolbar/Toolbar';
 import { MIXED_VALUE_PLACEHOLDER } from './fieldBox';
 import { TextField } from './TextField';
@@ -12,6 +13,7 @@ const LABEL = 'Name';
 const TOOLBAR_LABEL = 'Tools';
 const INITIAL = 'Cube';
 const EMPTY_MESSAGE = 'Name is required';
+const DIALOG_TITLE = 'Rename';
 
 interface HarnessProps {
   readonly onValueChange: ValueChangeHandler<string>;
@@ -254,5 +256,41 @@ describe('TextField', () => {
 
     expect(ref.current).toBe(field());
     expect(field().getAttribute('name')).toBe('object-name');
+  });
+});
+
+function DialogWithField() {
+  const [open, setOpen] = useState(true);
+
+  return (
+    <Dialog
+      open={open}
+      onClose={() => {
+        setOpen(false);
+      }}
+      title={DIALOG_TITLE}
+      actions={null}
+    >
+      <Harness onValueChange={vi.fn()} />
+    </Dialog>
+  );
+}
+
+describe('TextField inside a popup', () => {
+  it('cancels the edit on Esc without closing the dialog, and closes it on the next Esc', async () => {
+    const user = userEvent.setup();
+    render(<DialogWithField />);
+    await waitFor(() => {
+      expect(document.activeElement).toBe(field());
+    });
+
+    await user.keyboard('xyz{Escape}');
+
+    expect(field().value).toBe(INITIAL);
+    expect(screen.getByRole('dialog')).toBeDefined();
+
+    await user.keyboard('{Escape}');
+
+    expect(screen.queryByRole('dialog')).toBeNull();
   });
 });

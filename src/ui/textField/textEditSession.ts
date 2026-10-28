@@ -1,58 +1,58 @@
-export interface TextEditSession {
-  readonly initial: string;
+export interface TextEditSession<T> {
+  readonly initial: T;
   readonly draft: string;
   readonly previewed: boolean;
   readonly mixed: boolean;
 }
 
-export interface TextEditStart {
-  readonly value: string;
+export interface TextEditStart<T> {
+  readonly value: T;
   readonly mixed: boolean;
 }
 
-export interface TextEditStep {
-  readonly session: TextEditSession;
-  readonly preview: string | undefined;
-}
+export type TextReading<T> =
+  | { readonly valid: true; readonly value: T }
+  | { readonly valid: false; readonly message: string; readonly fallback: T | undefined };
 
-export type TextEditOutcome =
-  | { readonly phase: 'commit'; readonly value: string }
-  | { readonly phase: 'cancel'; readonly value: string }
+export type TextEditOutcome<T> =
+  | { readonly phase: 'commit'; readonly value: T }
+  | { readonly phase: 'cancel'; readonly value: T }
   | null;
 
-export function editText(
-  session: TextEditSession | null,
-  start: TextEditStart,
+export function editText<T>(
+  session: TextEditSession<T> | null,
+  start: TextEditStart<T>,
   draft: string,
-  previewDraft: boolean,
-): TextEditStep {
-  const current = session ?? {
-    initial: start.value,
-    draft: start.value,
-    previewed: false,
-    mixed: start.mixed,
-  };
+  previewed: boolean,
+): TextEditSession<T> {
+  const current = session ?? { initial: start.value, previewed: false, mixed: start.mixed };
 
-  return {
-    session: { ...current, draft, previewed: current.previewed || previewDraft },
-    preview: previewDraft ? draft : undefined,
-  };
+  return { ...current, draft, previewed: current.previewed || previewed };
 }
 
-export function cancelTextEdit(session: TextEditSession | null): TextEditOutcome {
+export function cancelTextEdit<T>(session: TextEditSession<T> | null): TextEditOutcome<T> {
   return session?.previewed === true ? { phase: 'cancel', value: session.initial } : null;
 }
 
-export function finishTextEdit(session: TextEditSession | null, valid: boolean): TextEditOutcome {
+export function committedValue<T>(reading: TextReading<T>): T | undefined {
+  return reading.valid ? reading.value : reading.fallback;
+}
+
+export function finishTextEdit<T>(
+  session: TextEditSession<T> | null,
+  reading: TextReading<T>,
+): TextEditOutcome<T> {
   if (session === null) {
     return null;
   }
 
-  if (!valid) {
+  const value = committedValue(reading);
+
+  if (value === undefined) {
     return cancelTextEdit(session);
   }
 
-  const changed = session.draft !== session.initial || session.previewed || session.mixed;
+  const changed = !Object.is(value, session.initial) || session.previewed || session.mixed;
 
-  return changed ? { phase: 'commit', value: session.draft } : null;
+  return changed ? { phase: 'commit', value } : null;
 }

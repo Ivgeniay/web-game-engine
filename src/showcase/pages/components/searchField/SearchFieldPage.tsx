@@ -31,7 +31,8 @@ export function SearchFieldPage() {
       </PageSection>
       <PageSection title="Keyboard and other props">
         <p>
-          Esc clears the query, and a second Esc leaves the field. A window focuses its search field
+          Esc clears the query, and a second Esc leaves the field. Esc that clears the query does
+          not close a dialog, popover or menu around the field. A window focuses its search field
           with its own hotkey, such as Mod+F in the window&apos;s scope, not with logic inside the
           field. Moving to the results with the Down arrow belongs to the list below the field:
           handle <code>onKeyDown</code> until lists arrive. Inside a toolbar the field joins the
