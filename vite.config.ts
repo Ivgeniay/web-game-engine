@@ -6,6 +6,15 @@ export default defineConfig({
   resolve: {
     tsconfigPaths: true,
   },
+  build: {
+    rolldownOptions: {
+      output: {
+        codeSplitting: {
+          groups: [{ name: 'dockview', test: /[\\/]node_modules[\\/].*dockview/ }],
+        },
+      },
+    },
+  },
   test: {
     css: { include: [/src\/themes\/.+\.css/] },
     projects: [
