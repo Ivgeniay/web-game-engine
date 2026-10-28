@@ -28,6 +28,13 @@ export function SizesPage() {
         <p>Thickness of scrollbars.</p>
         <TokenSection group="size" names={getSizeTokenNames('scrollbar')} />
       </PageSection>
+      <PageSection title="Property rows">
+        <p>
+          Limits of the label column in property rows: the narrowest label and the narrowest field
+          when the column is dragged, and the width of the grip on the column border.
+        </p>
+        <TokenSection group="size" names={getSizeTokenNames('property')} />
+      </PageSection>
     </>
   );
 }

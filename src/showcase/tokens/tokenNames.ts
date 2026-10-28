@@ -3,7 +3,14 @@ import type { GroupedTokenNames } from '@/themes/customProperties';
 import darkCss from '@/themes/dark.css?raw';
 import tokensCss from '@/themes/tokens.css?raw';
 
-export const SIZE_TOKEN_KINDS = ['control', 'panel', 'icon', 'border', 'scrollbar'] as const;
+export const SIZE_TOKEN_KINDS = [
+  'control',
+  'panel',
+  'icon',
+  'border',
+  'scrollbar',
+  'property',
+] as const;
 
 export type SizeTokenKind = (typeof SIZE_TOKEN_KINDS)[number];
 
@@ -13,6 +20,7 @@ export const SIZE_TOKEN_PREFIXES: Readonly<Record<SizeTokenKind, readonly string
   icon: ['--size-icon-'],
   border: ['--size-border-'],
   scrollbar: ['--size-scrollbar'],
+  property: ['--size-property-'],
 };
 
 export const GROUPED_TOKEN_NAMES: GroupedTokenNames = groupTokenNames([

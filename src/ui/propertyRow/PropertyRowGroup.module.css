@@ -1,0 +1,23 @@
+.root {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.splitter {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(
+    clamp(
+        var(--size-property-label-min),
+        var(--property-label-width, 40%),
+        calc(100% - var(--size-property-field-min))
+      ) -
+      var(--size-property-splitter) / 2
+  );
+  width: var(--size-property-splitter);
+  cursor: col-resize;
+  touch-action: none;
+}

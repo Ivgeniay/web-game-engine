@@ -36,6 +36,9 @@
   --size-icon-md: 16px;
   --size-border-width: 1px;
   --size-scrollbar: 8px;
+  --size-property-label-min: 48px;
+  --size-property-field-min: 48px;
+  --size-property-splitter: 5px;
 
   --radius-none: 0;
   --radius-sm: 2px;

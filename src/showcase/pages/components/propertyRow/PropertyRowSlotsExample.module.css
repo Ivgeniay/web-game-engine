@@ -1,0 +1,13 @@
+.root {
+  width: var(--showcase-inspector-width);
+}
+
+.modified,
+.unmodified {
+  width: var(--space-2);
+  height: var(--size-control-height-sm);
+}
+
+.modified {
+  background-color: var(--color-accent);
+}

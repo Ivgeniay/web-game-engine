@@ -1,0 +1,10 @@
+.zone {
+  cursor: ew-resize;
+  touch-action: none;
+}
+
+:global(:root[data-value-dragging]),
+:global(:root[data-value-dragging] *) {
+  cursor: ew-resize !important;
+  user-select: none !important;
+}

@@ -8,6 +8,7 @@ import { MenuPage } from '@/showcase/pages/components/menu/MenuPage';
 import { NumberFieldPage } from '@/showcase/pages/components/numberField/NumberFieldPage';
 import { PopoverPage } from '@/showcase/pages/components/popover/PopoverPage';
 import { PopupLayerPage } from '@/showcase/pages/components/popupLayer/PopupLayerPage';
+import { PropertyRowPage } from '@/showcase/pages/components/propertyRow/PropertyRowPage';
 import { RadioGroupPage } from '@/showcase/pages/components/radioGroup/RadioGroupPage';
 import { RovingFocusPage } from '@/showcase/pages/components/rovingFocus/RovingFocusPage';
 import { SearchFieldPage } from '@/showcase/pages/components/searchField/SearchFieldPage';
@@ -18,6 +19,7 @@ import { ToggleButtonPage } from '@/showcase/pages/components/toggleButton/Toggl
 import { ToggleButtonGroupPage } from '@/showcase/pages/components/toggleButtonGroup/ToggleButtonGroupPage';
 import { TooltipPage } from '@/showcase/pages/components/tooltip/TooltipPage';
 import { ToolbarPage } from '@/showcase/pages/components/toolbar/ToolbarPage';
+import { ValueDragPage } from '@/showcase/pages/components/valueDrag/ValueDragPage';
 import { ColorsPage } from '@/showcase/pages/foundations/ColorsPage';
 import { ContrastPage } from '@/showcase/pages/foundations/ContrastPage';
 import { IconsPage } from '@/showcase/pages/foundations/icons/IconsPage';
@@ -196,6 +198,21 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     title: 'NumberField',
     description: 'An integer or float input with a typing filter, a range and arrow steps.',
     component: NumberFieldPage,
+  },
+  {
+    id: 'components/value-drag',
+    section: 'components',
+    title: 'Value drag',
+    description:
+      'A hook that changes a number by dragging, with modifiers and an optional pointer lock.',
+    component: ValueDragPage,
+  },
+  {
+    id: 'components/property-row',
+    section: 'components',
+    title: 'PropertyRow',
+    description: 'An inspector line with a caption, a field and a shared caption column.',
+    component: PropertyRowPage,
   },
   {
     id: 'components/toolbar',
