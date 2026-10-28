@@ -3,11 +3,13 @@ import { CheckboxPage } from '@/showcase/pages/components/checkbox/CheckboxPage'
 import { IconButtonPage } from '@/showcase/pages/components/iconButton/IconButtonPage';
 import { KbdPage } from '@/showcase/pages/components/kbd/KbdPage';
 import { LabelPage } from '@/showcase/pages/components/label/LabelPage';
+import { PopupLayerPage } from '@/showcase/pages/components/popupLayer/PopupLayerPage';
 import { RadioGroupPage } from '@/showcase/pages/components/radioGroup/RadioGroupPage';
 import { RovingFocusPage } from '@/showcase/pages/components/rovingFocus/RovingFocusPage';
 import { SeparatorPage } from '@/showcase/pages/components/separator/SeparatorPage';
 import { ToggleButtonPage } from '@/showcase/pages/components/toggleButton/ToggleButtonPage';
 import { ToggleButtonGroupPage } from '@/showcase/pages/components/toggleButtonGroup/ToggleButtonGroupPage';
+import { TooltipPage } from '@/showcase/pages/components/tooltip/TooltipPage';
 import { ToolbarPage } from '@/showcase/pages/components/toolbar/ToolbarPage';
 import { ColorsPage } from '@/showcase/pages/foundations/ColorsPage';
 import { ContrastPage } from '@/showcase/pages/foundations/ContrastPage';
@@ -178,11 +180,26 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     component: KbdPage,
   },
   {
+    id: 'components/tooltip',
+    section: 'components',
+    title: 'Tooltip',
+    description: 'A short hint with an optional shortcut, shown on hover and keyboard focus.',
+    component: TooltipPage,
+  },
+  {
     id: 'components/roving-focus',
     section: 'components',
     title: 'Roving focus',
     description:
       'One Tab stop for a group of controls, with arrow keys inside: the mechanism behind toolbars and groups.',
     component: RovingFocusPage,
+  },
+  {
+    id: 'components/popup-layer',
+    section: 'components',
+    title: 'Popup layer',
+    description:
+      'The shared layer for tooltips, menus, lists, popovers and dialogs: z-index and position.',
+    component: PopupLayerPage,
   },
 ];

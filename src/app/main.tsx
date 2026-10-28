@@ -4,6 +4,7 @@ import { startLanguageController } from '@/state/language/languageController';
 import { StoresProvider } from '@/state/stores/StoresProvider';
 import { createBrowserStores } from '@/state/stores/browserStores';
 import { startThemeController } from '@/state/theme/themeController';
+import { PopupLayer } from '@/ui/popup/PopupLayer';
 import { App } from './App';
 import '@/themes/global.css';
 
@@ -23,7 +24,9 @@ startLanguageController(stores.language, document.documentElement);
 createRoot(rootElement).render(
   <StrictMode>
     <StoresProvider stores={stores}>
-      <App />
+      <PopupLayer>
+        <App />
+      </PopupLayer>
     </StoresProvider>
   </StrictMode>,
 );

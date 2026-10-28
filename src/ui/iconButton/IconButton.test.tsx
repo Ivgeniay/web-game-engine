@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { act, cleanup, render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { createRef } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -6,6 +6,7 @@ import { frameworkIcons } from '@/icons/frameworkIcons';
 import { IconButton } from './IconButton';
 
 const LABEL = 'Settings';
+const SHORTCUT = 'Ctrl+,';
 const SMALL_ICON_VIEW_BOX = '0 0 12 12';
 const MEDIUM_ICON_VIEW_BOX = '0 0 16 16';
 
@@ -14,15 +15,33 @@ afterEach(() => {
 });
 
 describe('IconButton', () => {
-  it('is named by its label and shows it as a tooltip', () => {
+  it('is named by its label and shows it in a tooltip', () => {
     render(<IconButton label={LABEL} icon={frameworkIcons.settings} />);
-
     const button = screen.getByRole('button', { name: LABEL });
+
+    act(() => {
+      button.focus();
+    });
 
     expect(button.getAttribute('type')).toBe('button');
     expect(button.getAttribute('aria-label')).toBe(LABEL);
-    expect(button.getAttribute('title')).toBe(LABEL);
+    expect(button.hasAttribute('title')).toBe(false);
     expect(button.textContent).toBe('');
+    expect(screen.getByRole('tooltip').textContent).toBe(LABEL);
+    expect(button.hasAttribute('aria-describedby')).toBe(false);
+  });
+
+  it('shows the shortcut in the tooltip and describes the button with it', () => {
+    render(<IconButton label={LABEL} icon={frameworkIcons.settings} shortcut={SHORTCUT} />);
+    const button = screen.getByRole('button', { name: LABEL });
+
+    act(() => {
+      button.focus();
+    });
+    const tooltip = screen.getByRole('tooltip');
+
+    expect(tooltip.querySelector('kbd')?.textContent).toBe(SHORTCUT);
+    expect(button.getAttribute('aria-describedby')).toBe(tooltip.id);
   });
 
   it('shows only a decorative icon', () => {

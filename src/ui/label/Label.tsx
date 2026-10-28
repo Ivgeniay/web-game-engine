@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import type { Ref } from 'react';
 import { classNames } from '@/ui/classNames';
+import { TooltipBubble } from '@/ui/tooltip/TooltipBubble';
+import { useTooltip } from '@/ui/tooltip/useTooltip';
 import { useMergedRefs } from '@/ui/useMergedRefs';
 import styles from './Label.module.css';
 import { useIsTruncated } from './useIsTruncated';
@@ -29,9 +31,12 @@ export function Label({
   ref,
 }: LabelProps) {
   const [element, setElement] = useState<HTMLElement | null>(null);
-  const mergedRef = useMergedRefs(ref, setElement);
   const truncated = useIsTruncated(truncate ? element : null);
+  const tooltip = useTooltip({ content: children, describe: false, disabled: !truncated });
+  const measuredRef = useMergedRefs<HTMLElement>(ref, setElement);
+  const mergedRef = useMergedRefs<HTMLElement>(measuredRef, tooltip.setTriggerRef);
   const props = {
+    ...tooltip.getTriggerProps(),
     ref: mergedRef,
     id,
     className: classNames(
@@ -41,16 +46,18 @@ export function Label({
       selectable && styles.selectable,
       className,
     ),
-    title: truncated ? children : undefined,
   };
 
-  if (htmlFor !== undefined) {
-    return (
-      <label {...props} htmlFor={htmlFor}>
-        {children}
-      </label>
-    );
-  }
-
-  return <span {...props}>{children}</span>;
+  return (
+    <>
+      {htmlFor === undefined ? (
+        <span {...props}>{children}</span>
+      ) : (
+        <label {...props} htmlFor={htmlFor}>
+          {children}
+        </label>
+      )}
+      {tooltip.bubble !== null && <TooltipBubble {...tooltip.bubble} />}
+    </>
+  );
 }

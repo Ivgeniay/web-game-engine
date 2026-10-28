@@ -1,6 +1,7 @@
-import { act, cleanup, render, screen } from '@testing-library/react';
+import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { createRef } from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { TOOLTIP_DELAY } from '@/ui/tooltip/tooltipTiming';
 import { Label } from './Label';
 
 const TEXT = 'Position of the selected object';
@@ -46,8 +47,16 @@ beforeEach(() => {
   vi.spyOn(HTMLElement.prototype, 'clientWidth', 'get').mockImplementation(() => boxWidth);
 });
 
+function hoverAndWait(element: HTMLElement): void {
+  fireEvent.mouseEnter(element);
+  act(() => {
+    vi.advanceTimersByTime(TOOLTIP_DELAY.open);
+  });
+}
+
 afterEach(() => {
   cleanup();
+  vi.useRealTimers();
   vi.unstubAllGlobals();
   vi.restoreAllMocks();
 });
@@ -75,17 +84,25 @@ describe('Label', () => {
     expect(screen.getByText(TEXT).tagName).toBe('LABEL');
   });
 
-  it('shows the full text as a hint only while the text is cut off', () => {
+  it('shows the full text in a tooltip only while the text is cut off', () => {
+    vi.useFakeTimers();
     render(<Label truncate>{TEXT}</Label>);
     const label = screen.getByText(TEXT);
 
-    expect(label.hasAttribute('title')).toBe(false);
+    hoverAndWait(label);
+    expect(screen.queryByRole('tooltip')).toBeNull();
+    fireEvent.mouseLeave(label);
 
     resizeBox(NARROW_WIDTH);
-    expect(label.getAttribute('title')).toBe(TEXT);
+    hoverAndWait(label);
+    expect(screen.getByRole('tooltip').textContent).toBe(TEXT);
+    expect(label.hasAttribute('title')).toBe(false);
+    expect(label.hasAttribute('aria-describedby')).toBe(false);
+    fireEvent.mouseLeave(label);
 
     resizeBox(FULL_WIDTH);
-    expect(label.hasAttribute('title')).toBe(false);
+    hoverAndWait(label);
+    expect(screen.queryByRole('tooltip')).toBeNull();
   });
 
   it('does not watch the size without truncation', () => {

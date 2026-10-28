@@ -1,4 +1,4 @@
-import { cleanup, render, screen, within } from '@testing-library/react';
+import { act, cleanup, render, screen, within } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { frameworkIcons } from '@/icons/frameworkIcons';
@@ -268,9 +268,12 @@ describe('ToggleButtonGroup', () => {
     );
 
     const button = option('Move');
+    act(() => {
+      button.focus();
+    });
 
     expect(button.textContent).toBe('');
-    expect(button.getAttribute('title')).toBe('Move');
+    expect(screen.getByRole('tooltip').textContent).toBe('Move');
   });
 
   it('passes the language of an option to its button', () => {

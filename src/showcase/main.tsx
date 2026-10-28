@@ -4,6 +4,7 @@ import { startLanguageController } from '@/state/language/languageController';
 import { StoresProvider } from '@/state/stores/StoresProvider';
 import { createBrowserStores } from '@/state/stores/browserStores';
 import { startThemeController } from '@/state/theme/themeController';
+import { PopupLayer } from '@/ui/popup/PopupLayer';
 import '@/themes/global.css';
 import './showcase.css';
 import { Showcase } from './Showcase';
@@ -24,7 +25,9 @@ startLanguageController(stores.language, document.documentElement);
 createRoot(rootElement).render(
   <StrictMode>
     <StoresProvider stores={stores}>
-      <Showcase />
+      <PopupLayer>
+        <Showcase />
+      </PopupLayer>
     </StoresProvider>
   </StrictMode>,
 );

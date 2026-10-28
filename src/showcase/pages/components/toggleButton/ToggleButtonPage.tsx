@@ -37,8 +37,9 @@ export function ToggleButtonPage() {
       <PageSection title="Icon only">
         <p>
           Without text, pass <code>icon</code> and a required <code>label</code>. The label names
-          the button for screen readers and is shown on hover through <code>title</code>, as for{' '}
-          <code>IconButton</code>. With text, <code>icon</code> is optional and shown before it.
+          the button for screen readers and is shown in a <code>Tooltip</code> on hover and on
+          keyboard focus, as for <code>IconButton</code>. With text, <code>icon</code> is optional
+          and shown before it.
         </p>
         <ExampleBlock
           sources={[
@@ -70,8 +71,9 @@ export function ToggleButtonPage() {
         <p>
           <code>ref</code>, native attributes and <code>className</code> work as for{' '}
           <code>Button</code>, except <code>onClick</code>, <code>aria-pressed</code>,{' '}
-          <code>aria-label</code> and <code>title</code>, which the toggle sets itself. Inside a
-          toolbar or another roving focus group the toggle joins the group&apos;s arrow order.
+          <code>aria-label</code> and <code>title</code>, which the toggle sets itself or replaces
+          with a tooltip. Inside a toolbar or another roving focus group the toggle joins the
+          group&apos;s arrow order.
         </p>
       </PageSection>
     </>

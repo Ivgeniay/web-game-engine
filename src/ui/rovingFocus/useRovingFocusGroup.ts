@@ -61,6 +61,10 @@ function isTextEntry(target: EventTarget): boolean {
   );
 }
 
+function isInsideGroup(event: KeyboardEvent<HTMLElement>): boolean {
+  return event.target instanceof Node && event.currentTarget.contains(event.target);
+}
+
 function readItems(
   registry: RovingFocusRegistry<HTMLElement>,
   target: EventTarget,
@@ -88,7 +92,12 @@ export function useRovingFocusGroup({
     (event: KeyboardEvent<HTMLElement>) => {
       const move = rovingMoveForKey(event.key, orientation);
 
-      if (move === undefined || event.defaultPrevented || isTextEntry(event.target)) {
+      if (
+        move === undefined ||
+        event.defaultPrevented ||
+        !isInsideGroup(event) ||
+        isTextEntry(event.target)
+      ) {
         return;
       }
 

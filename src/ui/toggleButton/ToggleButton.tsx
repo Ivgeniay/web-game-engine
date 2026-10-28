@@ -9,6 +9,9 @@ import type { ButtonSize, ButtonVariant } from '@/ui/button/buttonClassName';
 import { classNames } from '@/ui/classNames';
 import { Icon } from '@/ui/icon/Icon';
 import { useRovingFocusItem } from '@/ui/rovingFocus/useRovingFocusItem';
+import { TooltipBubble } from '@/ui/tooltip/TooltipBubble';
+import { useTooltip } from '@/ui/tooltip/useTooltip';
+import { useMergedRefs } from '@/ui/useMergedRefs';
 import styles from './ToggleButton.module.css';
 
 export type ToggleButtonVariant = Exclude<ButtonVariant, 'accent'>;
@@ -54,8 +57,14 @@ export function ToggleButton({
   onFocus,
   ...buttonProps
 }: ToggleButtonProps) {
-  const rovingProps = useRovingFocusItem({
-    ref,
+  const tooltip = useTooltip({
+    content: label ?? '',
+    describe: false,
+    disabled: label === undefined,
+  });
+  const triggerRef = useMergedRefs(ref, tooltip.setTriggerRef);
+  const { ref: rovingRef, ...rovingProps } = useRovingFocusItem({
+    ref: triggerRef,
     tabIndex,
     onFocus,
     disabled: buttonProps.disabled ?? false,
@@ -63,25 +72,27 @@ export function ToggleButton({
   });
 
   return (
-    <button
-      {...buttonProps}
-      {...rovingProps}
-      type="button"
-      className={buttonClassName({
-        variant,
-        size,
-        shape: children === undefined ? 'square' : 'text',
-        className: classNames(styles.root, className),
-      })}
-      aria-pressed={pressed}
-      aria-label={label}
-      title={label}
-      onClick={() => {
-        onPressedChange(!pressed);
-      }}
-    >
-      {icon !== undefined && <Icon icon={icon} size={BUTTON_ICON_SIZES[size]} />}
-      {children !== undefined && <span className={buttonLabelClassName}>{children}</span>}
-    </button>
+    <>
+      <button
+        {...tooltip.getTriggerProps({ ...buttonProps, ...rovingProps })}
+        ref={rovingRef}
+        type="button"
+        className={buttonClassName({
+          variant,
+          size,
+          shape: children === undefined ? 'square' : 'text',
+          className: classNames(styles.root, className),
+        })}
+        aria-pressed={pressed}
+        aria-label={label}
+        onClick={() => {
+          onPressedChange(!pressed);
+        }}
+      >
+        {icon !== undefined && <Icon icon={icon} size={BUTTON_ICON_SIZES[size]} />}
+        {children !== undefined && <span className={buttonLabelClassName}>{children}</span>}
+      </button>
+      {tooltip.bubble !== null && <TooltipBubble {...tooltip.bubble} />}
+    </>
   );
 }

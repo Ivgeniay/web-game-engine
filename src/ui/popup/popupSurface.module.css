@@ -1,0 +1,14 @@
+.surface {
+  box-sizing: border-box;
+  border: var(--size-border-width) solid var(--color-border-separator);
+  background-color: var(--color-bg-popup);
+  color: var(--color-text-primary);
+  font-family: var(--font-family-ui);
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--font-line-height-compact);
+}
+
+.surface[data-reference-hidden] {
+  visibility: hidden;
+}

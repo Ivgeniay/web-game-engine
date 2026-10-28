@@ -13,8 +13,10 @@ export function IconButtonPage() {
       <PageSection title="Label and icon">
         <p>
           <code>IconButton</code> shows only an icon. <code>label</code> is required: it names the
-          button for screen readers through <code>aria-label</code> and is shown on hover. Until the
-          Tooltip component arrives, the hint is the native <code>title</code> attribute.
+          button for screen readers through <code>aria-label</code> and is shown in a{' '}
+          <code>Tooltip</code> on hover and on keyboard focus. <code>shortcut</code> adds a key
+          combination to the tooltip; only then the tooltip also describes the button through{' '}
+          <code>aria-describedby</code>, so a screen reader does not read the label twice.
         </p>
         <p>
           <code>icon</code> takes an icon of a set or an <code>iconRef</code>. <code>variant</code>{' '}
@@ -50,7 +52,8 @@ export function IconButtonPage() {
         <p>
           Keyboard and focus work as for <code>Button</code>: Tab reaches it, Enter and Space press
           it. <code>ref</code>, native attributes and <code>className</code> work the same way too,
-          except that <code>aria-label</code> and <code>title</code> come from <code>label</code>.
+          except that <code>aria-label</code> comes from <code>label</code> and <code>title</code>{' '}
+          is not accepted: the tooltip replaces it.
         </p>
       </PageSection>
     </>

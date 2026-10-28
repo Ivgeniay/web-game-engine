@@ -1,0 +1,8 @@
+.root {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--space-4);
+  overflow: hidden;
+  border: var(--size-border-width) solid var(--color-border-control);
+  background-color: var(--color-bg-panel);
+}

@@ -1,0 +1,11 @@
+.root {
+  z-index: var(--z-tooltip);
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-8);
+  width: max-content;
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-tooltip);
+  pointer-events: none;
+}

@@ -1,4 +1,4 @@
-import { cleanup, render, screen } from '@testing-library/react';
+import { act, cleanup, render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { createRef } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
@@ -87,8 +87,12 @@ describe('ToggleButton', () => {
     );
 
     const button = screen.getByRole('button', { name: ICON_LABEL });
+    act(() => {
+      button.focus();
+    });
 
-    expect(button.getAttribute('title')).toBe(ICON_LABEL);
+    expect(button.hasAttribute('title')).toBe(false);
+    expect(screen.getByRole('tooltip').textContent).toBe(ICON_LABEL);
     expect(button.textContent).toBe('');
     expect(button.querySelector('svg')?.getAttribute('viewBox')).toBe(SMALL_ICON_VIEW_BOX);
   });
@@ -103,7 +107,11 @@ describe('ToggleButton', () => {
     const button = screen.getByRole('button', { name: TEXT });
 
     expect(button.firstElementChild?.tagName.toLowerCase()).toBe('svg');
-    expect(button.hasAttribute('title')).toBe(false);
+    act(() => {
+      button.focus();
+    });
+
+    expect(screen.queryByRole('tooltip')).toBeNull();
   });
 
   it('passes the DOM element to ref', () => {

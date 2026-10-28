@@ -4,6 +4,9 @@ import { BUTTON_ICON_SIZES, buttonClassName } from '@/ui/button/buttonClassName'
 import type { ButtonSize, ButtonVariant } from '@/ui/button/buttonClassName';
 import { Icon } from '@/ui/icon/Icon';
 import { useRovingFocusItem } from '@/ui/rovingFocus/useRovingFocusItem';
+import { TooltipBubble } from '@/ui/tooltip/TooltipBubble';
+import { useTooltip } from '@/ui/tooltip/useTooltip';
+import { useMergedRefs } from '@/ui/useMergedRefs';
 
 type NativeButtonProps = Omit<
   ComponentPropsWithRef<'button'>,
@@ -13,6 +16,7 @@ type NativeButtonProps = Omit<
 interface IconButtonProps extends NativeButtonProps {
   readonly label: string;
   readonly icon: IconSource;
+  readonly shortcut?: string | undefined;
   readonly variant?: ButtonVariant;
   readonly size?: ButtonSize;
 }
@@ -20,6 +24,7 @@ interface IconButtonProps extends NativeButtonProps {
 export function IconButton({
   label,
   icon,
+  shortcut,
   variant = 'flat',
   size = 'md',
   className,
@@ -28,8 +33,10 @@ export function IconButton({
   onFocus,
   ...buttonProps
 }: IconButtonProps) {
-  const rovingProps = useRovingFocusItem({
-    ref,
+  const tooltip = useTooltip({ content: label, shortcut, describe: shortcut !== undefined });
+  const triggerRef = useMergedRefs(ref, tooltip.setTriggerRef);
+  const { ref: rovingRef, ...rovingProps } = useRovingFocusItem({
+    ref: triggerRef,
     tabIndex,
     onFocus,
     disabled: buttonProps.disabled ?? false,
@@ -37,15 +44,17 @@ export function IconButton({
   });
 
   return (
-    <button
-      {...buttonProps}
-      {...rovingProps}
-      type="button"
-      className={buttonClassName({ variant, size, shape: 'square', className })}
-      aria-label={label}
-      title={label}
-    >
-      <Icon icon={icon} size={BUTTON_ICON_SIZES[size]} />
-    </button>
+    <>
+      <button
+        {...tooltip.getTriggerProps({ ...buttonProps, ...rovingProps })}
+        ref={rovingRef}
+        type="button"
+        className={buttonClassName({ variant, size, shape: 'square', className })}
+        aria-label={label}
+      >
+        <Icon icon={icon} size={BUTTON_ICON_SIZES[size]} />
+      </button>
+      {tooltip.bubble !== null && <TooltipBubble {...tooltip.bubble} />}
+    </>
   );
 }

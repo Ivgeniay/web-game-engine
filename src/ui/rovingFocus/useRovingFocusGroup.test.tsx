@@ -1,6 +1,7 @@
 import { cleanup, render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import type { ReactNode } from 'react';
+import { createPortal } from 'react-dom';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { Button } from '@/ui/button/Button';
 import type { RovingOrientation } from './rovingFocus';
@@ -257,6 +258,21 @@ describe('roving focus', () => {
     expect(focused()).toBe(button(SECOND));
     await user.tab({ shift: true });
     expect(focused()).toBe(button(FIRST));
+  });
+
+  it('leaves arrows from a portal rendered inside the group alone', async () => {
+    const user = userEvent.setup();
+    render(
+      <TestGroup label={GROUP_LABEL}>
+        <Button>{FIRST}</Button>
+        <Button>{SECOND}</Button>
+        {createPortal(<button type="button">{FOURTH}</button>, document.body)}
+      </TestGroup>,
+    );
+    button(FOURTH).focus();
+
+    await user.keyboard('{ArrowRight}');
+    expect(focused()).toBe(button(FOURTH));
   });
 
   it('leaves the Tab order alone outside a group', () => {

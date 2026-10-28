@@ -33,9 +33,9 @@ export function LabelPage() {
       <PageSection title="Truncation">
         <p>
           With <code>truncate</code> the text stays on one line and ends with an ellipsis when it
-          does not fit. Only while the text is cut off, the full text is shown on hover through the{' '}
-          <code>title</code> attribute; the Tooltip component will replace it later. Drag the corner
-          of the box to see the hint appear and disappear.
+          does not fit. Only while the text is cut off, the full text is shown in a{' '}
+          <code>Tooltip</code> on hover. Drag the corner of the box to see the tooltip appear and
+          disappear.
         </p>
         <ExampleBlock
           sources={[
