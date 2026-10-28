@@ -1,5 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { defineMessages } from '@/core/i18n/messages';
+import { tabsLayout } from '@/core/layout/layoutDescription';
+import type { LayoutNode } from '@/core/layout/layoutDescription';
 import { messageRef } from '@/core/i18n/translate';
 import type { DockAdapter, DockWindow } from './workspace';
 import { createWorkspace } from './workspace';
@@ -29,11 +31,15 @@ const inspectorWindow = defineWindow({
 
 interface FakeDock extends DockAdapter {
   readonly emit: () => void;
+  readonly getAppliedLayout: () => LayoutNode | null;
+  readonly getMaximizedId: () => string | null;
 }
 
 function createFakeDock(initial: readonly DockWindow[] = []): FakeDock {
   let windows = [...initial];
   let activeId: string | null = windows.at(-1)?.id ?? null;
+  let appliedLayout: LayoutNode | null = null;
+  let maximizedId: string | null = null;
   const listeners = new Set<() => void>();
 
   function emit(): void {
@@ -59,6 +65,19 @@ function createFakeDock(initial: readonly DockWindow[] = []): FakeDock {
       activeId = windows.at(-1)?.id ?? null;
       emit();
     },
+    applyLayout(layout) {
+      appliedLayout = layout;
+      emit();
+    },
+    maximizeWindow(windowId) {
+      maximizedId = windowId;
+      emit();
+    },
+    restoreMaximized() {
+      maximizedId = null;
+      emit();
+    },
+    isMaximized: () => maximizedId !== null,
     subscribe(listener) {
       listeners.add(listener);
 
@@ -67,6 +86,8 @@ function createFakeDock(initial: readonly DockWindow[] = []): FakeDock {
       };
     },
     emit,
+    getAppliedLayout: () => appliedLayout,
+    getMaximizedId: () => maximizedId,
   };
 }
 
@@ -157,5 +178,53 @@ describe('createWorkspace', () => {
     detachFirst();
 
     expect(workspace.isAttached()).toBe(true);
+  });
+
+  it('resets to the default layout only when one is set and a dock is attached', () => {
+    const workspace = createWorkspace();
+    const dock = createFakeDock();
+    const layout = tabsLayout([sceneWindow]);
+
+    expect(workspace.resetLayout()).toBe(false);
+
+    workspace.setDefaultLayout(layout);
+
+    expect(workspace.resetLayout()).toBe(false);
+
+    workspace.attach(dock);
+
+    expect(workspace.resetLayout()).toBe(true);
+    expect(dock.getAppliedLayout()).toBe(layout);
+  });
+
+  it('forgets the default layout when its registration is cancelled', () => {
+    const workspace = createWorkspace();
+    const cancel = workspace.setDefaultLayout(tabsLayout([sceneWindow]));
+    cancel();
+
+    expect(workspace.getDefaultLayout()).toBeNull();
+  });
+
+  it('reports a second default layout as a development error', () => {
+    const workspace = createWorkspace();
+    workspace.setDefaultLayout(tabsLayout([sceneWindow]));
+
+    expect(() => workspace.setDefaultLayout(tabsLayout([inspectorWindow]))).toThrow(
+      /Default layout is already set/,
+    );
+  });
+
+  it('maximizes a window and restores it', () => {
+    const workspace = createWorkspace();
+    const dock = createFakeDock([{ id: 'test.scene', windowType: 'test.scene' }]);
+    workspace.attach(dock);
+    workspace.maximize('test.scene');
+
+    expect(workspace.isMaximized()).toBe(true);
+    expect(dock.getMaximizedId()).toBe('test.scene');
+
+    workspace.restore();
+
+    expect(workspace.isMaximized()).toBe(false);
   });
 });

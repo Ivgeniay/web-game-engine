@@ -1,17 +1,7 @@
 import type { DockviewApi, IDockviewPanel } from 'dockview-react';
 import type { DockAdapter, DockWindow } from '@/core/windows/workspace';
-
-export const WINDOW_PANEL_COMPONENT = 'editor-window';
-
-export function windowTypeOfParams(params: unknown): string | null {
-  if (typeof params !== 'object' || params === null || !('windowType' in params)) {
-    return null;
-  }
-
-  const { windowType } = params;
-
-  return typeof windowType === 'string' ? windowType : null;
-}
+import { applyLayout } from './layoutPersistence';
+import { WINDOW_PANEL_COMPONENT, windowPanelParams, windowTypeOfParams } from './windowPanelParams';
 
 function dockWindowsOf(panel: IDockviewPanel): DockWindow[] {
   const windowType = windowTypeOfParams(panel.params);
@@ -25,7 +15,7 @@ export function createDockviewAdapter(api: DockviewApi): DockAdapter {
     getActiveWindowId: () => api.activePanel?.id ?? null,
     addWindow({ id, windowType }) {
       const group = api.activeGroup;
-      const params = { windowType };
+      const params = windowPanelParams(windowType);
 
       api.addPanel(
         group === undefined
@@ -39,12 +29,27 @@ export function createDockviewAdapter(api: DockviewApi): DockAdapter {
     closeWindow(windowId) {
       api.getPanel(windowId)?.api.close();
     },
+    applyLayout(layout) {
+      applyLayout(api, layout);
+    },
+    maximizeWindow(windowId) {
+      const panel = api.getPanel(windowId);
+
+      if (panel !== undefined) {
+        api.maximizeGroup(panel);
+      }
+    },
+    restoreMaximized() {
+      api.exitMaximizedGroup();
+    },
+    isMaximized: () => api.hasMaximizedGroup(),
     subscribe(listener) {
       const subscriptions = [
         api.onDidAddPanel(listener),
         api.onDidRemovePanel(listener),
         api.onDidActivePanelChange(listener),
         api.onDidLayoutFromJSON(listener),
+        api.onDidMaximizedGroupChange(listener),
       ];
 
       return () => {

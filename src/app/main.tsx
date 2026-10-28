@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { startHotkeyController } from '@/core/hotkeys/hotkeyController';
 import { detectPlatform } from '@/core/hotkeys/platform';
+import { createLayoutStorage } from '@/layout/layoutPersistence';
 import { startNativeContextMenuSuppression } from '@/shell/nativeContextMenu';
 import { isKeyboardCapturedByPopup } from '@/shell/popupKeyboardCapture';
 import { startLanguageController } from '@/state/language/languageController';
@@ -9,7 +10,7 @@ import { PlatformProvider } from '@/state/platform/PlatformProvider';
 import { createEditorRegistries } from '@/state/registries/editorRegistries';
 import { RegistriesProvider } from '@/state/registries/RegistriesProvider';
 import { StoresProvider } from '@/state/stores/StoresProvider';
-import { createBrowserStores } from '@/state/stores/browserStores';
+import { browserStorage, createBrowserStores } from '@/state/stores/browserStores';
 import { startThemeController } from '@/state/theme/themeController';
 import { PopupLayer } from '@/ui/popup/PopupLayer';
 import { App } from './App';
@@ -26,6 +27,7 @@ if (rootElement === null) {
 const stores = createBrowserStores();
 const platform = detectPlatform(navigator);
 const registries = createEditorRegistries();
+const layoutStorage = createLayoutStorage(browserStorage);
 
 startThemeController(stores.theme);
 startLanguageController(stores.language, document.documentElement);
@@ -43,7 +45,7 @@ createRoot(rootElement).render(
       <PlatformProvider platform={platform}>
         <RegistriesProvider registries={registries}>
           <PopupLayer>
-            <App />
+            <App layoutStorage={layoutStorage} />
           </PopupLayer>
         </RegistriesProvider>
       </PlatformProvider>

@@ -3,7 +3,7 @@ import type { IDockviewPanelHeaderProps } from 'dockview-react';
 import { useTranslate } from '@/state/language/useTranslate';
 import { useEditorRegistries } from '@/state/registries/registriesContext';
 import { Icon } from '@/ui/icon/Icon';
-import { windowTypeOfParams } from './dockviewAdapter';
+import { windowTypeOfParams } from './windowPanelParams';
 import styles from './WindowTab.module.css';
 
 export function WindowTab({ api, params }: IDockviewPanelHeaderProps) {

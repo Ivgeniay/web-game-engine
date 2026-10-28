@@ -6,7 +6,7 @@ import { THEME_MODE_SETTING } from '@/state/theme/themeMode';
 import { createThemeStore } from '@/state/theme/themeStore';
 import type { EditorStores } from './storesContext';
 
-const browserStorage: StorageProvider = () => window.localStorage;
+export const browserStorage: StorageProvider = () => window.localStorage;
 
 export function createBrowserStores(): EditorStores {
   return {

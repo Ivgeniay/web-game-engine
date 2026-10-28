@@ -2,16 +2,23 @@ import { useEffect, useState } from 'react';
 import { DockviewReact } from 'dockview-react';
 import type { DockviewApi, DockviewReadyEvent, DockviewTheme } from 'dockview-react';
 import 'dockview-react/dist/styles/dockview.css';
+import { combineUnsubscribes } from '@/core/unsubscribe';
 import { useMessages } from '@/state/language/useMessages';
 import { useEditorRegistries } from '@/state/registries/registriesContext';
+import { useRegistration } from '@/state/registries/useRegistration';
 import { classNames } from '@/ui/classNames';
-import { WINDOW_PANEL_COMPONENT, createDockviewAdapter } from './dockviewAdapter';
+import { createDockviewAdapter } from './dockviewAdapter';
 import styles from './DockLayout.module.css';
+import { registerLayoutCommands } from './layoutCommands';
 import { layoutMessages } from './layoutMessages';
+import { restoreLayout, startLayoutSaving } from './layoutPersistence';
+import type { LayoutStorage } from './layoutPersistence';
 import { WindowPanel } from './WindowPanel';
+import { WINDOW_PANEL_COMPONENT } from './windowPanelParams';
 import { WindowTab } from './WindowTab';
 
 interface DockLayoutProps {
+  readonly layoutStorage?: LayoutStorage | undefined;
   readonly className?: string | undefined;
 }
 
@@ -30,17 +37,34 @@ function EmptyWorkspace() {
   return <p className={styles.empty}>{messages('noOpenWindows')}</p>;
 }
 
-export function DockLayout({ className }: DockLayoutProps) {
-  const { workspace } = useEditorRegistries();
+export function DockLayout({ layoutStorage, className }: DockLayoutProps) {
+  const { windows, workspace } = useEditorRegistries();
   const [api, setApi] = useState<DockviewApi | null>(null);
+
+  useRegistration(registerLayoutCommands, []);
 
   useEffect(() => {
     if (api === null) {
       return undefined;
     }
 
-    return workspace.attach(createDockviewAdapter(api));
-  }, [api, workspace]);
+    restoreLayout({
+      api,
+      stored: layoutStorage?.load() ?? null,
+      defaultLayout: workspace.getDefaultLayout(),
+      isKnownWindowType: (windowType) => windows.get(windowType) !== undefined,
+    });
+    const detach = workspace.attach(createDockviewAdapter(api));
+
+    if (layoutStorage === undefined) {
+      return detach;
+    }
+
+    return combineUnsubscribes(
+      detach,
+      startLayoutSaving({ api, storage: layoutStorage, pageLifecycle: window }),
+    );
+  }, [api, windows, workspace, layoutStorage]);
 
   function handleReady(event: DockviewReadyEvent): void {
     setApi(event.api);

@@ -31,6 +31,7 @@ import { ConfirmDialogPage } from '@/showcase/pages/shell/confirmDialog/ConfirmD
 import { ContextMenuPage } from '@/showcase/pages/shell/contextMenu/ContextMenuPage';
 import { DockingPage } from '@/showcase/pages/shell/docking/DockingPage';
 import { HotkeysPage } from '@/showcase/pages/shell/hotkeys/HotkeysPage';
+import { LayoutPage } from '@/showcase/pages/shell/layout/LayoutPage';
 import { MenuBarPage } from '@/showcase/pages/shell/menuBar/MenuBarPage';
 import { ToolbarStatusBarPage } from '@/showcase/pages/shell/toolbarStatusBar/ToolbarStatusBarPage';
 import type { ShowcasePage } from './showcasePage';
@@ -295,7 +296,15 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     section: 'shell',
     title: 'Docking',
     description:
-      'Window types from the registry, opening and closing windows, the active window and its hotkey scope.',
+      'Window types from the registry, opening, closing and maximizing windows, the active window and its hotkey scope.',
     component: DockingPage,
+  },
+  {
+    id: 'shell/layout',
+    section: 'shell',
+    title: 'Layout',
+    description:
+      'The default layout of the integration, saving and restoring the layout, and resetting it.',
+    component: LayoutPage,
   },
 ];

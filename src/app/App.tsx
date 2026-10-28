@@ -1,5 +1,10 @@
+import type { LayoutStorage } from '@/layout/layoutPersistence';
 import { EditorFrame } from '@/shell/EditorFrame';
 
-export function App() {
-  return <EditorFrame />;
+interface AppProps {
+  readonly layoutStorage: LayoutStorage;
+}
+
+export function App({ layoutStorage }: AppProps) {
+  return <EditorFrame layoutStorage={layoutStorage} />;
 }

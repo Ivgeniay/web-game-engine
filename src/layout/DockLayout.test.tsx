@@ -6,6 +6,7 @@ import { startHotkeyController } from '@/core/hotkeys/hotkeyController';
 import { HOTKEY_SCOPE_ATTRIBUTE } from '@/core/hotkeys/hotkeyScope';
 import { defineMessages } from '@/core/i18n/messages';
 import { messageRef } from '@/core/i18n/translate';
+import { tabsLayout } from '@/core/layout/layoutDescription';
 import { defineWindow } from '@/core/windows/windowType';
 import type { WindowContentProps } from '@/core/windows/windowType';
 import { useMessages } from '@/state/language/useMessages';
@@ -13,6 +14,10 @@ import { createTestEditor } from '@/shell/testEditor';
 import type { TestEditor } from '@/shell/testEditor';
 import { TestEditorProviders } from '@/shell/TestEditorProviders';
 import { DockLayout } from './DockLayout';
+import { resetLayoutCommand, toggleMaximizeCommand } from './layoutCommands';
+import { createLayoutStorage } from './layoutPersistence';
+import type { LayoutStorage } from './layoutPersistence';
+import { serializeLayout, storedLayoutOf } from './layoutSerialization';
 
 const messages = defineMessages({
   en: { scene: 'Scene', game: 'Game', frame: 'Frame selected', play: 'Play' },
@@ -70,13 +75,34 @@ afterEach(() => {
   vi.unstubAllGlobals();
 });
 
-function renderDock(editor: TestEditor) {
+function renderDock(editor: TestEditor, layoutStorage?: LayoutStorage) {
   return render(
     <TestEditorProviders editor={editor}>
       <button type="button">{OUTSIDE_LABEL}</button>
-      <DockLayout />
+      <DockLayout layoutStorage={layoutStorage} />
     </TestEditorProviders>,
   );
+}
+
+function createMemoryLayoutStorage(): LayoutStorage {
+  const entries = new Map<string, string>();
+
+  return createLayoutStorage(() => ({
+    getItem: (key) => entries.get(key) ?? null,
+    setItem: (key, value) => {
+      entries.set(key, value);
+    },
+  }));
+}
+
+function windowIds(editor: TestEditor): string[] {
+  return editor.registries.workspace.getWindows().map(({ id }) => id);
+}
+
+async function waitForAttach(editor: TestEditor): Promise<void> {
+  await waitFor(() => {
+    expect(editor.registries.workspace.isAttached()).toBe(true);
+  });
 }
 
 async function openScene(editor: TestEditor): Promise<void> {
@@ -192,5 +218,103 @@ describe('DockLayout', () => {
     });
 
     expect(screen.getByText('This window is not available')).toBeDefined();
+  });
+
+  it('starts with the default layout of the integration', async () => {
+    const editor = createTestEditor();
+    const { windows, workspace } = editor.registries;
+    windows.register(sceneWindow);
+    windows.register(gameWindow);
+    workspace.setDefaultLayout(tabsLayout([sceneWindow, gameWindow]));
+    renderDock(editor);
+    await waitForAttach(editor);
+
+    expect(windowIds(editor)).toEqual(['test.scene', 'test.game']);
+  });
+
+  it('restores the stored layout instead of the default one', async () => {
+    const editor = createTestEditor();
+    const { windows, workspace } = editor.registries;
+    const layoutStorage = createMemoryLayoutStorage();
+    const stored = serializeLayout(tabsLayout([gameWindow]));
+    windows.register(sceneWindow);
+    windows.register(gameWindow);
+    workspace.setDefaultLayout(tabsLayout([sceneWindow, gameWindow]));
+    layoutStorage.save(stored === null ? null : storedLayoutOf(stored));
+    renderDock(editor, layoutStorage);
+    await waitForAttach(editor);
+
+    expect(windowIds(editor)).toEqual(['test.game']);
+  });
+
+  it('resets the layout to the default one after confirmation', async () => {
+    const editor = createTestEditor();
+    const { commands, dialogs, windows, workspace } = editor.registries;
+    windows.register(sceneWindow);
+    windows.register(gameWindow);
+    workspace.setDefaultLayout(tabsLayout([sceneWindow, gameWindow]));
+    renderDock(editor);
+    await waitForAttach(editor);
+    act(() => {
+      workspace.close('test.game');
+    });
+
+    act(() => {
+      commands.execute(resetLayoutCommand, { source: 'code', target: undefined });
+    });
+    const [request] = dialogs.store.getState().queue;
+
+    expect(windowIds(editor)).toEqual(['test.scene']);
+    expect(request?.options.destructive).toBe(true);
+
+    await act(async () => {
+      dialogs.store.getState().answer(request?.id ?? -1, 'confirm');
+      await Promise.resolve();
+    });
+
+    expect(windowIds(editor)).toEqual(['test.scene', 'test.game']);
+  });
+
+  it('keeps the layout when the reset is cancelled', async () => {
+    const editor = createTestEditor();
+    const { commands, dialogs, windows, workspace } = editor.registries;
+    windows.register(sceneWindow);
+    windows.register(gameWindow);
+    workspace.setDefaultLayout(tabsLayout([sceneWindow, gameWindow]));
+    renderDock(editor);
+    await waitForAttach(editor);
+    act(() => {
+      workspace.close('test.game');
+      commands.execute(resetLayoutCommand, { source: 'code', target: undefined });
+    });
+
+    await act(async () => {
+      const [request] = dialogs.store.getState().queue;
+      dialogs.store.getState().answer(request?.id ?? -1, 'cancel');
+      await Promise.resolve();
+    });
+
+    expect(windowIds(editor)).toEqual(['test.scene']);
+  });
+
+  it('maximizes the active window and restores it with one command', async () => {
+    const editor = createTestEditor();
+    const { commands, windows } = editor.registries;
+    windows.register(sceneWindow);
+    renderDock(editor);
+    await openScene(editor);
+    const invocation = { source: 'code', target: undefined } as const;
+
+    act(() => {
+      commands.execute(toggleMaximizeCommand, invocation);
+    });
+
+    expect(commands.getState(toggleMaximizeCommand, invocation).checked).toBe(true);
+
+    act(() => {
+      commands.execute(toggleMaximizeCommand, invocation);
+    });
+
+    expect(commands.getState(toggleMaximizeCommand, invocation).checked).toBe(false);
   });
 });

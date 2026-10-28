@@ -54,6 +54,13 @@ export function DockingPage() {
             <code>workspace.isOpen(windowType)</code> tells whether one is open.
           </li>
           <li>
+            <code>workspace.maximize(windowId)</code> spreads the group of the window over the whole
+            workspace, <code>workspace.restore()</code> brings the layout back and{' '}
+            <code>workspace.isMaximized()</code> tells whether a group is maximized. The framework
+            command <code>toggleMaximizeCommand</code> does the same for the active window and is
+            checked while a group is maximized.
+          </li>
+          <li>
             <code>workspace.getActiveWindow()</code> returns the active window,{' '}
             <code>workspace.subscribe</code> and <code>workspace.getVersion</code> follow changes.
           </li>

@@ -14,6 +14,7 @@ import { RegistriesProvider } from '@/state/registries/RegistriesProvider';
 import { useEditorRegistries } from '@/state/registries/registriesContext';
 import { Button } from '@/ui/button/Button';
 import { Label } from '@/ui/label/Label';
+import { ToggleButton } from '@/ui/toggleButton/ToggleButton';
 import styles from './OpenWindowsExample.module.css';
 
 const exampleMessages = defineMessages({
@@ -23,6 +24,7 @@ const exampleMessages = defineMessages({
     inspector: 'Inspector',
     open: 'Open {name}',
     closeActive: 'Close the active window',
+    maximize: 'Maximize the active window',
     windowId: 'Window id: {id}',
   },
   ru: {
@@ -31,6 +33,7 @@ const exampleMessages = defineMessages({
     inspector: 'Инспектор',
     open: 'Открыть: {name}',
     closeActive: 'Закрыть активное окно',
+    maximize: 'Развернуть активное окно',
     windowId: 'Идентификатор окна: {id}',
   },
 });
@@ -100,6 +103,14 @@ function ExampleWorkspace() {
     }
   }
 
+  function toggleMaximized(maximized: boolean): void {
+    if (!maximized) {
+      workspace.restore();
+    } else if (activeWindow !== null) {
+      workspace.maximize(activeWindow.id);
+    }
+  }
+
   return (
     <div className={styles.root}>
       <div className={styles.actions}>
@@ -116,6 +127,13 @@ function ExampleWorkspace() {
         <Button disabled={activeWindow === null} onClick={closeActiveWindow}>
           {t('closeActive')}
         </Button>
+        <ToggleButton
+          pressed={workspace.isMaximized()}
+          onPressedChange={toggleMaximized}
+          disabled={activeWindow === null}
+        >
+          {t('maximize')}
+        </ToggleButton>
       </div>
       <DockLayout className={styles.dock} />
     </div>

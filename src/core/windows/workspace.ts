@@ -1,4 +1,5 @@
 import { reportDevelopmentError } from '@/core/developmentError';
+import type { LayoutNode } from '@/core/layout/layoutDescription';
 import type { Unsubscribe } from '@/core/unsubscribe';
 import type { WindowType } from './windowType';
 
@@ -13,6 +14,10 @@ export interface DockAdapter {
   readonly addWindow: (window: DockWindow) => void;
   readonly activateWindow: (windowId: string) => void;
   readonly closeWindow: (windowId: string) => void;
+  readonly applyLayout: (layout: LayoutNode) => void;
+  readonly maximizeWindow: (windowId: string) => void;
+  readonly restoreMaximized: () => void;
+  readonly isMaximized: () => boolean;
   readonly subscribe: (listener: () => void) => Unsubscribe;
 }
 
@@ -26,6 +31,12 @@ export interface Workspace {
   readonly getActiveWindow: () => DockWindow | null;
   readonly requestFocus: (windowId: string) => void;
   readonly takeFocusRequest: (windowId: string) => boolean;
+  readonly setDefaultLayout: (layout: LayoutNode) => Unsubscribe;
+  readonly getDefaultLayout: () => LayoutNode | null;
+  readonly resetLayout: () => boolean;
+  readonly maximize: (windowId: string) => void;
+  readonly restore: () => void;
+  readonly isMaximized: () => boolean;
   readonly getVersion: () => number;
   readonly subscribe: (listener: () => void) => Unsubscribe;
 }
@@ -36,21 +47,26 @@ const NO_WINDOWS: readonly DockWindow[] = [];
 
 function ignoreUnsubscribe(): void {}
 
+export function windowInstanceId(windowType: string, instanceNumber: number): string {
+  return `${windowType}${INSTANCE_SEPARATOR}${String(instanceNumber)}`;
+}
+
 function nextInstanceId(windowType: WindowType, windows: readonly DockWindow[]): string {
   const usedIds = new Set(windows.map(({ id }) => id));
   let instanceNumber = FIRST_INSTANCE_NUMBER;
 
-  while (usedIds.has(`${windowType.id}${INSTANCE_SEPARATOR}${String(instanceNumber)}`)) {
+  while (usedIds.has(windowInstanceId(windowType.id, instanceNumber))) {
     instanceNumber += 1;
   }
 
-  return `${windowType.id}${INSTANCE_SEPARATOR}${String(instanceNumber)}`;
+  return windowInstanceId(windowType.id, instanceNumber);
 }
 
 export function createWorkspace(): Workspace {
   const listeners = new Set<() => void>();
   let adapter: DockAdapter | null = null;
   let focusRequest: string | null = null;
+  let defaultLayout: LayoutNode | null = null;
   let version = 0;
 
   function changed(): void {
@@ -139,6 +155,40 @@ export function createWorkspace(): Workspace {
       focusRequest = null;
       return true;
     },
+    setDefaultLayout(layout) {
+      if (defaultLayout !== null) {
+        reportDevelopmentError('Default layout is already set. Set it once per editor.');
+        return ignoreUnsubscribe;
+      }
+
+      defaultLayout = layout;
+      changed();
+
+      return () => {
+        if (defaultLayout !== layout) {
+          return;
+        }
+
+        defaultLayout = null;
+        changed();
+      };
+    },
+    getDefaultLayout: () => defaultLayout,
+    resetLayout() {
+      if (adapter === null || defaultLayout === null) {
+        return false;
+      }
+
+      adapter.applyLayout(defaultLayout);
+      return true;
+    },
+    maximize(windowId) {
+      adapter?.maximizeWindow(windowId);
+    },
+    restore() {
+      adapter?.restoreMaximized();
+    },
+    isMaximized: () => adapter?.isMaximized() ?? false,
     getVersion: () => version,
     subscribe(listener) {
       listeners.add(listener);

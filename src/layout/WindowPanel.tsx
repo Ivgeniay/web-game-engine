@@ -3,7 +3,7 @@ import type { IDockviewPanelProps } from 'dockview-react';
 import { useMessages } from '@/state/language/useMessages';
 import { useEditorRegistries } from '@/state/registries/registriesContext';
 import { WindowFrame } from '@/windows/WindowFrame';
-import { windowTypeOfParams } from './dockviewAdapter';
+import { windowTypeOfParams } from './windowPanelParams';
 import { layoutMessages } from './layoutMessages';
 import styles from './WindowPanel.module.css';
 
