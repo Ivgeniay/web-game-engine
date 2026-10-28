@@ -1,0 +1,44 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-8);
+}
+
+.areas {
+  display: flex;
+  gap: var(--space-8);
+}
+
+.area {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  padding: var(--space-8);
+  border: var(--size-border-width) solid var(--color-border-control);
+  border-radius: var(--radius-md);
+}
+
+.area:focus-visible {
+  outline: var(--size-border-width) solid var(--color-border-focus);
+}
+
+.hint {
+  display: flex;
+  gap: var(--space-8);
+  align-items: center;
+}
+
+.field {
+  height: var(--size-control-height-md);
+  padding: 0 var(--space-4);
+  border: var(--size-border-width) solid var(--color-border-control);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-field);
+  color: var(--color-text-primary);
+  font: inherit;
+}
+
+.field:focus-visible {
+  outline: var(--size-border-width) solid var(--color-border-focus);
+}

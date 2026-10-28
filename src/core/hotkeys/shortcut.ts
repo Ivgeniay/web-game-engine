@@ -127,3 +127,13 @@ export function parseShortcut(keys: string): ParsedShortcut | null {
 
   return formatKeys(parsed) === keys ? parsed : null;
 }
+
+export function parseShortcutKeys(keys: ShortcutKeys): ParsedShortcut {
+  const parsed = parseShortcut(keys);
+
+  if (parsed === null) {
+    throw new Error(`Invalid shortcut "${keys}".`);
+  }
+
+  return parsed;
+}

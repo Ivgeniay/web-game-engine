@@ -1,6 +1,8 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { detectPlatform } from '@/core/hotkeys/platform';
 import { startLanguageController } from '@/state/language/languageController';
+import { PlatformProvider } from '@/state/platform/PlatformProvider';
 import { StoresProvider } from '@/state/stores/StoresProvider';
 import { createBrowserStores } from '@/state/stores/browserStores';
 import { startThemeController } from '@/state/theme/themeController';
@@ -18,6 +20,7 @@ if (rootElement === null) {
 }
 
 const stores = createBrowserStores();
+const platform = detectPlatform(navigator);
 
 startThemeController(stores.theme);
 startLanguageController(stores.language, document.documentElement);
@@ -25,9 +28,11 @@ startLanguageController(stores.language, document.documentElement);
 createRoot(rootElement).render(
   <StrictMode>
     <StoresProvider stores={stores}>
-      <PopupLayer>
-        <Showcase />
-      </PopupLayer>
+      <PlatformProvider platform={platform}>
+        <PopupLayer>
+          <Showcase />
+        </PopupLayer>
+      </PlatformProvider>
     </StoresProvider>
   </StrictMode>,
 );

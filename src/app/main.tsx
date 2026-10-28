@@ -1,6 +1,9 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
+import { startHotkeyController } from '@/core/hotkeys/hotkeyController';
+import { detectPlatform } from '@/core/hotkeys/platform';
 import { startLanguageController } from '@/state/language/languageController';
+import { PlatformProvider } from '@/state/platform/PlatformProvider';
 import { createEditorRegistries } from '@/state/registries/editorRegistries';
 import { RegistriesProvider } from '@/state/registries/RegistriesProvider';
 import { StoresProvider } from '@/state/stores/StoresProvider';
@@ -19,19 +22,23 @@ if (rootElement === null) {
 }
 
 const stores = createBrowserStores();
+const platform = detectPlatform(navigator);
 const registries = createEditorRegistries();
 
 startThemeController(stores.theme);
 startLanguageController(stores.language, document.documentElement);
+startHotkeyController({ commands: registries.commands, target: document, platform });
 
 createRoot(rootElement).render(
   <StrictMode>
     <StoresProvider stores={stores}>
-      <RegistriesProvider registries={registries}>
-        <PopupLayer>
-          <App />
-        </PopupLayer>
-      </RegistriesProvider>
+      <PlatformProvider platform={platform}>
+        <RegistriesProvider registries={registries}>
+          <PopupLayer>
+            <App />
+          </PopupLayer>
+        </RegistriesProvider>
+      </PlatformProvider>
     </StoresProvider>
   </StrictMode>,
 );

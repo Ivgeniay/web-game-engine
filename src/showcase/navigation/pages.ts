@@ -27,6 +27,7 @@ import { ThemesPage } from '@/showcase/pages/foundations/themes/ThemesPage';
 import { TypographyPage } from '@/showcase/pages/foundations/TypographyPage';
 import { OverviewPage } from '@/showcase/pages/overview/OverviewPage';
 import { CommandsPage } from '@/showcase/pages/shell/commands/CommandsPage';
+import { HotkeysPage } from '@/showcase/pages/shell/hotkeys/HotkeysPage';
 import type { ShowcasePage } from './showcasePage';
 
 export const OVERVIEW_PAGE_ID = 'overview';
@@ -244,5 +245,13 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     description:
       'Command definitions and handlers, the integration entry point and registration for the lifetime of a component.',
     component: CommandsPage,
+  },
+  {
+    id: 'shell/hotkeys',
+    section: 'shell',
+    title: 'Hotkeys',
+    description:
+      'Shortcuts of commands: key matching in any layout, scopes, text fields, platform labels and reserved shortcuts.',
+    component: HotkeysPage,
   },
 ];
