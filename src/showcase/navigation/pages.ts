@@ -4,9 +4,11 @@ import { IconButtonPage } from '@/showcase/pages/components/iconButton/IconButto
 import { KbdPage } from '@/showcase/pages/components/kbd/KbdPage';
 import { LabelPage } from '@/showcase/pages/components/label/LabelPage';
 import { MenuPage } from '@/showcase/pages/components/menu/MenuPage';
+import { PopoverPage } from '@/showcase/pages/components/popover/PopoverPage';
 import { PopupLayerPage } from '@/showcase/pages/components/popupLayer/PopupLayerPage';
 import { RadioGroupPage } from '@/showcase/pages/components/radioGroup/RadioGroupPage';
 import { RovingFocusPage } from '@/showcase/pages/components/rovingFocus/RovingFocusPage';
+import { SelectPage } from '@/showcase/pages/components/select/SelectPage';
 import { SeparatorPage } from '@/showcase/pages/components/separator/SeparatorPage';
 import { ToggleButtonPage } from '@/showcase/pages/components/toggleButton/ToggleButtonPage';
 import { ToggleButtonGroupPage } from '@/showcase/pages/components/toggleButtonGroup/ToggleButtonGroupPage';
@@ -194,6 +196,21 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     description:
       'A list of commands with submenus, opened from a button or at a point on the screen.',
     component: MenuPage,
+  },
+  {
+    id: 'components/select',
+    section: 'components',
+    title: 'Select',
+    description:
+      'A field that chooses one value from a list, with icons, separators and an action.',
+    component: SelectPage,
+  },
+  {
+    id: 'components/popover',
+    section: 'components',
+    title: 'Popover',
+    description: 'A floating panel with any content next to its trigger.',
+    component: PopoverPage,
   },
   {
     id: 'components/roving-focus',

@@ -19,17 +19,26 @@ export function readPixelToken(name: string): number {
 
 export interface PopupMiddlewareOptions {
   readonly fitHeight: boolean;
+  readonly matchAnchorWidth?: boolean | undefined;
 }
 
 function viewportPadding(): number {
   return readPixelToken(POPUP_VIEWPORT_PADDING_TOKEN);
 }
 
-export function createPopupMiddleware({ fitHeight }: PopupMiddlewareOptions): Middleware[] {
-  const fitHeightMiddleware = size(() => ({
+export function createPopupMiddleware({
+  fitHeight,
+  matchAnchorWidth = false,
+}: PopupMiddlewareOptions): Middleware[] {
+  const sizeMiddleware = size(() => ({
     padding: viewportPadding(),
-    apply({ availableHeight, elements }) {
-      elements.floating.style.maxHeight = `${String(availableHeight)}px`;
+    apply({ availableHeight, elements, rects }) {
+      if (fitHeight) {
+        elements.floating.style.maxHeight = `${String(availableHeight)}px`;
+      }
+      if (matchAnchorWidth) {
+        elements.floating.style.minWidth = `${String(rects.reference.width)}px`;
+      }
     },
   }));
 
@@ -37,13 +46,16 @@ export function createPopupMiddleware({ fitHeight }: PopupMiddlewareOptions): Mi
     offset(() => readPixelToken(POPUP_GAP_TOKEN)),
     flip(() => ({ padding: viewportPadding() })),
     shift(() => ({ padding: viewportPadding() })),
-    ...(fitHeight ? [fitHeightMiddleware] : []),
+    ...(fitHeight || matchAnchorWidth ? [sizeMiddleware] : []),
     hide(),
   ];
 }
 
 export function usePopupMiddleware(options: PopupMiddlewareOptions): Middleware[] {
-  const { fitHeight } = options;
+  const { fitHeight, matchAnchorWidth } = options;
 
-  return useMemo(() => createPopupMiddleware({ fitHeight }), [fitHeight]);
+  return useMemo(
+    () => createPopupMiddleware({ fitHeight, matchAnchorWidth }),
+    [fitHeight, matchAnchorWidth],
+  );
 }

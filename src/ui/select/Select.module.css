@@ -1,0 +1,65 @@
+.trigger {
+  justify-content: flex-start;
+}
+
+.value {
+  flex: 1 1 auto;
+  text-align: start;
+}
+
+.placeholder {
+  color: var(--color-text-secondary);
+}
+
+.list {
+  z-index: var(--z-dropdown);
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-4) 0;
+  overflow-y: auto;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-popup);
+  outline: none;
+}
+
+.option {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-6);
+  box-sizing: border-box;
+  min-height: var(--size-control-height-md);
+  padding: 0 var(--space-8) 0 var(--space-4);
+  white-space: nowrap;
+  cursor: default;
+}
+
+.option:focus-visible {
+  outline: none;
+}
+
+.option[data-active] {
+  background-color: var(--color-bg-selection);
+}
+
+.option[aria-disabled] {
+  color: var(--color-text-disabled);
+}
+
+.mark {
+  display: flex;
+  flex: none;
+  width: var(--size-icon-md);
+  height: var(--size-icon-md);
+}
+
+.optionLabel {
+  flex: 1 1 auto;
+}
+
+.separator {
+  flex: none;
+  height: var(--size-border-width);
+  margin: var(--space-4) 0;
+  background-color: var(--color-border-separator);
+}
