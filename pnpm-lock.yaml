@@ -169,6 +169,9 @@ importers:
       '@floating-ui/react':
         specifier: 0.27.20
         version: 0.27.20(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
+      dockview-react:
+        specifier: 8.7.1
+        version: 8.7.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1)
       react:
         specifier: 19.3.1
         version: 19.3.1
@@ -795,6 +798,18 @@ packages:
   detect-libc@2.1.2:
     resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
     engines: {node: '>=8'}
+
+  dockview-core@8.7.1:
+    resolution: {integrity: sha512-4+Z7GYsRMAyZYeIS4CaM5f0nloJtvpvri15xKbpNJnlR8+QEhJGjz8F/syMbTUsbWB0X2bQAWEx/I9Rh2vmGIQ==}
+
+  dockview-react@8.7.1:
+    resolution: {integrity: sha512-Bedra4cDFLfPSekdvTrF9IoDbWw7rlIryIgsh6CWl9c9Pz0cn2oVToQdbt3c1qyYgHrtGK5UEyLqYwLFvSbeTQ==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+      react-dom: ^16.8.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
+
+  dockview@8.7.1:
+    resolution: {integrity: sha512-0KCiSkyXwjEJztaS63VPKBIg7HbJtpgFMFZhvQml28+VQPdt13T70j8ml6S4kQMikGwtvjXk7Qsg9f87Hi5UdQ==}
 
   dom-accessibility-api@0.5.16:
     resolution: {integrity: sha512-X7BJ2yElsnOJ30pZF4uIIDfBEVgF4XEBxL9Bxhy6dnrm5hkzqmsWHGTiHqRiITNhMyFLyAiWndIJP7Z1NTteDg==}
@@ -1998,6 +2013,18 @@ snapshots:
   dequal@2.0.3: {}
 
   detect-libc@2.1.2: {}
+
+  dockview-core@8.7.1: {}
+
+  dockview-react@8.7.1(react-dom@19.3.1(react@19.3.1))(react@19.3.1):
+    dependencies:
+      dockview: 8.7.1
+      react: 19.3.1
+      react-dom: 19.3.1(react@19.3.1)
+
+  dockview@8.7.1:
+    dependencies:
+      dockview-core: 8.7.1
 
   dom-accessibility-api@0.5.16: {}
 

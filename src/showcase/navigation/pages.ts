@@ -29,6 +29,7 @@ import { OverviewPage } from '@/showcase/pages/overview/OverviewPage';
 import { CommandsPage } from '@/showcase/pages/shell/commands/CommandsPage';
 import { ConfirmDialogPage } from '@/showcase/pages/shell/confirmDialog/ConfirmDialogPage';
 import { ContextMenuPage } from '@/showcase/pages/shell/contextMenu/ContextMenuPage';
+import { DockingPage } from '@/showcase/pages/shell/docking/DockingPage';
 import { HotkeysPage } from '@/showcase/pages/shell/hotkeys/HotkeysPage';
 import { MenuBarPage } from '@/showcase/pages/shell/menuBar/MenuBarPage';
 import { ToolbarStatusBarPage } from '@/showcase/pages/shell/toolbarStatusBar/ToolbarStatusBarPage';
@@ -288,5 +289,13 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     title: 'Confirm dialog',
     description: 'Asking the user from code and getting the answer as a promise, with a queue.',
     component: ConfirmDialogPage,
+  },
+  {
+    id: 'shell/docking',
+    section: 'shell',
+    title: 'Docking',
+    description:
+      'Window types from the registry, opening and closing windows, the active window and its hotkey scope.',
+    component: DockingPage,
   },
 ];

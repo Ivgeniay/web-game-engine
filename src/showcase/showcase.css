@@ -5,4 +5,5 @@
   --showcase-icon-zoom: 16;
   --showcase-icon-zoom-cell: calc(var(--showcase-icon-zoom) * 1px);
   --showcase-icon-tile-width: 112px;
+  --showcase-dock-example-height: 280px;
 }

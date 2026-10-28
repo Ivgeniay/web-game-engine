@@ -1,3 +1,4 @@
+import { DockLayout } from '@/layout/DockLayout';
 import { ConfirmDialogHost } from './ConfirmDialogHost';
 import styles from './EditorFrame.module.css';
 import { MainToolbar } from './MainToolbar';
@@ -11,7 +12,9 @@ export function EditorFrame() {
         <MenuBar />
         <MainToolbar />
       </header>
-      <main className={styles.workspace} />
+      <main className={styles.workspace}>
+        <DockLayout />
+      </main>
       <StatusBar />
       <ConfirmDialogHost />
     </div>

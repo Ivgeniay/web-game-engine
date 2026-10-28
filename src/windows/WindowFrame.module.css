@@ -1,0 +1,16 @@
+.root {
+  box-sizing: border-box;
+  height: 100%;
+  overflow: auto;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-md);
+}
+
+.root:focus {
+  outline: none;
+}
+
+.root:focus-visible {
+  outline: var(--size-border-width) solid var(--color-border-focus);
+  outline-offset: calc(var(--size-border-width) * -1);
+}

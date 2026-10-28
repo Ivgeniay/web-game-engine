@@ -1,0 +1,79 @@
+.root {
+  position: relative;
+  isolation: isolate;
+  z-index: var(--z-docking);
+  height: 100%;
+  min-height: 0;
+  font-family: var(--font-family-ui);
+}
+
+.theme {
+  --dv-group-view-background-color: var(--color-bg-panel);
+  --dv-tabs-and-actions-container-background-color: var(--color-bg-header);
+  --dv-tabs-and-actions-container-height: var(--size-tab-height);
+  --dv-tabs-and-actions-container-font-size: var(--font-size-md);
+  --dv-tab-font-size: inherit;
+  --dv-activegroup-visiblepanel-tab-background-color: var(--color-bg-panel);
+  --dv-activegroup-hiddenpanel-tab-background-color: var(--color-bg-header);
+  --dv-inactivegroup-visiblepanel-tab-background-color: var(--color-bg-panel);
+  --dv-inactivegroup-hiddenpanel-tab-background-color: var(--color-bg-header);
+  --dv-activegroup-visiblepanel-tab-color: var(--color-text-primary);
+  --dv-activegroup-hiddenpanel-tab-color: var(--color-text-secondary);
+  --dv-inactivegroup-visiblepanel-tab-color: var(--color-text-primary);
+  --dv-inactivegroup-hiddenpanel-tab-color: var(--color-text-secondary);
+  --dv-tab-divider-color: var(--color-border-separator);
+  --dv-separator-border: var(--color-border-separator);
+  --dv-paneview-header-border-color: var(--color-border-separator);
+  --dv-paneview-active-outline-color: var(--color-border-focus);
+  --dv-drag-over-background-color: var(--color-overlay-drop-target);
+  --dv-drag-over-border-color: var(--color-accent);
+  --dv-drag-over-border: var(--size-border-width) solid var(--color-accent);
+  --dv-edge-dock-indicator-color: var(--color-accent);
+  --dv-sash-color: transparent;
+  --dv-active-sash-color: var(--color-accent);
+  --dv-active-sash-transition-duration: var(--duration-fast);
+  --dv-active-sash-transition-delay: var(--duration-normal);
+  --dv-transition-duration: var(--duration-normal);
+  --dv-icon-hover-background-color: var(--color-overlay-hover);
+  --dv-tabs-container-scrollbar-color: var(--color-scrollbar-thumb);
+  --dv-scrollbar-background-color: var(--color-scrollbar-thumb);
+  --dv-overlay-z-index: var(--z-docking);
+  --dv-border-radius: var(--radius-none);
+  --dv-tab-border-radius: var(--radius-none);
+  --dv-sash-border-radius: var(--radius-none);
+  --dv-dropdown-border-radius: var(--radius-sm);
+  --dv-tab-margin: 0;
+  --dv-spacing-padding: 0;
+  --dv-tab-close-icon-size: var(--size-icon-sm);
+
+  color-scheme: inherit;
+}
+
+.theme :global(.dv-tab) {
+  padding: 0 var(--space-8);
+}
+
+.theme :global(.dv-tab:focus-visible::after),
+.theme :global(.dv-tab:has(:focus-visible)::after) {
+  outline-color: var(--color-border-focus) !important;
+}
+
+.theme :global(.dv-groupview.dv-active-group .dv-tab.dv-active-tab::before) {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: var(--size-border-width);
+  background-color: var(--color-accent);
+  content: '';
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  margin: 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-md);
+}

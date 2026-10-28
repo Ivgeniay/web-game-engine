@@ -1,0 +1,5 @@
+.unavailable {
+  margin: 0;
+  padding: var(--space-8);
+  color: var(--color-text-secondary);
+}

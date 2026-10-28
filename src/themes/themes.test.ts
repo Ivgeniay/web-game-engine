@@ -30,6 +30,7 @@ const EXPECTED_TOKEN_NAMES: readonly string[] = [
   'overlay-hover',
   'overlay-active',
   'overlay-backdrop',
+  'overlay-drop-target',
   'bg-selection',
   'bg-selection-inactive',
   'border-separator',

@@ -11,6 +11,7 @@
   --color-overlay-hover: rgb(0 0 0 / 6%);
   --color-overlay-active: rgb(0 0 0 / 12%);
   --color-overlay-backdrop: rgb(0 0 0 / 30%);
+  --color-overlay-drop-target: color-mix(in srgb, var(--color-accent) 30%, transparent);
 
   --color-bg-selection: #8fb4e3;
   --color-bg-selection-inactive: #a8a8a8;

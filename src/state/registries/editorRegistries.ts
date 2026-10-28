@@ -8,6 +8,10 @@ import { createStatusBarRegistry } from '@/core/statusBar/statusBarRegistry';
 import type { StatusBarRegistry } from '@/core/statusBar/statusBarRegistry';
 import { createToolbarRegistry } from '@/core/toolbar/toolbarRegistry';
 import type { ToolbarRegistry } from '@/core/toolbar/toolbarRegistry';
+import { createWindowRegistry } from '@/core/windows/windowRegistry';
+import type { WindowRegistry } from '@/core/windows/windowRegistry';
+import { createWorkspace } from '@/core/windows/workspace';
+import type { Workspace } from '@/core/windows/workspace';
 import { createConfirmDialogs } from '@/state/dialogs/confirmDialogStore';
 import type { ConfirmDialogs } from '@/state/dialogs/confirmDialogStore';
 
@@ -18,6 +22,8 @@ export interface EditorRegistries {
   readonly toolbar: ToolbarRegistry;
   readonly statusBar: StatusBarRegistry;
   readonly dialogs: ConfirmDialogs;
+  readonly windows: WindowRegistry;
+  readonly workspace: Workspace;
 }
 
 export function createEditorRegistries(): EditorRegistries {
@@ -28,5 +34,7 @@ export function createEditorRegistries(): EditorRegistries {
     toolbar: createToolbarRegistry(),
     statusBar: createStatusBarRegistry(),
     dialogs: createConfirmDialogs(),
+    windows: createWindowRegistry(),
+    workspace: createWorkspace(),
   };
 }
