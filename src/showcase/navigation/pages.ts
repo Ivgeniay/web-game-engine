@@ -3,6 +3,7 @@ import { CheckboxPage } from '@/showcase/pages/components/checkbox/CheckboxPage'
 import { IconButtonPage } from '@/showcase/pages/components/iconButton/IconButtonPage';
 import { KbdPage } from '@/showcase/pages/components/kbd/KbdPage';
 import { LabelPage } from '@/showcase/pages/components/label/LabelPage';
+import { MenuPage } from '@/showcase/pages/components/menu/MenuPage';
 import { PopupLayerPage } from '@/showcase/pages/components/popupLayer/PopupLayerPage';
 import { RadioGroupPage } from '@/showcase/pages/components/radioGroup/RadioGroupPage';
 import { RovingFocusPage } from '@/showcase/pages/components/rovingFocus/RovingFocusPage';
@@ -185,6 +186,14 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     title: 'Tooltip',
     description: 'A short hint with an optional shortcut, shown on hover and keyboard focus.',
     component: TooltipPage,
+  },
+  {
+    id: 'components/menu',
+    section: 'components',
+    title: 'Menu',
+    description:
+      'A list of commands with submenus, opened from a button or at a point on the screen.',
+    component: MenuPage,
   },
   {
     id: 'components/roving-focus',
