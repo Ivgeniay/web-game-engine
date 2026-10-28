@@ -2,6 +2,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { startHotkeyController } from '@/core/hotkeys/hotkeyController';
 import { detectPlatform } from '@/core/hotkeys/platform';
+import { isKeyboardCapturedByPopup } from '@/shell/popupKeyboardCapture';
 import { startLanguageController } from '@/state/language/languageController';
 import { PlatformProvider } from '@/state/platform/PlatformProvider';
 import { createEditorRegistries } from '@/state/registries/editorRegistries';
@@ -27,7 +28,12 @@ const registries = createEditorRegistries();
 
 startThemeController(stores.theme);
 startLanguageController(stores.language, document.documentElement);
-startHotkeyController({ commands: registries.commands, target: document, platform });
+startHotkeyController({
+  commands: registries.commands,
+  target: document,
+  platform,
+  areGlobalHotkeysBlocked: () => isKeyboardCapturedByPopup(document),
+});
 
 createRoot(rootElement).render(
   <StrictMode>

@@ -7,6 +7,7 @@ import { defineMessages } from '@/core/i18n/messages';
 import { messageRef } from '@/core/i18n/translate';
 import type { MessageRef } from '@/core/i18n/translate';
 import { combineUnsubscribes } from '@/core/unsubscribe';
+import { isKeyboardCapturedByPopup } from '@/shell/popupKeyboardCapture';
 import { useMessages } from '@/state/language/useMessages';
 import { useTranslate } from '@/state/language/useTranslate';
 import { usePlatform } from '@/state/platform/platformContext';
@@ -81,7 +82,12 @@ export function HotkeyScopesExample() {
       return undefined;
     }
 
-    return startHotkeyController({ commands: editor.commands, target: root, platform });
+    return startHotkeyController({
+      commands: editor.commands,
+      target: root,
+      platform,
+      areGlobalHotkeysBlocked: () => isKeyboardCapturedByPopup(document),
+    });
   }, [editor, platform]);
 
   return (

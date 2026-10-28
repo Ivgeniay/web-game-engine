@@ -108,8 +108,9 @@ export function HotkeysPage() {
             example.
           </li>
           <li>
-            While a dialog, a menu or a list is open, global shortcuts do not fire. These elements
-            handle their own keys.
+            While global shortcuts are blocked, only the scopes around the focus work. The editor
+            blocks them while a dialog, a menu or a list is open: these elements handle their own
+            keys.
           </li>
           <li>
             A key that a component has already handled with <code>preventDefault</code> is left
@@ -119,10 +120,19 @@ export function HotkeysPage() {
       </PageSection>
       <PageSection title="Starting the controller">
         <p>
-          <code>startHotkeyController({'{ commands, target, platform }'})</code> listens to{' '}
-          <code>keydown</code> on the target and returns the function that stops it. The editor
-          starts it in the entry point on <code>document</code>. The controller rebuilds the key map
-          whenever the set of handled commands changes.
+          <code>
+            startHotkeyController({'{ commands, target, platform, areGlobalHotkeysBlocked }'})
+          </code>{' '}
+          listens to <code>keydown</code> on the target and returns the function that stops it. The
+          editor starts it in the entry point on <code>document</code>. The controller rebuilds the
+          key map whenever the set of handled commands changes.
+        </p>
+        <p>
+          The controller lives in <code>core</code> and knows nothing about popups, so the caller
+          tells it when global shortcuts are blocked. The editor passes{' '}
+          <code>{'() => isKeyboardCapturedByPopup(document)'}</code> from{' '}
+          <code>@/shell/popupKeyboardCapture</code>: it is true while a dialog, a menu or a list is
+          open.
         </p>
       </PageSection>
       <PageSection title="Errors">

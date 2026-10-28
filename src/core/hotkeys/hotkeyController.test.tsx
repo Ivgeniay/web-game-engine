@@ -7,7 +7,6 @@ import type { CommandRegistry } from '@/core/commands/commandRegistry';
 import { defineMessages } from '@/core/i18n/messages';
 import { messageRef } from '@/core/i18n/translate';
 import type { Unsubscribe } from '@/core/unsubscribe';
-import { POPUP_BLOCKS_TOOLTIPS_PROPS } from '@/ui/popup/popupLayerAttributes';
 import { startHotkeyController } from './hotkeyController';
 import { hotkeyScopeProps } from './hotkeyScope';
 import type { CommandShortcut } from './shortcut';
@@ -33,9 +32,15 @@ const CTRL_S = { key: 's', code: 'KeyS', ctrlKey: true };
 const DELETE = { key: 'Delete', code: 'Delete' };
 
 let stopController: Unsubscribe | null = null;
+let globalHotkeysBlocked = false;
 
 function start(commands: CommandRegistry): void {
-  stopController = startHotkeyController({ commands, target: document, platform: 'other' });
+  stopController = startHotkeyController({
+    commands,
+    target: document,
+    platform: 'other',
+    areGlobalHotkeysBlocked: () => globalHotkeysBlocked,
+  });
 }
 
 function renderEditor() {
@@ -57,6 +62,7 @@ function button(name: string): HTMLElement {
 afterEach(() => {
   stopController?.();
   stopController = null;
+  globalHotkeysBlocked = false;
   cleanup();
 });
 
@@ -155,19 +161,29 @@ describe('startHotkeyController', () => {
     expect(run).toHaveBeenCalledTimes(1);
   });
 
-  it.each([
-    ['a dialog', { 'aria-modal': 'true' }],
-    ['a menu', POPUP_BLOCKS_TOOLTIPS_PROPS],
-  ])('ignores global shortcuts while %s is open', (_case, blockingProps) => {
+  it('ignores global shortcuts while they are blocked', () => {
     const commands = createCommandRegistry();
     const run = vi.fn();
     commands.handle(saveScene, { run });
     start(commands);
     renderEditor();
-    render(<div {...blockingProps} />);
+    globalHotkeysBlocked = true;
 
     expect(fireEvent.keyDown(button(OUTSIDE), CTRL_S)).toBe(true);
     expect(run).not.toHaveBeenCalled();
+  });
+
+  it('keeps scoped shortcuts while global ones are blocked', () => {
+    const commands = createCommandRegistry();
+    const run = vi.fn();
+    commands.handle(deleteInHierarchy, { run });
+    start(commands);
+    renderEditor();
+    globalHotkeysBlocked = true;
+
+    fireEvent.keyDown(button(IN_HIERARCHY), DELETE);
+
+    expect(run).toHaveBeenCalledTimes(1);
   });
 
   it('ignores events already handled by a component', () => {
