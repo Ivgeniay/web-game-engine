@@ -45,6 +45,12 @@
   --size-slider-rail: 4px;
   --size-slider-thumb: 10px;
   --size-slider-field-width: 48px;
+  --size-checker-cell: 4px;
+  --size-color-picker-width: 232px;
+  --size-color-area-height: 144px;
+  --size-color-strip-height: 12px;
+  --size-color-marker: 10px;
+  --size-color-alpha-bar: 2px;
 
   --radius-none: 0;
   --radius-sm: 2px;

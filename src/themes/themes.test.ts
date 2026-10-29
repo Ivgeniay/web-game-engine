@@ -52,6 +52,8 @@ const EXPECTED_TOKEN_NAMES: readonly string[] = [
   'axis-x',
   'axis-y',
   'axis-z',
+  'checker-light',
+  'checker-dark',
   'scrollbar-thumb',
   'scrollbar-track',
   'shadow',

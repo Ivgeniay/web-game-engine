@@ -3,6 +3,10 @@ import { ButtonPage } from '@/showcase/pages/components/button/ButtonPage';
 import { buttonPageMessages } from '@/showcase/pages/components/button/buttonPageMessages';
 import { CheckboxPage } from '@/showcase/pages/components/checkbox/CheckboxPage';
 import { checkboxPageMessages } from '@/showcase/pages/components/checkbox/checkboxPageMessages';
+import { ColorFieldPage } from '@/showcase/pages/components/colorField/ColorFieldPage';
+import { colorFieldPageMessages } from '@/showcase/pages/components/colorField/colorFieldPageMessages';
+import { ColorPickerPage } from '@/showcase/pages/components/colorPicker/ColorPickerPage';
+import { colorPickerPageMessages } from '@/showcase/pages/components/colorPicker/colorPickerPageMessages';
 import { ComponentHeaderPage } from '@/showcase/pages/components/componentHeader/ComponentHeaderPage';
 import { componentHeaderPageMessages } from '@/showcase/pages/components/componentHeader/componentHeaderPageMessages';
 import { DialogPage } from '@/showcase/pages/components/dialog/DialogPage';
@@ -272,6 +276,20 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     title: messageRef(sliderPageMessages, 'pageTitle'),
     description: messageRef(sliderPageMessages, 'pageDescription'),
     component: SliderPage,
+  },
+  {
+    id: 'components/color-field',
+    section: 'components',
+    title: messageRef(colorFieldPageMessages, 'pageTitle'),
+    description: messageRef(colorFieldPageMessages, 'pageDescription'),
+    component: ColorFieldPage,
+  },
+  {
+    id: 'components/color-picker',
+    section: 'components',
+    title: messageRef(colorPickerPageMessages, 'pageTitle'),
+    description: messageRef(colorPickerPageMessages, 'pageDescription'),
+    component: ColorPickerPage,
   },
   {
     id: 'components/value-drag',

@@ -12,6 +12,7 @@ const CORE_FILE = 'src/core/unsubscribe.ts';
 const CORE_TEST_FILE = 'src/core/registry/registry.test.ts';
 const SHELL_FILE = 'src/shell/EditorFrame.tsx';
 const DEMO_FILE = 'src/demo/demoExtension.ts';
+const SHARED_TEST_FILE = 'src/shared/developmentError.test.ts';
 
 interface ForbiddenCase {
   readonly name: string;
@@ -239,6 +240,36 @@ const FORBIDDEN_CASES: readonly ForbiddenCase[] = [
     code: "import { createRegistry } from '../core/registry/registry';\nexport const value = createRegistry;\n",
     ruleId: 'no-restricted-imports',
   },
+  {
+    name: 'a shared file importing core',
+    filePath: SHARED_TEST_FILE,
+    code: "import { combineUnsubscribes } from '@/core/unsubscribe';\nexport const value = combineUnsubscribes;\n",
+    ruleId: 'no-restricted-imports',
+  },
+  {
+    name: 'a shared file importing ui',
+    filePath: SHARED_TEST_FILE,
+    code: "import { classNames } from '@/ui/classNames';\nexport const value = classNames;\n",
+    ruleId: 'no-restricted-imports',
+  },
+  {
+    name: 'a shared test importing contracts',
+    filePath: SHARED_TEST_FILE,
+    code: "import { VALUE_EDIT_ATTRIBUTE } from '@/contracts/valueChange';\nexport const value = VALUE_EDIT_ATTRIBUTE;\n",
+    ruleId: 'no-restricted-imports',
+  },
+  {
+    name: 'a shared file importing the demo integration',
+    filePath: SHARED_TEST_FILE,
+    code: "import { installDemo } from '@/demo/demoExtension';\nexport const value = installDemo;\n",
+    ruleId: 'no-restricted-imports',
+  },
+  {
+    name: 'a shared file importing through ../',
+    filePath: SHARED_TEST_FILE,
+    code: "import { classNames } from '../ui/classNames';\nexport const value = classNames;\n",
+    ruleId: 'no-restricted-imports',
+  },
 ];
 
 const ALLOWED_CASES: readonly AllowedCase[] = [
@@ -286,6 +317,21 @@ const ALLOWED_CASES: readonly AllowedCase[] = [
     name: 'a core module importing core and icons',
     filePath: CORE_FILE,
     code: "import { createRegistry } from '@/core/registry/registry';\nimport { frameworkIcons } from '@/icons/frameworkIcons';\n\nexport const values = [createRegistry, frameworkIcons];\n",
+  },
+  {
+    name: 'a shared test importing its own folder and a package',
+    filePath: SHARED_TEST_FILE,
+    code: "import { describe } from 'vitest';\nimport { reportDevelopmentError } from './developmentError';\n\nexport const values = [describe, reportDevelopmentError];\n",
+  },
+  {
+    name: 'core importing shared',
+    filePath: CORE_FILE,
+    code: "import { reportDevelopmentError } from '@/shared/developmentError';\nexport const value = reportDevelopmentError;\n",
+  },
+  {
+    name: 'ui importing shared',
+    filePath: FRAMEWORK_TS_FILE,
+    code: "import { reportDevelopmentError } from '@/shared/developmentError';\nexport const value = reportDevelopmentError;\n",
   },
 ];
 

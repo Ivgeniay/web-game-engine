@@ -1,5 +1,5 @@
 import type { CommandDefinitionBase } from '@/core/commands/command';
-import { reportDevelopmentError } from '@/core/developmentError';
+import { reportDevelopmentError } from '@/shared/developmentError';
 import { isReservedShortcut } from './reservedShortcuts';
 import { parseShortcutKeys } from './shortcut';
 import type { ParsedShortcut, ShortcutKeys, TextInputPolicy } from './shortcut';

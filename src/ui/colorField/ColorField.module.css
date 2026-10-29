@@ -1,0 +1,72 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  min-width: 0;
+}
+
+.swatchButton {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: stretch;
+  box-sizing: border-box;
+  min-width: 0;
+  height: var(--size-control-height-md);
+  margin: 0;
+  padding: var(--space-2);
+  border: var(--size-border-width) solid var(--color-border-control);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-bg-field);
+  color: var(--color-text-primary);
+  font: inherit;
+  cursor: pointer;
+}
+
+.swatchButton:enabled:hover {
+  border-color: var(--color-text-secondary);
+}
+
+.swatchButton:focus-visible {
+  outline: var(--size-border-width) solid var(--color-border-focus);
+  outline-offset: calc(-1 * var(--size-border-width));
+}
+
+.swatchButton:disabled {
+  background-color: var(--color-bg-control);
+  color: var(--color-text-disabled);
+  cursor: default;
+}
+
+.swatch {
+  position: relative;
+  flex: 1 1 auto;
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+}
+
+.color {
+  position: absolute;
+  inset: 0;
+}
+
+.alphaBar {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: var(--size-color-alpha-bar);
+  background-color: var(--color-checker-dark);
+}
+
+.alphaFill {
+  display: block;
+  height: 100%;
+  background-color: var(--color-text-primary);
+}
+
+.mixed {
+  flex: 1 1 auto;
+  font-size: var(--font-size-md);
+  line-height: var(--font-line-height-compact);
+  text-align: center;
+}

@@ -1,4 +1,4 @@
-import { reportDevelopmentError } from '@/core/developmentError';
+import { reportDevelopmentError } from '@/shared/developmentError';
 import type { Unsubscribe } from '@/core/unsubscribe';
 
 export interface Registry<T> {

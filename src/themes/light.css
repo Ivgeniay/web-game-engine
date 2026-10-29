@@ -41,6 +41,9 @@
   --color-axis-y: #4f9a1f;
   --color-axis-z: #2f6fd1;
 
+  --color-checker-light: #ffffff;
+  --color-checker-dark: #cccccc;
+
   --color-scrollbar-thumb: #9a9a9a;
   --color-scrollbar-track: transparent;
 

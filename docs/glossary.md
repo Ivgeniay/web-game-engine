@@ -120,6 +120,15 @@
 | Flags field, flag | Поле флагов, флаг | `FlagsField` |
 | Split button | Кнопка с меню | `SplitButton`; части — «основная часть» и «стрелка» |
 | Summary (of a field) | Сводка | Подпись поля флагов: «Ничего», «Всё», «Смешано» или имена |
+| Color picker | Окно выбора цвета | `ColorPicker`; в интерфейсе — «Выбор цвета» |
+| Color field | Поле цвета | `ColorField` |
+| Swatch | Образец | Образец цвета в поле |
+| Checkerboard | Шахматка | Фон под прозрачным цветом, токены `checker-*` |
+| Hue / saturation / brightness | Тон / насыщенность / яркость | Модель HSV |
+| Alpha channel | Альфа-канал | В подписях полей — «Альфа» |
+| Color model | Модель цвета | RGB 0–255, RGB 0–1, HSV |
+| Eyedropper | Пипетка | `EyeDropper` API |
+| Hex | HEX | Шестнадцатеричная запись цвета |
 
 ## Правила русского перевода
 

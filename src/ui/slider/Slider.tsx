@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef } from 'react';
 import type { KeyboardEvent, Ref } from 'react';
-import type { ValueChangeHandler, ValueChangePhase } from '@/contracts/valueChange';
+import type { ValueChangeHandler } from '@/contracts/valueChange';
 import { classNames } from '@/ui/classNames';
-import { reportDevelopmentError } from '@/ui/developmentError';
+import { reportDevelopmentError } from '@/shared/developmentError';
 import { useLocale } from '@/ui/locale/useLocale';
 import { NumberField } from '@/ui/numberField/NumberField';
 import { DEFAULT_STEP } from '@/ui/numberField/numberStep';
@@ -14,6 +14,7 @@ import type { TextFieldUpdateMode } from '@/ui/textField/TextField';
 import styles from './Slider.module.css';
 import { checkSliderRange, positionToValue, sliderKeyValue, valueToPosition } from './sliderScale';
 import type { SliderScale } from './sliderScale';
+import { usePreviewSession } from './usePreviewSession';
 import { useTrackDrag } from './useTrackDrag';
 
 interface SliderBaseProps {
@@ -49,15 +50,8 @@ interface SliderAriaLabelledBy {
 
 type SliderProps = SliderBaseProps & (SliderAriaLabel | SliderAriaLabelledBy);
 
-interface SliderSession {
-  readonly start: number;
-  readonly value: number;
-  readonly key: string | undefined;
-}
-
 const DEFAULT_PRECISION = 3;
 const PERCENT = 100;
-const ESCAPE_KEY = 'Escape';
 
 export function Slider({
   value,
@@ -98,7 +92,6 @@ export function Slider({
     [locale, kind, precision],
   );
   const railRef = useRef<HTMLSpanElement>(null);
-  const sessionRef = useRef<SliderSession | null>(null);
   const editable = !disabled && !readOnly && movable;
   const rovingProps = useRovingFocusItem({
     ref,
@@ -108,42 +101,22 @@ export function Slider({
     preferred: false,
   });
 
-  function emit(next: number, phase: ValueChangePhase): void {
-    onValueChange?.(next, phase);
-  }
-
-  function preview(next: number, key: string | undefined): void {
-    const session = sessionRef.current ?? { start: value, value, key };
-    sessionRef.current = { ...session, value: next, key };
-    emit(next, 'preview');
-  }
-
-  function finish(commit: boolean): void {
-    const session = sessionRef.current;
-    sessionRef.current = null;
-
-    if (session !== null) {
-      emit(commit ? session.value : session.start, commit ? 'commit' : 'cancel');
-    }
-  }
+  const session = usePreviewSession(value, onValueChange);
 
   const drag = useTrackDrag({
     areaRef: railRef,
     disabled: !editable,
     onStart: () => {
-      finish(true);
+      session.finish(true);
     },
     onMove: (point) => {
-      preview(positionToValue(point.x, range, point.width), undefined);
+      session.preview(positionToValue(point.x, range, point.width), undefined);
     },
-    onEnd: finish,
+    onEnd: session.finish,
   });
 
   function handleKeyDown(event: KeyboardEvent<HTMLDivElement>): void {
-    if (event.key === ESCAPE_KEY && sessionRef.current?.key !== undefined) {
-      event.preventDefault();
-      event.stopPropagation();
-      finish(false);
+    if (session.cancelHeldKey(event)) {
       return;
     }
 
@@ -151,7 +124,7 @@ export function Slider({
       return;
     }
 
-    const base = sessionRef.current?.value ?? value;
+    const base = session.base();
     const next = sliderKeyValue(event.key, event, base, step, range);
 
     if (next === undefined) {
@@ -161,19 +134,7 @@ export function Slider({
     event.preventDefault();
 
     if (editable && !drag.dragging) {
-      preview(next, event.key);
-    }
-  }
-
-  function handleKeyUp(event: KeyboardEvent<HTMLDivElement>): void {
-    if (sessionRef.current !== null && sessionRef.current.key === event.key) {
-      finish(true);
-    }
-  }
-
-  function handleBlur(): void {
-    if (sessionRef.current?.key !== undefined) {
-      finish(true);
+      session.preview(next, event.key);
     }
   }
 
@@ -197,8 +158,8 @@ export function Slider({
         data-disabled={disabled ? '' : undefined}
         onPointerDown={drag.onPointerDown}
         onKeyDown={handleKeyDown}
-        onKeyUp={handleKeyUp}
-        onBlur={handleBlur}
+        onKeyUp={session.releaseKey}
+        onBlur={session.releaseFocus}
       >
         <span ref={railRef} className={styles.rail}>
           {!mixed && (

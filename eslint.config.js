@@ -80,6 +80,13 @@ const coreImportPatterns = [
   },
 ];
 
+const sharedImportPatterns = [
+  {
+    regex: '^@/',
+    message: 'src/shared is the lowest layer and imports nothing from other layers of the project.',
+  },
+];
+
 const namedExportsOnlySelectors = [
   {
     selector: 'ExportDefaultDeclaration',
@@ -195,6 +202,17 @@ export default defineConfig([
         'error',
         {
           patterns: [parentPathImportPattern, integrationImportPattern, ...coreImportPatterns],
+        },
+      ],
+    },
+  },
+  {
+    files: ['src/shared/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [parentPathImportPattern, ...sharedImportPatterns],
         },
       ],
     },

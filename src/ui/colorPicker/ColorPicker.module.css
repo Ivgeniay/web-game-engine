@@ -1,0 +1,102 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  box-sizing: border-box;
+  width: var(--size-color-picker-width);
+  max-width: 100%;
+}
+
+.area {
+  position: relative;
+  flex: none;
+  height: var(--size-color-area-height);
+  border-radius: var(--radius-sm);
+  outline: none;
+  cursor: crosshair;
+  touch-action: none;
+}
+
+.area:focus-visible,
+.strip:focus-visible {
+  outline: var(--size-border-width) solid var(--color-border-focus);
+  outline-offset: var(--size-border-width);
+}
+
+.marker {
+  position: absolute;
+  box-sizing: border-box;
+  width: var(--size-color-marker);
+  height: var(--size-color-marker);
+  border: var(--size-border-width) solid var(--color-text-on-accent);
+  border-radius: var(--radius-full);
+  outline: var(--size-border-width) solid var(--color-shadow);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.strip {
+  position: relative;
+  flex: none;
+  height: var(--size-color-strip-height);
+  border-radius: var(--radius-sm);
+  outline: none;
+  cursor: default;
+  touch-action: none;
+}
+
+.stripFill {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.stripThumb {
+  position: absolute;
+  top: calc(-1 * var(--size-border-width));
+  bottom: calc(-1 * var(--size-border-width));
+  box-sizing: border-box;
+  width: var(--space-4);
+  border: var(--size-border-width) solid var(--color-text-on-accent);
+  border-radius: var(--radius-sm);
+  outline: var(--size-border-width) solid var(--color-shadow);
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.modeRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.mode {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.channels {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-4) var(--space-6);
+}
+
+.channel {
+  display: contents;
+}
+
+.letter {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-md);
+}
+
+.hexRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+}
+
+.hex {
+  flex: 1 1 auto;
+}

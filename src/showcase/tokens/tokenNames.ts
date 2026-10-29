@@ -24,7 +24,7 @@ export const SIZE_TOKEN_PREFIXES: Readonly<Record<SizeTokenKind, readonly string
   scrollbar: ['--size-scrollbar'],
   property: ['--size-property-'],
   list: ['--size-list-', '--size-tree-', '--size-drop-'],
-  field: ['--size-slider-'],
+  field: ['--size-slider-', '--size-checker-', '--size-color-'],
 };
 
 export const GROUPED_TOKEN_NAMES: GroupedTokenNames = groupTokenNames([

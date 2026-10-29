@@ -1,0 +1,10 @@
+.checker {
+  background-color: var(--color-checker-light);
+  background-image: conic-gradient(
+    var(--color-checker-dark) 25%,
+    transparent 0 50%,
+    var(--color-checker-dark) 0 75%,
+    transparent 0
+  );
+  background-size: calc(2 * var(--size-checker-cell)) calc(2 * var(--size-checker-cell));
+}

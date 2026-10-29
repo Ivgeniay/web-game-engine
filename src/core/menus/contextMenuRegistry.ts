@@ -1,5 +1,5 @@
 import type { CommandDefinition } from '@/core/commands/command';
-import { reportDevelopmentError } from '@/core/developmentError';
+import { reportDevelopmentError } from '@/shared/developmentError';
 import type { MessageRef } from '@/core/i18n/translate';
 import { createRegistry } from '@/core/registry/registry';
 import type { Unsubscribe } from '@/core/unsubscribe';

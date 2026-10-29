@@ -23,7 +23,7 @@ export const sizesPageMessages = defineDocMessages({
       'Height of a row in lists and trees, the indent of one tree level and the thickness of the line that shows where a dragged row will be inserted. Every row has the same height, so a long list draws only the rows in view.',
     fieldsTitle: 'Fields',
     fieldsText:
-      'Parts of compound fields: the thickness of the slider rail, the size of its thumb and the width of the number field next to the slider.',
+      'Parts of compound fields: the thickness of the slider rail, the size of its thumb and the width of the number field next to the slider; the checkerboard cell under transparent colors; the size of the color picker, its saturation area, its strips and markers, and the alpha bar under a color swatch.',
   },
   ru: {
     pageTitle: 'Размеры',
@@ -47,6 +47,6 @@ export const sizesPageMessages = defineDocMessages({
       'Высота строки в списках и деревьях, отступ одного уровня дерева и толщина линии, которая показывает, куда встанет перетаскиваемая строка. У всех строк одна высота, поэтому длинный список рисует только видимые строки.',
     fieldsTitle: 'Поля',
     fieldsText:
-      'Части составных полей: толщина дорожки ползунка, размер его бегунка и ширина числового поля рядом с ползунком.',
+      'Части составных полей: толщина дорожки ползунка, размер его бегунка и ширина числового поля рядом с ползунком; клетка шахматки под прозрачными цветами; размеры окна выбора цвета, его поля насыщенности, полос и маркеров, а также полоска альфа-канала под образцом цвета.',
   },
 });

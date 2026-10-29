@@ -1,5 +1,5 @@
 import type { CommandDefinition } from '@/core/commands/command';
-import { reportDevelopmentError } from '@/core/developmentError';
+import { reportDevelopmentError } from '@/shared/developmentError';
 import { createRegistry } from '@/core/registry/registry';
 import type { Unsubscribe } from '@/core/unsubscribe';
 import { MENU_ROOT_PATH, commandBinding, isValidMenuPath, parentMenuPath } from './menuTree';

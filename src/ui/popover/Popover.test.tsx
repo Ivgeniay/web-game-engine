@@ -193,7 +193,7 @@ describe('Popover with a controlled state', () => {
 
     await user.keyboard('{Escape}');
 
-    expect(onOpenChange).toHaveBeenCalledWith(false);
+    expect(onOpenChange).toHaveBeenCalledWith(false, 'escape');
     expect(panel()).not.toBeNull();
   });
 
@@ -204,5 +204,40 @@ describe('Popover with a controlled state', () => {
     await user.click(screen.getByRole('button', { name: OUTSIDE }));
 
     expect(panel()).toBeNull();
+  });
+
+  it('tells why it closes: Esc, a click outside or the trigger', async () => {
+    const user = userEvent.setup();
+    const onOpenChange = vi.fn();
+    render(
+      <>
+        <Popover
+          label={PANEL_LABEL}
+          onOpenChange={onOpenChange}
+          trigger={(triggerProps) => <Button {...triggerProps}>{TRIGGER}</Button>}
+        >
+          <PanelContent />
+        </Popover>
+        <Button>{OUTSIDE}</Button>
+      </>,
+    );
+
+    await user.click(trigger());
+    await user.keyboard('{Escape}');
+
+    expect(onOpenChange).toHaveBeenLastCalledWith(false, 'escape');
+
+    await user.click(trigger());
+    await user.click(screen.getByRole('button', { name: OUTSIDE }));
+
+    expect(onOpenChange).toHaveBeenLastCalledWith(false, 'outside');
+
+    await user.click(trigger());
+
+    expect(onOpenChange).toHaveBeenLastCalledWith(true, 'trigger');
+
+    await user.click(trigger());
+
+    expect(onOpenChange).toHaveBeenLastCalledWith(false, 'trigger');
   });
 });

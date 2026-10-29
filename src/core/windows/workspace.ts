@@ -1,4 +1,4 @@
-import { reportDevelopmentError } from '@/core/developmentError';
+import { reportDevelopmentError } from '@/shared/developmentError';
 import type { LayoutNode } from '@/core/layout/layoutDescription';
 import type { Unsubscribe } from '@/core/unsubscribe';
 import type { WindowType } from './windowType';

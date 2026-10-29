@@ -11,7 +11,7 @@ import {
   useInteractions,
   useRole,
 } from '@floating-ui/react';
-import type { ReferenceType } from '@floating-ui/react';
+import type { OpenChangeReason, ReferenceType } from '@floating-ui/react';
 import { useCallback, useState } from 'react';
 import type { ReactNode } from 'react';
 import { classNames } from '@/ui/classNames';
@@ -25,16 +25,26 @@ export interface PopoverTriggerProps extends Record<string, unknown> {
   readonly ref: (node: ReferenceType | null) => void;
 }
 
+export type PopoverOpenChangeReason = 'escape' | 'outside' | 'trigger';
+
 interface PopoverProps {
   readonly label: string;
   readonly trigger: (triggerProps: PopoverTriggerProps) => ReactNode;
   readonly children: ReactNode;
   readonly open?: boolean | undefined;
-  readonly onOpenChange?: ((open: boolean) => void) | undefined;
+  readonly onOpenChange?: ((open: boolean, reason: PopoverOpenChangeReason) => void) | undefined;
   readonly className?: string | undefined;
 }
 
 const FIRST_TABBABLE = 0;
+
+function popoverReason(reason: OpenChangeReason | undefined): PopoverOpenChangeReason {
+  if (reason === 'escape-key') {
+    return 'escape';
+  }
+
+  return reason === 'reference-press' || reason === 'click' ? 'trigger' : 'outside';
+}
 
 function PopoverRoot({ label, trigger, children, open, onOpenChange, className }: PopoverProps) {
   const [internalOpen, setInternalOpen] = useState(false);
@@ -43,11 +53,11 @@ function PopoverRoot({ label, trigger, children, open, onOpenChange, className }
   const middleware = usePopupMiddleware({ fitHeight: true });
 
   const handleOpenChange = useCallback(
-    (nextOpen: boolean) => {
+    (nextOpen: boolean, _event?: Event, reason?: OpenChangeReason) => {
       if (open === undefined) {
         setInternalOpen(nextOpen);
       }
-      onOpenChange?.(nextOpen);
+      onOpenChange?.(nextOpen, popoverReason(reason));
     },
     [open, onOpenChange],
   );

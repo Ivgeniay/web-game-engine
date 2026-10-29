@@ -18,7 +18,7 @@ export const colorsPageMessages = defineDocMessages({
     rolesOverlay:
       '`overlay-*` are translucent layers: `overlay-hover` and `overlay-active` for hover and pressed states, `overlay-backdrop` to dim the editor behind a dialog, `overlay-drop-target` to highlight where a dragged window or row will land.',
     rolesSpecific:
-      '`axis-*`, `playmode-tint`, `scrollbar-*` and `shadow` serve their specific editor elements.',
+      '`axis-*`, `checker-*`, `playmode-tint`, `scrollbar-*` and `shadow` serve their specific editor elements; `checker-*` draws the checkerboard under transparent colors.',
     tokensTitle: 'Tokens',
     tokensText: 'Values are shown for the current theme.',
   },
@@ -39,7 +39,7 @@ export const colorsPageMessages = defineDocMessages({
     rolesOverlay:
       '`overlay-*` — полупрозрачные слои: `overlay-hover` и `overlay-active` для наведения и нажатия, `overlay-backdrop` затемняет редактор под диалогом, `overlay-drop-target` подсвечивает место, куда ляжет перетаскиваемое окно или строка.',
     rolesSpecific:
-      '`axis-*`, `playmode-tint`, `scrollbar-*` и `shadow` служат своим отдельным элементам редактора.',
+      '`axis-*`, `checker-*`, `playmode-tint`, `scrollbar-*` и `shadow` служат своим отдельным элементам редактора; `checker-*` рисует шахматку под прозрачными цветами.',
     tokensTitle: 'Токены',
     tokensText: 'Значения показаны для текущей темы.',
   },

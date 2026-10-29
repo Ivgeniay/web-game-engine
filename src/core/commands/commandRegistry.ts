@@ -1,4 +1,4 @@
-import { reportDevelopmentError } from '@/core/developmentError';
+import { reportDevelopmentError } from '@/shared/developmentError';
 import { createRegistry } from '@/core/registry/registry';
 import type { Unsubscribe } from '@/core/unsubscribe';
 import type {
