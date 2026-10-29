@@ -1,7 +1,9 @@
 import { ButtonPage } from '@/showcase/pages/components/button/ButtonPage';
 import { CheckboxPage } from '@/showcase/pages/components/checkbox/CheckboxPage';
+import { ComponentHeaderPage } from '@/showcase/pages/components/componentHeader/ComponentHeaderPage';
 import { DialogPage } from '@/showcase/pages/components/dialog/DialogPage';
 import { DragAndDropPage } from '@/showcase/pages/components/dragAndDrop/DragAndDropPage';
+import { FoldoutPage } from '@/showcase/pages/components/foldout/FoldoutPage';
 import { IconButtonPage } from '@/showcase/pages/components/iconButton/IconButtonPage';
 import { KbdPage } from '@/showcase/pages/components/kbd/KbdPage';
 import { LabelPage } from '@/showcase/pages/components/label/LabelPage';
@@ -246,6 +248,20 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     title: 'Drag and drop',
     description: 'Typed data moved with the pointer from a source to a target, across windows.',
     component: DragAndDropPage,
+  },
+  {
+    id: 'components/foldout',
+    section: 'components',
+    title: 'Foldout',
+    description: 'A collapsible group with Alt+click for the nested groups.',
+    component: FoldoutPage,
+  },
+  {
+    id: 'components/component-header',
+    section: 'components',
+    title: 'ComponentHeader',
+    description: 'The header of an inspector section: collapse, enable, title, help and menu.',
+    component: ComponentHeaderPage,
   },
   {
     id: 'components/toolbar',

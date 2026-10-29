@@ -1,0 +1,62 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  box-sizing: border-box;
+  min-width: 0;
+  height: var(--size-control-height-lg);
+  padding: 0 var(--space-4);
+  border-top: var(--size-border-width) solid var(--color-border-separator);
+  background-color: var(--color-bg-header);
+  color: var(--color-text-primary);
+  font-size: var(--font-size-md);
+  cursor: default;
+}
+
+.header:hover {
+  background-image: linear-gradient(var(--color-overlay-hover), var(--color-overlay-hover));
+}
+
+.toggle {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--space-4);
+  height: var(--size-control-height-md);
+  margin: 0;
+  padding: 0 var(--space-2) 0 0;
+  border: none;
+  border-radius: var(--radius-sm);
+  background-color: transparent;
+  color: inherit;
+  font: inherit;
+}
+
+.toggle:focus-visible {
+  outline: var(--size-border-width) solid var(--color-border-focus);
+  outline-offset: calc(-1 * var(--size-border-width));
+}
+
+.enabled {
+  display: flex;
+  flex: none;
+}
+
+.title {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  font-weight: var(--font-weight-semibold);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.content {
+  padding: var(--space-4) 0;
+}
