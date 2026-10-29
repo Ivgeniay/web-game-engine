@@ -4,6 +4,8 @@ import { ROW_HEIGHT_TOKEN } from './useVirtualRows';
 export const TEST_ROW_HEIGHT = 20;
 export const TEST_VISIBLE_ROWS = 10;
 
+const LIST_ROLES: ReadonlySet<string> = new Set(['listbox', 'tree']);
+
 export interface VirtualListTestEnvironment {
   readonly getScrollTop: () => number;
   readonly setScrollTop: (scrollTop: number) => void;
@@ -12,6 +14,10 @@ export interface VirtualListTestEnvironment {
 
 class FakeResizeObserver {
   observe(): void {
+    return undefined;
+  }
+
+  unobserve(): void {
     return undefined;
   }
 
@@ -24,9 +30,13 @@ export function installVirtualListEnvironment(): VirtualListTestEnvironment {
   let scrollTop = 0;
 
   vi.stubGlobal('ResizeObserver', FakeResizeObserver);
-  vi.spyOn(HTMLElement.prototype, 'clientHeight', 'get').mockReturnValue(
-    TEST_ROW_HEIGHT * TEST_VISIBLE_ROWS,
-  );
+  vi.spyOn(HTMLElement.prototype, 'clientHeight', 'get').mockImplementation(function (
+    this: HTMLElement,
+  ) {
+    return LIST_ROLES.has(this.getAttribute('role') ?? '')
+      ? TEST_ROW_HEIGHT * TEST_VISIBLE_ROWS
+      : 0;
+  });
   vi.spyOn(Element.prototype, 'scrollTop', 'get').mockImplementation(() => scrollTop);
   Object.defineProperty(Element.prototype, 'scrollTo', {
     configurable: true,

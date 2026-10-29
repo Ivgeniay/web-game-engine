@@ -1,23 +1,24 @@
 import { messageRef } from '@/core/i18n/translate';
 import { demoMessages } from '@/demo/demoMessages';
+import { DEFAULT_RIGIDBODY } from '@/demo/scene/sceneStore';
 import type { Interpolation, Rigidbody, SceneObject } from '@/demo/scene/sceneStore';
-import { useNumberFieldMessages } from '@/state/fields/useNumberFieldMessages';
 import { useMessages } from '@/state/language/useMessages';
-import { Checkbox } from '@/ui/checkbox/Checkbox';
-import { Label } from '@/ui/label/Label';
-import { NumberField } from '@/ui/numberField/NumberField';
-import { PropertyRow } from '@/ui/propertyRow/PropertyRow';
-import { PropertyRowGroup } from '@/ui/propertyRow/PropertyRowGroup';
-import { Select } from '@/ui/select/Select';
-import styles from './Inspector.module.css';
-import { useObjectProperty } from './useObjectProperty';
+import { BooleanPropertyRow } from './BooleanPropertyRow';
+import { ChoicePropertyRow } from './ChoicePropertyRow';
+import { NumberPropertyRow } from './NumberPropertyRow';
+import { ToggleableComponentSection } from './ToggleableComponentSection';
 
 const MIN_MASS = 0;
 const MIN_DRAG = 0;
 
 interface RigidbodySectionProps {
-  readonly object: SceneObject;
-  readonly rigidbody: Rigidbody;
+  readonly objects: readonly SceneObject[];
+  readonly expanded: boolean;
+  readonly onExpandedChange: (expanded: boolean) => void;
+}
+
+function rigidbodyOf(object: SceneObject): Rigidbody {
+  return object.rigidbody ?? DEFAULT_RIGIDBODY;
 }
 
 function withRigidbody(object: SceneObject, patch: Partial<Rigidbody>): SceneObject {
@@ -26,97 +27,57 @@ function withRigidbody(object: SceneObject, patch: Partial<Rigidbody>): SceneObj
     : { ...object, rigidbody: { ...object.rigidbody, ...patch } };
 }
 
-export function RigidbodySection({ object, rigidbody }: RigidbodySectionProps) {
+export function RigidbodySection({ objects, expanded, onExpandedChange }: RigidbodySectionProps) {
   const t = useMessages(demoMessages);
-  const massMessages = useNumberFieldMessages({ min: MIN_MASS });
-  const dragMessages = useNumberFieldMessages({ min: MIN_DRAG });
-  const changeMass = useObjectProperty({
-    object,
-    label: messageRef(demoMessages, 'mass'),
-    get: (current) => current.rigidbody?.mass ?? rigidbody.mass,
-    set: (current, mass: number) => withRigidbody(current, { mass }),
-  });
-  const changeDrag = useObjectProperty({
-    object,
-    label: messageRef(demoMessages, 'drag'),
-    get: (current) => current.rigidbody?.drag ?? rigidbody.drag,
-    set: (current, drag: number) => withRigidbody(current, { drag }),
-  });
-  const changeGravity = useObjectProperty({
-    object,
-    label: messageRef(demoMessages, 'useGravity'),
-    get: (current) => current.rigidbody?.useGravity ?? rigidbody.useGravity,
-    set: (current, useGravity: boolean) => withRigidbody(current, { useGravity }),
-  });
-  const changeInterpolation = useObjectProperty({
-    object,
-    label: messageRef(demoMessages, 'interpolate'),
-    get: (current) => current.rigidbody?.interpolate ?? rigidbody.interpolate,
-    set: (current, interpolate: Interpolation) => withRigidbody(current, { interpolate }),
-  });
 
   return (
-    <section className={styles.section}>
-      <Label tone="secondary">{t('rigidbody')}</Label>
-      <PropertyRowGroup>
-        <PropertyRow
-          label={t('mass')}
-          drag={{ value: rigidbody.mass, onValueChange: changeMass, min: MIN_MASS }}
-        >
-          {({ id }) => (
-            <NumberField
-              id={id}
-              value={rigidbody.mass}
-              min={MIN_MASS}
-              invalidMessages={massMessages}
-              onValueChange={changeMass}
-            />
-          )}
-        </PropertyRow>
-        <PropertyRow
-          label={t('drag')}
-          drag={{ value: rigidbody.drag, onValueChange: changeDrag, min: MIN_DRAG }}
-        >
-          {({ id }) => (
-            <NumberField
-              id={id}
-              value={rigidbody.drag}
-              min={MIN_DRAG}
-              invalidMessages={dragMessages}
-              onValueChange={changeDrag}
-            />
-          )}
-        </PropertyRow>
-        <PropertyRow label={t('useGravity')}>
-          {({ id, labelId }) => (
-            <Checkbox
-              id={id}
-              aria-labelledby={labelId}
-              checked={rigidbody.useGravity}
-              onCheckedChange={(checked) => {
-                changeGravity(checked, 'commit');
-              }}
-            />
-          )}
-        </PropertyRow>
-        <PropertyRow label={t('interpolate')}>
-          {({ id, labelId }) => (
-            <Select
-              id={id}
-              aria-labelledby={labelId}
-              options={[
-                { kind: 'option', value: 'none', label: t('interpolationNone') },
-                { kind: 'option', value: 'interpolate', label: t('interpolationInterpolate') },
-                { kind: 'option', value: 'extrapolate', label: t('interpolationExtrapolate') },
-              ]}
-              value={rigidbody.interpolate}
-              onValueChange={(value) => {
-                changeInterpolation(value, 'commit');
-              }}
-            />
-          )}
-        </PropertyRow>
-      </PropertyRowGroup>
-    </section>
+    <ToggleableComponentSection
+      component="rigidbody"
+      title={t('rigidbody')}
+      objects={objects}
+      expanded={expanded}
+      onExpandedChange={onExpandedChange}
+      enabled={{
+        undoLabel: messageRef(demoMessages, 'rigidbody'),
+        get: (object) => rigidbodyOf(object).enabled,
+        set: (object, enabled) => withRigidbody(object, { enabled }),
+      }}
+    >
+      <NumberPropertyRow
+        objects={objects}
+        label={t('mass')}
+        undoLabel={messageRef(demoMessages, 'mass')}
+        min={MIN_MASS}
+        get={(object) => rigidbodyOf(object).mass}
+        set={(object, mass) => withRigidbody(object, { mass })}
+      />
+      <NumberPropertyRow
+        objects={objects}
+        label={t('drag')}
+        undoLabel={messageRef(demoMessages, 'drag')}
+        min={MIN_DRAG}
+        get={(object) => rigidbodyOf(object).drag}
+        set={(object, drag) => withRigidbody(object, { drag })}
+      />
+      <BooleanPropertyRow
+        objects={objects}
+        label={t('useGravity')}
+        undoLabel={messageRef(demoMessages, 'useGravity')}
+        get={(object) => rigidbodyOf(object).useGravity}
+        set={(object, useGravity) => withRigidbody(object, { useGravity })}
+      />
+      <ChoicePropertyRow<Interpolation>
+        objects={objects}
+        label={t('interpolate')}
+        undoLabel={messageRef(demoMessages, 'interpolate')}
+        options={[
+          { kind: 'option', value: 'none', label: t('interpolationNone') },
+          { kind: 'option', value: 'interpolate', label: t('interpolationInterpolate') },
+          { kind: 'option', value: 'extrapolate', label: t('interpolationExtrapolate') },
+        ]}
+        get={(object) => rigidbodyOf(object).interpolate}
+        set={(object, interpolate) => withRigidbody(object, { interpolate })}
+      />
+    </ToggleableComponentSection>
   );
 }

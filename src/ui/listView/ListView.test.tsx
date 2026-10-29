@@ -218,6 +218,19 @@ describe('ListView mouse', () => {
     expect(screen.queryAllByRole('option', { selected: true })).toEqual([]);
   });
 
+  it('selects an unselected row on a right click and keeps a selected one', () => {
+    render(<Harness initial={{ selectedIds: ['apple', 'banana'] }} />);
+
+    fireEvent.contextMenu(row('Banana'));
+
+    expect(selectedNames()).toEqual(['Apple', 'Banana']);
+    expect(activeRow()).toBe(row('Banana'));
+
+    fireEvent.contextMenu(row('Date'));
+
+    expect(selectedNames()).toEqual(['Date']);
+  });
+
   it('ignores the modifiers in the single mode', async () => {
     const user = userEvent.setup();
     render(<Harness selectionMode="single" />);

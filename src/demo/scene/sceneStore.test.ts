@@ -1,40 +1,41 @@
 import { describe, expect, it } from 'vitest';
-import { createSceneStore, selectedObject } from './sceneStore';
+import { createSceneStore, findObject, selectedObjects } from './sceneStore';
+import type { SceneStore } from './sceneStore';
 
-function names(store: ReturnType<typeof createSceneStore>): string[] {
+function names(store: SceneStore): string[] {
   return store.getState().objects.map(({ name }) => name);
 }
 
+function idOf(store: SceneStore, name: string): string {
+  return store.getState().objects.find((object) => object.name === name)?.id ?? '';
+}
+
 describe('createSceneStore', () => {
-  it('creates an object and selects it', () => {
+  it('starts with a hierarchy of objects', () => {
     const store = createSceneStore();
-    store.getState().create('Cube');
+    const player = idOf(store, 'Player');
 
-    expect(names(store).at(-1)).toBe('Cube');
-    expect(selectedObject(store.getState())?.name).toBe('Cube');
+    expect(names(store).slice(0, 3)).toEqual(['Main Camera', 'Directional Light', 'Environment']);
+    expect(findObject(store.getState(), idOf(store, 'Weapon'))?.parentId).toBe(player);
+    expect(findObject(store.getState(), player)?.parentId).toBeNull();
   });
 
-  it('duplicates and deletes the selected object', () => {
+  it('gives every object its own id, also to created ones', () => {
     const store = createSceneStore();
-    const [camera] = store.getState().objects;
-    store.getState().select(camera?.id ?? '');
-    store.getState().duplicateSelected();
-
-    expect(names(store)).toEqual(['Main Camera', 'Directional Light', 'Player', 'Main Camera']);
-
-    store.getState().deleteSelected();
-
-    expect(names(store)).toEqual(['Main Camera', 'Directional Light', 'Player']);
-    expect(store.getState().selectedId).toBeNull();
-  });
-
-  it('gives every object its own id', () => {
-    const store = createSceneStore();
-    store.getState().create('Cube');
-    store.getState().create('Cube');
-    const ids = store.getState().objects.map(({ id }) => id);
+    const created = store.getState().createId();
+    const ids = [...store.getState().objects.map(({ id }) => id), created];
 
     expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it('selects several objects in the scene order', () => {
+    const store = createSceneStore();
+    store.getState().setSelection([idOf(store, 'Player'), idOf(store, 'Main Camera')]);
+
+    expect(selectedObjects(store.getState()).map(({ name }) => name)).toEqual([
+      'Main Camera',
+      'Player',
+    ]);
   });
 
   it('updates one object and leaves the others', () => {
@@ -42,27 +43,17 @@ describe('createSceneStore', () => {
     const [camera, light] = store.getState().objects;
     store.getState().updateObject(camera?.id ?? '', (object) => ({ ...object, name: 'Camera' }));
 
-    expect(names(store)).toEqual(['Camera', 'Directional Light', 'Player']);
+    expect(names(store)[0]).toBe('Camera');
     expect(store.getState().objects[1]).toBe(light);
   });
 
-  it('ignores an update of a missing object', () => {
+  it('restores a snapshot of the objects and the selection', () => {
     const store = createSceneStore();
-    const before = store.getState().objects;
-    store.getState().updateObject('missing', (object) => ({ ...object, name: 'Changed' }));
+    const [camera] = store.getState().objects;
 
-    expect(names(store)).toEqual(before.map(({ name }) => name));
-  });
+    store.getState().restore({ objects: camera === undefined ? [] : [camera], selectedIds: ['x'] });
 
-  it('copies the components of a duplicated object', () => {
-    const store = createSceneStore();
-    const player = store.getState().objects[2];
-    store.getState().select(player?.id ?? '');
-    store.getState().duplicateSelected();
-    const copy = store.getState().objects.at(-1);
-
-    expect(copy?.id).not.toBe(player?.id);
-    expect(copy?.rigidbody).toEqual(player?.rigidbody);
-    expect(copy?.transform).toEqual(player?.transform);
+    expect(names(store)).toEqual(['Main Camera']);
+    expect(store.getState().selectedIds).toEqual(['x']);
   });
 });

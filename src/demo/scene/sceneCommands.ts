@@ -1,12 +1,14 @@
 import { defineCommand } from '@/core/commands/command';
 import type { CommandDefinition } from '@/core/commands/command';
 import { messageRef } from '@/core/i18n/translate';
+import type { MessageRef } from '@/core/i18n/translate';
 import { combineUnsubscribes } from '@/core/unsubscribe';
 import type { Unsubscribe } from '@/core/unsubscribe';
 import type { EditorRegistries } from '@/state/registries/editorRegistries';
 import { demoIcons } from '@/demo/demoIcons';
 import { demoMessages } from '@/demo/demoMessages';
-import { SCENE_TOOLS } from './sceneStore';
+import { addObject, applySceneEdit } from './sceneEdits';
+import { DEFAULT_TRANSFORM, SCENE_TOOLS } from './sceneStore';
 import type { SceneStore, SceneTool } from './sceneStore';
 
 const toolCommands: Readonly<Record<SceneTool, CommandDefinition>> = {
@@ -74,19 +76,23 @@ function registerTools({ commands, toolbar }: EditorRegistries, store: SceneStor
 }
 
 function registerGameObjectMenu(
-  { commands, mainMenu }: EditorRegistries,
+  { commands, mainMenu, undo }: EditorRegistries,
   store: SceneStore,
 ): Unsubscribe {
-  function create(name: string): () => void {
+  function create(name: string, label: MessageRef): () => void {
     return () => {
-      store.getState().create(name);
+      const content = { name, transform: DEFAULT_TRANSFORM, rigidbody: null, light: null };
+
+      applySceneEdit(store, undo, label, addObject(content, store.getState().createId()));
     };
   }
 
   return combineUnsubscribes(
-    commands.handle(createEmptyCommand, { run: create(EMPTY_OBJECT_NAME) }),
-    commands.handle(createCubeCommand, { run: create(CUBE_NAME) }),
-    commands.handle(createSphereCommand, { run: create(SPHERE_NAME) }),
+    commands.handle(createEmptyCommand, {
+      run: create(EMPTY_OBJECT_NAME, createEmptyCommand.label),
+    }),
+    commands.handle(createCubeCommand, { run: create(CUBE_NAME, createCubeCommand.label) }),
+    commands.handle(createSphereCommand, { run: create(SPHERE_NAME, createSphereCommand.label) }),
     mainMenu.registerItem({
       path: 'gameObject/createEmpty',
       command: createEmptyCommand,

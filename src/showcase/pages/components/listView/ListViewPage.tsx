@@ -30,7 +30,8 @@ export function ListViewPage() {
           <code>selectionMode</code> is <code>single</code> by default. In the <code>multiple</code>{' '}
           mode, Ctrl (⌘ on macOS) adds or removes a row, Shift selects a range from the last clicked
           row, and both together add a range. A click on the empty space below the rows clears the
-          selection.
+          selection. A right click on a row that is not selected selects it, so a context menu acts
+          on the row that was clicked.
         </p>
         <p>
           The selection is drawn with <code>bg-selection</code> while the focus is in the list and

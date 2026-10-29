@@ -1,9 +1,10 @@
 import { defineCommand } from '@/core/commands/command';
+import { commonMessages } from '@/core/i18n/commonMessages';
 import { messageRef } from '@/core/i18n/translate';
 import { defineContextMenu } from '@/core/menus/contextMenuRegistry';
 import type { WindowTabTarget } from '@/core/windows/windowType';
 import { demoMessages } from '@/demo/demoMessages';
-import type { SceneObject } from '@/demo/scene/sceneStore';
+import type { ComponentKind } from '@/demo/scene/sceneComponents';
 
 export const SCENE_WINDOW_ID = 'demo.scene';
 export const HIERARCHY_WINDOW_ID = 'demo.hierarchy';
@@ -31,7 +32,31 @@ export const deleteObjectCommand = defineCommand({
   shortcut: { keys: 'Delete', scope: HIERARCHY_WINDOW_ID },
 });
 
-export const hierarchyObjectMenu = defineContextMenu<SceneObject>({
+export const renameObjectCommand = defineCommand({
+  id: 'hierarchy.rename',
+  label: messageRef(demoMessages, 'rename'),
+});
+
+export const hierarchyObjectMenu = defineContextMenu<readonly string[]>({
   id: 'hierarchy.object',
   label: messageRef(demoMessages, 'hierarchy'),
+});
+
+export interface ComponentTarget {
+  readonly component: ComponentKind;
+}
+
+export const inspectorComponentMenu = defineContextMenu<ComponentTarget>({
+  id: 'inspector.component',
+  label: messageRef(demoMessages, 'component'),
+});
+
+export const resetComponentCommand = defineCommand<ComponentTarget>({
+  id: 'inspector.resetComponent',
+  label: messageRef(commonMessages, 'reset'),
+});
+
+export const removeComponentCommand = defineCommand<ComponentTarget>({
+  id: 'inspector.removeComponent',
+  label: messageRef(demoMessages, 'removeComponent'),
 });

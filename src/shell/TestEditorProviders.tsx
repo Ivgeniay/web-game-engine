@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { PlatformProvider } from '@/state/platform/PlatformProvider';
 import { RegistriesProvider } from '@/state/registries/RegistriesProvider';
 import { StoresProvider } from '@/state/stores/StoresProvider';
+import { DragAndDropLayer } from '@/ui/dragAndDrop/DragAndDropLayer';
 import type { TestEditor } from './testEditor';
 
 interface TestEditorProvidersProps {
@@ -13,7 +14,9 @@ export function TestEditorProviders({ editor, children }: TestEditorProvidersPro
   return (
     <StoresProvider stores={editor.stores}>
       <PlatformProvider platform={editor.platform}>
-        <RegistriesProvider registries={editor.registries}>{children}</RegistriesProvider>
+        <RegistriesProvider registries={editor.registries}>
+          <DragAndDropLayer>{children}</DragAndDropLayer>
+        </RegistriesProvider>
       </PlatformProvider>
     </StoresProvider>
   );

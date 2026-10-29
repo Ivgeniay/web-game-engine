@@ -3,6 +3,7 @@ import type { KeyboardEvent, MouseEvent, ReactNode } from 'react';
 import { frameworkIcons } from '@/icons/frameworkIcons';
 import type { IconSource } from '@/icons/icon';
 import { Checkbox } from '@/ui/checkbox/Checkbox';
+import type { CheckboxChecked } from '@/ui/checkbox/Checkbox';
 import { classNames } from '@/ui/classNames';
 import { FoldoutChevron } from '@/ui/foldout/FoldoutChevron';
 import { FoldoutContext } from '@/ui/foldout/foldoutContext';
@@ -25,7 +26,7 @@ interface ComponentHeaderBaseProps {
 
 type EnabledToggleProps =
   | {
-      readonly enabled: boolean;
+      readonly enabled: CheckboxChecked;
       readonly onEnabledChange: (enabled: boolean) => void;
       readonly enabledLabel: string;
     }

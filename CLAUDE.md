@@ -82,6 +82,7 @@
 - Компоненты ничего не знают о текущей теме. Всё различие тем выражается только через значения переменных.
 - Стили dockview переопределяются через те же переменные, чтобы докинг выглядел как часть редактора.
 - Запрещены Tailwind, CSS-in-JS и готовые UI-киты (MUI, Ant Design, Chakra и подобные).
+- Атрибут `hidden` всегда скрывает элемент: `[hidden] { display: none !important; }` в `src/themes/global.css` побеждает любой `display` компонента, поэтому частные правила для `[hidden]` не пишутся.
 - Инлайн-стили (`style`) запрещены, кроме случаев, когда значение известно только во время работы: имя токена, пришедшее данными, размер панели после перетаскивания и подобное. Даже тогда в них только ссылки на токены через `var()` или вычисленные числа, без цветов и других дизайн-значений.
 
 ### Иконки
@@ -157,6 +158,22 @@
 - Обработчик клавиш группы или диалога проверяет `event.currentTarget.contains(event.target)`: события из порталов всплывают по дереву React, а не по DOM.
 - В тестах наведение с задержкой проверяется через `fireEvent.mouseEnter` на поддельных таймерах: user-event с поддельными таймерами зависает. Перенос фокуса Floating UI асинхронный, его ждут через `waitFor`.
 
+### Списки, деревья и перенос данных
+
+Требования к поведению — в каталоге `docs/ui-catalog.md`, записи ListView, TreeView, Foldout, ComponentHeader и общие механизмы «Перетаскивание» и «Виртуализация списков».
+
+- ListView и TreeView строятся на `useListBox` из `src/ui/listView/`: одна остановка Tab, фокус держит контейнер, активная строка — через `aria-activedescendant`, строка с фокусом рисуется всегда. Логика выделения и навигации — чистые модули рядом (`listSelection`, `listNavigation`, `treeModel`, `treeFilter`, `treeDrop`).
+- Виртуализация — `useVirtualRows` из `src/ui/virtualList/`: строки одной высоты из токена `--size-list-row-height`, рисуются только видимые и запас по 5 строк. Список и дерево обязаны оставаться быстрыми на 10 000 строк.
+- Данные не копируются в компонент. ListView получает `itemIds` и функции чтения строки, TreeView — `TreeModel { rootIds, getChildren, hasChildren, getLabel, getIcon? }`. Новые данные — новый массив или новый объект модели.
+- Состояние управляемое: `selectedIds`, `focusedId`, у дерева ещё `expandedIds` и `renamingId`. Владельцу, которому его не нужно хранить, — `useListViewState` и `useTreeViewState`. Якорь диапазона, раскрытие в режиме поиска и черновик имени — состояние сеанса внутри компонента.
+- Отрисовка строки — `renderRow`; стандартная строка — `ListRowContent` (иконка, подпись, подсветка совпадения). Двойной клик начинает переименование только на элементе с `data-list-row-label`.
+- Платформу (Mod — Ctrl или ⌘, F2 или Enter для переименования) примитивы берут из `useIsMacPlatform` в `src/ui/platform/`, его наполняет `PlatformProvider`.
+- Поиск над списком — SearchField с `resultsRef`: стрелка вниз переводит фокус в результаты.
+- Перенос данных — `src/ui/dragAndDrop/` на Pointer Events: `useDragSource` (`startDrag` из `onPointerDown`, порог 3 пикселя, Esc отменяет, клик после переноса гасится) и `useDropTarget` (`accepts`, `onDragOver`, `onDragLeave`, `onDrop`). Данные — `DragData { type, ids, label }`, тип с префиксом своей части: `demo.scene-object`. HTML5 Drag and Drop — только для файлов из ОС и вкладок dockview.
+- Точка входа оборачивает приложение в `DragAndDropLayer` внутри `PopupLayer`. Слой держит сеанс и рисует превью с `--z-drag`; пока идёт перенос, подсказки не показываются. Без слоя хуки бросают ошибку, но только когда перенос включён.
+- Перетаскивание в TreeView: `dragType` делает строки источником, `onDropData` — дерево целью, `canDropData` уточняет место, `dropTypes` — чужие типы данных. Место — `TreeDropTarget`: узел с `before`, `after`, `inside` или `root`. Внутрь себя и своих потомков дерево не роняет само; переносит данные владелец.
+- Foldout и ComponentHeader: развёрнутость управляемая, свёрнутое содержимое остаётся смонтированным с `hidden`, Alt+клик меняет и вложенные секции. Содержимое выстраивается столбцом. Меню ComponentHeader — готовые `menuItems`; из реестра их строит `useContextMenuItems(context, target)` из `src/shell/`.
+
 ## Архитектура
 
 ### Структура папок
@@ -223,7 +240,7 @@ src/
 ### Меню, тулбар, строка состояния, диалоги
 
 - Главное меню: `mainMenu.registerMenu({ path, label, group, order })` и `mainMenu.registerItem({ path, command, group, order })`. Путь — из id через `/`: `file/export/png`. Сортировка по `group`, затем `order`, разделитель — между группами. Пустые меню не показываются.
-- Контекстное меню: контекст `defineContextMenu<T>({ id, label })`, пункты — `contextMenus.registerItem(context, …)` с теми же путями. Команда без цели добавляется с `withoutTarget: true`. Открывает меню `useContextMenu(context)` вместе с компонентом `ContextMenu`.
+- Контекстное меню: контекст `defineContextMenu<T>({ id, label })`, пункты — `contextMenus.registerItem(context, …)` с теми же путями. Команда без цели добавляется с `withoutTarget: true`. Открывает меню `useContextMenu(context)` вместе с компонентом `ContextMenu`. Примитиву со своим меню (ComponentHeader) готовые пункты из того же реестра даёт `useContextMenuItems(context, target)`.
 - Тулбар: `toolbar.register({ kind: 'command' | 'component', id, zone, group, order, … })`, зоны `left`, `center`, `right`.
 - Строка состояния: `statusBar.register({ id, zone, order, component, announce? })`, зоны `left`, `right`.
 - Подтверждение: `await dialogs.confirm({ title, message?, confirmLabel, cancelLabel?, destructive? })` возвращает `'confirm'` или `'cancel'`. Запросы ждут в очереди, показывает их `ConfirmDialogHost` в `EditorFrame`.

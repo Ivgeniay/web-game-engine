@@ -34,6 +34,7 @@ export interface ListInteraction {
   readonly selectedSet: ReadonlySet<string>;
   readonly handleKeyDown: (event: KeyboardEvent<HTMLElement>) => boolean;
   readonly handleRowClick: (id: string, event: MouseEvent<HTMLElement>) => void;
+  readonly handleRowContextMenu: (id: string) => void;
   readonly handleBackgroundClick: () => void;
   readonly handleFocus: () => void;
   readonly moveFocus: (index: number, gesture: SelectionGesture | null) => void;
@@ -205,6 +206,14 @@ export function useListInteraction({
     select(id, gestureOf(event));
   }
 
+  function handleRowContextMenu(id: string): void {
+    focus(id);
+
+    if (!selectedSet.has(id)) {
+      select(id, PLAIN_GESTURE);
+    }
+  }
+
   function handleBackgroundClick(): void {
     anchorId.current = null;
     emitSelection([]);
@@ -229,6 +238,7 @@ export function useListInteraction({
     selectedSet,
     handleKeyDown,
     handleRowClick,
+    handleRowContextMenu,
     handleBackgroundClick,
     handleFocus,
     moveFocus,

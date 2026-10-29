@@ -11,6 +11,10 @@ import {
   deleteObjectCommand,
   duplicateObjectCommand,
   hierarchyObjectMenu,
+  inspectorComponentMenu,
+  removeComponentCommand,
+  renameObjectCommand,
+  resetComponentCommand,
   toggleGridCommand,
 } from './demoWindowCommands';
 import { GameWindow } from './GameWindow';
@@ -66,18 +70,37 @@ export function registerDemoWindows({ contextMenus, windows }: EditorRegistries)
       order: 0,
     }),
     contextMenus.registerItem(hierarchyObjectMenu, {
+      path: 'rename',
+      command: renameObjectCommand,
+      withoutTarget: true,
+      group: 0,
+      order: 0,
+    }),
+    contextMenus.registerItem(hierarchyObjectMenu, {
       path: 'duplicate',
       command: duplicateObjectCommand,
       withoutTarget: true,
-      group: 0,
+      group: 10,
       order: 0,
     }),
     contextMenus.registerItem(hierarchyObjectMenu, {
       path: 'delete',
       command: deleteObjectCommand,
       withoutTarget: true,
-      group: 0,
+      group: 10,
       order: 10,
+    }),
+    contextMenus.registerItem(inspectorComponentMenu, {
+      path: 'reset',
+      command: resetComponentCommand,
+      group: 0,
+      order: 0,
+    }),
+    contextMenus.registerItem(inspectorComponentMenu, {
+      path: 'remove',
+      command: removeComponentCommand,
+      group: 10,
+      order: 0,
     }),
   );
 }

@@ -1,6 +1,9 @@
 import { ExampleBlock } from '@/showcase/template/ExampleBlock';
 import { PageSection } from '@/showcase/template/PageSection';
 import { ContextMenuExample } from './ContextMenuExample';
+import { ContextMenuItemsExample } from './ContextMenuItemsExample';
+import contextMenuItemsStyles from './ContextMenuItemsExample.module.css?raw';
+import contextMenuItemsSource from './ContextMenuItemsExample.tsx?raw';
 import contextMenuStyles from './ContextMenuExample.module.css?raw';
 import contextMenuSource from './ContextMenuExample.tsx?raw';
 
@@ -61,6 +64,25 @@ export function ContextMenuPage() {
           ]}
         >
           <ContextMenuExample />
+        </ExampleBlock>
+      </PageSection>
+      <PageSection title="Items for a component">
+        <p>
+          A primitive with its own menu, such as <code>ComponentHeader</code>, takes ready{' '}
+          <code>MenuItem</code> values and knows nothing about registries.{' '}
+          <code>useContextMenuItems(context, target)</code> builds those items from the registry the
+          same way <code>ContextMenu</code> does: hidden commands are left out, groups are
+          separated, <code>isEnabled</code> and <code>isChecked</code> are asked about the target,
+          and a command runs after the menu has closed. The items follow new registrations and{' '}
+          <code>commands.refresh()</code>. Keep the target stable with <code>useMemo</code>.
+        </p>
+        <ExampleBlock
+          sources={[
+            { fileName: 'ContextMenuItemsExample.tsx', code: contextMenuItemsSource },
+            { fileName: 'ContextMenuItemsExample.module.css', code: contextMenuItemsStyles },
+          ]}
+        >
+          <ContextMenuItemsExample />
         </ExampleBlock>
       </PageSection>
     </>

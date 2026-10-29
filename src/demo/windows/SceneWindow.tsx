@@ -4,7 +4,7 @@ import { messageRef } from '@/core/i18n/translate';
 import { combineUnsubscribes } from '@/core/unsubscribe';
 import { useDemoStores, useScene } from '@/demo/demoStores';
 import { demoMessages } from '@/demo/demoMessages';
-import { selectedObject } from '@/demo/scene/sceneStore';
+import { selectedObjects } from '@/demo/scene/sceneStore';
 import { useMessages } from '@/state/language/useMessages';
 import { useTranslate } from '@/state/language/useTranslate';
 import { useRegistration } from '@/state/registries/useRegistration';
@@ -24,13 +24,13 @@ export function SceneWindow() {
       combineUnsubscribes(
         commands.handle(frameSelectedCommand, {
           run: () => {
-            const selected = selectedObject(scene.getState());
+            const [selected] = selectedObjects(scene.getState());
 
-            if (selected !== null) {
+            if (selected !== undefined) {
               setFramed(messageRef(demoMessages, 'framed', { name: selected.name }));
             }
           },
-          isEnabled: () => selectedObject(scene.getState()) !== null,
+          isEnabled: () => scene.getState().selectedIds.length > 0,
         }),
         commands.handle(toggleGridCommand, {
           run: () => {

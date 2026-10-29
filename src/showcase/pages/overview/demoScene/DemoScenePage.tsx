@@ -2,6 +2,7 @@ import defaultLayoutSource from '@/demo/defaultLayout.ts?raw';
 import demoExtensionSource from '@/demo/demoExtension.ts?raw';
 import demoMainSource from '@/demo/main.tsx?raw';
 import demoWindowsSource from '@/demo/windows/demoWindows.ts?raw';
+import hierarchyWindowSource from '@/demo/windows/HierarchyWindow.tsx?raw';
 import sceneWindowSource from '@/demo/windows/SceneWindow.tsx?raw';
 import { CodeBlock } from '@/showcase/template/CodeBlock';
 import { PageSection } from '@/showcase/template/PageSection';
@@ -23,15 +24,24 @@ export function DemoScenePage() {
           <a href={DEMO_URL}>Open the demo scene</a>
         </p>
         <ul>
-          <li>Windows Scene, Game, Hierarchy and Project with placeholder content.</li>
+          <li>Scene and Game with placeholder content.</li>
           <li>
-            The Inspector window with the selected object: its name, the Transform made of vector
-            fields and the Rigidbody and Light components with numbers, checkboxes and selects in
-            property rows. Until trees arrive, a select at the top chooses the object.
+            Hierarchy shows the objects of the scene as a tree. It selects one or several objects,
+            renames them with F2 (Enter on macOS) or a double click, changes their parent and order
+            by dragging, and duplicates, renames and deletes them from the context menu.
           </li>
           <li>
-            Every change in the Inspector goes into the undo stack: Undo and Redo in the Edit menu,
-            Mod+Z and Mod+Shift+Z.
+            Inspector shows the objects selected in the hierarchy: the name, the Transform and the
+            components that all of them share, each under a <code>ComponentHeader</code> with a
+            collapse arrow, an enable checkbox on Rigidbody and Light and a menu with Reset and
+            Remove component. With several objects, different values show as mixed, and a change
+            goes to all of them.
+          </li>
+          <li>Project shows the folders and files of a demo project as a tree with a search.</li>
+          <li>
+            Every change goes into the undo stack as one record: edits in the inspector, also for
+            several objects at once, creating, duplicating, renaming, moving and deleting objects.
+            Undo and Redo are in the Edit menu, on Mod+Z and Mod+Shift+Z.
           </li>
           <li>Menus File, Edit, GameObject and Window.</li>
           <li>
@@ -86,6 +96,14 @@ export function DemoScenePage() {
           focus is inside the Scene window, Show grid toggles from the tab menu.
         </p>
         <CodeBlock fileName="src/demo/windows/SceneWindow.tsx" code={sceneWindowSource} />
+        <p>
+          Hierarchy builds a <code>TreeModel</code> from the objects of the scene store, keeps the
+          selection in the store so that the inspector follows it, and keeps the expanded rows, the
+          focused row and the renamed row in the window. Renaming and dropping go through{' '}
+          <code>applySceneEdit</code>, which puts the change into the undo stack with a snapshot of
+          the objects and the selection.
+        </p>
+        <CodeBlock fileName="src/demo/windows/HierarchyWindow.tsx" code={hierarchyWindowSource} />
       </PageSection>
       <PageSection title="Default layout">
         <CodeBlock fileName="src/demo/defaultLayout.ts" code={defaultLayoutSource} />

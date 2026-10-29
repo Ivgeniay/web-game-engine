@@ -42,6 +42,7 @@ export interface ListBoxRowProps {
   readonly 'data-list-row': '';
   readonly style: CSSProperties;
   readonly onClick: MouseEventHandler<HTMLDivElement>;
+  readonly onContextMenu: MouseEventHandler<HTMLDivElement>;
 }
 
 export interface ListBox {
@@ -127,6 +128,9 @@ export function useListBox({ ref, handleOwnKey, ...interactionOptions }: ListBox
       style: { transform: `translateY(${String(index * virtualRows.rowHeight)}px)` },
       onClick: (event) => {
         interaction.handleRowClick(id, event);
+      },
+      onContextMenu: () => {
+        interaction.handleRowContextMenu(id);
       },
     }),
   };
