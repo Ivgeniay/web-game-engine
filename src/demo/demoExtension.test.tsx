@@ -125,4 +125,55 @@ describe('demo integration', () => {
 
     expect(stores.scene.getState().tool).toBe('rotate');
   });
+
+  it('edits the selected object in the inspector and undoes the edits', async () => {
+    const user = userEvent.setup();
+    const { stores } = await renderDemo();
+
+    await user.click(screen.getByRole('button', { name: 'Player' }));
+
+    const positionX = screen.getByRole('spinbutton', { name: 'Position X' });
+    const player = () => stores.scene.getState().objects.find(({ name }) => name === 'Player');
+
+    await user.clear(positionX);
+    await user.type(positionX, '5{Enter}');
+
+    expect(player()?.transform.position).toEqual([5, 0, 0]);
+
+    await user.click(screen.getByRole('checkbox', { name: 'Use gravity' }));
+
+    expect(player()?.rigidbody?.useGravity).toBe(false);
+
+    await user.keyboard('{Control>}z{/Control}');
+
+    expect(player()?.rigidbody?.useGravity).toBe(true);
+
+    await user.click(within(screen.getByRole('menubar')).getByRole('menuitem', { name: 'Edit' }));
+    await user.click(await screen.findByRole('menuitem', { name: 'Undo' }));
+
+    expect(player()?.transform.position).toEqual([0, 0, 0]);
+    expect(positionX).toHaveProperty('value', '0');
+
+    await user.click(within(screen.getByRole('menubar')).getByRole('menuitem', { name: 'Edit' }));
+    await user.click(await screen.findByRole('menuitem', { name: 'Redo' }));
+
+    expect(player()?.transform.position).toEqual([5, 0, 0]);
+  });
+
+  it('chooses the inspected object with the select', async () => {
+    const user = userEvent.setup();
+    const { stores } = await renderDemo();
+
+    await user.click(screen.getByRole('combobox', { name: 'Inspected object' }));
+    await user.click(await screen.findByRole('option', { name: 'Directional Light' }));
+
+    expect(selectedName(stores)).toBe('Directional Light');
+    expect(screen.getByRole('spinbutton', { name: 'Intensity' })).toBeDefined();
+  });
 });
+
+function selectedName(stores: DemoStores): string | undefined {
+  const { objects, selectedId } = stores.scene.getState();
+
+  return objects.find(({ id }) => id === selectedId)?.name;
+}

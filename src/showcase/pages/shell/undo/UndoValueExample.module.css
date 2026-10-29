@@ -1,0 +1,14 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.row {
+  width: var(--showcase-inspector-width);
+}
+
+.actions {
+  display: flex;
+  gap: var(--space-8);
+}

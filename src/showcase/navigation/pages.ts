@@ -41,6 +41,7 @@ import { HotkeysPage } from '@/showcase/pages/shell/hotkeys/HotkeysPage';
 import { LayoutPage } from '@/showcase/pages/shell/layout/LayoutPage';
 import { MenuBarPage } from '@/showcase/pages/shell/menuBar/MenuBarPage';
 import { ToolbarStatusBarPage } from '@/showcase/pages/shell/toolbarStatusBar/ToolbarStatusBarPage';
+import { UndoPage } from '@/showcase/pages/shell/undo/UndoPage';
 import { WindowTabMenuPage } from '@/showcase/pages/shell/windowTabMenu/WindowTabMenuPage';
 import type { ShowcasePage } from './showcasePage';
 
@@ -373,5 +374,13 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     description:
       'The menu of a tab with the items of the window and the framework, the Window menu and the docking shortcuts.',
     component: WindowTabMenuPage,
+  },
+  {
+    id: 'shell/undo',
+    section: 'shell',
+    title: 'Undo stack',
+    description:
+      'Operations from the integration, one entry per edit of a field, grouping and Mod+Z in fields.',
+    component: UndoPage,
   },
 ];

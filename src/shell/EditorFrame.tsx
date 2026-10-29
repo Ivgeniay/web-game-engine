@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import { DockLayout } from '@/layout/DockLayout';
 import type { LayoutStorage } from '@/layout/layoutPersistence';
+import { registerUndoCommands } from '@/core/undo/undoCommands';
 import { useRegistration } from '@/state/registries/useRegistration';
 import { ConfirmDialogHost } from './ConfirmDialogHost';
 import styles from './EditorFrame.module.css';
@@ -25,6 +26,7 @@ export function EditorFrame({ layoutStorage }: EditorFrameProps) {
   const rootRef = useRef<HTMLDivElement>(null);
 
   useRegistration((editor) => registerFocusRegionCommands(editor, () => rootRef.current), []);
+  useRegistration(({ commands, undo }) => registerUndoCommands(commands, undo), []);
 
   return (
     <div ref={rootRef} className={styles.root}>

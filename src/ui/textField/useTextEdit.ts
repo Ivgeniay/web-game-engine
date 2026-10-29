@@ -15,6 +15,7 @@ export interface TextEditOptions<T> {
 export interface TextEdit {
   readonly text: string;
   readonly editing: boolean;
+  readonly dirty: boolean;
   readonly invalidMessage: string | undefined;
   readonly change: (draft: string) => void;
   readonly replace: (draft: string) => void;
@@ -79,6 +80,7 @@ export function useTextEdit<T>({
   return {
     text: session?.draft ?? format(value),
     editing: session !== null,
+    dirty: session !== null && session.draft !== format(session.initial),
     invalidMessage: reading?.valid === false ? reading.message : undefined,
     change: (draft) => {
       edit(draft, live);

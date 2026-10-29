@@ -23,7 +23,16 @@ export function DemoScenePage() {
           <a href={DEMO_URL}>Open the demo scene</a>
         </p>
         <ul>
-          <li>Windows Scene, Game, Hierarchy, Inspector and Project with placeholder content.</li>
+          <li>Windows Scene, Game, Hierarchy and Project with placeholder content.</li>
+          <li>
+            The Inspector window with the selected object: its name, the Transform made of vector
+            fields and the Rigidbody and Light components with numbers, checkboxes and selects in
+            property rows. Until trees arrive, a select at the top chooses the object.
+          </li>
+          <li>
+            Every change in the Inspector goes into the undo stack: Undo and Redo in the Edit menu,
+            Mod+Z and Mod+Shift+Z.
+          </li>
           <li>Menus File, Edit, GameObject and Window.</li>
           <li>
             Tools Move, Rotate and Scale on the left of the toolbar, Play, Pause and Step in the

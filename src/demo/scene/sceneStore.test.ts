@@ -36,4 +36,33 @@ describe('createSceneStore', () => {
 
     expect(new Set(ids).size).toBe(ids.length);
   });
+
+  it('updates one object and leaves the others', () => {
+    const store = createSceneStore();
+    const [camera, light] = store.getState().objects;
+    store.getState().updateObject(camera?.id ?? '', (object) => ({ ...object, name: 'Camera' }));
+
+    expect(names(store)).toEqual(['Camera', 'Directional Light', 'Player']);
+    expect(store.getState().objects[1]).toBe(light);
+  });
+
+  it('ignores an update of a missing object', () => {
+    const store = createSceneStore();
+    const before = store.getState().objects;
+    store.getState().updateObject('missing', (object) => ({ ...object, name: 'Changed' }));
+
+    expect(names(store)).toEqual(before.map(({ name }) => name));
+  });
+
+  it('copies the components of a duplicated object', () => {
+    const store = createSceneStore();
+    const player = store.getState().objects[2];
+    store.getState().select(player?.id ?? '');
+    store.getState().duplicateSelected();
+    const copy = store.getState().objects.at(-1);
+
+    expect(copy?.id).not.toBe(player?.id);
+    expect(copy?.rigidbody).toEqual(player?.rigidbody);
+    expect(copy?.transform).toEqual(player?.transform);
+  });
 });

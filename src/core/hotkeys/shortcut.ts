@@ -82,10 +82,12 @@ type ModifierPrefix =
 
 export type ShortcutKeys = `${ModifierPrefix}${KeyCode}`;
 
+export type TextInputPolicy = boolean | 'whenCommitted';
+
 export interface CommandShortcut {
   readonly keys: ShortcutKeys;
   readonly scope?: string | undefined;
-  readonly allowInTextInput?: boolean | undefined;
+  readonly allowInTextInput?: TextInputPolicy | undefined;
 }
 
 export interface ParsedShortcut {

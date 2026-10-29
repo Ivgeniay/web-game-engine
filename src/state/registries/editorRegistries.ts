@@ -10,6 +10,8 @@ import { createToolbarRegistry } from '@/core/toolbar/toolbarRegistry';
 import type { ToolbarRegistry } from '@/core/toolbar/toolbarRegistry';
 import { createWindowRegistry } from '@/core/windows/windowRegistry';
 import type { WindowRegistry } from '@/core/windows/windowRegistry';
+import { createUndoStack } from '@/core/undo/undoStack';
+import type { UndoStack } from '@/core/undo/undoStack';
 import { createWorkspace } from '@/core/windows/workspace';
 import type { Workspace } from '@/core/windows/workspace';
 import { createConfirmDialogs } from '@/state/dialogs/confirmDialogStore';
@@ -24,6 +26,7 @@ export interface EditorRegistries {
   readonly dialogs: ConfirmDialogs;
   readonly windows: WindowRegistry;
   readonly workspace: Workspace;
+  readonly undo: UndoStack;
 }
 
 export function createEditorRegistries(): EditorRegistries {
@@ -36,5 +39,6 @@ export function createEditorRegistries(): EditorRegistries {
     dialogs: createConfirmDialogs(),
     windows: createWindowRegistry(),
     workspace: createWorkspace(),
+    undo: createUndoStack(),
   };
 }

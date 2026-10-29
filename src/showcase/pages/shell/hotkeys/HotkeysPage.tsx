@@ -107,6 +107,10 @@ export function HotkeysPage() {
             only when the command sets <code>allowInTextInput</code>, like Run the line in the
             example. Function keys F1 to F12 type nothing, so with <code>allowInTextInput</code>{' '}
             they fire in a field even without modifiers: F6 moves to the next area from a field.
+            <code>allowInTextInput: &apos;whenCommitted&apos;</code> lets a shortcut fire only in a
+            text or number field without uncommitted typing, and never in other text inputs: Undo
+            and Redo use it, so Mod+Z undoes the typing first and the editor changes after the
+            commit.
           </li>
           <li>
             Shortcuts on Space and Enter, such as Shift+Space, do not fire while the focus is on an

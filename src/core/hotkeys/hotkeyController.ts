@@ -1,6 +1,6 @@
 import type { CommandRegistry, HandledCommand } from '@/core/commands/commandRegistry';
 import { isKeyActivatedElement } from '@/core/keyActivatedElement';
-import { isTextInput } from '@/core/textInput';
+import { isCommittedValueField, isTextInput } from '@/core/textInput';
 import { combineUnsubscribes } from '@/core/unsubscribe';
 import type { Unsubscribe } from '@/core/unsubscribe';
 import { findHotkeyBindings } from './hotkeyDispatcher';
@@ -23,6 +23,7 @@ function contextOf(target: Element, globalBlocked: boolean): HotkeyContext {
   return {
     scopes: hotkeyScopesOf(target),
     inTextInput: isTextInput(target),
+    inCommittedValueField: isCommittedValueField(target),
     onKeyActivatedElement: isKeyActivatedElement(target),
     globalBlocked,
   };

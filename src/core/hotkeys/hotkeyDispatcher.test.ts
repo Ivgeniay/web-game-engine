@@ -137,6 +137,7 @@ const keymap = createKeymap([
 const NOWHERE: HotkeyContext = {
   scopes: [],
   inTextInput: false,
+  inCommittedValueField: false,
   onKeyActivatedElement: false,
   globalBlocked: false,
 };
@@ -201,5 +202,29 @@ describe('findHotkeyBindings', () => {
 
   it('finds nothing for an unbound key', () => {
     expect(commandsFor(press('x', 'KeyX'), {})).toEqual([]);
+  });
+});
+
+describe('findHotkeyBindings with the committed value policy', () => {
+  const undoChange = command('edit.undo', { keys: 'Mod+KeyZ', allowInTextInput: 'whenCommitted' });
+  const undoKeymap = createKeymap([undoChange]);
+  const undoPress = press('z', 'KeyZ', CTRL);
+
+  function undoFor(context: Partial<HotkeyContext>) {
+    return findHotkeyBindings(undoKeymap, undoPress, { ...NOWHERE, ...context }, 'other').map(
+      (binding) => binding.command,
+    );
+  }
+
+  it('works outside text inputs', () => {
+    expect(undoFor({})).toEqual([undoChange]);
+  });
+
+  it('works in a value field without uncommitted typing', () => {
+    expect(undoFor({ inTextInput: true, inCommittedValueField: true })).toEqual([undoChange]);
+  });
+
+  it('leaves other text inputs and uncommitted typing to the browser', () => {
+    expect(undoFor({ inTextInput: true, inCommittedValueField: false })).toEqual([]);
   });
 });

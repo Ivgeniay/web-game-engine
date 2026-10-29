@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import type { ComponentPropsWithRef, KeyboardEvent, MouseEvent } from 'react';
-import type { ValueChangeHandler } from '@/contracts/valueChange';
+import { VALUE_EDIT_ATTRIBUTE } from '@/contracts/valueChange';
+import type { ValueChangeHandler, ValueEditState } from '@/contracts/valueChange';
 import { useRovingFocusItem } from '@/ui/rovingFocus/useRovingFocusItem';
 import { TooltipBubble } from '@/ui/tooltip/TooltipBubble';
 import { useMergedRefs } from '@/ui/useMergedRefs';
@@ -79,6 +80,7 @@ export function FieldInput<T>({
   const { setAnchorRef, describedBy, bubble } = useInvalidMessageBubble(edit.invalidMessage);
   const showsMixed = mixed && !edit.editing;
   const text = showsMixed ? '' : edit.text;
+  const editState: ValueEditState = edit.dirty ? 'uncommitted' : 'committed';
 
   useEffect(() => {
     const input = inputRef.current;
@@ -148,6 +150,7 @@ export function FieldInput<T>({
         <input
           {...inputProps}
           {...rovingProps}
+          {...{ [VALUE_EDIT_ATTRIBUTE]: editState }}
           className={fieldInputClassName}
           type={type}
           value={text}

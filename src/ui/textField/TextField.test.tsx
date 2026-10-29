@@ -2,6 +2,7 @@ import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { createRef, useState } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import { VALUE_EDIT_ATTRIBUTE } from '@/contracts/valueChange';
 import type { ValueChangeHandler } from '@/contracts/valueChange';
 import { Dialog } from '@/ui/dialog/Dialog';
 import { Toolbar } from '@/ui/toolbar/Toolbar';
@@ -292,5 +293,26 @@ describe('TextField inside a popup', () => {
     await user.keyboard('{Escape}');
 
     expect(screen.queryByRole('dialog')).toBeNull();
+  });
+});
+
+describe('TextField edit state', () => {
+  it('marks typing that differs from the committed value', async () => {
+    const user = userEvent.setup();
+    render(<Harness onValueChange={vi.fn()} />);
+
+    expect(field().getAttribute(VALUE_EDIT_ATTRIBUTE)).toBe('committed');
+
+    await user.type(field(), 'x');
+
+    expect(field().getAttribute(VALUE_EDIT_ATTRIBUTE)).toBe('uncommitted');
+
+    await user.keyboard('{Backspace}');
+
+    expect(field().getAttribute(VALUE_EDIT_ATTRIBUTE)).toBe('committed');
+
+    await user.keyboard('y{Enter}');
+
+    expect(field().getAttribute(VALUE_EDIT_ATTRIBUTE)).toBe('committed');
   });
 });

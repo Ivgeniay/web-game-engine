@@ -20,6 +20,8 @@ export const commonMessages = defineMessages({
     close: 'Close',
     reset: 'Reset',
     maximize: 'Maximize',
+    undo: 'Undo',
+    redo: 'Redo',
   },
   ru: {
     window: 'Окно',
@@ -40,5 +42,7 @@ export const commonMessages = defineMessages({
     close: 'Закрыть',
     reset: 'Сбросить',
     maximize: 'Развернуть',
+    undo: 'Отменить',
+    redo: 'Повторить',
   },
 });

@@ -15,6 +15,7 @@ export interface HotkeyKeyEvent {
 export interface HotkeyContext {
   readonly scopes: readonly string[];
   readonly inTextInput: boolean;
+  readonly inCommittedValueField: boolean;
   readonly onKeyActivatedElement: boolean;
   readonly globalBlocked: boolean;
 }
@@ -58,10 +59,16 @@ export function matchesShortcut(
   return modifiersMatch(event, shortcut, platform) && keyMatches(event, shortcut);
 }
 
-function worksInTextInput(binding: KeyBinding): boolean {
+function allowsTextInput(binding: KeyBinding, context: HotkeyContext): boolean {
+  return binding.allowInTextInput === 'whenCommitted'
+    ? context.inCommittedValueField
+    : binding.allowInTextInput;
+}
+
+function worksInTextInput(binding: KeyBinding, context: HotkeyContext): boolean {
   const { mod, alt, code } = binding.shortcut;
 
-  return binding.allowInTextInput && (mod || alt || FUNCTION_KEY_PATTERN.test(code));
+  return allowsTextInput(binding, context) && (mod || alt || FUNCTION_KEY_PATTERN.test(code));
 }
 
 function worksInContext(binding: KeyBinding, context: HotkeyContext): boolean {
@@ -69,7 +76,7 @@ function worksInContext(binding: KeyBinding, context: HotkeyContext): boolean {
     return false;
   }
 
-  return !context.inTextInput || worksInTextInput(binding);
+  return !context.inTextInput || worksInTextInput(binding, context);
 }
 
 export function findHotkeyBindings(

@@ -2,7 +2,7 @@ import type { CommandDefinitionBase } from '@/core/commands/command';
 import { reportDevelopmentError } from '@/core/developmentError';
 import { isReservedShortcut } from './reservedShortcuts';
 import { parseShortcutKeys } from './shortcut';
-import type { ParsedShortcut, ShortcutKeys } from './shortcut';
+import type { ParsedShortcut, ShortcutKeys, TextInputPolicy } from './shortcut';
 
 export const GLOBAL_HOTKEY_SCOPE = 'global';
 
@@ -11,7 +11,7 @@ export interface KeyBinding {
   readonly keys: ShortcutKeys;
   readonly shortcut: ParsedShortcut;
   readonly scope: string;
-  readonly allowInTextInput: boolean;
+  readonly allowInTextInput: TextInputPolicy;
 }
 
 export type Keymap = ReadonlyMap<string, readonly KeyBinding[]>;
