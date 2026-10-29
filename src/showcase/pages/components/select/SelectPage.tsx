@@ -1,3 +1,4 @@
+import { useDocMessages } from '@/showcase/i18n/useDocMessages';
 import { ExampleBlock } from '@/showcase/template/ExampleBlock';
 import { PageSection } from '@/showcase/template/PageSection';
 import { SelectActionExample } from './SelectActionExample';
@@ -9,24 +10,16 @@ import selectSource from './SelectExample.tsx?raw';
 import { SelectToolbarExample } from './SelectToolbarExample';
 import selectToolbarStyles from './SelectToolbarExample.module.css?raw';
 import selectToolbarSource from './SelectToolbarExample.tsx?raw';
+import { selectPageMessages } from './selectPageMessages';
 
 export function SelectPage() {
+  const doc = useDocMessages(selectPageMessages);
+
   return (
     <>
-      <PageSection title="Choosing a value">
-        <p>
-          <code>Select</code> chooses one value from a list. <code>options</code> is an array of
-          entries: <code>option</code> with a <code>value</code>, a <code>label</code>, an optional{' '}
-          <code>icon</code> and <code>disabled</code>, or a <code>separator</code>. The type of the
-          value comes from the options, so <code>onValueChange</code> receives the same string
-          union. <code>value</code> may be <code>null</code>; then the field shows{' '}
-          <code>placeholder</code>.
-        </p>
-        <p>
-          Name the field with <code>aria-label</code> or with <code>aria-labelledby</code> pointing
-          to a visible caption, as in the example. The list opens with the chosen option focused and
-          scrolled into view, marked with a check.
-        </p>
+      <PageSection title={doc('choosingValueTitle')}>
+        <p>{doc('choosingValueText')}</p>
+        <p>{doc('choosingValueText2')}</p>
         <ExampleBlock
           sources={[
             { fileName: 'SelectExample.tsx', code: selectSource },
@@ -36,12 +29,8 @@ export function SelectPage() {
           <SelectExample />
         </ExampleBlock>
       </PageSection>
-      <PageSection title="An action at the end">
-        <p>
-          <code>action</code> adds a command below the options, separated by a line, for example to
-          create a new value. Choosing it runs <code>onSelect</code> and closes the list without
-          changing the value.
-        </p>
+      <PageSection title={doc('actionAtTitle')}>
+        <p>{doc('actionAtText')}</p>
         <ExampleBlock
           sources={[
             { fileName: 'SelectActionExample.tsx', code: selectActionSource },
@@ -51,12 +40,8 @@ export function SelectPage() {
           <SelectActionExample />
         </ExampleBlock>
       </PageSection>
-      <PageSection title="In a toolbar">
-        <p>
-          The field takes <code>variant</code> and <code>size</code> like a button:{' '}
-          <code>flat</code> and <code>sm</code> fit a toolbar. Inside a toolbar the field joins its
-          arrow order.
-        </p>
+      <PageSection title={doc('toolbarTitle')}>
+        <p>{doc('toolbarText')}</p>
         <ExampleBlock
           sources={[
             { fileName: 'SelectToolbarExample.tsx', code: selectToolbarSource },
@@ -66,27 +51,14 @@ export function SelectPage() {
           <SelectToolbarExample />
         </ExampleBlock>
       </PageSection>
-      <PageSection title="Keyboard">
+      <PageSection title={doc('keyboardTitle')}>
         <ul>
-          <li>Enter, Space and Alt+Down open the list.</li>
-          <li>
-            On the closed field, arrows and letters do nothing, so the value never changes by
-            accident while moving through a panel.
-          </li>
-          <li>
-            In the open list, Up and Down move and wrap around, Home and End go to the ends,
-            disabled options are skipped, and typing the first letters moves to an option.
-          </li>
-          <li>
-            Enter or Space chooses the option and returns the focus to the field. Esc and a click
-            outside close the list without a change.
-          </li>
+          <li>{doc('keyboardItem')}</li>
+          <li>{doc('keyboardItem2')}</li>
+          <li>{doc('keyboardItem3')}</li>
+          <li>{doc('keyboardItem4')}</li>
         </ul>
-        <p>
-          Hints do not appear while the list is open. There is no search inside the list: a
-          searchable list is a separate component. <code>disabled</code>, <code>id</code>,{' '}
-          <code>ref</code> and <code>className</code> apply to the field.
-        </p>
+        <p>{doc('keyboardText')}</p>
       </PageSection>
     </>
   );

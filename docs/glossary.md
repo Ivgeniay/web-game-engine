@@ -67,7 +67,7 @@
 | Entry point | Точка входа | |
 | Source of truth | Источник правды | |
 | Focus outline | Рамка фокуса | |
-| Easing | Сглаживание | Кривые `--easing-*` |
+| Easing | Плавность, кривая плавности | Кривые `--easing-*`. Не «сглаживание»: в графике это anti-aliasing |
 | Reduced motion | Уменьшение движения | Настройка ОС `prefers-reduced-motion` |
 | Assistive technologies | Вспомогательные технологии | |
 | Pixel grid | Пиксельная сетка | |
@@ -76,6 +76,30 @@
 | Glyph | Глиф | |
 | Placeholder icon | Заглушка | Иконка `unknown`; подстановка в переводе — «подстановка» |
 | Pass / fail (contrast) | Норма / ниже нормы | |
+| Screen reader | Скринридер | Так говорят русскоязычные разработчики; «программа экранного доступа» — слишком длинно |
+| Props | Пропсы | |
+| Tab stop | Остановка Tab | |
+| Tab order | Порядок Tab | |
+| Tooltip, hint | Подсказка | Имя компонента `Tooltip` не переводится |
+| Toggle button | Переключаемая кнопка | `ToggleButton` |
+| Checkbox | Флажок | `Checkbox` |
+| Radio button | Радиокнопка | |
+| Caption, label | Подпись | |
+| Mixed state | Смешанное состояние | |
+| Read-only | Только для чтения | |
+| Caret | Курсор | Текстовый курсор в поле |
+| Draft | Черновик | Текст поля до фиксации |
+| Value change protocol | Протокол изменения значения | `@/contracts/valueChange` |
+| Property row | Строка свойства | `PropertyRow` |
+| Drag preview | Превью | Подпись рядом с указателем; фаза `preview` — «предпросмотр» |
+| Drop target | Цель переноса | |
+| Anchor | Якорь | Элемент, к которому привязан всплывающий элемент, и якорь диапазона выделения |
+| Stacking order | Порядок наложения | |
+| Viewport | Окно просмотра | Координаты `point` у меню |
+| Pointer lock | Блокировка указателя | Pointer Lock API |
+| Error bubble | Пузырь | Сообщение об ошибке поля |
+| Accessible name | Доступное имя | |
+| Snapshot | Снимок | Снимок стора |
 
 ## Правила русского перевода
 

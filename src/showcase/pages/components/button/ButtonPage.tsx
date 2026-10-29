@@ -1,3 +1,4 @@
+import { useDocMessages } from '@/showcase/i18n/useDocMessages';
 import { ExampleBlock } from '@/showcase/template/ExampleBlock';
 import { PageSection } from '@/showcase/template/PageSection';
 import { ButtonDisabledExample } from './ButtonDisabledExample';
@@ -12,29 +13,21 @@ import buttonVariantsSource from './ButtonVariantsExample.tsx?raw';
 import { ButtonWithIconExample } from './ButtonWithIconExample';
 import buttonWithIconStyles from './ButtonWithIconExample.module.css?raw';
 import buttonWithIconSource from './ButtonWithIconExample.tsx?raw';
+import { buttonPageMessages } from './buttonPageMessages';
 
 export function ButtonPage() {
+  const doc = useDocMessages(buttonPageMessages);
+
   return (
     <>
-      <PageSection title="Variants">
-        <p>
-          <code>variant</code> sets the look:
-        </p>
+      <PageSection title={doc('variantsTitle')}>
+        <p>{doc('variantsText')}</p>
         <ul>
-          <li>
-            <code>default</code> is a regular action;
-          </li>
-          <li>
-            <code>accent</code> is the primary action, at most one per group of buttons;
-          </li>
-          <li>
-            <code>flat</code> has no background or border at rest and is meant for toolbars.
-          </li>
+          <li>{doc('variantsItem')}</li>
+          <li>{doc('variantsItem2')}</li>
+          <li>{doc('variantsItem3')}</li>
         </ul>
-        <p>
-          The text is the only child and must be a ready string: primitives know nothing about
-          localization, so pass a translated text from <code>useMessages</code>.
-        </p>
+        <p>{doc('variantsText2')}</p>
         <ExampleBlock
           sources={[
             { fileName: 'ButtonVariantsExample.tsx', code: buttonVariantsSource },
@@ -44,11 +37,8 @@ export function ButtonPage() {
           <ButtonVariantsExample />
         </ExampleBlock>
       </PageSection>
-      <PageSection title="Sizes">
-        <p>
-          <code>size</code> is <code>sm</code>, <code>md</code> (the default) or <code>lg</code>.
-          The height comes from the <code>--size-control-height-*</code> tokens.
-        </p>
+      <PageSection title={doc('sizesTitle')}>
+        <p>{doc('sizesText')}</p>
         <ExampleBlock
           sources={[
             { fileName: 'ButtonSizesExample.tsx', code: buttonSizesSource },
@@ -58,13 +48,8 @@ export function ButtonPage() {
           <ButtonSizesExample />
         </ExampleBlock>
       </PageSection>
-      <PageSection title="Icon">
-        <p>
-          <code>icon</code> takes an icon of a set or an <code>iconRef</code>, the same as{' '}
-          <code>Icon</code>, and shows it before the text. Its size follows the button: 12 pixels
-          for <code>sm</code>, 16 pixels for <code>md</code> and <code>lg</code>. For a button
-          without text use <code>IconButton</code>.
-        </p>
+      <PageSection title={doc('iconTitle')}>
+        <p>{doc('iconText')}</p>
         <ExampleBlock
           sources={[
             { fileName: 'ButtonWithIconExample.tsx', code: buttonWithIconSource },
@@ -74,14 +59,8 @@ export function ButtonPage() {
           <ButtonWithIconExample />
         </ExampleBlock>
       </PageSection>
-      <PageSection title="Disabled">
-        <p>
-          <code>disabled</code> is the native attribute. A disabled button ignores the mouse and the
-          keyboard, leaves the Tab order and shows its text in <code>--color-text-disabled</code>. A
-          disabled accent button looks like a disabled default one. In toolbars, add{' '}
-          <code>focusableWhenDisabled</code> to keep a disabled button reachable from the keyboard:
-          see the Toolbar page.
-        </p>
+      <PageSection title={doc('disabledTitle')}>
+        <p>{doc('disabledText')}</p>
         <ExampleBlock
           sources={[
             { fileName: 'ButtonDisabledExample.tsx', code: buttonDisabledSource },
@@ -91,29 +70,14 @@ export function ButtonPage() {
           <ButtonDisabledExample />
         </ExampleBlock>
       </PageSection>
-      <PageSection title="Keyboard and focus">
-        <p>
-          The button is a native <code>button</code> with <code>type="button"</code>: Tab reaches
-          it, Enter and Space press it. The focus outline shows only for keyboard focus. On an
-          accent button the outline is drawn outside with a one pixel gap, so it lies on the surface
-          around the button and stays visible against the accent color.
-        </p>
+      <PageSection title={doc('keyboardFocusTitle')}>
+        <p>{doc('keyboardFocusText')}</p>
       </PageSection>
-      <PageSection title="Other props">
+      <PageSection title={doc('otherPropsTitle')}>
         <ul>
-          <li>
-            <code>ref</code> receives the <code>button</code> element, for example to anchor a
-            popup.
-          </li>
-          <li>
-            Native button attributes and event handlers pass through, except <code>style</code>,{' '}
-            <code>type</code> and <code>children</code>.
-          </li>
-          <li>
-            <code>className</code> is for placing the button in a layout: margins, flex and grid
-            properties. Do not recolor a button through it; the look changes only with{' '}
-            <code>variant</code> and <code>size</code>.
-          </li>
+          <li>{doc('otherPropsItem')}</li>
+          <li>{doc('otherPropsItem2')}</li>
+          <li>{doc('otherPropsItem3')}</li>
         </ul>
       </PageSection>
     </>

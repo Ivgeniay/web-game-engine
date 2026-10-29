@@ -1,3 +1,4 @@
+import { useDocMessages } from '@/showcase/i18n/useDocMessages';
 import { ExampleBlock } from '@/showcase/template/ExampleBlock';
 import { PageSection } from '@/showcase/template/PageSection';
 import { CheckboxDisabledExample } from './CheckboxDisabledExample';
@@ -9,22 +10,16 @@ import checkboxSource from './CheckboxExample.tsx?raw';
 import { CheckboxMixedExample } from './CheckboxMixedExample';
 import checkboxMixedStyles from './CheckboxMixedExample.module.css?raw';
 import checkboxMixedSource from './CheckboxMixedExample.tsx?raw';
+import { checkboxPageMessages } from './checkboxPageMessages';
 
 export function CheckboxPage() {
+  const doc = useDocMessages(checkboxPageMessages);
+
   return (
     <>
-      <PageSection title="Checked state and label">
-        <p>
-          A checkbox switches a boolean value. The state is controlled: <code>checked</code> sets
-          it, and <code>onCheckedChange</code> receives the requested new value. It is a native{' '}
-          <code>input type=&quot;checkbox&quot;</code>, drawn with tokens.
-        </p>
-        <p>
-          <code>label</code> shows a text to the right of the box, and clicking the text switches
-          the checkbox too. Without a visible label, name the checkbox with <code>aria-label</code>{' '}
-          or point to a caption with <code>aria-labelledby</code>: one of the three is required by
-          the types. A label on the left comes from the property row around the field.
-        </p>
+      <PageSection title={doc('checkedStateTitle')}>
+        <p>{doc('checkedStateText')}</p>
+        <p>{doc('checkedStateText2')}</p>
         <ExampleBlock
           sources={[
             { fileName: 'CheckboxExample.tsx', code: checkboxSource },
@@ -34,13 +29,8 @@ export function CheckboxPage() {
           <CheckboxExample />
         </ExampleBlock>
       </PageSection>
-      <PageSection title="Mixed state">
-        <p>
-          <code>checked=&quot;mixed&quot;</code> shows a dash: some of the values behind the
-          checkbox are on and some are off, as with several selected objects or a group of child
-          options. Screen readers announce it as partially checked. A click on a mixed checkbox asks
-          for <code>true</code>; the owner decides what that means and passes the new value back.
-        </p>
+      <PageSection title={doc('mixedStateTitle')}>
+        <p>{doc('mixedStateText')}</p>
         <ExampleBlock
           sources={[
             { fileName: 'CheckboxMixedExample.tsx', code: checkboxMixedSource },
@@ -50,11 +40,8 @@ export function CheckboxPage() {
           <CheckboxMixedExample />
         </ExampleBlock>
       </PageSection>
-      <PageSection title="Disabled">
-        <p>
-          A disabled checkbox ignores the mouse, the keyboard and clicks on its label, leaves the
-          Tab order and shows its state in disabled colors.
-        </p>
+      <PageSection title={doc('disabledTitle')}>
+        <p>{doc('disabledText')}</p>
         <ExampleBlock
           sources={[
             { fileName: 'CheckboxDisabledExample.tsx', code: checkboxDisabledSource },
@@ -64,14 +51,8 @@ export function CheckboxPage() {
           <CheckboxDisabledExample />
         </ExampleBlock>
       </PageSection>
-      <PageSection title="Keyboard and other props">
-        <p>
-          Tab reaches the checkbox and Space switches it, as with a native checkbox; Enter does
-          nothing. Inside a toolbar the checkbox joins the toolbar&apos;s arrow order.{' '}
-          <code>ref</code> receives the <code>input</code> element, and native input attributes such
-          as <code>id</code>, <code>name</code> and <code>aria-describedby</code> pass through.{' '}
-          <code>className</code> goes to the outer element and is meant only for layout.
-        </p>
+      <PageSection title={doc('keyboardOtherTitle')}>
+        <p>{doc('keyboardOtherText')}</p>
       </PageSection>
     </>
   );
