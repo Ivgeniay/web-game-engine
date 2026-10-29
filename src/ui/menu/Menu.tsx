@@ -1,7 +1,7 @@
 import { FloatingNode, FloatingTree, useFloatingParentNodeId } from '@floating-ui/react';
 import type { ReferenceType, VirtualElement } from '@floating-ui/react';
 import { useCallback, useMemo, useRef, useState } from 'react';
-import type { KeyboardEvent, ReactNode } from 'react';
+import type { KeyboardEvent, ReactNode, RefObject } from 'react';
 import type { MenuItem, MenuNavigationDirection, MenuPoint } from './menuItems';
 import { MenuList } from './MenuList';
 import { useMenuLevel } from './useMenuLevel';
@@ -20,6 +20,7 @@ interface TriggerMenuProps extends MenuBaseProps {
   readonly label?: never;
   readonly open?: boolean | undefined;
   readonly onOpenChange?: ((open: boolean) => void) | undefined;
+  readonly returnFocusRef?: RefObject<HTMLElement | null> | undefined;
   readonly point?: never;
   readonly onClose?: never;
 }
@@ -31,6 +32,7 @@ interface PointMenuProps extends MenuBaseProps {
   readonly trigger?: never;
   readonly open?: never;
   readonly onOpenChange?: never;
+  readonly returnFocusRef?: never;
 }
 
 type MenuProps = TriggerMenuProps | PointMenuProps;
@@ -66,7 +68,14 @@ function navigationDirection(event: KeyboardEvent<HTMLElement>): MenuNavigationD
   return null;
 }
 
-function TriggerMenu({ items, onNavigateOut, trigger, open, onOpenChange }: TriggerMenuProps) {
+function TriggerMenu({
+  items,
+  onNavigateOut,
+  trigger,
+  open,
+  onOpenChange,
+  returnFocusRef,
+}: TriggerMenuProps) {
   const [internalOpen, setInternalOpen] = useState(false);
   const isOpen = open ?? internalOpen;
 
@@ -98,6 +107,7 @@ function TriggerMenu({ items, onNavigateOut, trigger, open, onOpenChange }: Trig
         elementsRef={elementsRef}
         labelsRef={labelsRef}
         items={items}
+        returnFocusRef={returnFocusRef}
         onKeyDown={navigateOutHandler(onNavigateOut)}
       />
     </FloatingNode>

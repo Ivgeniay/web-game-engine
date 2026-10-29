@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { assertSliderRange, positionToValue, sliderKeyValue, valueToPosition } from './sliderScale';
+import { checkSliderRange, positionToValue, sliderKeyValue, valueToPosition } from './sliderScale';
 import type { SliderRange } from './sliderScale';
 
 const LINEAR: SliderRange = { min: 0, max: 10, scale: 'linear', kind: 'float' };
@@ -79,16 +79,25 @@ describe('sliderKeyValue', () => {
   });
 });
 
-describe('assertSliderRange', () => {
-  it('rejects an empty range and a logarithmic range from zero', () => {
-    expect(() => {
-      assertSliderRange({ ...LINEAR, max: 0 });
-    }).toThrow();
-    expect(() => {
-      assertSliderRange({ ...LOG, min: 0 });
-    }).toThrow();
-    expect(() => {
-      assertSliderRange(LOG);
-    }).not.toThrow();
+describe('checkSliderRange', () => {
+  it('accepts a valid range as it is', () => {
+    expect(checkSliderRange(LOG)).toEqual({ range: LOG, movable: true, problem: undefined });
+  });
+
+  it('falls back to a linear scale for a logarithmic range from zero', () => {
+    const check = checkSliderRange({ ...LOG, min: 0 });
+
+    expect(check.range.scale).toBe('linear');
+    expect(check.movable).toBe(true);
+    expect(check.problem).toContain('positive min');
+  });
+
+  it('makes an empty range immovable with the thumb at the start', () => {
+    const empty = { ...LINEAR, max: 0 };
+    const check = checkSliderRange(empty);
+
+    expect(check.movable).toBe(false);
+    expect(check.problem).toContain('max greater than min');
+    expect(valueToPosition(0, check.range)).toBe(0);
   });
 });

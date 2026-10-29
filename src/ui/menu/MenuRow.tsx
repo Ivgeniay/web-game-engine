@@ -3,6 +3,7 @@ import { useId } from 'react';
 import { frameworkIcons } from '@/icons/frameworkIcons';
 import type { IconSource } from '@/icons/icon';
 import styles from './Menu.module.css';
+import type { MenuCheckedState } from './menuItems';
 import { MenuRowContent } from './MenuRowContent';
 import { useMenuLevelContext } from './useMenuLevelContext';
 
@@ -12,7 +13,8 @@ interface MenuRowProps {
   readonly role: MenuRowRole;
   readonly label: string;
   readonly icon?: IconSource | undefined;
-  readonly checked?: boolean | undefined;
+  readonly checked?: MenuCheckedState | undefined;
+  readonly keepOpen?: boolean | undefined;
   readonly shortcut?: string | undefined;
   readonly disabled?: boolean | undefined;
   readonly onSelect: () => void;
@@ -21,11 +23,28 @@ interface MenuRowProps {
 const ACTIVE_TAB_INDEX = 0;
 const INACTIVE_TAB_INDEX = -1;
 
+function checkedMark(checked: MenuCheckedState | undefined, icon: IconSource | undefined) {
+  if (checked === true) {
+    return frameworkIcons.check;
+  }
+
+  return checked === 'mixed' ? frameworkIcons.minus : icon;
+}
+
+function ariaChecked(role: MenuRowRole, checked: MenuCheckedState | undefined) {
+  if (role === 'menuitem') {
+    return undefined;
+  }
+
+  return checked === 'mixed' ? 'mixed' : checked === true;
+}
+
 export function MenuRow({
   role,
   label,
   icon,
   checked,
+  keepOpen = false,
   shortcut,
   disabled = false,
   onSelect,
@@ -35,7 +54,7 @@ export function MenuRow({
     label: disabled ? null : label,
   });
   const active = listItemIndex === level.activeIndex;
-  const mark = checked === true ? frameworkIcons.check : icon;
+  const mark = checkedMark(checked, icon);
   const shortcutId = useId();
 
   return (
@@ -43,7 +62,7 @@ export function MenuRow({
       ref={listItemRef}
       type="button"
       role={role}
-      aria-checked={role === 'menuitem' ? undefined : checked === true}
+      aria-checked={ariaChecked(role, checked)}
       className={styles.item}
       tabIndex={active ? ACTIVE_TAB_INDEX : INACTIVE_TAB_INDEX}
       disabled={disabled}
@@ -52,7 +71,10 @@ export function MenuRow({
       {...level.getItemProps({
         onClick() {
           onSelect();
-          level.selectAndClose();
+
+          if (!keepOpen) {
+            level.selectAndClose();
+          }
         },
       })}
     >

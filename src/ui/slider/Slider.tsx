@@ -1,7 +1,8 @@
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import type { KeyboardEvent, Ref } from 'react';
 import type { ValueChangeHandler, ValueChangePhase } from '@/contracts/valueChange';
 import { classNames } from '@/ui/classNames';
+import { reportDevelopmentError } from '@/ui/developmentError';
 import { useLocale } from '@/ui/locale/useLocale';
 import { NumberField } from '@/ui/numberField/NumberField';
 import { DEFAULT_STEP } from '@/ui/numberField/numberStep';
@@ -11,8 +12,8 @@ import { useRovingFocusItem } from '@/ui/rovingFocus/useRovingFocusItem';
 import type { FieldSize } from '@/ui/textField/fieldBox';
 import type { TextFieldUpdateMode } from '@/ui/textField/TextField';
 import styles from './Slider.module.css';
-import { assertSliderRange, positionToValue, sliderKeyValue, valueToPosition } from './sliderScale';
-import type { SliderRange, SliderScale } from './sliderScale';
+import { checkSliderRange, positionToValue, sliderKeyValue, valueToPosition } from './sliderScale';
+import type { SliderScale } from './sliderScale';
 import { useTrackDrag } from './useTrackDrag';
 
 interface SliderBaseProps {
@@ -80,8 +81,16 @@ export function Slider({
   'aria-label': ariaLabel,
   'aria-labelledby': ariaLabelledBy,
 }: SliderProps) {
-  const range = useMemo<SliderRange>(() => ({ min, max, scale, kind }), [min, max, scale, kind]);
-  assertSliderRange(range);
+  const { range, movable, problem } = useMemo(
+    () => checkSliderRange({ min, max, scale, kind }),
+    [min, max, scale, kind],
+  );
+
+  useEffect(() => {
+    if (problem !== undefined) {
+      reportDevelopmentError(problem);
+    }
+  }, [problem]);
 
   const locale = useLocale();
   const valueFormat = useMemo(
@@ -90,7 +99,7 @@ export function Slider({
   );
   const railRef = useRef<HTMLSpanElement>(null);
   const sessionRef = useRef<SliderSession | null>(null);
-  const editable = !disabled && !readOnly;
+  const editable = !disabled && !readOnly && movable;
   const rovingProps = useRovingFocusItem({
     ref,
     tabIndex: disabled ? undefined : (tabIndex ?? 0),

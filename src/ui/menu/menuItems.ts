@@ -10,13 +10,16 @@ export interface MenuActionItem {
   readonly onSelect: () => void;
 }
 
+export type MenuCheckedState = boolean | 'mixed';
+
 export interface MenuCheckboxItem {
   readonly kind: 'checkbox';
   readonly id: string;
   readonly label: string;
   readonly shortcut?: string | undefined;
   readonly disabled?: boolean | undefined;
-  readonly checked: boolean;
+  readonly checked: MenuCheckedState;
+  readonly keepOpen?: boolean | undefined;
   readonly onCheckedChange: (checked: boolean) => void;
 }
 

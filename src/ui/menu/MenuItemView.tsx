@@ -26,10 +26,11 @@ export function MenuItemView({ item }: MenuItemViewProps) {
           role="menuitemcheckbox"
           label={item.label}
           checked={item.checked}
+          keepOpen={item.keepOpen}
           shortcut={item.shortcut}
           disabled={item.disabled}
           onSelect={() => {
-            item.onCheckedChange(!item.checked);
+            item.onCheckedChange(item.checked !== true);
           }}
         />
       );

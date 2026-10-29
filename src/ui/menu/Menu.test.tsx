@@ -260,6 +260,42 @@ describe('Menu with a trigger', () => {
     expect(handlers.snap).toHaveBeenCalledExactlyOnceWith(true);
   });
 
+  it('keeps the menu open after a checkbox item that asks for it', async () => {
+    const user = userEvent.setup();
+    const onCheckedChange = vi.fn();
+    render(
+      <Menu
+        items={[
+          {
+            kind: 'checkbox',
+            id: 'gizmos',
+            label: 'Gizmos',
+            checked: false,
+            keepOpen: true,
+            onCheckedChange,
+          },
+          { kind: 'checkbox', id: 'grid', label: 'Grid', checked: 'mixed', onCheckedChange },
+        ]}
+        trigger={(triggerProps) => <Button {...triggerProps}>{TRIGGER_LABEL}</Button>}
+      />,
+    );
+
+    await user.click(trigger());
+    await expectFocusOn('Gizmos');
+    await user.keyboard('{Enter}');
+
+    expect(onCheckedChange).toHaveBeenLastCalledWith(true);
+    expect(screen.getByRole('menu')).toBeDefined();
+    expect(focused()).toBe(item('Gizmos'));
+
+    expect(item('Grid').getAttribute('aria-checked')).toBe('mixed');
+    expect(item('Grid').querySelector('svg')).not.toBeNull();
+    await user.click(item('Grid'));
+
+    expect(onCheckedChange).toHaveBeenLastCalledWith(true);
+    expect(screen.queryByRole('menu')).toBeNull();
+  });
+
   it('chooses a radio item in its group', async () => {
     const { user, handlers } = await openWithClick();
     const group = screen.getByRole('group', { name: 'Pivot' });

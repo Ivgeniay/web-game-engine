@@ -87,6 +87,7 @@ beforeEach(() => {
 afterEach(() => {
   cleanup();
   vi.restoreAllMocks();
+  vi.unstubAllEnvs();
 });
 
 describe('Slider', () => {
@@ -263,5 +264,41 @@ describe('Slider', () => {
     await user.keyboard('{ArrowRight}');
 
     expect(slider().getAttribute('aria-valuenow')).toBe('5.1');
+  });
+
+  it('reports a logarithmic range from zero as an error in development', () => {
+    vi.spyOn(console, 'error').mockImplementation(() => undefined);
+
+    expect(() => render(<Harness min={0} scale="log" />)).toThrow('positive min');
+  });
+
+  it('falls back to a linear scale outside development', () => {
+    vi.stubEnv('DEV', false);
+    const error = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+    const onValueChange = vi.fn();
+    render(<Harness min={0} scale="log" onValueChange={onValueChange} />);
+
+    pointerDown(25);
+    pointerUp();
+
+    expect(error).toHaveBeenCalledExactlyOnceWith(expect.stringContaining('positive min'));
+    expect(onValueChange).toHaveBeenLastCalledWith(2.5, 'commit');
+  });
+
+  it('keeps the thumb still for an empty range outside development', async () => {
+    vi.stubEnv('DEV', false);
+    const error = vi.spyOn(console, 'error').mockImplementation(() => undefined);
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    render(<Harness initial={3} min={3} max={3} onValueChange={onValueChange} />);
+
+    pointerDown(80);
+    pointerUp();
+    slider().focus();
+    await user.keyboard('{ArrowRight}');
+
+    expect(error).toHaveBeenCalledExactlyOnceWith(expect.stringContaining('max greater than min'));
+    expect(onValueChange).not.toHaveBeenCalled();
+    expect(thumb()?.getAttribute('style')).toContain('left: 0%');
   });
 });

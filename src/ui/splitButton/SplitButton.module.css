@@ -1,0 +1,25 @@
+.root {
+  display: inline-flex;
+  flex: none;
+  max-width: 100%;
+}
+
+.root > button:first-of-type {
+  min-width: 0;
+  border-start-end-radius: 0;
+  border-end-end-radius: 0;
+}
+
+.root > button:last-of-type {
+  margin-inline-start: calc(-1 * var(--size-border-width));
+  border-start-start-radius: 0;
+  border-end-start-radius: 0;
+}
+
+.root > button:focus-visible {
+  position: relative;
+}
+
+.accent > button:last-of-type:enabled {
+  border-inline-start-color: var(--color-accent-active);
+}

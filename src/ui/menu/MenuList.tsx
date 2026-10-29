@@ -1,5 +1,5 @@
 import { FloatingFocusManager, FloatingList } from '@floating-ui/react';
-import type { KeyboardEvent } from 'react';
+import type { KeyboardEvent, RefObject } from 'react';
 import { classNames } from '@/ui/classNames';
 import { POPUP_BLOCKS_TOOLTIPS_PROPS } from '@/ui/popup/popupLayerAttributes';
 import { PopupPortal } from '@/ui/popup/PopupPortal';
@@ -14,6 +14,7 @@ interface MenuListProps extends MenuListRefs {
   readonly level: MenuLevel;
   readonly label?: string | undefined;
   readonly items: readonly MenuItem[];
+  readonly returnFocusRef?: RefObject<HTMLElement | null> | undefined;
   readonly onKeyDown?: ((event: KeyboardEvent<HTMLElement>) => void) | undefined;
 }
 
@@ -26,6 +27,7 @@ export function MenuList({
   labelsRef,
   label,
   items,
+  returnFocusRef,
   onKeyDown,
 }: MenuListProps) {
   const { open, nested, context, levelContext, floatingStyles, setFloating, getFloatingProps } =
@@ -40,7 +42,7 @@ export function MenuList({
               context={context}
               modal={false}
               initialFocus={nested ? NO_INITIAL_FOCUS : FIRST_TABBABLE}
-              returnFocus
+              returnFocus={returnFocusRef ?? true}
             >
               <div
                 {...POPUP_BLOCKS_TOOLTIPS_PROPS}

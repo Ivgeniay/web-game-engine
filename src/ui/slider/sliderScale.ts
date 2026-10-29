@@ -31,14 +31,32 @@ const KEY_DIRECTIONS: Readonly<Record<string, number>> = {
   PageUp: PAGE_STEP_COUNT,
 };
 
-export function assertSliderRange({ min, max, scale }: SliderRange): void {
+export interface SliderRangeCheck {
+  readonly range: SliderRange;
+  readonly movable: boolean;
+  readonly problem: string | undefined;
+}
+
+export function checkSliderRange(range: SliderRange): SliderRangeCheck {
+  const { min, max, scale } = range;
+
   if (!(max > min)) {
-    throw new Error(`Slider needs max greater than min, got ${String(min)} and ${String(max)}`);
+    return {
+      range: { ...range, scale: 'linear' },
+      movable: false,
+      problem: `Slider needs max greater than min, got ${String(min)} and ${String(max)}`,
+    };
   }
 
   if (scale === 'log' && !(min > 0)) {
-    throw new Error(`A logarithmic slider needs a positive min, got ${String(min)}`);
+    return {
+      range: { ...range, scale: 'linear' },
+      movable: true,
+      problem: `A logarithmic slider needs a positive min, got ${String(min)}`,
+    };
   }
+
+  return { range, movable: true, problem: undefined };
 }
 
 function clampPosition(position: number): number {
@@ -51,6 +69,11 @@ function limitsOf({ min, max, kind }: SliderRange): NumberLimits {
 
 export function valueToPosition(value: number, range: SliderRange): number {
   const { min, max, scale } = range;
+
+  if (!(max > min)) {
+    return MIN_POSITION;
+  }
+
   const clamped = clampNumber(value, limitsOf(range));
   const position =
     scale === 'log' ? Math.log(clamped / min) / Math.log(max / min) : (clamped - min) / (max - min);

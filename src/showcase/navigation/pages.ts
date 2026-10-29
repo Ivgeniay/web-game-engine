@@ -9,6 +9,8 @@ import { DialogPage } from '@/showcase/pages/components/dialog/DialogPage';
 import { dialogPageMessages } from '@/showcase/pages/components/dialog/dialogPageMessages';
 import { DragAndDropPage } from '@/showcase/pages/components/dragAndDrop/DragAndDropPage';
 import { dragAndDropPageMessages } from '@/showcase/pages/components/dragAndDrop/dragAndDropPageMessages';
+import { FlagsFieldPage } from '@/showcase/pages/components/flagsField/FlagsFieldPage';
+import { flagsFieldPageMessages } from '@/showcase/pages/components/flagsField/flagsFieldPageMessages';
 import { FoldoutPage } from '@/showcase/pages/components/foldout/FoldoutPage';
 import { foldoutPageMessages } from '@/showcase/pages/components/foldout/foldoutPageMessages';
 import { IconButtonPage } from '@/showcase/pages/components/iconButton/IconButtonPage';
@@ -39,6 +41,8 @@ import { SelectPage } from '@/showcase/pages/components/select/SelectPage';
 import { selectPageMessages } from '@/showcase/pages/components/select/selectPageMessages';
 import { SeparatorPage } from '@/showcase/pages/components/separator/SeparatorPage';
 import { separatorPageMessages } from '@/showcase/pages/components/separator/separatorPageMessages';
+import { SplitButtonPage } from '@/showcase/pages/components/splitButton/SplitButtonPage';
+import { splitButtonPageMessages } from '@/showcase/pages/components/splitButton/splitButtonPageMessages';
 import { SliderPage } from '@/showcase/pages/components/slider/SliderPage';
 import { sliderPageMessages } from '@/showcase/pages/components/slider/sliderPageMessages';
 import { TextAreaPage } from '@/showcase/pages/components/textArea/TextAreaPage';
@@ -368,11 +372,25 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     component: MenuPage,
   },
   {
+    id: 'components/split-button',
+    section: 'components',
+    title: messageRef(splitButtonPageMessages, 'pageTitle'),
+    description: messageRef(splitButtonPageMessages, 'pageDescription'),
+    component: SplitButtonPage,
+  },
+  {
     id: 'components/select',
     section: 'components',
     title: messageRef(selectPageMessages, 'pageTitle'),
     description: messageRef(selectPageMessages, 'pageDescription'),
     component: SelectPage,
+  },
+  {
+    id: 'components/flags-field',
+    section: 'components',
+    title: messageRef(flagsFieldPageMessages, 'pageTitle'),
+    description: messageRef(flagsFieldPageMessages, 'pageDescription'),
+    component: FlagsFieldPage,
   },
   {
     id: 'components/popover',
