@@ -48,6 +48,7 @@ export interface Light {
   readonly intensity: number;
   readonly range: number;
   readonly castShadows: boolean;
+  readonly shadowStrength: number;
 }
 
 export interface Waypoint {
@@ -119,6 +120,7 @@ export const DEFAULT_LIGHT: Light = {
   intensity: 1,
   range: 10,
   castShadows: false,
+  shadowStrength: 1,
 };
 
 interface InitialObject {

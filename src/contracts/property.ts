@@ -1,4 +1,5 @@
 import type { MessageRef } from '@/core/i18n/translate';
+import type { PropertyRowSlots } from '@/ui/propertyRow/PropertyRow';
 import type { Color } from './color';
 import type { Bounds, Rect } from './geometry';
 import type { ValueChangeHandler, ValueChangePhase } from './valueChange';
@@ -155,7 +156,7 @@ export type PropertyDescription =
 
 export type PropertyValueType = PropertyDescription['type'];
 
-export type TargetsChange<T> = (own: T, shown: T) => T;
+export type TargetsChange<T> = (own: T) => T;
 
 export type TargetsChangeHandler<T> = (change: TargetsChange<T>, phase: ValueChangePhase) => void;
 
@@ -167,4 +168,5 @@ export interface PropertyEditorProps<T> {
   readonly readOnly: boolean;
   readonly onValueChange: ValueChangeHandler<T>;
   readonly onTargetsChange: TargetsChangeHandler<T>;
+  readonly row: PropertyRowSlots;
 }

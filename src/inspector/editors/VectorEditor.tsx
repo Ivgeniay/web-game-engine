@@ -1,12 +1,17 @@
 import type { VectorDimensions, VectorSpec } from '@/contracts/property';
 import { useNumberFieldMessages } from '@/state/fields/useNumberFieldMessages';
 import { PropertyRow } from '@/ui/propertyRow/PropertyRow';
-import { VECTOR2_AXES, VECTOR3_AXES, VECTOR4_AXES } from '@/ui/vectorField/vectorAxes';
+import {
+  VECTOR2_AXES,
+  VECTOR3_AXES,
+  VECTOR4_AXES,
+  replaceComponent,
+} from '@/ui/vectorField/vectorAxes';
 import type { VectorAxis } from '@/ui/vectorField/vectorAxes';
 import { VectorField } from '@/ui/vectorField/VectorField';
 import { DEFAULT_NUMBER_KIND } from './builtInEditorProps';
 import type { BuiltInEditorProps } from './builtInEditorProps';
-import { mergeChangedComponents, mixedComponents } from './componentChanges';
+import { mixedComponents } from './mixedComponents';
 
 const AXES: Readonly<Record<VectorDimensions, readonly VectorAxis[]>> = {
   2: VECTOR2_AXES,
@@ -20,13 +25,14 @@ export function VectorEditor({
   value,
   values,
   readOnly,
+  row,
   onTargetsChange,
 }: BuiltInEditorProps<readonly number[], VectorSpec>) {
   const { dimensions, kind = DEFAULT_NUMBER_KIND, min, max, step } = spec;
   const invalidMessages = useNumberFieldMessages({ min, max });
 
   return (
-    <PropertyRow label={label}>
+    <PropertyRow label={label} {...row}>
       {({ id, labelId }) => (
         <VectorField
           id={id}
@@ -40,8 +46,8 @@ export function VectorEditor({
           step={step}
           readOnly={readOnly}
           invalidMessages={invalidMessages}
-          onValueChange={(next, phase) => {
-            onTargetsChange((own, shown) => mergeChangedComponents(own, next, shown), phase);
+          onComponentChange={(index, component, phase) => {
+            onTargetsChange((own) => replaceComponent(own, index, component), phase);
           }}
         />
       )}

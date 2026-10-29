@@ -4,6 +4,7 @@ import type { Unsubscribe } from '@/core/unsubscribe';
 import { defineWindow } from '@/core/windows/windowType';
 import { demoMessages } from '@/demo/demoMessages';
 import { frameworkIcons } from '@/icons/frameworkIcons';
+import { inspectorSectionMenu } from '@/inspector/inspectorMenus';
 import type { EditorRegistries } from '@/state/registries/editorRegistries';
 import {
   HIERARCHY_WINDOW_ID,
@@ -11,7 +12,6 @@ import {
   deleteObjectCommand,
   duplicateObjectCommand,
   hierarchyObjectMenu,
-  inspectorComponentMenu,
   removeComponentCommand,
   renameObjectCommand,
   resetComponentCommand,
@@ -90,13 +90,13 @@ export function registerDemoWindows({ contextMenus, windows }: EditorRegistries)
       group: 10,
       order: 10,
     }),
-    contextMenus.registerItem(inspectorComponentMenu, {
+    contextMenus.registerItem(inspectorSectionMenu, {
       path: 'reset',
       command: resetComponentCommand,
       group: 0,
       order: 0,
     }),
-    contextMenus.registerItem(inspectorComponentMenu, {
+    contextMenus.registerItem(inspectorSectionMenu, {
       path: 'remove',
       command: removeComponentCommand,
       group: 10,

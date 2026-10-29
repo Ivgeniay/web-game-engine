@@ -5,7 +5,7 @@ import { PropertyRow } from '@/ui/propertyRow/PropertyRow';
 import { RectField } from '@/ui/rectField/RectField';
 import { DEFAULT_NUMBER_KIND } from './builtInEditorProps';
 import type { BuiltInEditorProps } from './builtInEditorProps';
-import { mergeChangedRect, mixedRect } from './componentChanges';
+import { mixedRect } from './mixedComponents';
 
 export function RectEditor({
   spec,
@@ -13,12 +13,13 @@ export function RectEditor({
   value,
   values,
   readOnly,
+  row,
   onTargetsChange,
 }: BuiltInEditorProps<Rect, RectSpec>) {
   const invalidMessages = useNumberFieldMessages();
 
   return (
-    <PropertyRow label={label}>
+    <PropertyRow label={label} {...row}>
       {({ id, labelId }) => (
         <RectField
           id={id}
@@ -28,8 +29,8 @@ export function RectEditor({
           kind={spec.kind ?? DEFAULT_NUMBER_KIND}
           readOnly={readOnly}
           invalidMessages={invalidMessages}
-          onValueChange={(next, phase) => {
-            onTargetsChange((own, shown) => mergeChangedRect(own, next, shown), phase);
+          onComponentChange={(key, component, phase) => {
+            onTargetsChange((own) => ({ ...own, [key]: component }), phase);
           }}
         />
       )}

@@ -1,4 +1,5 @@
 .root {
+  position: relative;
   display: grid;
   grid-template-columns:
     clamp(
@@ -9,6 +10,19 @@
     minmax(0, 1fr) auto;
   align-items: center;
   min-height: var(--size-control-height-md);
+}
+
+.root[data-markable] {
+  padding-inline-start: calc(var(--size-property-modified-mark) + var(--space-2));
+}
+
+.root[data-modified]::before {
+  position: absolute;
+  inset-block: var(--space-2);
+  inset-inline-start: 0;
+  width: var(--size-property-modified-mark);
+  background-color: var(--color-accent);
+  content: '';
 }
 
 .labelCell {
@@ -29,10 +43,15 @@
   color: var(--color-text-primary);
 }
 
-.slot {
+.reset {
   display: flex;
   flex: none;
   align-items: center;
+  padding-inline-start: var(--space-2);
+}
+
+.reset[data-unavailable] {
+  visibility: hidden;
 }
 
 .field {

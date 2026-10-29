@@ -97,21 +97,6 @@ describe('createTargetsChangeHandler', () => {
     expect(snapshot()).toEqual({ a: [2, 0] });
   });
 
-  it('passes the value shown at the start of the edit', () => {
-    const { handler } = setup({ a: [7, 0], b: [9, 0] });
-    const shown: Vector[] = [];
-
-    handler((own, start) => {
-      shown.push(start);
-      return own;
-    }, 'commit');
-
-    expect(shown).toEqual([
-      [7, 0],
-      [7, 0],
-    ]);
-  });
-
   it('restores the start values on cancel and records nothing', () => {
     const { handler, snapshot, undo } = setup({ a: [0, 1], b: [4, 2] });
 

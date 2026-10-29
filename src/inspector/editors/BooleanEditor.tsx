@@ -7,10 +7,11 @@ export function BooleanEditor({
   value,
   mixed,
   readOnly,
+  row,
   onValueChange,
 }: PropertyEditorProps<boolean>) {
   return (
-    <PropertyRow label={label}>
+    <PropertyRow label={label} {...row}>
       {({ id, labelId }) => (
         <Checkbox
           id={id}

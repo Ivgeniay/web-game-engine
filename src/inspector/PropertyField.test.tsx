@@ -244,6 +244,30 @@ describe('PropertyField', () => {
     ]);
   });
 
+  it('writes a value typed into a mixed component to every target, also when the first one has it', async () => {
+    const user = userEvent.setup();
+    const items = createItems({ a: { position: [1, 2, 3] }, b: { position: [4, 5, 6] } });
+    show(
+      items,
+      vectorProperty({
+        id: 'position',
+        label: messageRef(messages, 'position'),
+        dimensions: 3,
+        read: (id) => items.read(id).position,
+        write: (id, position) => {
+          items.update(id, { position });
+        },
+      }),
+    );
+
+    await user.type(input('Position Y'), '2{Enter}');
+
+    expect([items.read('a').position, items.read('b').position]).toEqual([
+      [1, 2, 3],
+      [4, 2, 6],
+    ]);
+  });
+
   it('shows the translated options of an enumeration', async () => {
     const user = userEvent.setup();
     const items = createItems({ a: { mode: 'off' } });

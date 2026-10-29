@@ -1,6 +1,6 @@
 import { useId } from 'react';
 import type { Bounds } from '@/contracts/geometry';
-import type { ValueChangeHandler } from '@/contracts/valueChange';
+import type { ValueChangeHandler, ValueChangePhase } from '@/contracts/valueChange';
 import { classNames } from '@/ui/classNames';
 import { Label } from '@/ui/label/Label';
 import type { NumberFieldMessages, NumberKind } from '@/ui/numberField/numberText';
@@ -14,12 +14,20 @@ export interface BoundsMixed {
   readonly size?: readonly boolean[] | undefined;
 }
 
+export type BoundsComponentChangeHandler = (
+  part: keyof Bounds,
+  index: number,
+  value: number,
+  phase: ValueChangePhase,
+) => void;
+
 interface BoundsFieldProps {
   readonly label: string;
   readonly centerLabel: string;
   readonly sizeLabel: string;
   readonly value: Bounds;
   readonly onValueChange?: ValueChangeHandler<Bounds> | undefined;
+  readonly onComponentChange?: BoundsComponentChangeHandler | undefined;
   readonly mixed?: BoundsMixed | undefined;
   readonly kind?: NumberKind;
   readonly invalidMessages: NumberFieldMessages;
@@ -37,6 +45,7 @@ export function BoundsField({
   sizeLabel,
   value,
   onValueChange,
+  onComponentChange,
   mixed = {},
   kind = 'float',
   invalidMessages,
@@ -70,6 +79,9 @@ export function BoundsField({
             aria-labelledby={`${captionId} ${labelId}`}
             value={value.center}
             mixed={mixed.center}
+            onComponentChange={(index, component, phase) => {
+              onComponentChange?.('center', index, component, phase);
+            }}
             onValueChange={(center, phase) => {
               onValueChange?.({ ...value, center }, phase);
             }}
@@ -84,6 +96,9 @@ export function BoundsField({
             aria-labelledby={`${captionId} ${labelId}`}
             value={value.size}
             mixed={mixed.size}
+            onComponentChange={(index, component, phase) => {
+              onComponentChange?.('size', index, component, phase);
+            }}
             onValueChange={(size, phase) => {
               onValueChange?.({ ...value, size }, phase);
             }}

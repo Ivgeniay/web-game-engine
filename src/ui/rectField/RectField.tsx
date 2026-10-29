@@ -1,5 +1,5 @@
 import type { Rect } from '@/contracts/geometry';
-import type { ValueChangeHandler } from '@/contracts/valueChange';
+import type { ValueChangeHandler, ValueChangePhase } from '@/contracts/valueChange';
 import { classNames } from '@/ui/classNames';
 import type { NumberFieldMessages, NumberKind } from '@/ui/numberField/numberText';
 import type { FieldSize } from '@/ui/textField/fieldBox';
@@ -8,6 +8,12 @@ import { VectorField } from '@/ui/vectorField/VectorField';
 import styles from './RectField.module.css';
 
 export type RectMixed = Readonly<Partial<Record<keyof Rect, boolean>>>;
+
+export type RectComponentChangeHandler = (
+  key: keyof Rect,
+  value: number,
+  phase: ValueChangePhase,
+) => void;
 
 const RECT_POSITION_AXES: readonly VectorAxis[] = [
   { label: 'X', mark: 'x' },
@@ -19,6 +25,7 @@ const RECT_SIZE_AXES: readonly VectorAxis[] = [{ label: 'W' }, { label: 'H' }];
 interface RectFieldBaseProps {
   readonly value: Rect;
   readonly onValueChange?: ValueChangeHandler<Rect> | undefined;
+  readonly onComponentChange?: RectComponentChangeHandler | undefined;
   readonly mixed?: RectMixed | undefined;
   readonly kind?: NumberKind;
   readonly invalidMessages: NumberFieldMessages;
@@ -36,11 +43,14 @@ type GroupLabelling =
 type RectFieldProps = RectFieldBaseProps & GroupLabelling;
 
 const NOT_MIXED = false;
+const RECT_POSITION_KEYS: readonly (keyof Rect)[] = ['x', 'y'];
+const RECT_SIZE_KEYS: readonly (keyof Rect)[] = ['width', 'height'];
 
 export function RectField(props: RectFieldProps) {
   const {
     value,
     onValueChange,
+    onComponentChange,
     mixed = {},
     kind = 'float',
     invalidMessages,
@@ -64,6 +74,13 @@ export function RectField(props: RectFieldProps) {
         axes={RECT_POSITION_AXES}
         value={[value.x, value.y]}
         mixed={[mixed.x ?? NOT_MIXED, mixed.y ?? NOT_MIXED]}
+        onComponentChange={(index, component, phase) => {
+          const key = RECT_POSITION_KEYS[index];
+
+          if (key !== undefined) {
+            onComponentChange?.(key, component, phase);
+          }
+        }}
         onValueChange={(next, phase) => {
           onValueChange?.({ ...value, x: next[0] ?? value.x, y: next[1] ?? value.y }, phase);
         }}
@@ -73,6 +90,13 @@ export function RectField(props: RectFieldProps) {
         axes={RECT_SIZE_AXES}
         value={[value.width, value.height]}
         mixed={[mixed.width ?? NOT_MIXED, mixed.height ?? NOT_MIXED]}
+        onComponentChange={(index, component, phase) => {
+          const key = RECT_SIZE_KEYS[index];
+
+          if (key !== undefined) {
+            onComponentChange?.(key, component, phase);
+          }
+        }}
         onValueChange={(next, phase) => {
           onValueChange?.(
             { ...value, width: next[0] ?? value.width, height: next[1] ?? value.height },

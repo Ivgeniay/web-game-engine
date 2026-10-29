@@ -198,10 +198,10 @@ src/
   themes/      токены, темы и глобальные стили
   icons/       SVG-иконки каркаса, их формат и набор frameworkIcons
   ui/          базовые UI-примитивы
-  core/        команды, меню, горячие клавиши, реестры тулбара и строки состояния, общий реестр. core/i18n/ — ядро локализации и словарь общих терминов каркаса. core/windows/ — тип окна, реестр окон и рабочая область, core/layout/ — описание раскладки, core/undo/ — стек отмены и команды отмены, core/inspector/ — конструкторы описаний свойств, многообъектная запись значения и реестр редакторов свойств
+  core/        команды, меню, горячие клавиши, реестры тулбара и строки состояния, общий реестр. core/i18n/ — ядро локализации и словарь общих терминов каркаса. core/windows/ — тип окна, реестр окон и рабочая область, core/layout/ — описание раскладки, core/undo/ — стек отмены и команды отмены, core/inspector/ — конструкторы описаний свойств, многообъектная запись значения, реестры редакторов свойств и отрисовщиков секций
   state/       сторы Zustand и связанная с ними логика, сгруппированная по функциям: например, state/theme/, state/language/ (стор языка и хуки перевода), state/stores/ (провайдер сторов), state/registries/ (реестры редактора, их провайдер и хуки), state/platform/ (платформа и форматирование сочетаний), state/dialogs/ (очередь подтверждений), state/fields/ (переведённые сообщения и подписи полей), state/undo/ (связь полей со стеком отмены)
   contracts/   интерфейсы между редактором и движком
-  inspector/   механизм инспектора: PropertyField и встроенные редакторы свойств. Описание свойства — src/contracts/property.ts
+  inspector/   механизм инспектора: Inspector, секции, PropertyField и встроенные редакторы свойств. Описания свойств и секций — src/contracts/property.ts и src/contracts/inspector.ts
   layout/      докинг-система на dockview: DockLayout, вкладки и меню вкладки, сохранение раскладки, команды раскладки
   shell/       оболочка редактора: MenuBar, MainToolbar, StatusBar, ContextMenu, ConfirmDialogHost и каркас страницы EditorFrame
   windows/     механизм окон каркаса: базовое окно WindowFrame, функция для меню Window, общие окна каркаса. Окна конкретного движка приносит engine/
@@ -229,7 +229,7 @@ src/
 ### Как интеграция подключается
 
 - Реестры создаёт `createEditorRegistries()` в точке входа и передаёт через `RegistriesProvider`, компоненты берут их через `useEditorRegistries()`. Глобальных реестров нет, тесты и примеры создают свои.
-- Состав реестров: `commands`, `mainMenu`, `contextMenus`, `toolbar`, `statusBar`, `dialogs`, `windows`, `workspace`, `undo`, `propertyEditors`.
+- Состав реестров: `commands`, `mainMenu`, `contextMenus`, `toolbar`, `statusBar`, `dialogs`, `windows`, `workspace`, `undo`, `propertyEditors`, `inspectorSections`.
 - Интеграция подключается функцией типа `EditorExtension` из `src/contracts/editorExtension.ts`: получает реестры и возвращает функцию отмены всех своих регистраций. Каждый `register` и `handle` возвращает свою отмену, несколько отмен объединяет `combineUnsubscribes`.
 - Окно или другой компонент, который приносит свои команды и пункты на время жизни, регистрирует их через `useRegistration((editor) => …, deps)`. Зависимости проверяет линтер, как у `useEffect`.
 - Дубль id и неверный путь — ошибка в режиме разработки (`reportDevelopmentError`): исключение в разработке, запись в консоль в production.

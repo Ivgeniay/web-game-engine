@@ -13,7 +13,7 @@ export const propertyRowPageMessages = defineDocMessages({
       '`PropertyRowGroup` lines up the rows of a window or a section: the caption column has one width for all of them, 40% by default, and the border between the columns can be dragged. The width stays within the `--size-property-*` limits and is not saved between sessions. A row outside a group uses the default width.',
     depthSlotsTitle: 'Depth, slots and the property menu',
     depthSlotsText:
-      '`depth` indents the caption of a nested property; fields stay in one column. `leading` is a slot left of the caption for a mark such as "value changed", and `trailing` is a slot right of the field for a button such as "reset".',
+      '`depth` indents the caption of a nested property; fields stay in one column. `modified` draws a mark at the left edge of the row: the value differs from the default. `reset` with a `label` and `onReset` adds a reset button right of the field; it is shown only while `modified` is true and keeps its place otherwise, so fields stay in one column. A row with `modified`, even `false`, keeps a gap for the mark.',
     depthSlotsText2:
       "`menuItems` gives the property menu: a right click on the row, or the context menu key and Shift+F10 on a field that is not a text input, opens it. The row does not build the menu itself, the items come from the owner as data of the Menu component. Text inputs keep the browser's own menu with copy and paste.",
     otherPropsTitle: 'Other props',
@@ -32,7 +32,7 @@ export const propertyRowPageMessages = defineDocMessages({
       '`PropertyRowGroup` выравнивает строки окна или секции: у колонки подписей одна ширина для всех строк, по умолчанию 40%, а границу между колонками можно перетаскивать. Ширина остаётся в пределах `--size-property-*` и не сохраняется между сессиями. Строка вне группы берёт ширину по умолчанию.',
     depthSlotsTitle: 'Вложенность, слоты и меню свойства',
     depthSlotsText:
-      '`depth` сдвигает подпись вложенного свойства; поля остаются в одной колонке. `leading` — слот слева от подписи для пометки вроде «значение изменено», `trailing` — слот справа от поля для кнопки вроде «сбросить».',
+      '`depth` сдвигает подпись вложенного свойства; поля остаются в одной колонке. `modified` рисует отметку у левого края строки: значение отличается от значения по умолчанию. `reset` с подписью `label` и `onReset` добавляет справа от поля кнопку сброса; она видна, только пока `modified` истинно, а иначе сохраняет своё место, чтобы поля оставались в одной колонке. Строка с `modified`, даже `false`, оставляет зазор под отметку.',
     depthSlotsText2:
       '`menuItems` задаёт меню свойства: его открывает правый клик по строке, а на поле, которое не является текстовым вводом, — клавиша контекстного меню и Shift+F10. Сама строка меню не строит: пункты приходят от владельца данными компонента Menu. Текстовые поля оставляют родное меню браузера с копированием и вставкой.',
     otherPropsTitle: 'Остальные пропсы',

@@ -29,6 +29,7 @@ function LayerEditor({
   value,
   mixed,
   readOnly,
+  row,
   onValueChange,
 }: PropertyEditorProps<number>) {
   const options = ENGINE_LAYERS.map((name, index) => ({
@@ -38,7 +39,7 @@ function LayerEditor({
   }));
 
   return (
-    <PropertyRow label={label}>
+    <PropertyRow label={label} {...row}>
       {({ id, labelId }) => (
         <Select
           id={id}

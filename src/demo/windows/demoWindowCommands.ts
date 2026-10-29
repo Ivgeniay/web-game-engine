@@ -1,10 +1,10 @@
+import type { InspectorSectionTarget } from '@/contracts/inspector';
 import { defineCommand } from '@/core/commands/command';
 import { commonMessages } from '@/core/i18n/commonMessages';
 import { messageRef } from '@/core/i18n/translate';
 import { defineContextMenu } from '@/core/menus/contextMenuRegistry';
 import type { WindowTabTarget } from '@/core/windows/windowType';
 import { demoMessages } from '@/demo/demoMessages';
-import type { ComponentKind } from '@/demo/scene/sceneComponents';
 
 export const SCENE_WINDOW_ID = 'demo.scene';
 export const HIERARCHY_WINDOW_ID = 'demo.hierarchy';
@@ -42,21 +42,12 @@ export const hierarchyObjectMenu = defineContextMenu<readonly string[]>({
   label: messageRef(demoMessages, 'hierarchy'),
 });
 
-export interface ComponentTarget {
-  readonly component: ComponentKind;
-}
-
-export const inspectorComponentMenu = defineContextMenu<ComponentTarget>({
-  id: 'inspector.component',
-  label: messageRef(demoMessages, 'component'),
-});
-
-export const resetComponentCommand = defineCommand<ComponentTarget>({
+export const resetComponentCommand = defineCommand<InspectorSectionTarget>({
   id: 'inspector.resetComponent',
   label: messageRef(commonMessages, 'reset'),
 });
 
-export const removeComponentCommand = defineCommand<ComponentTarget>({
+export const removeComponentCommand = defineCommand<InspectorSectionTarget>({
   id: 'inspector.removeComponent',
   label: messageRef(demoMessages, 'removeComponent'),
 });

@@ -6,7 +6,7 @@ import type { Bounds } from '@/contracts/geometry';
 import type { ValueChangeHandler } from '@/contracts/valueChange';
 import { PropertyRowGroup } from '@/ui/propertyRow/PropertyRowGroup';
 import { BoundsField } from './BoundsField';
-import type { BoundsMixed } from './BoundsField';
+import type { BoundsComponentChangeHandler, BoundsMixed } from './BoundsField';
 
 const LABEL = 'Bounds';
 const CENTER = 'Center';
@@ -18,9 +18,10 @@ interface HarnessProps {
   readonly mixed?: BoundsMixed;
   readonly disabled?: boolean;
   readonly onValueChange?: ValueChangeHandler<Bounds>;
+  readonly onComponentChange?: BoundsComponentChangeHandler;
 }
 
-function Harness({ mixed, disabled, onValueChange }: HarnessProps) {
+function Harness({ mixed, disabled, onValueChange, onComponentChange }: HarnessProps) {
   const [bounds, setBounds] = useState(INITIAL);
 
   return (
@@ -37,6 +38,7 @@ function Harness({ mixed, disabled, onValueChange }: HarnessProps) {
           setBounds(next);
           onValueChange?.(next, phase);
         }}
+        onComponentChange={onComponentChange}
       />
     </PropertyRowGroup>
   );
@@ -113,5 +115,16 @@ describe('BoundsField', () => {
 
     expect(component(CENTER, 'X').disabled).toBe(true);
     expect(component(SIZE, 'Z').disabled).toBe(true);
+  });
+
+  it('reports the part and the index of the edited component', async () => {
+    const user = userEvent.setup();
+    const onComponentChange = vi.fn();
+    render(<Harness onComponentChange={onComponentChange} />);
+
+    await user.clear(component('Size', 'Y'));
+    await user.type(component('Size', 'Y'), '4{Enter}');
+
+    expect(onComponentChange).toHaveBeenCalledExactlyOnceWith('size', 1, 4, 'commit');
   });
 });

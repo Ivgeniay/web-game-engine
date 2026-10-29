@@ -6,6 +6,7 @@ import type { ValueChangeHandler, ValueChangePhase } from '@/contracts/valueChan
 import { VALUE_DRAG_THRESHOLD } from '@/ui/valueDrag/valueDragSession';
 import { VECTOR2_AXES, VECTOR3_AXES } from './vectorAxes';
 import { VectorField } from './VectorField';
+import type { VectorComponentChangeHandler } from './VectorField';
 
 const GROUP_LABEL = 'Position';
 const SIZE_LABEL = 'Size';
@@ -18,9 +19,16 @@ interface HarnessProps {
   readonly mixed?: readonly boolean[];
   readonly disabled?: boolean;
   readonly onValueChange?: ValueChangeHandler<readonly number[]>;
+  readonly onComponentChange?: VectorComponentChangeHandler;
 }
 
-function Harness({ initial = [1, 2, 3], mixed, disabled, onValueChange }: HarnessProps) {
+function Harness({
+  initial = [1, 2, 3],
+  mixed,
+  disabled,
+  onValueChange,
+  onComponentChange,
+}: HarnessProps) {
   const [value, setValue] = useState(initial);
 
   return (
@@ -39,6 +47,7 @@ function Harness({ initial = [1, 2, 3], mixed, disabled, onValueChange }: Harnes
           setValue(next);
           onValueChange?.(next, phase);
         }}
+        onComponentChange={onComponentChange}
       />
     </>
   );
@@ -180,5 +189,15 @@ describe('VectorField', () => {
 
     expect(screen.getByRole('group', { name: SIZE_LABEL })).toBeDefined();
     expect(screen.getByRole('spinbutton', { name: `${SIZE_LABEL} X` })).toBeDefined();
+  });
+
+  it('reports the edited component even when it is typed equal to the shown value', async () => {
+    const user = userEvent.setup();
+    const onComponentChange = vi.fn();
+    render(<Harness mixed={[false, true, false]} onComponentChange={onComponentChange} />);
+
+    await user.type(component('Y'), '2{Enter}');
+
+    expect(onComponentChange).toHaveBeenCalledExactlyOnceWith(1, 2, 'commit');
   });
 });

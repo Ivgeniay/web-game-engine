@@ -11,12 +11,13 @@ export function ColorEditor({
   value,
   mixed,
   readOnly,
+  row,
   onValueChange,
 }: BuiltInEditorProps<Color, ColorSpec>) {
   const labels = useColorFieldLabels();
 
   return (
-    <PropertyRow label={label}>
+    <PropertyRow label={label} {...row}>
       {({ id, labelId }) => (
         <ColorField
           id={id}

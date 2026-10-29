@@ -1,0 +1,10 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-8);
+}
+
+.inspector {
+  width: var(--showcase-inspector-width);
+}

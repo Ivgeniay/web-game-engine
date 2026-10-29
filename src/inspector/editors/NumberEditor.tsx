@@ -12,6 +12,7 @@ export function NumberEditor({
   value,
   mixed,
   readOnly,
+  row,
   onValueChange,
 }: BuiltInEditorProps<number, NumberSpec>) {
   const { kind = DEFAULT_NUMBER_KIND, step, min, max } = spec;
@@ -19,7 +20,7 @@ export function NumberEditor({
 
   if (spec.slider === true) {
     return (
-      <PropertyRow label={label}>
+      <PropertyRow label={label} {...row}>
         {({ id, labelId }) => (
           <Slider
             id={id}
@@ -42,6 +43,7 @@ export function NumberEditor({
   return (
     <PropertyRow
       label={label}
+      {...row}
       drag={readOnly ? undefined : { value, onValueChange, kind, min, max, step }}
     >
       {({ id }) => (

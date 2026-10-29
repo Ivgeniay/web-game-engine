@@ -1,4 +1,4 @@
-import type { ValueChangeHandler } from '@/contracts/valueChange';
+import type { ValueChangeHandler, ValueChangePhase } from '@/contracts/valueChange';
 import { classNames } from '@/ui/classNames';
 import type { NumberFieldMessages, NumberKind } from '@/ui/numberField/numberText';
 import type { FieldSize } from '@/ui/textField/fieldBox';
@@ -12,6 +12,7 @@ interface VectorFieldBaseProps {
   readonly axes: readonly VectorAxis[];
   readonly value: readonly number[];
   readonly onValueChange?: ValueChangeHandler<readonly number[]> | undefined;
+  readonly onComponentChange?: VectorComponentChangeHandler | undefined;
   readonly mixed?: readonly boolean[] | undefined;
   readonly kind?: NumberKind;
   readonly min?: number | undefined;
@@ -40,6 +41,12 @@ interface VectorFieldAriaLabelledBy {
 
 type VectorFieldProps = VectorFieldBaseProps & (VectorFieldAriaLabel | VectorFieldAriaLabelledBy);
 
+export type VectorComponentChangeHandler = (
+  index: number,
+  value: number,
+  phase: ValueChangePhase,
+) => void;
+
 const FIRST_COMPONENT = 0;
 const MISSING_COMPONENT = 0;
 
@@ -47,6 +54,7 @@ export function VectorField({
   axes,
   value,
   onValueChange,
+  onComponentChange,
   mixed,
   kind = 'float',
   min,
@@ -92,6 +100,7 @@ export function VectorField({
           readOnly={readOnly}
           size={size}
           onValueChange={(component, phase) => {
+            onComponentChange?.(index, component, phase);
             onValueChange?.(replaceComponent(value, index, component), phase);
           }}
         />

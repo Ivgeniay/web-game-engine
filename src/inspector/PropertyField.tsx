@@ -17,6 +17,7 @@ import { NumberEditor } from './editors/NumberEditor';
 import { RectEditor } from './editors/RectEditor';
 import { StringEditor } from './editors/StringEditor';
 import { VectorEditor } from './editors/VectorEditor';
+import { usePropertyRowSlots } from './usePropertyRowSlots';
 import { useTargetsValue } from './useTargetsValue';
 
 interface PropertyFieldProps {
@@ -25,13 +26,17 @@ interface PropertyFieldProps {
 }
 
 interface BoundPropertyProps<T> {
+  readonly description: PropertyDescription;
   readonly property: PropertyCommon<T>;
   readonly targetIds: readonly string[];
   readonly equals?: ((first: T, second: T) => boolean) | undefined;
   readonly children: (props: PropertyEditorProps<T>) => ReactNode;
 }
 
+function ignoreChange(): void {}
+
 function BoundProperty<T>({
+  description,
   property,
   targetIds,
   equals = samePropertyValue,
@@ -39,6 +44,14 @@ function BoundProperty<T>({
 }: BoundPropertyProps<T>) {
   const translate = useTranslate();
   const binding = useTargetsValue({ access: property, targetIds, label: property.label, equals });
+  const row = usePropertyRowSlots({
+    description,
+    property,
+    targetIds,
+    values: binding?.values ?? [],
+    equals,
+    onValueChange: binding?.onValueChange ?? ignoreChange,
+  });
 
   if (binding === null) {
     return null;
@@ -48,11 +61,12 @@ function BoundProperty<T>({
     ...binding,
     label: translate(property.label),
     readOnly: property.readOnly ?? false,
+    row,
   });
 }
 
 function editorOf(property: PropertyDescription, targetIds: readonly string[]): ReactNode {
-  const bound = { targetIds };
+  const bound = { targetIds, description: property };
 
   switch (property.type) {
     case 'number':

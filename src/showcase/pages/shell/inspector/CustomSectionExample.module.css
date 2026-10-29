@@ -1,0 +1,7 @@
+.root {
+  width: var(--showcase-inspector-width);
+}
+
+.action {
+  justify-self: start;
+}

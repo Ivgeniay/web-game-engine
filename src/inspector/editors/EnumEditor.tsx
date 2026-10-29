@@ -13,6 +13,7 @@ export function EnumEditor({
   value,
   mixed,
   readOnly,
+  row,
   onValueChange,
 }: BuiltInEditorProps<string, EnumSpec>) {
   const translate = useTranslate();
@@ -27,7 +28,7 @@ export function EnumEditor({
   );
 
   return (
-    <PropertyRow label={label}>
+    <PropertyRow label={label} {...row}>
       {({ id, labelId }) => (
         <Select
           id={id}

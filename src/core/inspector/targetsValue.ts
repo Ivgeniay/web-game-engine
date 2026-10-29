@@ -18,7 +18,6 @@ export interface TargetsValueOptions<T> {
 
 interface EditSession<T> {
   readonly values: ReadonlyMap<string, T>;
-  readonly shown: T;
 }
 
 export function readTargetsValue<T>(
@@ -43,9 +42,7 @@ export function createTargetsChangeHandler<T>(
 
   return (change, phase) => {
     const { undo, label, targetIds, access, equals } = getOptions();
-    const [firstId] = targetIds;
-
-    if (firstId === undefined || (phase === 'cancel' && session === null)) {
+    if (targetIds.length === 0 || (phase === 'cancel' && session === null)) {
       return;
     }
 
@@ -59,10 +56,8 @@ export function createTargetsChangeHandler<T>(
       }
     }
 
-    const current = session ?? { values: readAll(), shown: access.read(firstId) };
-    const changed = new Map(
-      [...current.values].map(([targetId, own]) => [targetId, change(own, current.shown)]),
-    );
+    const current = session ?? { values: readAll() };
+    const changed = new Map([...current.values].map(([targetId, own]) => [targetId, change(own)]));
 
     if (phase === 'preview') {
       session = current;

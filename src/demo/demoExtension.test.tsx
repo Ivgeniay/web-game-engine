@@ -260,6 +260,27 @@ describe('demo integration', () => {
     expect(lightIntensities(stores)).toEqual([1, 2]);
   });
 
+  it('marks a changed property and resets it to the default', async () => {
+    const user = userEvent.setup();
+    const { stores, editor } = await renderDemo();
+    const weapon = () => stores.scene.getState().objects.find(({ name }) => name === 'Weapon');
+
+    await user.click(object('Weapon'));
+    const resetMass = within(
+      screen.getByRole('spinbutton', { name: 'Mass' }).closest('[data-modified]') ?? document.body,
+    ).getByRole('button', { name: 'Reset to default' });
+
+    await user.click(resetMass);
+
+    expect(weapon()?.rigidbody?.mass).toBe(1);
+
+    act(() => {
+      editor.registries.undo.undo();
+    });
+
+    expect(weapon()?.rigidbody?.mass).toBe(0.2);
+  });
+
   it('changes the light color and intensity with one undo entry each', async () => {
     const user = userEvent.setup();
     const { stores, editor } = await renderDemo();

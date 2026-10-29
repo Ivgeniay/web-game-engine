@@ -320,17 +320,45 @@ describe('PropertyRow', () => {
     expect(onSelect).toHaveBeenCalledOnce();
   });
 
-  it('indents the label by depth and renders the slots', () => {
-    render(
-      <PropertyRow label={LABEL} depth={2} leading="*" trailing="r">
+  it('indents the label by depth', () => {
+    const { container } = render(
+      <PropertyRow label={LABEL} depth={2}>
         {({ id }) => <TextField id={id} value="" />}
       </PropertyRow>,
     );
 
-    const labelCell = screen.getByText('*').parentElement;
+    const labelCell = container.querySelector<HTMLElement>('[style]');
 
     expect(labelCell?.style.paddingInlineStart).toBe('calc(var(--space-12) * 2)');
-    expect(screen.getByText('r')).toBeDefined();
     expect(screen.getByLabelText(LABEL)).toBeDefined();
+  });
+
+  it('marks a modified value and resets it with the button', async () => {
+    const user = userEvent.setup();
+    const onReset = vi.fn();
+    const { container } = render(
+      <PropertyRow label={LABEL} modified reset={{ label: RESET_LABEL, onReset }}>
+        {({ id }) => <TextField id={id} value="" />}
+      </PropertyRow>,
+    );
+
+    expect(container.firstElementChild?.hasAttribute('data-modified')).toBe(true);
+
+    await user.click(screen.getByRole('button', { name: RESET_LABEL }));
+
+    expect(onReset).toHaveBeenCalledOnce();
+  });
+
+  it('keeps the place of the reset button but makes it inert while the value is the default', () => {
+    const { container } = render(
+      <PropertyRow label={LABEL} modified={false} reset={{ label: RESET_LABEL, onReset: vi.fn() }}>
+        {({ id }) => <TextField id={id} value="" />}
+      </PropertyRow>,
+    );
+    const button = screen.getByRole('button', { name: RESET_LABEL, hidden: true });
+
+    expect(container.firstElementChild?.hasAttribute('data-modified')).toBe(false);
+    expect(container.firstElementChild?.hasAttribute('data-markable')).toBe(true);
+    expect(button.closest('[inert]')).not.toBeNull();
   });
 });

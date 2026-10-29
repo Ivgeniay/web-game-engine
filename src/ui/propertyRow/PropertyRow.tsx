@@ -1,6 +1,8 @@
 import { useId, useState } from 'react';
 import type { KeyboardEvent, MouseEvent, ReactNode } from 'react';
+import { frameworkIcons } from '@/icons/frameworkIcons';
 import { classNames } from '@/ui/classNames';
+import { IconButton } from '@/ui/iconButton/IconButton';
 import { Label } from '@/ui/label/Label';
 import { Menu } from '@/ui/menu/Menu';
 import type { MenuItem, MenuPoint } from '@/ui/menu/menuItems';
@@ -14,15 +16,23 @@ export interface PropertyFieldProps {
   readonly labelId: string;
 }
 
-interface PropertyRowProps {
+export interface PropertyRowReset {
+  readonly label: string;
+  readonly onReset: () => void;
+}
+
+export interface PropertyRowSlots {
+  readonly modified?: boolean | undefined;
+  readonly reset?: PropertyRowReset | undefined;
+  readonly menuItems?: readonly MenuItem[] | undefined;
+}
+
+interface PropertyRowProps extends PropertyRowSlots {
   readonly label: string;
   readonly children: (field: PropertyFieldProps) => ReactNode;
   readonly drag?: ValueDragTarget | undefined;
   readonly disabled?: boolean | undefined;
   readonly depth?: number | undefined;
-  readonly leading?: ReactNode;
-  readonly trailing?: ReactNode;
-  readonly menuItems?: readonly MenuItem[] | undefined;
   readonly className?: string | undefined;
 }
 
@@ -53,8 +63,8 @@ export function PropertyRow({
   drag,
   disabled = false,
   depth = NO_DEPTH,
-  leading,
-  trailing,
+  modified,
+  reset,
   menuItems,
   className,
 }: PropertyRowProps) {
@@ -71,6 +81,8 @@ export function PropertyRow({
   return (
     <div
       className={classNames(styles.root, className)}
+      data-markable={modified === undefined ? undefined : ''}
+      data-modified={modified === true ? '' : undefined}
       onContextMenu={(event) => {
         if (!opensMenu(event)) {
           return;
@@ -98,7 +110,6 @@ export function PropertyRow({
             : undefined
         }
       >
-        {leading !== undefined && <span className={styles.slot}>{leading}</span>}
         <span
           {...zoneProps}
           className={classNames(styles.label, zoneProps.className)}
@@ -110,7 +121,21 @@ export function PropertyRow({
         </span>
       </div>
       <div className={styles.field}>{children({ id, labelId })}</div>
-      {trailing !== undefined && <span className={styles.slot}>{trailing}</span>}
+      {reset !== undefined && (
+        <span
+          className={styles.reset}
+          inert={modified !== true}
+          data-unavailable={modified === true ? undefined : ''}
+        >
+          <IconButton
+            size="sm"
+            label={reset.label}
+            icon={frameworkIcons.reset}
+            disabled={disabled}
+            onClick={reset.onReset}
+          />
+        </span>
+      )}
       {hasMenu && (
         <Menu
           label={label}

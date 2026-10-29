@@ -34,9 +34,10 @@ function itemEditorProps<V>(
     values: [value],
     mixed: false,
     readOnly,
+    row: {},
     onValueChange,
     onTargetsChange: (change, phase) => {
-      onValueChange(change(value, value), phase);
+      onValueChange(change(value), phase);
     },
   };
 }

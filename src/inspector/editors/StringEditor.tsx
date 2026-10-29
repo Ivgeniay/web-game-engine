@@ -10,10 +10,11 @@ export function StringEditor({
   value,
   mixed,
   readOnly,
+  row,
   onValueChange,
 }: BuiltInEditorProps<string, StringSpec>) {
   return (
-    <PropertyRow label={label}>
+    <PropertyRow label={label} {...row}>
       {({ id }) =>
         spec.multiline === true ? (
           <TextArea

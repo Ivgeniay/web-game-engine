@@ -5,7 +5,7 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { Rect } from '@/contracts/geometry';
 import type { ValueChangeHandler } from '@/contracts/valueChange';
 import { RectField } from './RectField';
-import type { RectMixed } from './RectField';
+import type { RectComponentChangeHandler, RectMixed } from './RectField';
 
 const LABEL = 'Viewport';
 const MESSAGES = { incomplete: 'Enter a number', belowMin: 'Too small', aboveMax: 'Too large' };
@@ -15,9 +15,10 @@ interface HarnessProps {
   readonly mixed?: RectMixed;
   readonly disabled?: boolean;
   readonly onValueChange?: ValueChangeHandler<Rect>;
+  readonly onComponentChange?: RectComponentChangeHandler;
 }
 
-function Harness({ mixed, disabled, onValueChange }: HarnessProps) {
+function Harness({ mixed, disabled, onValueChange, onComponentChange }: HarnessProps) {
   const [rect, setRect] = useState(INITIAL);
 
   return (
@@ -31,6 +32,7 @@ function Harness({ mixed, disabled, onValueChange }: HarnessProps) {
         setRect(next);
         onValueChange?.(next, phase);
       }}
+      onComponentChange={onComponentChange}
     />
   );
 }
@@ -100,5 +102,15 @@ describe('RectField', () => {
 
     expect(component('Y').disabled).toBe(true);
     expect(component('H').disabled).toBe(true);
+  });
+
+  it('reports which field was edited', async () => {
+    const user = userEvent.setup();
+    const onComponentChange = vi.fn();
+    render(<Harness mixed={{ height: true }} onComponentChange={onComponentChange} />);
+
+    await user.type(component('H'), '0.5{Enter}');
+
+    expect(onComponentChange).toHaveBeenCalledExactlyOnceWith('height', 0.5, 'commit');
   });
 });

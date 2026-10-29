@@ -18,6 +18,8 @@ import { dragAndDropPageMessages } from '@/showcase/pages/components/dragAndDrop
 import { FlagsFieldPage } from '@/showcase/pages/components/flagsField/FlagsFieldPage';
 import { flagsFieldPageMessages } from '@/showcase/pages/components/flagsField/flagsFieldPageMessages';
 import { FoldoutPage } from '@/showcase/pages/components/foldout/FoldoutPage';
+import { SectionHeaderPage } from '@/showcase/pages/components/sectionHeader/SectionHeaderPage';
+import { sectionHeaderPageMessages } from '@/showcase/pages/components/sectionHeader/sectionHeaderPageMessages';
 import { foldoutPageMessages } from '@/showcase/pages/components/foldout/foldoutPageMessages';
 import { IconButtonPage } from '@/showcase/pages/components/iconButton/IconButtonPage';
 import { iconButtonPageMessages } from '@/showcase/pages/components/iconButton/iconButtonPageMessages';
@@ -113,6 +115,8 @@ import { MenuBarPage } from '@/showcase/pages/shell/menuBar/MenuBarPage';
 import { menuBarPageMessages } from '@/showcase/pages/shell/menuBar/menuBarPageMessages';
 import { ToolbarStatusBarPage } from '@/showcase/pages/shell/toolbarStatusBar/ToolbarStatusBarPage';
 import { toolbarStatusBarPageMessages } from '@/showcase/pages/shell/toolbarStatusBar/toolbarStatusBarPageMessages';
+import { InspectorPage } from '@/showcase/pages/shell/inspector/InspectorPage';
+import { inspectorPageMessages } from '@/showcase/pages/shell/inspector/inspectorPageMessages';
 import { PropertiesPage } from '@/showcase/pages/shell/properties/PropertiesPage';
 import { propertiesPageMessages } from '@/showcase/pages/shell/properties/propertiesPageMessages';
 import { UndoPage } from '@/showcase/pages/shell/undo/UndoPage';
@@ -370,6 +374,13 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     component: FoldoutPage,
   },
   {
+    id: 'components/section-header',
+    section: 'components',
+    title: messageRef(sectionHeaderPageMessages, 'pageTitle'),
+    description: messageRef(sectionHeaderPageMessages, 'pageDescription'),
+    component: SectionHeaderPage,
+  },
+  {
     id: 'components/component-header',
     section: 'components',
     title: messageRef(componentHeaderPageMessages, 'pageTitle'),
@@ -543,5 +554,12 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     title: messageRef(propertiesPageMessages, 'pageTitle'),
     description: messageRef(propertiesPageMessages, 'pageDescription'),
     component: PropertiesPage,
+  },
+  {
+    id: 'shell/inspector',
+    section: 'shell',
+    title: messageRef(inspectorPageMessages, 'pageTitle'),
+    description: messageRef(inspectorPageMessages, 'pageDescription'),
+    component: InspectorPage,
   },
 ];

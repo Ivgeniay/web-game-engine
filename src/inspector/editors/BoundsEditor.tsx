@@ -3,9 +3,10 @@ import type { BoundsSpec } from '@/contracts/property';
 import { useBoundsFieldLabels } from '@/state/fields/useBoundsFieldLabels';
 import { useNumberFieldMessages } from '@/state/fields/useNumberFieldMessages';
 import { BoundsField } from '@/ui/boundsField/BoundsField';
+import { replaceComponent } from '@/ui/vectorField/vectorAxes';
 import { DEFAULT_NUMBER_KIND } from './builtInEditorProps';
 import type { BuiltInEditorProps } from './builtInEditorProps';
-import { mergeChangedBounds, mixedBounds } from './componentChanges';
+import { mixedBounds } from './mixedComponents';
 
 export function BoundsEditor({
   spec,
@@ -27,8 +28,11 @@ export function BoundsEditor({
       kind={spec.kind ?? DEFAULT_NUMBER_KIND}
       readOnly={readOnly}
       invalidMessages={invalidMessages}
-      onValueChange={(next, phase) => {
-        onTargetsChange((own, shown) => mergeChangedBounds(own, next, shown), phase);
+      onComponentChange={(part, index, component, phase) => {
+        onTargetsChange(
+          (own) => ({ ...own, [part]: replaceComponent(own[part], index, component) }),
+          phase,
+        );
       }}
     />
   );

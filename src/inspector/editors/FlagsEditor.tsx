@@ -13,6 +13,7 @@ export function FlagsEditor({
   label,
   values,
   readOnly,
+  row,
   onTargetsChange,
 }: BuiltInEditorProps<readonly string[], FlagsSpec>) {
   const translate = useTranslate();
@@ -28,7 +29,7 @@ export function FlagsEditor({
   );
 
   return (
-    <PropertyRow label={label}>
+    <PropertyRow label={label} {...row}>
       {({ id, labelId }) => (
         <FlagsField
           {...labels}

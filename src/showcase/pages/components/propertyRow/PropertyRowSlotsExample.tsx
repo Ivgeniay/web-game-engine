@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import { frameworkIcons } from '@/icons/frameworkIcons';
 import { useNumberFieldMessages } from '@/state/fields/useNumberFieldMessages';
-import { IconButton } from '@/ui/iconButton/IconButton';
 import { Label } from '@/ui/label/Label';
 import type { MenuItem } from '@/ui/menu/menuItems';
 import { NumberField } from '@/ui/numberField/NumberField';
@@ -68,18 +67,13 @@ export function PropertyRowSlotsExample() {
         label={STRENGTH_LABEL}
         depth={1}
         menuItems={menuItems}
-        leading={<span className={modified ? styles.modified : styles.unmodified} />}
-        trailing={
-          <IconButton
-            label={RESET_LABEL}
-            icon={frameworkIcons.reset}
-            size="sm"
-            disabled={!modified}
-            onClick={() => {
-              setStrength(DEFAULT_STRENGTH);
-            }}
-          />
-        }
+        modified={modified}
+        reset={{
+          label: RESET_LABEL,
+          onReset: () => {
+            setStrength(DEFAULT_STRENGTH);
+          },
+        }}
         drag={{
           value: strength,
           onValueChange: setStrength,
@@ -103,6 +97,7 @@ export function PropertyRowSlotsExample() {
       <PropertyRow
         label={BIAS_LABEL}
         depth={1}
+        modified={false}
         drag={{ value: bias, onValueChange: setBias, step: BIAS_STEP }}
       >
         {({ id }) => (
