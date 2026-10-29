@@ -129,6 +129,11 @@
 | Color model | Модель цвета | RGB 0–255, RGB 0–1, HSV |
 | Eyedropper | Пипетка | `EyeDropper` API |
 | Hex | HEX | Шестнадцатеричная запись цвета |
+| List editor | Редактор списка | `ListEditor` |
+| Element (of an array) | Элемент | «Элемент 0», как Element 0 в Unity |
+| Handle | Ручка | Ручка перетаскивания строки |
+| Rect field / bounds field | Поле прямоугольника / поле объёма | `RectField`, `BoundsField` |
+| Center / size / extent | Центр / размер / половина размера | В `BoundsField` — полный размер |
 
 ## Правила русского перевода
 

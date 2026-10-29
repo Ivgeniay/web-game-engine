@@ -1,0 +1,12 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.caption {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  min-height: var(--size-control-height-md);
+}

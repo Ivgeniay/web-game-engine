@@ -1,4 +1,6 @@
 import { messageRef } from '@/core/i18n/translate';
+import { BoundsFieldPage } from '@/showcase/pages/components/boundsField/BoundsFieldPage';
+import { boundsFieldPageMessages } from '@/showcase/pages/components/boundsField/boundsFieldPageMessages';
 import { ButtonPage } from '@/showcase/pages/components/button/ButtonPage';
 import { buttonPageMessages } from '@/showcase/pages/components/button/buttonPageMessages';
 import { CheckboxPage } from '@/showcase/pages/components/checkbox/CheckboxPage';
@@ -23,6 +25,8 @@ import { KbdPage } from '@/showcase/pages/components/kbd/KbdPage';
 import { kbdPageMessages } from '@/showcase/pages/components/kbd/kbdPageMessages';
 import { LabelPage } from '@/showcase/pages/components/label/LabelPage';
 import { labelPageMessages } from '@/showcase/pages/components/label/labelPageMessages';
+import { ListEditorPage } from '@/showcase/pages/components/listEditor/ListEditorPage';
+import { listEditorPageMessages } from '@/showcase/pages/components/listEditor/listEditorPageMessages';
 import { ListViewPage } from '@/showcase/pages/components/listView/ListViewPage';
 import { listViewPageMessages } from '@/showcase/pages/components/listView/listViewPageMessages';
 import { MenuPage } from '@/showcase/pages/components/menu/MenuPage';
@@ -37,6 +41,8 @@ import { PropertyRowPage } from '@/showcase/pages/components/propertyRow/Propert
 import { propertyRowPageMessages } from '@/showcase/pages/components/propertyRow/propertyRowPageMessages';
 import { RadioGroupPage } from '@/showcase/pages/components/radioGroup/RadioGroupPage';
 import { radioGroupPageMessages } from '@/showcase/pages/components/radioGroup/radioGroupPageMessages';
+import { RectFieldPage } from '@/showcase/pages/components/rectField/RectFieldPage';
+import { rectFieldPageMessages } from '@/showcase/pages/components/rectField/rectFieldPageMessages';
 import { RovingFocusPage } from '@/showcase/pages/components/rovingFocus/RovingFocusPage';
 import { rovingFocusPageMessages } from '@/showcase/pages/components/rovingFocus/rovingFocusPageMessages';
 import { SearchFieldPage } from '@/showcase/pages/components/searchField/SearchFieldPage';
@@ -311,6 +317,27 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     title: messageRef(vectorFieldPageMessages, 'pageTitle'),
     description: messageRef(vectorFieldPageMessages, 'pageDescription'),
     component: VectorFieldPage,
+  },
+  {
+    id: 'components/rect-field',
+    section: 'components',
+    title: messageRef(rectFieldPageMessages, 'pageTitle'),
+    description: messageRef(rectFieldPageMessages, 'pageDescription'),
+    component: RectFieldPage,
+  },
+  {
+    id: 'components/bounds-field',
+    section: 'components',
+    title: messageRef(boundsFieldPageMessages, 'pageTitle'),
+    description: messageRef(boundsFieldPageMessages, 'pageDescription'),
+    component: BoundsFieldPage,
+  },
+  {
+    id: 'components/list-editor',
+    section: 'components',
+    title: messageRef(listEditorPageMessages, 'pageTitle'),
+    description: messageRef(listEditorPageMessages, 'pageDescription'),
+    component: ListEditorPage,
   },
   {
     id: 'components/list-view',
