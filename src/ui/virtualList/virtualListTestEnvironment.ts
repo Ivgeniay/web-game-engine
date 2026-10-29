@@ -31,7 +31,7 @@ export function installVirtualListEnvironment(): VirtualListTestEnvironment {
   Object.defineProperty(Element.prototype, 'scrollTo', {
     configurable: true,
     value: ({ top }: ScrollToOptions) => {
-      scrollTop = top ?? scrollTop;
+      scrollTop = Math.max(0, top ?? scrollTop);
     },
   });
   document.documentElement.style.setProperty(ROW_HEIGHT_TOKEN, `${String(TEST_ROW_HEIGHT)}px`);

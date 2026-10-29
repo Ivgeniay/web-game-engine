@@ -22,7 +22,7 @@ export const SIZE_TOKEN_PREFIXES: Readonly<Record<SizeTokenKind, readonly string
   border: ['--size-border-'],
   scrollbar: ['--size-scrollbar'],
   property: ['--size-property-'],
-  list: ['--size-list-', '--size-tree-'],
+  list: ['--size-list-', '--size-tree-', '--size-drop-'],
 };
 
 export const GROUPED_TOKEN_NAMES: GroupedTokenNames = groupTokenNames([

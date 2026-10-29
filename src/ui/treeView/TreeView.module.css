@@ -11,3 +11,20 @@
   width: var(--size-tree-indent);
   color: var(--color-text-secondary);
 }
+
+.tree [data-drop-inside] {
+  outline: var(--size-drop-indicator) solid var(--color-border-drop-indicator);
+  outline-offset: calc(-1 * var(--size-drop-indicator));
+  background-color: var(--color-overlay-drop-target);
+}
+
+.dropLine {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: var(--size-drop-indicator);
+  margin-top: calc(var(--size-drop-indicator) / -2);
+  margin-left: calc(var(--space-4) + var(--size-tree-indent));
+  background-color: var(--color-border-drop-indicator);
+  pointer-events: none;
+}

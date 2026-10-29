@@ -1,0 +1,19 @@
+.preview {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: var(--z-drag);
+  margin: var(--space-12) 0 0 var(--space-12);
+  padding: var(--space-2) var(--space-6);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-bg-popup);
+  box-shadow: var(--shadow-tooltip);
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-md);
+  white-space: nowrap;
+  pointer-events: none;
+}
+
+.preview[data-allowed] {
+  color: var(--color-text-primary);
+}

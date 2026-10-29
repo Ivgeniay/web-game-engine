@@ -95,7 +95,7 @@ const uiTextMessage =
   'Interface texts must come from a translation: use useMessages or useTranslate.';
 
 const textAttributePattern =
-  '/^(alt|aria-description|aria-label|aria-placeholder|aria-roledescription|aria-valuetext|label|placeholder|title)$/';
+  '/^(alt|aria-description|aria-label|aria-placeholder|aria-roledescription|aria-valuetext|label|placeholder|title|[a-z][A-Za-z]*Label)$/';
 
 const uiTextSelectors = [
   'JSXText[value=/\\S/]',

@@ -108,6 +108,18 @@ const FORBIDDEN_CASES: readonly ForbiddenCase[] = [
     ruleId: 'no-restricted-syntax',
   },
   {
+    name: 'a literal in a prop that ends with Label',
+    filePath: FRAMEWORK_TSX_FILE,
+    code: 'import { SearchField } from \'@/ui/searchField/SearchField\';\n\ninterface SearchProps {\n  readonly label: string;\n}\n\nexport function Search({ label }: SearchProps) {\n  return <SearchField label={label} clearLabel="Clear" value="" onValueChange={() => undefined} />;\n}\n',
+    ruleId: 'no-restricted-syntax',
+  },
+  {
+    name: 'a template literal in a prop that ends with Label',
+    filePath: FRAMEWORK_TSX_FILE,
+    code: "import { TreeView } from '@/ui/treeView/TreeView';\nexport const element = <TreeView renameLabel={`Name`} />;\n",
+    ruleId: 'no-restricted-syntax',
+  },
+  {
     name: 'an svg element outside the icon component',
     filePath: FRAMEWORK_TSX_FILE,
     code: 'export function Mark() {\n  return <svg />;\n}\n',
@@ -216,6 +228,16 @@ const ALLOWED_CASES: readonly AllowedCase[] = [
     name: 'framework code that follows the rules',
     filePath: FRAMEWORK_TSX_FILE,
     code: "import { Kbd } from '@/ui/kbd/Kbd';\n\ninterface HintProps {\n  readonly shortcut: string;\n}\n\nexport function Hint({ shortcut }: HintProps) {\n  return <Kbd>{shortcut}</Kbd>;\n}\n",
+  },
+  {
+    name: 'props that end with Label and get their text from a parameter',
+    filePath: FRAMEWORK_TSX_FILE,
+    code: 'import { SearchField } from \'@/ui/searchField/SearchField\';\n\ninterface SearchProps {\n  readonly label: string;\n  readonly clearLabel: string;\n}\n\nexport function Search({ label, clearLabel }: SearchProps) {\n  return <SearchField label={label} clearLabel={clearLabel} value="" onValueChange={() => undefined} />;\n}\n',
+  },
+  {
+    name: 'a data attribute that ends with -label',
+    filePath: FRAMEWORK_TSX_FILE,
+    code: 'export function Mark() {\n  return <span data-row-label="" />;\n}\n',
   },
   {
     name: 'text in JSX in the showcase',

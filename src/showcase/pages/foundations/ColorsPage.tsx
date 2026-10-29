@@ -16,7 +16,8 @@ export function ColorsPage() {
             <code>text-*</code> are text colors. Every text uses one of them.
           </li>
           <li>
-            <code>border-*</code> are separators, control borders and the focus outline.
+            <code>border-*</code> are separators, control borders, the focus outline and the line
+            that shows where a dragged row will be inserted.
           </li>
           <li>
             <code>accent</code>, <code>accent-hover</code> and <code>accent-active</code> mark the
@@ -30,7 +31,7 @@ export function ColorsPage() {
             <code>overlay-*</code> are translucent layers: <code>overlay-hover</code> and{' '}
             <code>overlay-active</code> for hover and pressed states, <code>overlay-backdrop</code>{' '}
             to dim the editor behind a dialog, <code>overlay-drop-target</code> to highlight where a
-            dragged window will land.
+            dragged window or row will land.
           </li>
           <li>
             <code>axis-*</code>, <code>playmode-tint</code>, <code>scrollbar-*</code> and{' '}

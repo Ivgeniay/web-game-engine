@@ -41,6 +41,7 @@
   --size-property-splitter: 5px;
   --size-list-row-height: 20px;
   --size-tree-indent: 12px;
+  --size-drop-indicator: 2px;
 
   --radius-none: 0;
   --radius-sm: 2px;
@@ -58,6 +59,7 @@
   --z-dropdown: 400;
   --z-notification: 500;
   --z-tooltip: 600;
+  --z-drag: 700;
 
   --duration-fast: 80ms;
   --duration-normal: 150ms;

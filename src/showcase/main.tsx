@@ -6,6 +6,7 @@ import { PlatformProvider } from '@/state/platform/PlatformProvider';
 import { StoresProvider } from '@/state/stores/StoresProvider';
 import { createBrowserStores } from '@/state/stores/browserStores';
 import { startThemeController } from '@/state/theme/themeController';
+import { DragAndDropLayer } from '@/ui/dragAndDrop/DragAndDropLayer';
 import { PopupLayer } from '@/ui/popup/PopupLayer';
 import '@/themes/global.css';
 import './showcase.css';
@@ -30,7 +31,9 @@ createRoot(rootElement).render(
     <StoresProvider stores={stores}>
       <PlatformProvider platform={platform}>
         <PopupLayer>
-          <Showcase />
+          <DragAndDropLayer>
+            <Showcase />
+          </DragAndDropLayer>
         </PopupLayer>
       </PlatformProvider>
     </StoresProvider>

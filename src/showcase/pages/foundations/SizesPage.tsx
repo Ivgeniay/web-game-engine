@@ -37,8 +37,9 @@ export function SizesPage() {
       </PageSection>
       <PageSection title="Lists and trees">
         <p>
-          Height of a row in lists and trees and the indent of one tree level. Every row has the
-          same height, so a long list draws only the rows in view.
+          Height of a row in lists and trees, the indent of one tree level and the thickness of the
+          line that shows where a dragged row will be inserted. Every row has the same height, so a
+          long list draws only the rows in view.
         </p>
         <TokenSection group="size" names={getSizeTokenNames('list')} />
       </PageSection>

@@ -3,6 +3,9 @@ import { PageSection } from '@/showcase/template/PageSection';
 import { TreeViewControlledExample } from './TreeViewControlledExample';
 import treeViewControlledStyles from './TreeViewControlledExample.module.css?raw';
 import treeViewControlledSource from './TreeViewControlledExample.tsx?raw';
+import { TreeViewDragExample } from './TreeViewDragExample';
+import treeViewDragStyles from './TreeViewDragExample.module.css?raw';
+import treeViewDragSource from './TreeViewDragExample.tsx?raw';
 import { TreeViewExample } from './TreeViewExample';
 import treeViewStyles from './TreeViewExample.module.css?raw';
 import treeViewSource from './TreeViewExample.tsx?raw';
@@ -130,6 +133,37 @@ export function TreeViewPage() {
           <TreeViewSearchExample />
         </ExampleBlock>
       </PageSection>
+      <PageSection title="Dragging rows">
+        <p>
+          <code>dragType</code> lets the rows be dragged with the drag and drop mechanism, so the
+          tree needs <code>DragAndDropLayer</code> around it. Dragging a selected row takes the
+          whole selection; dragging another row selects it first. The tree passes the ids in the
+          tree order and leaves out the descendants of other dragged nodes.
+        </p>
+        <p>
+          <code>onDropData</code> makes the tree a drop target. It receives the data and a{' '}
+          <code>TreeDropTarget</code>: a node with the position <code>before</code>,{' '}
+          <code>after</code> or <code>inside</code>, or <code>root</code> for the empty space below
+          the rows. The upper and lower quarters of a row mean before and after, the middle means
+          inside; below an expanded node the place is before its first child. The tree does not move
+          anything: the owner changes the data and passes a new model.
+        </p>
+        <p>
+          A node never lands inside itself or its descendants, the tree checks this before asking{' '}
+          <code>canDropData</code>. <code>dropTypes</code> lists other data types the tree takes,
+          such as assets from another window. Near the top and bottom edges the tree scrolls, and
+          holding the pointer over a collapsed node expands it. <code>getDragLabel</code> replaces
+          the preview text, which is the first name and the number of other nodes.
+        </p>
+        <ExampleBlock
+          sources={[
+            { fileName: 'TreeViewDragExample.tsx', code: treeViewDragSource },
+            { fileName: 'TreeViewDragExample.module.css', code: treeViewDragStyles },
+          ]}
+        >
+          <TreeViewDragExample />
+        </ExampleBlock>
+      </PageSection>
       <PageSection title="Keyboard and mouse">
         <ul>
           <li>All keys of ListView: arrows, Home, End, pages, Shift, Ctrl (⌘), Ctrl+A, letters.</li>
@@ -140,6 +174,9 @@ export function TreeViewPage() {
           <li>Alt+Right and Alt+Left expand and collapse the node with its whole subtree.</li>
           <li>
             F2 (Enter on macOS) renames the focused row when the tree has <code>onRename</code>.
+          </li>
+          <li>
+            Esc while dragging cancels the drag. Dragging from the keyboard is not available yet.
           </li>
           <li>
             A click on the arrow expands or collapses the node without selecting it. Alt+click does

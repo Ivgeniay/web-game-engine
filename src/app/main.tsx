@@ -12,6 +12,7 @@ import { RegistriesProvider } from '@/state/registries/RegistriesProvider';
 import { StoresProvider } from '@/state/stores/StoresProvider';
 import { browserStorage, createBrowserStores } from '@/state/stores/browserStores';
 import { startThemeController } from '@/state/theme/themeController';
+import { DragAndDropLayer } from '@/ui/dragAndDrop/DragAndDropLayer';
 import { PopupLayer } from '@/ui/popup/PopupLayer';
 import { App } from './App';
 import '@/themes/global.css';
@@ -46,7 +47,9 @@ createRoot(rootElement).render(
       <PlatformProvider platform={platform}>
         <RegistriesProvider registries={registries}>
           <PopupLayer>
-            <App layoutStorage={layoutStorage} />
+            <DragAndDropLayer>
+              <App layoutStorage={layoutStorage} />
+            </DragAndDropLayer>
           </PopupLayer>
         </RegistriesProvider>
       </PlatformProvider>

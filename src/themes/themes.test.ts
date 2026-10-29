@@ -36,6 +36,7 @@ const EXPECTED_TOKEN_NAMES: readonly string[] = [
   'border-separator',
   'border-control',
   'border-focus',
+  'border-drop-indicator',
   'text-primary',
   'text-secondary',
   'text-disabled',

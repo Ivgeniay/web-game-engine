@@ -1,6 +1,7 @@
 import { ButtonPage } from '@/showcase/pages/components/button/ButtonPage';
 import { CheckboxPage } from '@/showcase/pages/components/checkbox/CheckboxPage';
 import { DialogPage } from '@/showcase/pages/components/dialog/DialogPage';
+import { DragAndDropPage } from '@/showcase/pages/components/dragAndDrop/DragAndDropPage';
 import { IconButtonPage } from '@/showcase/pages/components/iconButton/IconButtonPage';
 import { KbdPage } from '@/showcase/pages/components/kbd/KbdPage';
 import { LabelPage } from '@/showcase/pages/components/label/LabelPage';
@@ -238,6 +239,13 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     title: 'TreeView',
     description: 'A fast tree over flat data with expanding, selection and keyboard moves.',
     component: TreeViewPage,
+  },
+  {
+    id: 'components/drag-and-drop',
+    section: 'components',
+    title: 'Drag and drop',
+    description: 'Typed data moved with the pointer from a source to a target, across windows.',
+    component: DragAndDropPage,
   },
   {
     id: 'components/toolbar',

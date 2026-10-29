@@ -17,9 +17,12 @@ import { useMergedRefs } from '@/ui/useMergedRefs';
 import { findMatch } from './treeFilter';
 import { collectExpandableSubtree, flattenTree, subtreeEnd } from './treeModel';
 import type { TreeModel, TreeRow } from './treeModel';
+import type { TreeDropPlacement } from './treeDrop';
 import { treeKeyAction } from './treeNavigation';
 import { TreeRenameField } from './TreeRenameField';
 import type { RenameOutcome } from './TreeRenameField';
+import { useTreeDragAndDrop } from './useTreeDragAndDrop';
+import type { TreeDragProps } from './useTreeDragAndDrop';
 import { useTreeFilter } from './useTreeFilter';
 import styles from './TreeView.module.css';
 
@@ -45,7 +48,8 @@ interface TreeViewProps
     Omit<ComponentPropsWithRef<'div'>, ListBoxOwnProps>,
     ListSelectionProps,
     TreeExpansionProps,
-    TreeRenameProps {
+    TreeRenameProps,
+    TreeDragProps {
   readonly model: TreeModel;
   readonly renderRow?: ((row: TreeRowState) => ReactNode) | undefined;
   readonly selectionMode?: ListSelectionMode | undefined;
@@ -64,6 +68,44 @@ const NOT_FOUND = -1;
 
 function indentWidth(depth: number): string {
   return `calc(${String(depth)} * var(--size-tree-indent))`;
+}
+
+function dropLineIndex({ target, rowIndex }: TreeDropPlacement): number | null {
+  if (target.kind === 'root') {
+    return rowIndex;
+  }
+  if (target.position === 'inside') {
+    return null;
+  }
+
+  return target.position === 'before' ? rowIndex : rowIndex + 1;
+}
+
+function dropLine(placement: TreeDropPlacement, rowHeight: number) {
+  const lineIndex = dropLineIndex(placement);
+
+  if (lineIndex === null) {
+    return null;
+  }
+
+  return (
+    <div
+      className={styles.dropLine}
+      data-drop-line=""
+      style={{
+        left: indentWidth(placement.depth),
+        transform: `translateY(${String(lineIndex * rowHeight)}px)`,
+      }}
+    />
+  );
+}
+
+function isDropInside(placement: TreeDropPlacement | null, index: number): boolean {
+  return (
+    placement?.target.kind === 'node' &&
+    placement.target.position === 'inside' &&
+    placement.rowIndex === index
+  );
 }
 
 function isOnLabel(event: MouseEvent<HTMLElement>): boolean {
@@ -90,6 +132,11 @@ export function TreeView({
   onRename,
   renameLabel,
   validateName,
+  dragType,
+  dropTypes,
+  canDropData,
+  onDropData,
+  getDragLabel,
   className,
   ref,
   ...nativeProps
@@ -182,7 +229,26 @@ export function TreeView({
     handleOwnKey: handleTreeKey,
   });
   const { focusedIndex, selectedSet } = listBox.interaction;
-  const { revealIndex } = listBox.virtualRows;
+  const { revealIndex, rowHeight } = listBox.virtualRows;
+  const drag = useTreeDragAndDrop({
+    dragType,
+    dropTypes,
+    canDropData,
+    onDropData,
+    getDragLabel,
+    model,
+    rows,
+    selectedIds,
+    containerRef,
+    rowHeight,
+    selectRow: (index) => {
+      listBox.interaction.moveFocus(index, PLAIN_GESTURE);
+    },
+    expandRow: (id) => {
+      treeFilter.setExpanded([id], true);
+    },
+  });
+  const { placement } = drag;
   const renamingIndex = renamingId === null ? NOT_FOUND : itemIds.indexOf(renamingId);
 
   useEffect(() => {
@@ -282,7 +348,11 @@ export function TreeView({
         aria-posinset={row.posInSet}
         aria-expanded={hasChildren ? expanded : undefined}
         className={listStyles.row}
+        data-drop-inside={isDropInside(placement, index) || undefined}
         {...listBox.getRowProps(index, id)}
+        onPointerDown={(event) => {
+          drag.startRowDrag(event, index);
+        }}
         onDoubleClick={(event) => {
           if (isOnLabel(event)) {
             startRename(id);
@@ -293,6 +363,7 @@ export function TreeView({
         <span
           className={styles.toggle}
           aria-hidden
+          data-tree-toggle=""
           onClick={
             hasChildren
               ? (event) => {
@@ -322,11 +393,13 @@ export function TreeView({
     <div
       {...nativeProps}
       {...listBox.containerProps}
+      {...drag.dropTargetProps}
       role="tree"
-      className={classNames(listStyles.root, className)}
+      className={classNames(listStyles.root, styles.tree, className)}
     >
       <div className={listStyles.rows} style={listBox.rowsStyle}>
         {indexes.map(renderRowAt)}
+        {placement !== null && dropLine(placement, rowHeight)}
       </div>
     </div>
   );

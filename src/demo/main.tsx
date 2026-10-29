@@ -13,6 +13,7 @@ import { RegistriesProvider } from '@/state/registries/RegistriesProvider';
 import { StoresProvider } from '@/state/stores/StoresProvider';
 import { browserStorage, createBrowserStores } from '@/state/stores/browserStores';
 import { startThemeController } from '@/state/theme/themeController';
+import { DragAndDropLayer } from '@/ui/dragAndDrop/DragAndDropLayer';
 import { PopupLayer } from '@/ui/popup/PopupLayer';
 import { installDemo } from './demoExtension';
 import { DemoStoresContext, createDemoStores } from './demoStores';
@@ -51,7 +52,9 @@ createRoot(rootElement).render(
         <RegistriesProvider registries={registries}>
           <DemoStoresContext value={demoStores}>
             <PopupLayer>
-              <EditorFrame layoutStorage={layoutStorage} />
+              <DragAndDropLayer>
+                <EditorFrame layoutStorage={layoutStorage} />
+              </DragAndDropLayer>
             </PopupLayer>
           </DemoStoresContext>
         </RegistriesProvider>
