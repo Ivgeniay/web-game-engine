@@ -35,10 +35,10 @@ export function SizesPage() {
         </p>
         <TokenSection group="size" names={getSizeTokenNames('property')} />
       </PageSection>
-      <PageSection title="Lists">
+      <PageSection title="Lists and trees">
         <p>
-          Height of a row in lists and trees. Every row has this height, so a long list draws only
-          the rows in view.
+          Height of a row in lists and trees and the indent of one tree level. Every row has the
+          same height, so a long list draws only the rows in view.
         </p>
         <TokenSection group="size" names={getSizeTokenNames('list')} />
       </PageSection>

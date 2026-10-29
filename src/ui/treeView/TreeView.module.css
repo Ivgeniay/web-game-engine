@@ -1,0 +1,13 @@
+.indent {
+  flex: none;
+}
+
+.toggle {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  align-self: stretch;
+  width: var(--size-tree-indent);
+  color: var(--color-text-secondary);
+}

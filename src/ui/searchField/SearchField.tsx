@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import type { ComponentPropsWithRef, KeyboardEvent, MouseEvent } from 'react';
+import type { ComponentPropsWithRef, KeyboardEvent, MouseEvent, RefObject } from 'react';
 import { frameworkIcons } from '@/icons/frameworkIcons';
 import { classNames } from '@/ui/classNames';
 import { Icon } from '@/ui/icon/Icon';
@@ -28,6 +28,7 @@ interface SearchFieldProps extends NativeInputProps {
   readonly onValueChange: (value: string) => void;
   readonly label: string;
   readonly clearLabel: string;
+  readonly resultsRef?: RefObject<HTMLElement | null> | undefined;
 }
 
 const EMPTY_QUERY = '';
@@ -38,6 +39,7 @@ export function SearchField({
   onValueChange,
   label,
   clearLabel,
+  resultsRef,
   className,
   ref,
   tabIndex,
@@ -61,7 +63,19 @@ export function SearchField({
   function handleKeyDown(event: KeyboardEvent<HTMLInputElement>): void {
     onKeyDown?.(event);
 
-    if (event.defaultPrevented || event.key !== 'Escape') {
+    if (event.defaultPrevented) {
+      return;
+    }
+
+    const results = resultsRef?.current;
+
+    if (event.key === 'ArrowDown' && results !== null && results !== undefined) {
+      event.preventDefault();
+      results.focus();
+
+      return;
+    }
+    if (event.key !== 'Escape') {
       return;
     }
 

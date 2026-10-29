@@ -34,12 +34,12 @@ export function SearchFieldPage() {
           Esc clears the query, and a second Esc leaves the field. Esc that clears the query does
           not close a dialog, popover or menu around the field. A window focuses its search field
           with its own hotkey, such as Mod+F in the window&apos;s scope, not with logic inside the
-          field. Moving to the results with the Down arrow belongs to the list below the field:
-          handle <code>onKeyDown</code> until lists arrive. Inside a toolbar the field joins the
-          toolbar&apos;s Tab stop. Disabled and read-only fields hide the clear button.{' '}
-          <code>ref</code> receives the <code>input</code> element, and native input attributes such
-          as <code>placeholder</code> pass through. <code>className</code> goes to the outer box and
-          is meant only for layout.
+          field. <code>resultsRef</code> points to the results, such as a <code>TreeView</code> or a{' '}
+          <code>ListView</code> below the field: then Down moves the focus there. The TreeView page
+          shows it in an example. Inside a toolbar the field joins the toolbar&apos;s Tab stop.
+          Disabled and read-only fields hide the clear button. <code>ref</code> receives the{' '}
+          <code>input</code> element, and native input attributes such as <code>placeholder</code>{' '}
+          pass through. <code>className</code> goes to the outer box and is meant only for layout.
         </p>
       </PageSection>
     </>

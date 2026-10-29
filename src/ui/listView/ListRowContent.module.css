@@ -16,3 +16,10 @@
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.match {
+  background-color: transparent;
+  color: inherit;
+  font-weight: var(--font-weight-semibold);
+  text-decoration: underline;
+}

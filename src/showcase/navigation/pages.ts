@@ -20,6 +20,7 @@ import { ToggleButtonPage } from '@/showcase/pages/components/toggleButton/Toggl
 import { ToggleButtonGroupPage } from '@/showcase/pages/components/toggleButtonGroup/ToggleButtonGroupPage';
 import { TooltipPage } from '@/showcase/pages/components/tooltip/TooltipPage';
 import { ToolbarPage } from '@/showcase/pages/components/toolbar/ToolbarPage';
+import { TreeViewPage } from '@/showcase/pages/components/treeView/TreeViewPage';
 import { ValueDragPage } from '@/showcase/pages/components/valueDrag/ValueDragPage';
 import { VectorFieldPage } from '@/showcase/pages/components/vectorField/VectorFieldPage';
 import { ColorsPage } from '@/showcase/pages/foundations/ColorsPage';
@@ -230,6 +231,13 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     title: 'ListView',
     description: 'A fast list of rows with a single or multiple selection and keyboard moves.',
     component: ListViewPage,
+  },
+  {
+    id: 'components/tree-view',
+    section: 'components',
+    title: 'TreeView',
+    description: 'A fast tree over flat data with expanding, selection and keyboard moves.',
+    component: TreeViewPage,
   },
   {
     id: 'components/toolbar',

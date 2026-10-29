@@ -12,6 +12,7 @@ const TOOLBAR_LABEL = 'Tools';
 const DIALOG_TITLE = 'Find object';
 const NEXT_LABEL = 'Next';
 const PLACEHOLDER = 'Search';
+const RESULTS_LABEL = 'Results';
 
 interface HarnessProps {
   readonly initial?: string;
@@ -180,6 +181,38 @@ describe('SearchField', () => {
 
     expect(ref.current).toBe(field());
     expect(field().placeholder).toBe(PLACEHOLDER);
+  });
+
+  it('moves the focus to the results with Down', async () => {
+    const user = userEvent.setup();
+    const resultsRef = createRef<HTMLDivElement>();
+    render(
+      <>
+        <SearchField
+          label={LABEL}
+          clearLabel={CLEAR_LABEL}
+          value="cam"
+          onValueChange={vi.fn()}
+          resultsRef={resultsRef}
+        />
+        <div ref={resultsRef} tabIndex={-1} aria-label={RESULTS_LABEL} role="listbox" />
+      </>,
+    );
+
+    await user.click(field());
+    await user.keyboard('{ArrowDown}');
+
+    expect(document.activeElement).toBe(screen.getByRole('listbox', { name: RESULTS_LABEL }));
+  });
+
+  it('keeps Down in the field without results', async () => {
+    const user = userEvent.setup();
+    render(<Harness initial="cam" />);
+
+    await user.click(field());
+    await user.keyboard('{ArrowDown}');
+
+    expect(document.activeElement).toBe(field());
   });
 });
 

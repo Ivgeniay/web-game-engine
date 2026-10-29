@@ -1,0 +1,17 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.field {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.icon {
+  display: flex;
+  flex: none;
+}

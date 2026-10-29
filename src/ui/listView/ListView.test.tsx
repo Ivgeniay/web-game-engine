@@ -2,7 +2,12 @@ import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { MacPlatformContext } from '@/ui/platform/macPlatformContext';
-import { ROW_HEIGHT_TOKEN } from '@/ui/virtualList/useVirtualRows';
+import {
+  TEST_ROW_HEIGHT,
+  TEST_VISIBLE_ROWS,
+  installVirtualListEnvironment,
+} from '@/ui/virtualList/virtualListTestEnvironment';
+import type { VirtualListTestEnvironment } from '@/ui/virtualList/virtualListTestEnvironment';
 import { OVERSCAN_ROWS } from '@/ui/virtualList/virtualRange';
 import { ListView } from './ListView';
 import type { ListSelectionMode } from './listSelection';
@@ -11,8 +16,6 @@ import type { ListViewInitialState } from './useListViewState';
 
 const LIST_LABEL = 'Assets';
 const OUTSIDE = 'Outside';
-const ROW_HEIGHT = 20;
-const VISIBLE_ROWS = 10;
 const LARGE_COUNT = 10_000;
 const SCROLLED_ROW = 5000;
 
@@ -70,38 +73,15 @@ function Harness({
   );
 }
 
-class FakeResizeObserver {
-  observe(): void {
-    return undefined;
-  }
-
-  disconnect(): void {
-    return undefined;
-  }
-}
-
-let scrollTop = 0;
+let environment: VirtualListTestEnvironment;
 
 beforeEach(() => {
-  scrollTop = 0;
-  vi.stubGlobal('ResizeObserver', FakeResizeObserver);
-  vi.spyOn(HTMLElement.prototype, 'clientHeight', 'get').mockReturnValue(ROW_HEIGHT * VISIBLE_ROWS);
-  vi.spyOn(Element.prototype, 'scrollTop', 'get').mockImplementation(() => scrollTop);
-  Object.defineProperty(Element.prototype, 'scrollTo', {
-    configurable: true,
-    value: ({ top }: ScrollToOptions) => {
-      scrollTop = top ?? scrollTop;
-    },
-  });
-  document.documentElement.style.setProperty(ROW_HEIGHT_TOKEN, `${String(ROW_HEIGHT)}px`);
+  environment = installVirtualListEnvironment();
 });
 
 afterEach(() => {
   cleanup();
-  vi.restoreAllMocks();
-  vi.unstubAllGlobals();
-  Reflect.deleteProperty(Element.prototype, 'scrollTo');
-  document.documentElement.style.removeProperty(ROW_HEIGHT_TOKEN);
+  environment.restore();
 });
 
 function list(): HTMLElement {
@@ -133,7 +113,7 @@ describe('ListView rendering', () => {
   it('renders only the visible rows and the overscan of a large list', () => {
     render(<Harness itemIds={LARGE_IDS} getLabel={largeLabel} />);
 
-    expect(screen.getAllByRole('option')).toHaveLength(VISIBLE_ROWS + OVERSCAN_ROWS);
+    expect(screen.getAllByRole('option')).toHaveLength(TEST_VISIBLE_ROWS + OVERSCAN_ROWS);
     expect(row('Item 0').getAttribute('aria-setsize')).toBe(String(LARGE_COUNT));
     expect(row('Item 0').getAttribute('aria-posinset')).toBe('1');
   });
@@ -141,7 +121,7 @@ describe('ListView rendering', () => {
   it('renders the rows of the scrolled position', () => {
     render(<Harness itemIds={LARGE_IDS} getLabel={largeLabel} />);
 
-    scrollTop = SCROLLED_ROW * ROW_HEIGHT;
+    environment.setScrollTop(SCROLLED_ROW * TEST_ROW_HEIGHT);
     fireEvent.scroll(list());
 
     expect(row(`Item ${String(SCROLLED_ROW)}`).getAttribute('aria-posinset')).toBe(
@@ -354,10 +334,10 @@ describe('ListView keyboard', () => {
     await user.keyboard('{End}');
     const lastLabel = `Item ${String(LARGE_COUNT - 1)}`;
 
-    expect(scrollTop).toBe((LARGE_COUNT - VISIBLE_ROWS) * ROW_HEIGHT);
+    expect(environment.getScrollTop()).toBe((LARGE_COUNT - TEST_VISIBLE_ROWS) * TEST_ROW_HEIGHT);
 
     act(() => {
-      scrollTop = 0;
+      environment.setScrollTop(0);
       fireEvent.scroll(list());
     });
 

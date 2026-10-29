@@ -1,0 +1,12 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  width: var(--showcase-inspector-width);
+}
+
+.tree {
+  height: var(--showcase-list-height);
+  border: var(--size-border-width) solid var(--color-border-control);
+  background-color: var(--color-bg-panel);
+}
