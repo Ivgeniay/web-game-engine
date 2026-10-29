@@ -1076,12 +1076,15 @@
 6. Foldout и ComponentHeader.
 7. Демо-сцена: иерархия объектов в Hierarchy, Inspector по выделению со смешанными значениями и ComponentHeader, Project с поиском, отмена структурных правок; `useContextMenuItems`, глобальное правило `[hidden]`, документация.
 
-### Этап 11. Индикаторы и сообщения (next)
+### Этап 11. Перевод витрины
 
-1. EmptyState и HelpBox.
-2. ProgressBar и Spinner.
-3. Badge и Link.
-4. Notification.
+Сделано. Инструкция — `docs/stages/stage-11-showcase-i18n.md`, подшаги:
+
+1. Проект: тексты со вставками кода и ссылками, словари по страницам, переводимые названия и описания в реестре страниц.
+2. Механизм документационных текстов в `src/showcase/i18n/` (`defineDocMessages`, разметка кода, выделения и ссылок, `useDocMessages`, `DocText`), словарь оболочки витрины, реестр страниц на `MessageRef`, страница Overview.
+3. Раздел Foundations. Подписи переключателей и заголовки таблиц в регистре предложения.
+4. Раздел Components.
+5. Раздел Shell и страница Demo scene, правило линтера о текстах для всей витрины, кроме примеров, загрузка `*.module.css?raw` в тестах и тест отрисовки всех страниц на обоих языках, документация.
 
 ### Этап 12. Расширенные поля (next)
 
@@ -1099,7 +1102,14 @@
 4. PickerDialog и ReferenceField.
 5. SearchableMenu и Breadcrumbs.
 
-### Этап 14. Оболочка, вторая очередь (next)
+### Этап 14. Индикаторы и сообщения (next)
+
+1. EmptyState и HelpBox.
+2. ProgressBar и Spinner.
+3. Badge и Link.
+4. Notification.
+
+### Этап 15. Оболочка, вторая очередь (next)
 
 1. CommandPalette.
 2. SettingsWindow, Tabs и SplitView.

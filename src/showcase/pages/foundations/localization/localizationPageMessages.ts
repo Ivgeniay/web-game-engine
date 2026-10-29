@@ -41,7 +41,7 @@ export const localizationPageMessages = defineDocMessages({
       'There is no global registry of keys: a component passes the dictionary it needs to `useMessages`. Keys of different dictionaries never clash, and a component can use several dictionaries, for example its own and `commonMessages` with the shared framework terms.',
     rulesTitle: 'Rules',
     rulesLinter:
-      'Every interface text goes through the localization system. Outside the showcase, the linter rejects text written directly in JSX and string literals in text attributes such as `title` or `aria-label`. It cannot see text in constants and data, so the rule is also checked in review.',
+      'Every interface text goes through the localization system. Everywhere except example files `*Example.tsx`, the linter rejects text written directly in JSX and string literals in text attributes such as `title` or `aria-label`. It cannot see text in constants and data, so the rule is also checked in review.',
     rulesPrimitives:
       'UI primitives do not depend on the localization system: they receive ready strings through props, and the code that uses them translates.',
     rulesGlossary:
@@ -91,7 +91,7 @@ export const localizationPageMessages = defineDocMessages({
       'Глобального реестра ключей нет: компонент передаёт в `useMessages` нужный ему словарь. Ключи разных словарей не пересекаются, и компонент может пользоваться несколькими словарями, например своим и `commonMessages` с общими терминами каркаса.',
     rulesTitle: 'Правила',
     rulesLinter:
-      'Любой текст интерфейса идёт через систему локализации. Вне витрины линтер запрещает текст прямо в JSX и строковые литералы в текстовых атрибутах вроде `title` или `aria-label`. Текст в константах и данных он не видит, поэтому правило проверяется ещё и на ревью.',
+      'Любой текст интерфейса идёт через систему локализации. Везде, кроме файлов примеров `*Example.tsx`, линтер запрещает текст прямо в JSX и строковые литералы в текстовых атрибутах вроде `title` или `aria-label`. Текст в константах и данных он не видит, поэтому правило проверяется ещё и на ревью.',
     rulesPrimitives:
       'UI-примитивы не зависят от системы локализации: они получают готовые строки через пропсы, а переводит код, который их использует.',
     rulesGlossary:

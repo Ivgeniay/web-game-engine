@@ -23,7 +23,7 @@ export const numberFieldPageMessages = defineDocMessages({
       '`mixed` shows a dash for different values of several selected objects, and any edit is committed so the owner can apply it to every object. A read-only field stays in the Tab order and ignores typing and the arrows. A disabled field leaves the Tab order.',
     keyboardOtherTitle: 'Keyboard and other props',
     keyboardOtherText:
-      'The field is a text input with the `spinbutton` role, so screen readers announce the value and the limits. Changing the value by dragging the caption arrives with the property row. Expressions such as `2*3` and large integers beyond `number` are not supported yet. Esc that cancels an edit does not reach a dialog, popover or menu around the field; the next Esc closes it. `size`, `ref`, native attributes and `className` work as in the text field.',
+      'The field is a text input with the `spinbutton` role, so screen readers announce the value and the limits. To change the value by dragging its caption, put the field in a `PropertyRow` with `drag`. Expressions such as `2*3` and large integers beyond `number` are not supported yet. Esc that cancels an edit does not reach a dialog, popover or menu around the field; the next Esc closes it. `size`, `ref`, native attributes and `className` work as in the text field.',
   },
   ru: {
     pageTitle: 'NumberField',
@@ -48,6 +48,6 @@ export const numberFieldPageMessages = defineDocMessages({
       '`mixed` показывает черту для разных значений у нескольких выбранных объектов, и любая правка фиксируется, чтобы владелец мог применить её ко всем объектам. Поле только для чтения остаётся в порядке Tab и не реагирует на ввод и стрелки. Отключённое поле выпадает из порядка Tab.',
     keyboardOtherTitle: 'Клавиатура и остальные пропсы',
     keyboardOtherText:
-      'Поле — текстовый ввод с ролью `spinbutton`, поэтому скринридеры объявляют значение и границы. Изменение значения перетаскиванием подписи появится вместе со строкой свойства. Выражения вроде `2*3` и большие целые за пределами `number` пока не поддерживаются. Esc, который отменил правку, не доходит до диалога, всплывающей панели или меню вокруг поля; их закрывает следующий Esc. `size`, `ref`, нативные атрибуты и `className` работают как у текстового поля.',
+      'Поле — текстовый ввод с ролью `spinbutton`, поэтому скринридеры объявляют значение и границы. Чтобы менять значение перетаскиванием подписи, поставьте поле в `PropertyRow` с `drag`. Выражения вроде `2*3` и большие целые за пределами `number` пока не поддерживаются. Esc, который отменил правку, не доходит до диалога, всплывающей панели или меню вокруг поля; их закрывает следующий Esc. `size`, `ref`, нативные атрибуты и `className` работают как у текстового поля.',
   },
 });

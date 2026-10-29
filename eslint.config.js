@@ -201,7 +201,7 @@ export default defineConfig([
   },
   {
     files: ['src/**/*.{ts,tsx}'],
-    ignores: ['src/showcase/**'],
+    ignores: ['src/**/*Example.tsx'],
     rules: {
       'no-restricted-syntax': ['error', ...namedExportsOnlySelectors, ...uiTextSelectors],
     },

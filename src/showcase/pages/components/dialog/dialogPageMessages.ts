@@ -18,7 +18,7 @@ export const dialogPageMessages = defineDocMessages({
       'When the dialog opens, the focus moves to its first control, usually the first field. A dialog without fields should start on its main action: pass a ref to that button as `initialFocus`, as the example does.',
     focusTitle: 'Focus',
     focusText:
-      'Tab and Shift+Tab move only inside the dialog, and the rest of the editor is hidden from screen readers while it is open. After closing, the focus returns to the control that opened the dialog. A confirmation that code opens and awaits will be built on top of this component.',
+      'Tab and Shift+Tab move only inside the dialog, and the rest of the editor is hidden from screen readers while it is open. After closing, the focus returns to the control that opened the dialog. A confirmation that code opens and awaits, `dialogs.confirm` from the editor registries, is built on top of this component.',
   },
   ru: {
     pageTitle: 'Dialog',
@@ -38,6 +38,6 @@ export const dialogPageMessages = defineDocMessages({
       'Когда диалог открывается, фокус переходит на его первый элемент, обычно на первое поле. Диалог без полей должен начинаться с главного действия: передайте ref этой кнопки как `initialFocus`, как в примере.',
     focusTitle: 'Фокус',
     focusText:
-      'Tab и Shift+Tab ходят только внутри диалога, а остальной редактор, пока диалог открыт, скрыт от скринридеров. После закрытия фокус возвращается на элемент, который открыл диалог. Подтверждение, которое код открывает и ждёт, будет построено поверх этого компонента.',
+      'Tab и Shift+Tab ходят только внутри диалога, а остальной редактор, пока диалог открыт, скрыт от скринридеров. После закрытия фокус возвращается на элемент, который открыл диалог. Подтверждение, которое код открывает и ждёт, — `dialogs.confirm` из реестров редактора — построено поверх этого компонента.',
   },
 });

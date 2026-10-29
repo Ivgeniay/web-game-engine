@@ -84,25 +84,25 @@ const FORBIDDEN_CASES: readonly ForbiddenCase[] = [
     ruleId: 'no-restricted-syntax',
   },
   {
-    name: 'text in JSX outside the showcase',
+    name: 'text in JSX in framework code',
     filePath: FRAMEWORK_TSX_FILE,
     code: 'export function Hint() {\n  return <span>Save</span>;\n}\n',
     ruleId: 'no-restricted-syntax',
   },
   {
-    name: 'a string literal among JSX children outside the showcase',
+    name: 'a string literal among JSX children in framework code',
     filePath: FRAMEWORK_TSX_FILE,
     code: "export function Hint() {\n  return <span>{'Save'}</span>;\n}\n",
     ruleId: 'no-restricted-syntax',
   },
   {
-    name: 'a literal aria-label outside the showcase',
+    name: 'a literal aria-label in framework code',
     filePath: FRAMEWORK_TSX_FILE,
     code: 'export function Hint() {\n  return <span aria-label="Save" />;\n}\n',
     ruleId: 'no-restricted-syntax',
   },
   {
-    name: 'a literal label prop outside the showcase',
+    name: 'a literal label prop in framework code',
     filePath: FRAMEWORK_TSX_FILE,
     code: 'import { Toolbar } from \'@/ui/toolbar/Toolbar\';\nexport function Bar() {\n  return <Toolbar label="Scene">{null}</Toolbar>;\n}\n',
     ruleId: 'no-restricted-syntax',
@@ -117,6 +117,24 @@ const FORBIDDEN_CASES: readonly ForbiddenCase[] = [
     name: 'a template literal in a prop that ends with Label',
     filePath: FRAMEWORK_TSX_FILE,
     code: "import { TreeView } from '@/ui/treeView/TreeView';\nexport const element = <TreeView renameLabel={`Name`} />;\n",
+    ruleId: 'no-restricted-syntax',
+  },
+  {
+    name: 'text in JSX on a showcase page',
+    filePath: SHOWCASE_TSX_FILE,
+    code: 'export function Hint() {\n  return <span>Save</span>;\n}\n',
+    ruleId: 'no-restricted-syntax',
+  },
+  {
+    name: 'a literal aria-label on a showcase page',
+    filePath: SHOWCASE_TSX_FILE,
+    code: 'export function Hint() {\n  return <span aria-label="Save" />;\n}\n',
+    ruleId: 'no-restricted-syntax',
+  },
+  {
+    name: 'a default export in an example',
+    filePath: EXAMPLE_FILE,
+    code: 'const value = 1;\nexport default value;\n',
     ruleId: 'no-restricted-syntax',
   },
   {
@@ -240,8 +258,8 @@ const ALLOWED_CASES: readonly AllowedCase[] = [
     code: 'export function Mark() {\n  return <span data-row-label="" />;\n}\n',
   },
   {
-    name: 'text in JSX in the showcase',
-    filePath: SHOWCASE_TSX_FILE,
+    name: 'text in JSX in an example',
+    filePath: EXAMPLE_FILE,
     code: 'export function Hint() {\n  return <span aria-label="Save">Save</span>;\n}\n',
   },
   {

@@ -16,7 +16,7 @@ export default defineConfig({
     },
   },
   test: {
-    css: { include: [/src\/themes\/.+\.css/] },
+    css: { include: [/src\/themes\/.+\.css/, /\.css\?raw$/] },
     projects: [
       {
         extends: true,

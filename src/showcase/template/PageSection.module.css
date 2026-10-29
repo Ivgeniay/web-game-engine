@@ -30,17 +30,3 @@
 .body ul {
   padding-left: var(--space-24);
 }
-
-.body code {
-  padding: 0 var(--space-2);
-  border-radius: var(--radius-sm);
-  background-color: var(--color-bg-field);
-  font-family: var(--font-family-mono);
-  font-size: var(--font-size-sm);
-}
-
-.body pre code {
-  padding: 0;
-  border-radius: var(--radius-none);
-  background: none;
-}

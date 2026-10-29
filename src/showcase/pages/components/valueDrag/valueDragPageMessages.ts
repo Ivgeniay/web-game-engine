@@ -7,7 +7,7 @@ export const valueDragPageMessages = defineDocMessages({
       'A hook that changes a number by dragging, with modifiers and an optional pointer lock.',
     draggingNumberTitle: 'Dragging a number',
     draggingNumberText:
-      '`useValueDrag(target, disabled)` from `@/ui/valueDrag` turns any element into a zone that changes a number by dragging left and right, like the caption of a numeric field in Unity. Spread `zoneProps` on the element: they add the two-way arrow cursor, the pointer handlers and a click guard. `dragging` tells whether a drag is running. Property rows use the hook for their captions, and vector fields will use it for axis captions.',
+      '`useValueDrag(target, disabled)` from `@/ui/valueDrag` turns any element into a zone that changes a number by dragging left and right, like the caption of a numeric field in Unity. Spread `zoneProps` on the element: they add the two-way arrow cursor, the pointer handlers and a click guard. `dragging` tells whether a drag is running. Property rows use the hook for their captions, and vector fields for their axis captions.',
     draggingNumberText2:
       'The target describes the number: `value`, `onValueChange`, `kind`, `min`, `max` and `step`, as in the number field. Every pixel moves the value by one step. With Shift the step is ten times finer, with Alt ten times coarser, and a modifier pressed in the middle of a drag affects only the movement after it. Pushing past a limit does not pile up: moving back changes the value at once.',
     protocolThresholdTitle: 'Protocol, threshold and cancel',
@@ -23,7 +23,7 @@ export const valueDragPageMessages = defineDocMessages({
       'Хук, который меняет число перетаскиванием, с модификаторами и необязательным захватом указателя.',
     draggingNumberTitle: 'Перетаскивание числа',
     draggingNumberText:
-      '`useValueDrag(target, disabled)` из `@/ui/valueDrag` превращает любой элемент в зону, которая меняет число перетаскиванием влево и вправо, как подпись числового поля в Unity. Разверните `zoneProps` на элементе: они добавляют курсор с двусторонней стрелкой, обработчики указателя и защиту от клика. `dragging` говорит, идёт ли перетаскивание. Строки свойств используют хук для своих подписей, а поля векторов будут использовать его для подписей осей.',
+      '`useValueDrag(target, disabled)` из `@/ui/valueDrag` превращает любой элемент в зону, которая меняет число перетаскиванием влево и вправо, как подпись числового поля в Unity. Разверните `zoneProps` на элементе: они добавляют курсор с двусторонней стрелкой, обработчики указателя и защиту от клика. `dragging` говорит, идёт ли перетаскивание. Строки свойств используют хук для своих подписей, а поля векторов — для подписей осей.',
     draggingNumberText2:
       'Цель описывает число: `value`, `onValueChange`, `kind`, `min`, `max` и `step`, как у числового поля. Каждый пиксель сдвигает значение на один шаг. С Shift шаг в десять раз мельче, с Alt — в десять раз крупнее, и модификатор, нажатый посреди перетаскивания, влияет только на движение после нажатия. Упор в границу не накапливается: обратное движение сразу меняет значение.',
     protocolThresholdTitle: 'Протокол, порог и отмена',

@@ -100,6 +100,18 @@
 | Error bubble | Пузырь | Сообщение об ошибке поля |
 | Accessible name | Доступное имя | |
 | Snapshot | Снимок | Снимок стора |
+| Command definition | Описание команды | `defineCommand`; поведение — «обработчик» |
+| Invocation | Вызов | `CommandInvocation` |
+| Integration entry point | Точка подключения интеграции | `EditorExtension`; не путать с точкой входа приложения |
+| Key map | Карта клавиш | |
+| Text composition | Составной ввод | Ввод через IME |
+| Workspace | Рабочая область | |
+| Split (layout) | Разделение | `splitLayout` |
+| Single-instance / multi-instance window | Одиночное окно / окно с несколькими экземплярами | |
+| Undo entry | Запись | Запись стека отмены |
+| Operation | Операция | `UndoOperation` |
+| Redo branch | Ветка повтора | |
+| Queue | Очередь | Очередь запросов подтверждения |
 
 ## Правила русского перевода
 

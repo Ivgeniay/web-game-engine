@@ -1,3 +1,4 @@
+import { useDocMessages } from '@/showcase/i18n/useDocMessages';
 import { ExampleBlock } from '@/showcase/template/ExampleBlock';
 import { PageSection } from '@/showcase/template/PageSection';
 import { TabMenuExample } from './TabMenuExample';
@@ -6,41 +7,25 @@ import tabMenuSource from './TabMenuExample.tsx?raw';
 import { WindowMenuExample } from './WindowMenuExample';
 import windowMenuStyles from './WindowMenuExample.module.css?raw';
 import windowMenuSource from './WindowMenuExample.tsx?raw';
+import { windowTabMenuPageMessages } from './windowTabMenuPageMessages';
 
 export function WindowTabMenuPage() {
+  const doc = useDocMessages(windowTabMenuPageMessages);
+
   return (
     <>
-      <PageSection title="Opening">
-        <p>
-          Every group of tabs has a menu button at the right of its tabs. A right click on a tab, or
-          Shift+F10 and the context menu key on a focused tab, opens the same menu for that tab. The
-          button is an ordinary Tab stop; inside the menu the keyboard works as in any menu.
-        </p>
+      <PageSection title={doc('openingTitle')}>
+        <p>{doc('openingText')}</p>
       </PageSection>
-      <PageSection title="Items">
-        <p>The framework always adds its items at the end of the menu:</p>
+      <PageSection title={doc('itemsTitle')}>
+        <p>{doc('itemsText')}</p>
         <ul>
-          <li>Maximize, checked while the group is maximized. It restores the layout again.</li>
-          <li>Close tab.</li>
-          <li>
-            Add tab, a submenu with every registered window type. The window opens in the group of
-            the tab. A single-instance window that is already open is disabled.
-          </li>
+          <li>{doc('itemsItem')}</li>
+          <li>{doc('itemsItem2')}</li>
+          <li>{doc('itemsItem3')}</li>
         </ul>
-        <p>
-          A window adds its own items before them. <code>defineWindow</code> gives every window type
-          a context menu of its own, <code>windowType.tabMenu</code>, and the integration registers
-          items into it with <code>contextMenus.registerItem</code>, the same way as into any
-          context menu. The target of the menu is <code>{'{ windowId, windowType }'}</code>, so a
-          command declared as <code>{'defineCommand<WindowTabTarget>'}</code> knows which instance
-          it serves. The items of the window and of the framework are built as separate menus, so a
-          window may use any path, including the paths of the framework items.
-        </p>
-        <p>
-          A multi-instance window registers the handler of its items once, together with the window
-          type, and tells the instances apart by <code>target.windowId</code>. In the example every
-          Inspector is locked on its own.
-        </p>
+        <p>{doc('itemsText2')}</p>
+        <p>{doc('itemsText3')}</p>
         <ExampleBlock
           sources={[
             { fileName: 'TabMenuExample.tsx', code: tabMenuSource },
@@ -50,15 +35,8 @@ export function WindowTabMenuPage() {
           <TabMenuExample />
         </ExampleBlock>
       </PageSection>
-      <PageSection title="Window menu">
-        <p>
-          The framework does not create a Window menu. It gives{' '}
-          <code>{'registerWindowMenuItems(editor, { menuPath, group })'}</code>, which adds an item
-          for every registered window type to the menu at <code>menuPath</code> and follows window
-          types registered and removed later. The item calls <code>workspace.open</code>: it opens
-          the window or activates the open one. The integration places the menu itself and adds
-          other items next to it, such as <code>resetLayoutCommand</code>.
-        </p>
+      <PageSection title={doc('windowMenuTitle')}>
+        <p>{doc('windowMenuText')}</p>
         <ExampleBlock
           sources={[
             { fileName: 'WindowMenuExample.tsx', code: windowMenuSource },
@@ -68,16 +46,13 @@ export function WindowTabMenuPage() {
           <WindowMenuExample />
         </ExampleBlock>
       </PageSection>
-      <PageSection title="Shortcuts">
+      <PageSection title={doc('shortcutsTitle')}>
         <ul>
-          <li>Shift+Space maximizes the active window and restores the layout.</li>
-          <li>Alt+PageDown and Alt+PageUp switch to the next and previous tab of the group.</li>
-          <li>
-            F6 and Shift+F6 move the focus between the areas of the editor: the menu, the toolbar,
-            the active window and the status bar.
-          </li>
+          <li>{doc('shortcutsItem')}</li>
+          <li>{doc('shortcutsItem2')}</li>
+          <li>{doc('shortcutsItem3')}</li>
         </ul>
-        <p>The Hotkeys page explains how these shortcuts behave in fields and on buttons.</p>
+        <p>{doc('shortcutsText')}</p>
       </PageSection>
     </>
   );

@@ -1,3 +1,4 @@
+import { useDocMessages } from '@/showcase/i18n/useDocMessages';
 import { formatShortcut } from '@/core/hotkeys/formatShortcut';
 import { PLATFORMS } from '@/core/hotkeys/platform';
 import type { Platform } from '@/core/hotkeys/platform';
@@ -17,53 +18,27 @@ const PLATFORM_NAMES: Readonly<Record<Platform, string>> = {
   other: 'Windows and Linux:',
   mac: 'macOS:',
 };
+import { hotkeysPageMessages } from './hotkeysPageMessages';
 
 export function HotkeysPage() {
+  const doc = useDocMessages(hotkeysPageMessages);
+
   return (
     <>
-      <PageSection title="Declaring a shortcut">
-        <p>
-          A shortcut belongs to a command: <code>{"shortcut: { keys: 'Mod+Shift+KeyZ' }"}</code>.
-          The key is a <code>KeyboardEvent.code</code> value such as <code>KeyZ</code>,{' '}
-          <code>Digit1</code>, <code>F2</code> or <code>Delete</code>. The modifiers are{' '}
-          <code>Mod</code>, <code>Alt</code> and <code>Shift</code>, always in this order.{' '}
-          <code>Mod</code> is Ctrl on Windows and Linux and ⌘ on macOS, like <code>%</code> in Unity
-          menu paths. A separate Control modifier on macOS is not supported yet.
-        </p>
-        <p>
-          The string is checked by the compiler, and it is easy to store: user remapping, which will
-          come later, will replace <code>keys</code> by command id. Two more fields are optional:{' '}
-          <code>scope</code> (see below) and <code>allowInTextInput</code>.
-        </p>
+      <PageSection title={doc('declaringShortcutTitle')}>
+        <p>{doc('declaringShortcutText')}</p>
+        <p>{doc('declaringShortcutText2')}</p>
       </PageSection>
-      <PageSection title="Which key matches">
-        <p>Shortcuts must work in any keyboard layout, so the key is compared in two ways:</p>
+      <PageSection title={doc('whichKeyTitle')}>
+        <p>{doc('whichKeyText')}</p>
         <ul>
-          <li>
-            <strong>Letters.</strong> If the pressed key types a Latin letter, the letter is
-            compared: <code>Mod+KeyZ</code> fires on the key labelled Z in AZERTY and in Dvorak,
-            wherever that key is. If it types another character, such as Cyrillic in the Russian
-            layout or a symbol made with Option on macOS, the physical key is compared:{' '}
-            <code>Mod+KeyS</code> fires on the key that types Ы.
-          </li>
-          <li>
-            <strong>Digits, punctuation and other keys</strong> are always compared by the physical
-            key. Their labels are shown as on the US layout.
-          </li>
+          <li>{doc('whichKeyItem')}</li>
+          <li>{doc('whichKeyItem2')}</li>
         </ul>
       </PageSection>
-      <PageSection title="Showing a shortcut">
-        <p>
-          <code>formatShortcut(keys, platform)</code> builds the string for <code>Kbd</code>:
-          symbols ⌥ ⇧ ⌘ without separators on macOS, <code>Ctrl+Alt+Shift+…</code> elsewhere.
-          Components use <code>useFormatShortcut()</code>, which formats for the current platform.
-          The platform is detected once in the entry point with{' '}
-          <code>detectPlatform(navigator)</code> and passed down with <code>PlatformProvider</code>.
-        </p>
-        <p>
-          Key names (Ctrl, Shift, Enter, Space and the symbols) are not translated, just like
-          language names: users know them in this form in every language.
-        </p>
+      <PageSection title={doc('showingShortcutTitle')}>
+        <p>{doc('showingShortcutText')}</p>
+        <p>{doc('showingShortcutText2')}</p>
         <ExampleBlock
           sources={[
             { fileName: 'ShortcutFormatExample.tsx', code: shortcutFormatSource },
@@ -73,23 +48,10 @@ export function HotkeysPage() {
           <ShortcutFormatExample />
         </ExampleBlock>
       </PageSection>
-      <PageSection title="Scopes">
-        <p>
-          A shortcut without <code>scope</code> is global. A named scope is declared by markup:
-          spread <code>hotkeyScopeProps('hierarchy')</code> on the root element of a window or an
-          area. Make that element focusable, so that a click on it moves the focus inside.
-        </p>
-        <p>
-          The active scopes are the scopes around the focused element, from the nearest to the
-          farthest, and the global scope comes last. The first matching command that is enabled
-          runs. A disabled command passes the key on to a wider scope, but the browser action is
-          prevented anyway, so a disabled Save never opens the browser&apos;s save dialog.
-        </p>
-        <p>
-          In the example the same Delete key runs a different command in each area. Each example on
-          this page creates its own registries and attaches the controller to its own root element,
-          so the shortcuts work only inside it.
-        </p>
+      <PageSection title={doc('scopesTitle')}>
+        <p>{doc('scopesText')}</p>
+        <p>{doc('scopesText2')}</p>
+        <p>{doc('scopesText3')}</p>
         <ExampleBlock
           sources={[
             { fileName: 'HotkeyScopesExample.tsx', code: hotkeyScopesSource },
@@ -99,82 +61,31 @@ export function HotkeysPage() {
           <HotkeyScopesExample />
         </ExampleBlock>
       </PageSection>
-      <PageSection title="When shortcuts do not fire">
+      <PageSection title={doc('whenShortcutsTitle')}>
         <ul>
-          <li>
-            While the focus is in a text field, a text area, a select or editable content, shortcuts
-            without Mod or Alt never fire: the keys belong to typing. Shortcuts with Mod or Alt fire
-            only when the command sets <code>allowInTextInput</code>, like Run the line in the
-            example. Function keys F1 to F12 type nothing, so with <code>allowInTextInput</code>{' '}
-            they fire in a field even without modifiers: F6 moves to the next area from a field.
-            <code>allowInTextInput: &apos;whenCommitted&apos;</code> lets a shortcut fire only in a
-            text or number field without uncommitted typing, and never in other text inputs: Undo
-            and Redo use it, so Mod+Z undoes the typing first and the editor changes after the
-            commit.
-          </li>
-          <li>
-            Shortcuts on Space and Enter, such as Shift+Space, do not fire while the focus is on an
-            element that these keys activate: a button, a checkbox, a radio button, a link or a menu
-            item. The key stays with the element, so Shift+Space on a focused button does not
-            maximize the window.
-          </li>
-          <li>
-            While global shortcuts are blocked, only the scopes around the focus work. The editor
-            blocks them while a dialog, a menu or a list is open: these elements handle their own
-            keys.
-          </li>
-          <li>
-            A key that a component has already handled with <code>preventDefault</code> is left
-            alone, and so are characters typed with AltGr and keys pressed during text composition.
-          </li>
+          <li>{doc('whenShortcutsItem')}</li>
+          <li>{doc('whenShortcutsItem2')}</li>
+          <li>{doc('whenShortcutsItem3')}</li>
+          <li>{doc('whenShortcutsItem4')}</li>
         </ul>
       </PageSection>
-      <PageSection title="Shortcuts of the framework">
+      <PageSection title={doc('shortcutsFrameworkTitle')}>
         <ul>
-          <li>Shift+Space maximizes the active window and restores the layout.</li>
-          <li>Alt+PageDown and Alt+PageUp switch to the next and previous tab of the group.</li>
-          <li>
-            F6 and Shift+F6 move the focus between the menu, the toolbar, the active window and the
-            status bar. They work in fields too.
-          </li>
+          <li>{doc('shortcutsFrameworkItem')}</li>
+          <li>{doc('shortcutsFrameworkItem2')}</li>
+          <li>{doc('shortcutsFrameworkItem3')}</li>
         </ul>
-        <p>
-          Ctrl+Tab and Ctrl+PageUp/PageDown, which other editors use for tabs, are taken by the
-          browser and cannot be used.
-        </p>
+        <p>{doc('shortcutsFrameworkText')}</p>
       </PageSection>
-      <PageSection title="Starting the controller">
-        <p>
-          <code>
-            startHotkeyController({'{ commands, target, platform, areGlobalHotkeysBlocked }'})
-          </code>{' '}
-          listens to <code>keydown</code> on the target and returns the function that stops it. The
-          editor starts it in the entry point on <code>document</code>. The controller rebuilds the
-          key map whenever the set of handled commands changes.
-        </p>
-        <p>
-          The controller lives in <code>core</code> and knows nothing about popups, so the caller
-          tells it when global shortcuts are blocked. The editor passes{' '}
-          <code>{'() => isKeyboardCapturedByPopup(document)'}</code> from{' '}
-          <code>@/shell/popupKeyboardCapture</code>: it is true while a dialog, a menu or a list is
-          open.
-        </p>
+      <PageSection title={doc('startingControllerTitle')}>
+        <p>{doc('startingControllerText')}</p>
+        <p>{doc('startingControllerText2')}</p>
       </PageSection>
-      <PageSection title="Errors">
-        <p>
-          The following are errors: in development they throw from the registration, in production
-          they are logged and the shortcut is ignored.
-        </p>
+      <PageSection title={doc('errorsTitle')}>
+        <p>{doc('errorsText')}</p>
         <ul>
-          <li>Two commands with the same shortcut in the same scope.</li>
-          <li>
-            A default shortcut that the browser or the operating system keeps for itself. Such a
-            shortcut would work on some machines and silently fail on others. The list is{' '}
-            <code>RESERVED_SHORTCUTS</code> in <code>@/core/hotkeys/reservedShortcuts</code>. It
-            follows the reserved commands in the sources of Chromium and Firefox and the known
-            behavior of Safari. Mod+P is not reserved: all three browsers let the page take it from
-            printing.
-          </li>
+          <li>{doc('errorsItem')}</li>
+          <li>{doc('errorsItem2')}</li>
         </ul>
         {PLATFORMS.map((platform) => (
           <div key={platform} className={styles.reserved}>
