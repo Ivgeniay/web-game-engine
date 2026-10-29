@@ -1,17 +1,18 @@
+import { useDocMessages } from '@/showcase/i18n/useDocMessages';
 import { PageSection } from '@/showcase/template/PageSection';
 import { TokenSection } from '@/showcase/tokens/TokenSection';
 import { GROUPED_TOKEN_NAMES } from '@/showcase/tokens/tokenNames';
+import { spacingPageMessages } from './spacingPageMessages';
 
 export function SpacingPage() {
+  const doc = useDocMessages(spacingPageMessages);
+
   return (
     <>
-      <PageSection title="Usage">
-        <p>
-          Paddings, margins and gaps use the spacing scale. The token name is its size in pixels, so
-          a value that is not on the scale is a sign to pick the nearest step instead.
-        </p>
+      <PageSection title={doc('usageTitle')}>
+        <p>{doc('usageText')}</p>
       </PageSection>
-      <PageSection title="Tokens">
+      <PageSection title={doc('tokensTitle')}>
         <TokenSection group="space" names={GROUPED_TOKEN_NAMES.space} />
       </PageSection>
     </>

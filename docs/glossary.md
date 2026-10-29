@@ -62,6 +62,20 @@
 | Promise | Промис | |
 | Mock data | Мок-данные | |
 | Production build | Production-сборка | |
+| Store | Стор | Сторы Zustand |
+| Selector | Селектор | |
+| Entry point | Точка входа | |
+| Source of truth | Источник правды | |
+| Focus outline | Рамка фокуса | |
+| Easing | Сглаживание | Кривые `--easing-*` |
+| Reduced motion | Уменьшение движения | Настройка ОС `prefers-reduced-motion` |
+| Assistive technologies | Вспомогательные технологии | |
+| Pixel grid | Пиксельная сетка | |
+| Raster | Растр | |
+| Outline (of an icon drawing) | Контур | Не путать с рамкой фокуса |
+| Glyph | Глиф | |
+| Placeholder icon | Заглушка | Иконка `unknown`; подстановка в переводе — «подстановка» |
+| Pass / fail (contrast) | Норма / ниже нормы | |
 
 ## Правила русского перевода
 

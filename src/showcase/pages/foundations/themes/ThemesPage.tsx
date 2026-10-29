@@ -1,3 +1,4 @@
+import { useDocMessages } from '@/showcase/i18n/useDocMessages';
 import { ExampleBlock } from '@/showcase/template/ExampleBlock';
 import { PageSection } from '@/showcase/template/PageSection';
 import { CurrentThemeExample } from './CurrentThemeExample';
@@ -7,79 +8,41 @@ import themeModeSource from './ThemeModeExample.tsx?raw';
 import { TokenStyledPanelExample } from './TokenStyledPanelExample';
 import tokenStyledPanelStyles from './TokenStyledPanelExample.module.css?raw';
 import tokenStyledPanelSource from './TokenStyledPanelExample.tsx?raw';
+import { themesPageMessages } from './themesPageMessages';
 
 export function ThemesPage() {
+  const doc = useDocMessages(themesPageMessages);
+
   return (
     <>
-      <PageSection title="Theme modes">
-        <p>The editor has three theme modes:</p>
+      <PageSection title={doc('modesTitle')}>
+        <p>{doc('modesIntro')}</p>
         <ul>
-          <li>
-            <code>dark</code> is the default;
-          </li>
-          <li>
-            <code>light</code>;
-          </li>
-          <li>
-            <code>system</code> follows the operating system preference and updates when it changes.
-          </li>
+          <li>{doc('modesDark')}</li>
+          <li>{doc('modesLight')}</li>
+          <li>{doc('modesSystem')}</li>
         </ul>
-        <p>
-          The mode is stored in <code>localStorage</code> under the <code>editor-theme-mode</code>{' '}
-          key. The resolved theme, <code>dark</code> or <code>light</code>, is written to the{' '}
-          <code>data-theme</code> attribute of the root element. An inline script in the HTML file
-          sets it before the first paint, and <code>startThemeController(stores.theme)</code> keeps
-          it in sync afterwards. The editor and the showcase entry points already call it.
-        </p>
+        <p>{doc('modesStorage')}</p>
       </PageSection>
-      <PageSection title="Reading the current theme">
-        <p>
-          Read the theme with <code>useThemeStore</code> and a selector. <code>mode</code> is what
-          the user picked, <code>resolvedTheme</code> is the theme actually shown. With the{' '}
-          <code>system</code> mode they differ.
-        </p>
-        <p>
-          Most components never need this: differences between themes belong in token values, not in
-          component code.
-        </p>
+      <PageSection title={doc('readingTitle')}>
+        <p>{doc('readingStore')}</p>
+        <p>{doc('readingRarelyNeeded')}</p>
         <ExampleBlock sources={[{ fileName: 'CurrentThemeExample.tsx', code: currentThemeSource }]}>
           <CurrentThemeExample />
         </ExampleBlock>
       </PageSection>
-      <PageSection title="Changing the mode">
-        <p>
-          Call <code>setMode</code> from the store. It saves the mode, resolves the theme and starts
-          or stops following the system preference. <code>THEME_MODES</code> lists every mode.
-        </p>
+      <PageSection title={doc('changingTitle')}>
+        <p>{doc('changingSetMode')}</p>
         <ExampleBlock sources={[{ fileName: 'ThemeModeExample.tsx', code: themeModeSource }]}>
           <ThemeModeExample />
         </ExampleBlock>
-        <p>
-          There is no global theme store. The entry point creates the stores with{' '}
-          <code>createBrowserStores()</code> and passes them to <code>StoresProvider</code>, where{' '}
-          <code>useThemeStore</code> finds them. Code outside React receives the store as a
-          parameter: <code>getState()</code> reads the state and <code>subscribe()</code> listens to
-          changes.
-        </p>
+        <p>{doc('changingStores')}</p>
       </PageSection>
-      <PageSection title="Styling with tokens">
-        <p>
-          Components are styled with CSS Modules. Colors, spacing, font sizes, radii, shadows and
-          z-index values come only from token variables through <code>var()</code>. Components know
-          nothing about the current theme: switching it changes token values, and every component
-          follows.
-        </p>
+      <PageSection title={doc('tokensTitle')}>
+        <p>{doc('tokensIntro')}</p>
         <ul>
-          <li>
-            Tokens are named by role, not by value, and grouped by prefix: <code>--color-</code>,{' '}
-            <code>--space-</code>, <code>--font-</code>, <code>--size-</code>,{' '}
-            <code>--radius-</code>, <code>--shadow-</code>, <code>--z-</code>,{' '}
-            <code>--duration-</code>, <code>--easing-</code>.
-          </li>
-          <li>
-            Status colors <code>--color-status-*</code> are for icons, borders and indicators only.
-            Text always uses <code>--color-text-*</code>.
-          </li>
+          <li>{doc('tokensNaming')}</li>
+          <li>{doc('tokensStatus')}</li>
         </ul>
         <ExampleBlock
           sources={[

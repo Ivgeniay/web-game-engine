@@ -1,7 +1,9 @@
 import { useEffect, useRef } from 'react';
 import type { IconDefinition, IconSize } from '@/icons/icon';
+import { useMessages } from '@/state/language/useMessages';
 import { useThemeStore } from '@/state/theme/useThemeStore';
 import { Icon } from '@/ui/icon/Icon';
+import { iconsPageMessages } from './iconsPageMessages';
 import styles from './IconPixelPreview.module.css';
 import { rasterizeSvg } from './svgRaster';
 import type { SvgRasterOptions } from './svgRaster';
@@ -13,9 +15,6 @@ interface IconPixelPreviewProps {
 }
 
 const OUTLINE_CSS_WIDTH = 1;
-
-const DENSITY_NOTE =
-  'Rasterized at 1× density, as on a standard screen. On high-density screens the icon looks sharper.';
 
 function clearCanvas(canvas: HTMLCanvasElement): void {
   canvas.getContext('2d')?.clearRect(0, 0, canvas.width, canvas.height);
@@ -64,6 +63,7 @@ function outlineOptions(svg: SVGSVGElement, canvas: HTMLCanvasElement): SvgRaste
 
 export function IconPixelPreview({ icon, size, showOutline }: IconPixelPreviewProps) {
   const resolvedTheme = useThemeStore((state) => state.resolvedTheme);
+  const t = useMessages(iconsPageMessages);
   const sourceRef = useRef<HTMLDivElement>(null);
   const rasterRef = useRef<HTMLCanvasElement>(null);
   const outlineRef = useRef<HTMLCanvasElement>(null);
@@ -104,7 +104,7 @@ export function IconPixelPreview({ icon, size, showOutline }: IconPixelPreviewPr
           <Icon icon={icon} size={size} />
         </div>
       </div>
-      <figcaption className={styles.note}>{DENSITY_NOTE}</figcaption>
+      <figcaption className={styles.note}>{t('galleryDensityNote')}</figcaption>
     </figure>
   );
 }

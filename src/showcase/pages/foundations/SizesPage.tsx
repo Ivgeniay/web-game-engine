@@ -1,46 +1,40 @@
+import { useDocMessages } from '@/showcase/i18n/useDocMessages';
 import { PageSection } from '@/showcase/template/PageSection';
 import { TokenSection } from '@/showcase/tokens/TokenSection';
 import { getSizeTokenNames } from '@/showcase/tokens/tokenNames';
+import { sizesPageMessages } from './sizesPageMessages';
 
 export function SizesPage() {
+  const doc = useDocMessages(sizesPageMessages);
+
   return (
     <>
-      <PageSection title="Controls">
-        <p>
-          Heights of buttons, fields and other controls. <code>md</code> is the default,{' '}
-          <code>sm</code> fits dense lists and toolbars, <code>lg</code> is for roomy rows.
-        </p>
+      <PageSection title={doc('controlsTitle')}>
+        <p>{doc('controlsText')}</p>
         <TokenSection group="size" names={getSizeTokenNames('control')} />
       </PageSection>
-      <PageSection title="Panels">
-        <p>Heights of the main menu bar, the toolbar, panel tabs and the status bar.</p>
+      <PageSection title={doc('panelsTitle')}>
+        <p>{doc('panelsText')}</p>
         <TokenSection group="size" names={getSizeTokenNames('panel')} />
       </PageSection>
-      <PageSection title="Icons">
-        <p>Icon sizes. Icons are square.</p>
+      <PageSection title={doc('iconsTitle')}>
+        <p>{doc('iconsText')}</p>
         <TokenSection group="size" names={getSizeTokenNames('icon')} />
       </PageSection>
-      <PageSection title="Borders">
-        <p>Width of borders, separators and the focus outline.</p>
+      <PageSection title={doc('bordersTitle')}>
+        <p>{doc('bordersText')}</p>
         <TokenSection group="size" names={getSizeTokenNames('border')} />
       </PageSection>
-      <PageSection title="Scrollbar">
-        <p>Thickness of scrollbars.</p>
+      <PageSection title={doc('scrollbarTitle')}>
+        <p>{doc('scrollbarText')}</p>
         <TokenSection group="size" names={getSizeTokenNames('scrollbar')} />
       </PageSection>
-      <PageSection title="Property rows">
-        <p>
-          Limits of the label column in property rows: the narrowest label and the narrowest field
-          when the column is dragged, and the width of the grip on the column border.
-        </p>
+      <PageSection title={doc('propertyRowsTitle')}>
+        <p>{doc('propertyRowsText')}</p>
         <TokenSection group="size" names={getSizeTokenNames('property')} />
       </PageSection>
-      <PageSection title="Lists and trees">
-        <p>
-          Height of a row in lists and trees, the indent of one tree level and the thickness of the
-          line that shows where a dragged row will be inserted. Every row has the same height, so a
-          long list draws only the rows in view.
-        </p>
+      <PageSection title={doc('listsTitle')}>
+        <p>{doc('listsText')}</p>
         <TokenSection group="size" names={getSizeTokenNames('list')} />
       </PageSection>
     </>

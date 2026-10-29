@@ -1,22 +1,20 @@
+import { useDocMessages } from '@/showcase/i18n/useDocMessages';
 import { PageSection } from '@/showcase/template/PageSection';
 import { TokenSection } from '@/showcase/tokens/TokenSection';
 import { GROUPED_TOKEN_NAMES } from '@/showcase/tokens/tokenNames';
+import { radiusAndShadowsPageMessages } from './radiusAndShadowsPageMessages';
 
 export function RadiusAndShadowsPage() {
+  const doc = useDocMessages(radiusAndShadowsPageMessages);
+
   return (
     <>
-      <PageSection title="Radius">
-        <p>
-          Corner radii. Editor surfaces are mostly sharp or slightly rounded,{' '}
-          <code>radius-full</code> is for pills and round indicators.
-        </p>
+      <PageSection title={doc('radiusTitle')}>
+        <p>{doc('radiusText')}</p>
         <TokenSection group="radius" names={GROUPED_TOKEN_NAMES.radius} />
       </PageSection>
-      <PageSection title="Shadows">
-        <p>
-          Shadows separate floating elements from the content below: popups, menus and tooltips.
-          Docked panels have no shadow.
-        </p>
+      <PageSection title={doc('shadowsTitle')}>
+        <p>{doc('shadowsText')}</p>
         <TokenSection group="shadow" names={GROUPED_TOKEN_NAMES.shadow} />
       </PageSection>
     </>
