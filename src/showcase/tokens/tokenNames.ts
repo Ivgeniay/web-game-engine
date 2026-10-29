@@ -11,6 +11,7 @@ export const SIZE_TOKEN_KINDS = [
   'scrollbar',
   'property',
   'list',
+  'field',
 ] as const;
 
 export type SizeTokenKind = (typeof SIZE_TOKEN_KINDS)[number];
@@ -23,6 +24,7 @@ export const SIZE_TOKEN_PREFIXES: Readonly<Record<SizeTokenKind, readonly string
   scrollbar: ['--size-scrollbar'],
   property: ['--size-property-'],
   list: ['--size-list-', '--size-tree-', '--size-drop-'],
+  field: ['--size-slider-'],
 };
 
 export const GROUPED_TOKEN_NAMES: GroupedTokenNames = groupTokenNames([

@@ -30,6 +30,13 @@
   padding: 0 var(--space-6);
 }
 
+.multiline {
+  align-items: stretch;
+  height: auto;
+  padding-block: var(--space-2);
+  line-height: var(--font-line-height-multiline);
+}
+
 .root:not(.disabled, .readOnly):hover {
   background-image: linear-gradient(var(--color-overlay-hover), var(--color-overlay-hover));
 }
@@ -71,6 +78,13 @@
   color: inherit;
   font: inherit;
   cursor: inherit;
+}
+
+.multiline .input {
+  display: block;
+  height: auto;
+  overflow-y: auto;
+  resize: none;
 }
 
 .input:focus-visible {

@@ -37,6 +37,10 @@ export function SizesPage() {
         <p>{doc('listsText')}</p>
         <TokenSection group="size" names={getSizeTokenNames('list')} />
       </PageSection>
+      <PageSection title={doc('fieldsTitle')}>
+        <p>{doc('fieldsText')}</p>
+        <TokenSection group="size" names={getSizeTokenNames('field')} />
+      </PageSection>
     </>
   );
 }

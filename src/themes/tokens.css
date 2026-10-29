@@ -42,6 +42,9 @@
   --size-list-row-height: 20px;
   --size-tree-indent: 12px;
   --size-drop-indicator: 2px;
+  --size-slider-rail: 4px;
+  --size-slider-thumb: 10px;
+  --size-slider-field-width: 48px;
 
   --radius-none: 0;
   --radius-sm: 2px;

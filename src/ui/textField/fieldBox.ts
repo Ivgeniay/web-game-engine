@@ -9,6 +9,7 @@ export const MIXED_VALUE_PLACEHOLDER = '—';
 
 export interface FieldBoxClassNameOptions {
   readonly size: FieldSize;
+  readonly multiline?: boolean | undefined;
   readonly invalid: boolean;
   readonly disabled: boolean;
   readonly readOnly: boolean;
@@ -17,6 +18,7 @@ export interface FieldBoxClassNameOptions {
 
 export function fieldBoxClassName({
   size,
+  multiline = false,
   invalid,
   disabled,
   readOnly,
@@ -25,6 +27,7 @@ export function fieldBoxClassName({
   return classNames(
     styles.root,
     styles[size],
+    multiline && styles.multiline,
     invalid && styles.invalid,
     disabled && styles.disabled,
     readOnly && styles.readOnly,

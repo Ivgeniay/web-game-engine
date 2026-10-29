@@ -1,0 +1,76 @@
+.root {
+  display: flex;
+  align-items: center;
+  gap: var(--space-6);
+  min-width: 0;
+}
+
+.track {
+  display: flex;
+  flex: 1 1 auto;
+  align-items: center;
+  box-sizing: border-box;
+  min-width: 0;
+  padding-inline: calc(var(--size-slider-thumb) / 2);
+  touch-action: none;
+  cursor: default;
+}
+
+.sm {
+  height: var(--size-control-height-sm);
+}
+
+.md {
+  height: var(--size-control-height-md);
+}
+
+.lg {
+  height: var(--size-control-height-lg);
+}
+
+.track:focus-visible {
+  outline: none;
+}
+
+.rail {
+  position: relative;
+  flex: 1 1 auto;
+  box-sizing: border-box;
+  height: var(--size-slider-rail);
+  border: var(--size-border-width) solid var(--color-border-control);
+  border-radius: var(--radius-full);
+  background-color: var(--color-bg-field);
+}
+
+.thumb {
+  position: absolute;
+  top: 50%;
+  box-sizing: border-box;
+  width: var(--size-slider-thumb);
+  height: var(--size-slider-thumb);
+  border-radius: var(--radius-full);
+  background-color: var(--color-text-secondary);
+  transform: translate(-50%, -50%);
+}
+
+.track:not([data-disabled], [aria-readonly]):hover .thumb {
+  background-color: var(--color-text-primary);
+}
+
+.track[data-dragging] .thumb {
+  background-color: var(--color-accent);
+}
+
+.track:focus-visible .thumb {
+  outline: var(--size-border-width) solid var(--color-border-focus);
+  outline-offset: var(--size-border-width);
+}
+
+.track[data-disabled] .thumb {
+  background-color: var(--color-text-disabled);
+}
+
+.field {
+  flex: none;
+  width: var(--size-slider-field-width);
+}

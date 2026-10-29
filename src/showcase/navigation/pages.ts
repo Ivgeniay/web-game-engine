@@ -39,6 +39,10 @@ import { SelectPage } from '@/showcase/pages/components/select/SelectPage';
 import { selectPageMessages } from '@/showcase/pages/components/select/selectPageMessages';
 import { SeparatorPage } from '@/showcase/pages/components/separator/SeparatorPage';
 import { separatorPageMessages } from '@/showcase/pages/components/separator/separatorPageMessages';
+import { SliderPage } from '@/showcase/pages/components/slider/SliderPage';
+import { sliderPageMessages } from '@/showcase/pages/components/slider/sliderPageMessages';
+import { TextAreaPage } from '@/showcase/pages/components/textArea/TextAreaPage';
+import { textAreaPageMessages } from '@/showcase/pages/components/textArea/textAreaPageMessages';
 import { TextFieldPage } from '@/showcase/pages/components/textField/TextFieldPage';
 import { textFieldPageMessages } from '@/showcase/pages/components/textField/textFieldPageMessages';
 import { ToggleButtonPage } from '@/showcase/pages/components/toggleButton/ToggleButtonPage';
@@ -238,6 +242,13 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     component: TextFieldPage,
   },
   {
+    id: 'components/text-area',
+    section: 'components',
+    title: messageRef(textAreaPageMessages, 'pageTitle'),
+    description: messageRef(textAreaPageMessages, 'pageDescription'),
+    component: TextAreaPage,
+  },
+  {
     id: 'components/search-field',
     section: 'components',
     title: messageRef(searchFieldPageMessages, 'pageTitle'),
@@ -250,6 +261,13 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     title: messageRef(numberFieldPageMessages, 'pageTitle'),
     description: messageRef(numberFieldPageMessages, 'pageDescription'),
     component: NumberFieldPage,
+  },
+  {
+    id: 'components/slider',
+    section: 'components',
+    title: messageRef(sliderPageMessages, 'pageTitle'),
+    description: messageRef(sliderPageMessages, 'pageDescription'),
+    component: SliderPage,
   },
   {
     id: 'components/value-drag',
