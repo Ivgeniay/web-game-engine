@@ -12,10 +12,10 @@ export const demoScenePageMessages = defineDocMessages({
     whatIsItem2:
       'Hierarchy shows the objects of the scene as a tree. It selects one or several objects, renames them with F2 (Enter on macOS) or a double click, changes their parent and order by dragging, and duplicates, renames and deletes them from the context menu.',
     whatIsItem3:
-      'Inspector shows the objects selected in the hierarchy: the name, the Transform and the components that all of them share, each under a `ComponentHeader` with a collapse arrow, an enable checkbox on Rigidbody and Light and a menu with Reset and Remove component. With several objects, different values show as mixed, and a change goes to all of them.',
+      'Inspector shows the objects selected in the hierarchy: the name, the Transform and the components that all of them share, each under a `ComponentHeader` with a collapse arrow, an enable checkbox on Rigidbody and Light and a menu with Reset and Remove component. With several objects, different values show as mixed, and a change goes to all of them. Light has a color in a [ColorField](components/color-field) and an intensity on a [Slider](components/slider), Rigidbody has its constraints in a [FlagsField](components/flags-field), Path keeps its waypoints in a [ListEditor](components/list-editor), and Note keeps a text in a [TextArea](components/text-area).',
     whatIsItem4: 'Project shows the folders and files of a demo project as a tree with a search.',
     whatIsItem5:
-      'Every change goes into the undo stack as one record: edits in the inspector, also for several objects at once, creating, duplicating, renaming, moving and deleting objects. Undo and Redo are in the Edit menu, on Mod+Z and Mod+Shift+Z.',
+      'Every change goes into the undo stack as one record: edits in the inspector, also for several objects at once, a whole choice in the color picker, a drag of a slider, an operation on a list, creating, duplicating, renaming, moving and deleting objects. Undo and Redo are in the Edit menu, on Mod+Z and Mod+Shift+Z.',
     whatIsItem6: 'Menus File, Edit, GameObject and Window.',
     whatIsItem7:
       'Tools Move, Rotate and Scale on the left of the toolbar, Play, Pause and Step in the middle.',
@@ -53,10 +53,10 @@ export const demoScenePageMessages = defineDocMessages({
     whatIsItem2:
       'Hierarchy показывает объекты сцены деревом. Она выделяет один или несколько объектов, переименовывает их по F2 (Enter на macOS) или двойному клику, меняет родителя и порядок перетаскиванием, а дублирует, переименовывает и удаляет из контекстного меню.',
     whatIsItem3:
-      'Inspector показывает объекты, выделенные в иерархии: имя, Transform и компоненты, общие для всех них, каждый под `ComponentHeader` со стрелкой сворачивания, флажком включения у Rigidbody и Light и меню с Reset и Remove component. При нескольких объектах разные значения показываются как смешанные, а изменение уходит всем.',
+      'Inspector показывает объекты, выделенные в иерархии: имя, Transform и компоненты, общие для всех них, каждый под `ComponentHeader` со стрелкой сворачивания, флажком включения у Rigidbody и Light и меню с Reset и Remove component. При нескольких объектах разные значения показываются как смешанные, а изменение уходит всем. У Light цвет в [ColorField](components/color-field) и интенсивность на [Slider](components/slider), у Rigidbody ограничения во [FlagsField](components/flags-field), Path хранит точки маршрута в [ListEditor](components/list-editor), а Note — текст в [TextArea](components/text-area).',
     whatIsItem4: 'Project показывает папки и файлы демо-проекта деревом с поиском.',
     whatIsItem5:
-      'Каждое изменение попадает в стек отмены одной записью: правки в инспекторе, в том числе сразу для нескольких объектов, создание, дублирование, переименование, перемещение и удаление объектов. Undo и Redo — в меню Edit, на Mod+Z и Mod+Shift+Z.',
+      'Каждое изменение попадает в стек отмены одной записью: правки в инспекторе, в том числе сразу для нескольких объектов, весь выбор в окне выбора цвета, перетаскивание ползунка, операция над списком, создание, дублирование, переименование, перемещение и удаление объектов. Undo и Redo — в меню Edit, на Mod+Z и Mod+Shift+Z.',
     whatIsItem6: 'Меню File, Edit, GameObject и Window.',
     whatIsItem7:
       'Инструменты Move, Rotate и Scale слева на панели инструментов, Play, Pause и Step — посередине.',

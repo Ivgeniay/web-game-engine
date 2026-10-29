@@ -11,7 +11,7 @@ export const popoverPageMessages = defineDocMessages({
       'When the panel opens, the focus moves to its first control. Esc, a click outside and moving the focus out of the panel close it, and the focus returns to the trigger. Popups opened from inside the panel, like the list of the select in the example, count as part of it: working with them does not close the panel, and Esc closes only the topmost one.',
     controlOutsideTitle: 'Control from outside',
     controlOutsideText:
-      'By default the panel keeps its open state itself. Pass `open` and `onOpenChange` to decide it from outside; `onOpenChange` also works alone, as a notification.',
+      'By default the panel keeps its open state itself. Pass `open` and `onOpenChange` to decide it from outside; `onOpenChange` also works alone, as a notification. Its second argument tells why the panel opens or closes: `escape`, `outside` (a click outside, leaving the panel with the focus, the anchor going out of view) or `trigger`. [ColorField](components/color-field) cancels the choice on `escape` and commits it otherwise.',
   },
   ru: {
     pageTitle: 'Popover',
@@ -23,6 +23,6 @@ export const popoverPageMessages = defineDocMessages({
       'Когда панель открывается, фокус переходит на её первый элемент. Esc, клик снаружи и уход фокуса из панели закрывают её, и фокус возвращается на триггер. Всплывающие элементы, открытые изнутри панели, как список выбора в примере, считаются её частью: работа с ними не закрывает панель, а Esc закрывает только верхний из них.',
     controlOutsideTitle: 'Управление снаружи',
     controlOutsideText:
-      'По умолчанию панель сама хранит, открыта ли она. Передайте `open` и `onOpenChange`, чтобы решать это снаружи; `onOpenChange` работает и сам по себе, как уведомление.',
+      'По умолчанию панель сама хранит, открыта ли она. Передайте `open` и `onOpenChange`, чтобы решать это снаружи; `onOpenChange` работает и сам по себе, как уведомление. Второй аргумент говорит, почему панель открылась или закрылась: `escape`, `outside` (клик снаружи, уход фокуса из панели, якорь вышел из видимой области) или `trigger`. [ColorField](components/color-field) по `escape` отменяет выбор, а в остальных случаях фиксирует его.',
   },
 });

@@ -5,10 +5,13 @@ import type { Light, LightType, SceneObject } from '@/demo/scene/sceneStore';
 import { useMessages } from '@/state/language/useMessages';
 import { BooleanPropertyRow } from './BooleanPropertyRow';
 import { ChoicePropertyRow } from './ChoicePropertyRow';
+import { ColorPropertyRow } from './ColorPropertyRow';
 import { NumberPropertyRow } from './NumberPropertyRow';
+import { SliderPropertyRow } from './SliderPropertyRow';
 import { ToggleableComponentSection } from './ToggleableComponentSection';
 
 const MIN_INTENSITY = 0;
+const MAX_INTENSITY = 8;
 const MIN_RANGE = 0;
 
 interface LightSectionProps {
@@ -53,11 +56,19 @@ export function LightSection({ objects, expanded, onExpandedChange }: LightSecti
         get={(object) => lightOf(object).type}
         set={(object, type) => withLight(object, { type })}
       />
-      <NumberPropertyRow
+      <ColorPropertyRow
+        objects={objects}
+        label={t('color')}
+        undoLabel={messageRef(demoMessages, 'color')}
+        get={(object) => lightOf(object).color}
+        set={(object, color) => withLight(object, { color })}
+      />
+      <SliderPropertyRow
         objects={objects}
         label={t('intensity')}
         undoLabel={messageRef(demoMessages, 'intensity')}
         min={MIN_INTENSITY}
+        max={MAX_INTENSITY}
         get={(object) => lightOf(object).intensity}
         set={(object, intensity) => withLight(object, { intensity })}
       />

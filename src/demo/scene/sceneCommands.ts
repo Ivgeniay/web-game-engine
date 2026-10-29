@@ -81,7 +81,14 @@ function registerGameObjectMenu(
 ): Unsubscribe {
   function create(name: string, label: MessageRef): () => void {
     return () => {
-      const content = { name, transform: DEFAULT_TRANSFORM, rigidbody: null, light: null };
+      const content = {
+        name,
+        transform: DEFAULT_TRANSFORM,
+        rigidbody: null,
+        light: null,
+        path: null,
+        note: null,
+      };
 
       applySceneEdit(store, undo, label, addObject(content, store.getState().createId()));
     };

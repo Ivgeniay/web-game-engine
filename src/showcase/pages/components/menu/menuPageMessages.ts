@@ -15,7 +15,7 @@ export const menuPageMessages = defineDocMessages({
     kindsItemsItem:
       '`action` runs `onSelect`; it may have an `icon`, a `shortcut` string and `disabled`;',
     kindsItemsItem2:
-      '`checkbox` shows a check mark for `checked` and reports the switched value to `onCheckedChange`;',
+      "`checkbox` shows a check mark for `checked` and reports the switched value to `onCheckedChange`; `checked: 'mixed'` shows a dash and turns on when chosen, and `keepOpen` leaves the menu open after the switch, as in [FlagsField](components/flags-field);",
     kindsItemsItem3:
       '`radio-group` is a group of `options` with one chosen `value`, reported to `onValueChange`;',
     kindsItemsItem4:
@@ -35,7 +35,7 @@ export const menuPageMessages = defineDocMessages({
     keyboardItem5: 'A click outside closes the menu.',
     controlOutsideTitle: 'Control from outside',
     controlOutsideText:
-      'By default a menu with a trigger keeps its open state itself. Pass `open` and `onOpenChange` to decide it from outside, for example to switch between the menus of a menu bar. `onOpenChange` also works alone, as a notification.',
+      'By default a menu with a trigger keeps its open state itself. Pass `open` and `onOpenChange` to decide it from outside, for example to switch between the menus of a menu bar. `onOpenChange` also works alone, as a notification. `returnFocusRef` names the element that gets the focus back when the menu closes, if it is not the trigger: [SplitButton](components/split-button) returns it to its main part.',
     controlOutsideText2:
       '`onNavigateOut` is called with `previous` or `next` when Left or Right is pressed on the top level of a menu where they have no meaning of their own: Right on an item without a submenu, Left anywhere on the top level. A menu bar uses it to move to the neighbouring menu.',
   },
@@ -52,7 +52,7 @@ export const menuPageMessages = defineDocMessages({
     kindsItemsItem:
       '`action` вызывает `onSelect`; у него могут быть `icon`, строка `shortcut` и `disabled`;',
     kindsItemsItem2:
-      '`checkbox` показывает галочку для `checked` и сообщает переключённое значение в `onCheckedChange`;',
+      "`checkbox` показывает галочку для `checked` и сообщает переключённое значение в `onCheckedChange`; `checked: 'mixed'` показывает черту и при выборе включается, а `keepOpen` оставляет меню открытым после переключения, как в [FlagsField](components/flags-field);",
     kindsItemsItem3:
       '`radio-group` — группа `options` с одним выбранным `value`, о котором узнаёт `onValueChange`;',
     kindsItemsItem4:
@@ -73,7 +73,7 @@ export const menuPageMessages = defineDocMessages({
     keyboardItem5: 'Клик снаружи закрывает меню.',
     controlOutsideTitle: 'Управление снаружи',
     controlOutsideText:
-      'По умолчанию меню с триггером само хранит, открыто ли оно. Передайте `open` и `onOpenChange`, чтобы решать это снаружи, например чтобы переключаться между меню главного меню. `onOpenChange` работает и сам по себе, как уведомление.',
+      'По умолчанию меню с триггером само хранит, открыто ли оно. Передайте `open` и `onOpenChange`, чтобы решать это снаружи, например чтобы переключаться между меню главного меню. `onOpenChange` работает и сам по себе, как уведомление. `returnFocusRef` указывает элемент, которому вернётся фокус после закрытия меню, если это не триггер: [SplitButton](components/split-button) возвращает его на основную часть.',
     controlOutsideText2:
       '`onNavigateOut` вызывается с `previous` или `next`, когда стрелку влево или вправо нажали на верхнем уровне меню там, где у неё нет своего смысла: стрелка вправо на пункте без подменю, стрелка влево где угодно на верхнем уровне. Главное меню переходит так к соседнему меню.',
   },

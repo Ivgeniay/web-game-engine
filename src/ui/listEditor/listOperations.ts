@@ -22,13 +22,16 @@ export function resizeItems<T>(
   items: readonly T[],
   size: number,
   createItem: () => T,
+  copyItem: (item: T) => T,
 ): readonly T[] {
   if (size <= items.length) {
     return items.slice(0, Math.max(size, 0));
   }
 
   const last = items.at(-1);
-  const added = Array.from({ length: size - items.length }, () => last ?? createItem());
+  const added = Array.from({ length: size - items.length }, () =>
+    last === undefined ? createItem() : copyItem(last),
+  );
 
   return [...items, ...added];
 }

@@ -13,6 +13,7 @@ export interface SelectionPropertyOptions<T> {
   readonly get: (object: SceneObject) => T;
   readonly set: (object: SceneObject, value: T) => SceneObject;
   readonly merge?: ((own: T, value: T, shown: T) => T) | undefined;
+  readonly equals?: ((first: T, second: T) => boolean) | undefined;
 }
 
 export interface SelectionProperty<T> {
@@ -40,7 +41,7 @@ export function useSelectionProperty<T>(
 
   const onValueChange = useCallback(
     (value: T, phase: ValueChangePhase) => {
-      const { objects, label, get, set, merge } = optionsRef.current;
+      const { objects, label, get, set, merge, equals = sameValue } = optionsRef.current;
       const ids = objects.map(({ id }) => id);
 
       function readAll(): ReadonlyMap<string, T> {
@@ -95,7 +96,12 @@ export function useSelectionProperty<T>(
 
       writeAll(apply);
       const after = readAll();
-      const changed = ids.some((id) => !sameValue(start.values.get(id), after.get(id)));
+      const changed = ids.some((id) => {
+        const before = start.values.get(id);
+        const now = after.get(id);
+
+        return before === undefined || now === undefined || !equals(before, now);
+      });
 
       if (changed) {
         undo.push({
@@ -118,8 +124,9 @@ export function useSelectionProperty<T>(
     throw new Error('A selection property needs at least one object.');
   }
 
+  const equals = options.equals ?? sameValue;
   const value = options.get(first);
-  const mixed = others.some((object) => !sameValue(options.get(object), value));
+  const mixed = others.some((object) => !equals(options.get(object), value));
 
   return { value, mixed, onValueChange };
 }

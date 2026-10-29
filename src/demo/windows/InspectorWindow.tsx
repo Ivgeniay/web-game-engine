@@ -21,13 +21,21 @@ import { TextField } from '@/ui/textField/TextField';
 import { removeComponentCommand, resetComponentCommand } from './demoWindowCommands';
 import styles from './inspector/Inspector.module.css';
 import { LightSection } from './inspector/LightSection';
+import { NoteSection } from './inspector/NoteSection';
+import { PathSection } from './inspector/PathSection';
 import { RigidbodySection } from './inspector/RigidbodySection';
 import { TransformSection } from './inspector/TransformSection';
 import { useSelectionProperty } from './inspector/useSelectionProperty';
 
 type ExpandedComponents = Readonly<Record<ComponentKind, boolean>>;
 
-const ALL_EXPANDED: ExpandedComponents = { transform: true, rigidbody: true, light: true };
+const ALL_EXPANDED: ExpandedComponents = {
+  transform: true,
+  rigidbody: true,
+  light: true,
+  path: true,
+  note: true,
+};
 
 interface ObjectsInspectorProps {
   readonly objects: readonly SceneObject[];
@@ -70,6 +78,8 @@ function ObjectsInspector({ objects, expanded, onExpandedChange }: ObjectsInspec
       <TransformSection {...sectionProps('transform')} />
       {shared('rigidbody') && <RigidbodySection {...sectionProps('rigidbody')} />}
       {shared('light') && <LightSection {...sectionProps('light')} />}
+      {shared('path') && <PathSection {...sectionProps('path')} />}
+      {shared('note') && <NoteSection {...sectionProps('note')} />}
     </>
   );
 }

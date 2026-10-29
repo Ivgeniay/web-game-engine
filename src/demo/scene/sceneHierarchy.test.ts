@@ -18,6 +18,8 @@ function node(id: string, parentId: string | null = null): SceneObject {
     transform: DEFAULT_TRANSFORM,
     rigidbody: null,
     light: null,
+    path: null,
+    note: null,
   };
 }
 

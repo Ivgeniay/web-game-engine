@@ -7,7 +7,16 @@ const MOVED = { ...DEFAULT_TRANSFORM, position: [1, 2, 3] };
 const HEAVY = { ...DEFAULT_RIGIDBODY, mass: 50 };
 
 function object(id: string, rigidbody: SceneObject['rigidbody']): SceneObject {
-  return { id, name: id, parentId: null, transform: MOVED, rigidbody, light: null };
+  return {
+    id,
+    name: id,
+    parentId: null,
+    transform: MOVED,
+    rigidbody,
+    light: null,
+    path: null,
+    note: null,
+  };
 }
 
 const SNAPSHOT = {

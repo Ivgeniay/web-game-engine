@@ -1,10 +1,16 @@
 import { messageRef } from '@/core/i18n/translate';
 import { demoMessages } from '@/demo/demoMessages';
-import { DEFAULT_RIGIDBODY } from '@/demo/scene/sceneStore';
-import type { Interpolation, Rigidbody, SceneObject } from '@/demo/scene/sceneStore';
+import { DEFAULT_RIGIDBODY, RIGIDBODY_CONSTRAINTS } from '@/demo/scene/sceneStore';
+import type {
+  Interpolation,
+  Rigidbody,
+  RigidbodyConstraint,
+  SceneObject,
+} from '@/demo/scene/sceneStore';
 import { useMessages } from '@/state/language/useMessages';
 import { BooleanPropertyRow } from './BooleanPropertyRow';
 import { ChoicePropertyRow } from './ChoicePropertyRow';
+import { FlagsPropertyRow } from './FlagsPropertyRow';
 import { NumberPropertyRow } from './NumberPropertyRow';
 import { ToggleableComponentSection } from './ToggleableComponentSection';
 
@@ -77,6 +83,17 @@ export function RigidbodySection({ objects, expanded, onExpandedChange }: Rigidb
         ]}
         get={(object) => rigidbodyOf(object).interpolate}
         set={(object, interpolate) => withRigidbody(object, { interpolate })}
+      />
+      <FlagsPropertyRow<RigidbodyConstraint>
+        objects={objects}
+        label={t('constraints')}
+        undoLabel={messageRef(demoMessages, 'constraints')}
+        options={RIGIDBODY_CONSTRAINTS.map((constraint) => ({
+          value: constraint,
+          label: t(constraint),
+        }))}
+        get={(object) => rigidbodyOf(object).constraints}
+        set={(object, constraints) => withRigidbody(object, { constraints })}
       />
     </ToggleableComponentSection>
   );

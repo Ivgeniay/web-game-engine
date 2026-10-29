@@ -44,7 +44,14 @@ describe('applySceneEdit', () => {
   it('adds a root object and selects it', () => {
     const scene = createSceneStore();
     const undo = createUndoStack();
-    const content = { name: 'Cube', transform: DEFAULT_TRANSFORM, rigidbody: null, light: null };
+    const content = {
+      name: 'Cube',
+      transform: DEFAULT_TRANSFORM,
+      rigidbody: null,
+      light: null,
+      path: null,
+      note: null,
+    };
 
     applySceneEdit(scene, undo, LABEL, addObject(content, NEW_ID));
 

@@ -260,6 +260,148 @@ describe('demo integration', () => {
     expect(lightIntensities(stores)).toEqual([1, 2]);
   });
 
+  it('changes the light color and intensity with one undo entry each', async () => {
+    const user = userEvent.setup();
+    const { stores, editor } = await renderDemo();
+    const lamp = () => stores.scene.getState().objects.find(({ name }) => name === 'Lamp')?.light;
+    stubPointerCapture();
+
+    await user.click(object('Lamp'));
+    screen.getByRole('slider', { name: 'Intensity' }).focus();
+    await user.keyboard('{ArrowRight>3}{/ArrowRight}');
+
+    expect(lamp()?.intensity).toBeCloseTo(2.3);
+
+    await user.click(screen.getByRole('button', { name: 'Color' }));
+    const area = await screen.findByRole('slider', { name: 'Saturation and brightness' });
+    vi.spyOn(area, 'getBoundingClientRect').mockReturnValue(
+      DOMRect.fromRect({ x: 0, y: 0, width: AREA_SIZE, height: AREA_SIZE }),
+    );
+    fireEvent.pointerDown(area, { button: 0, pointerId: 1, clientX: 0, clientY: 0 });
+    fireEvent.pointerMove(area, { pointerId: 1, clientX: AREA_SIZE, clientY: 0 });
+    fireEvent.pointerUp(area, { pointerId: 1 });
+    fireEvent.pointerDown(area, { button: 0, pointerId: 1, clientX: 0, clientY: 0 });
+    fireEvent.pointerUp(area, { pointerId: 1 });
+    await user.keyboard('{Tab}');
+    await user.click(object('Lamp'));
+
+    expect(lamp()?.color).toEqual({ r: 1, g: 1, b: 1, a: 1 });
+
+    act(() => {
+      editor.registries.undo.undo();
+    });
+
+    expect(lamp()?.color).toEqual({ r: 1, g: 0.7, b: 0.35, a: 1 });
+    expect(lamp()?.intensity).toBeCloseTo(2.3);
+
+    act(() => {
+      editor.registries.undo.undo();
+    });
+
+    expect(lamp()?.intensity).toBe(2);
+  });
+
+  it('toggles a mixed constraint for every selected rigidbody and undoes it', async () => {
+    const user = userEvent.setup();
+    const { stores, editor } = await renderDemo();
+    const constraints = () =>
+      stores.scene
+        .getState()
+        .objects.flatMap(({ rigidbody }) => (rigidbody === null ? [] : [rigidbody.constraints]));
+
+    await user.click(object('Player'));
+    await user.keyboard('{Control>}');
+    await user.click(object('Weapon'));
+    await user.keyboard('{/Control}');
+    const field = screen.getByRole('button', { name: 'Constraints' });
+
+    expect(field.textContent).toBe('Mixed');
+
+    await user.click(field);
+    const freezeZ = screen.getByRole('menuitemcheckbox', { name: 'Freeze rotation Z' });
+
+    expect(freezeZ.getAttribute('aria-checked')).toBe('mixed');
+
+    await user.click(freezeZ);
+
+    expect(constraints()).toEqual([
+      ['freezeRotationX', 'freezeRotationZ'],
+      ['freezeRotationX', 'freezeRotationZ'],
+    ]);
+
+    await user.keyboard('{Escape}');
+    act(() => {
+      editor.registries.undo.undo();
+    });
+
+    expect(constraints()).toEqual([['freezeRotationX', 'freezeRotationZ'], ['freezeRotationX']]);
+  });
+
+  it('adds a waypoint with one undo entry and shows different paths as mixed', async () => {
+    const user = userEvent.setup();
+    const { stores, editor } = await renderDemo();
+    const waypointCount = () =>
+      stores.scene.getState().objects.find(({ name }) => name === 'Player')?.path?.waypoints.length;
+
+    await user.click(object('Player'));
+    await user.click(screen.getByRole('button', { name: 'Add element' }));
+
+    expect(waypointCount()).toBe(4);
+    expect(screen.getByRole('spinbutton', { name: 'Element 3 X' })).toBeDefined();
+
+    act(() => {
+      editor.registries.undo.undo();
+    });
+
+    expect(waypointCount()).toBe(3);
+
+    await user.keyboard('{Control>}');
+    await user.click(object('Weapon'));
+    await user.keyboard('{/Control}');
+
+    expect(screen.getByRole('spinbutton', { name: 'Size' })).toHaveProperty('disabled', true);
+    expect(screen.queryByRole('list', { name: 'Waypoints' })).toBeNull();
+  });
+
+  it('writes one note for several objects and undoes it', async () => {
+    const user = userEvent.setup();
+    const { stores, editor } = await renderDemo();
+    const notes = () =>
+      stores.scene.getState().objects.flatMap(({ note }) => (note === null ? [] : [note.text]));
+
+    await user.click(object('Rocks'));
+    await user.keyboard('{ArrowRight}');
+    const [firstRock, secondRock] = within(
+      screen.getByRole('tree', { name: 'Hierarchy' }),
+    ).getAllByRole('treeitem', { name: 'Rock' });
+
+    if (firstRock === undefined || secondRock === undefined) {
+      throw new Error('The scene has two rocks');
+    }
+
+    await user.click(firstRock);
+    await user.keyboard('{Control>}');
+    await user.click(secondRock);
+    await user.keyboard('{/Control}');
+    const text = screen.getByRole('textbox', { name: 'Text' });
+
+    expect(text).toHaveProperty('placeholder', '—');
+
+    await user.type(text, 'Shared{Enter}line');
+    await user.tab();
+
+    expect(notes()).toEqual(['Shared\nline', 'Shared\nline']);
+
+    act(() => {
+      editor.registries.undo.undo();
+    });
+
+    expect(notes()).toEqual([
+      'Cover for the first wave.',
+      'Too close to the bridge.\nMove it before the next build.',
+    ]);
+  });
+
   it('finds assets in the project with the search', async () => {
     const user = userEvent.setup();
     await renderDemo();
@@ -276,6 +418,15 @@ describe('demo integration', () => {
 });
 
 const TREE_HEIGHT = TEST_ROW_HEIGHT * TEST_VISIBLE_ROWS;
+const AREA_SIZE = 100;
+
+function stubPointerCapture(): void {
+  Object.assign(HTMLElement.prototype, {
+    setPointerCapture: vi.fn(),
+    releasePointerCapture: vi.fn(),
+    hasPointerCapture: vi.fn(() => true),
+  });
+}
 const MIDDLE_OF_ROW = TEST_ROW_HEIGHT / 2;
 
 function object(name: string): HTMLElement {

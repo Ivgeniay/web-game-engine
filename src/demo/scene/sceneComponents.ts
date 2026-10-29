@@ -1,12 +1,23 @@
 import type { SceneSnapshot } from './sceneHierarchy';
-import { DEFAULT_LIGHT, DEFAULT_RIGIDBODY, DEFAULT_TRANSFORM } from './sceneStore';
+import {
+  DEFAULT_LIGHT,
+  DEFAULT_NOTE,
+  DEFAULT_PATH,
+  DEFAULT_RIGIDBODY,
+  DEFAULT_TRANSFORM,
+} from './sceneStore';
 import type { SceneObject } from './sceneStore';
 
-export const COMPONENT_KINDS = ['transform', 'rigidbody', 'light'] as const;
+export const COMPONENT_KINDS = ['transform', 'rigidbody', 'light', 'path', 'note'] as const;
 
 export type ComponentKind = (typeof COMPONENT_KINDS)[number];
 
-export const REMOVABLE_COMPONENTS: ReadonlySet<ComponentKind> = new Set(['rigidbody', 'light']);
+export const REMOVABLE_COMPONENTS: ReadonlySet<ComponentKind> = new Set([
+  'rigidbody',
+  'light',
+  'path',
+  'note',
+]);
 
 function resetIn(object: SceneObject, component: ComponentKind): SceneObject {
   switch (component) {
@@ -16,6 +27,10 @@ function resetIn(object: SceneObject, component: ComponentKind): SceneObject {
       return object.rigidbody === null ? object : { ...object, rigidbody: DEFAULT_RIGIDBODY };
     case 'light':
       return object.light === null ? object : { ...object, light: DEFAULT_LIGHT };
+    case 'path':
+      return object.path === null ? object : { ...object, path: DEFAULT_PATH };
+    case 'note':
+      return object.note === null ? object : { ...object, note: DEFAULT_NOTE };
   }
 }
 
@@ -27,6 +42,10 @@ function removeFrom(object: SceneObject, component: ComponentKind): SceneObject 
       return { ...object, rigidbody: null };
     case 'light':
       return { ...object, light: null };
+    case 'path':
+      return { ...object, path: null };
+    case 'note':
+      return { ...object, note: null };
   }
 }
 
@@ -67,5 +86,9 @@ export function hasComponent(object: SceneObject, component: ComponentKind): boo
       return object.rigidbody !== null;
     case 'light':
       return object.light !== null;
+    case 'path':
+      return object.path !== null;
+    case 'note':
+      return object.note !== null;
   }
 }

@@ -5,6 +5,7 @@ import { FoldoutChevron } from './FoldoutChevron';
 import { FoldoutContext } from './foldoutContext';
 import { useFoldout } from './useFoldout';
 import styles from './Foldout.module.css';
+import headerStyles from './foldoutHeader.module.css';
 
 type NativeButtonProps = Omit<
   ComponentPropsWithRef<'button'>,
@@ -47,7 +48,7 @@ export function Foldout({
         {...buttonProps}
         {...roving}
         type="button"
-        className={styles.header}
+        className={headerStyles.header}
         disabled={disabled}
         aria-expanded={expanded}
         aria-controls={foldout.contentId}
@@ -61,7 +62,7 @@ export function Foldout({
         }}
       >
         <FoldoutChevron expanded={expanded} />
-        <span className={styles.label}>{label}</span>
+        <span className={headerStyles.label}>{label}</span>
       </button>
       <FoldoutContext value={foldout.broadcast}>
         <div id={foldout.contentId} className={styles.content} hidden={!expanded}>

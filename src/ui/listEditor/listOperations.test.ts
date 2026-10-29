@@ -14,6 +14,10 @@ function createItem(): string {
   return 'new';
 }
 
+function copyItem(item: string): string {
+  return `${item}+`;
+}
+
 describe('list operations', () => {
   it('replaces and removes an item by index', () => {
     expect(replaceItem(ITEMS, 1, 'x')).toEqual(['a', 'x', 'c', 'd']);
@@ -28,10 +32,10 @@ describe('list operations', () => {
   });
 
   it('grows with copies of the last item and shrinks from the end', () => {
-    expect(resizeItems(['a'], 3, createItem)).toEqual(['a', 'a', 'a']);
-    expect(resizeItems([], 2, createItem)).toEqual(['new', 'new']);
-    expect(resizeItems(ITEMS, 1, createItem)).toEqual(['a']);
-    expect(resizeItems(ITEMS, -1, createItem)).toEqual([]);
+    expect(resizeItems(['a'], 3, createItem, copyItem)).toEqual(['a', 'a+', 'a+']);
+    expect(resizeItems([], 2, createItem, copyItem)).toEqual(['new', 'new']);
+    expect(resizeItems(ITEMS, 1, createItem, copyItem)).toEqual(['a']);
+    expect(resizeItems(ITEMS, -1, createItem, copyItem)).toEqual([]);
   });
 
   it('turns a pointer position into an insertion index and a target index', () => {

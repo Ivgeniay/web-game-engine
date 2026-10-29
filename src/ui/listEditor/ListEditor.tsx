@@ -7,6 +7,7 @@ import { useDragSource } from '@/ui/dragAndDrop/useDragSource';
 import { useDropTarget } from '@/ui/dragAndDrop/useDropTarget';
 import { FoldoutChevron } from '@/ui/foldout/FoldoutChevron';
 import { FoldoutContext } from '@/ui/foldout/foldoutContext';
+import foldoutHeader from '@/ui/foldout/foldoutHeader.module.css';
 import { useFoldout } from '@/ui/foldout/useFoldout';
 import { Icon } from '@/ui/icon/Icon';
 import { IconButton } from '@/ui/iconButton/IconButton';
@@ -46,6 +47,7 @@ interface ListEditorProps<T> {
   readonly onValueChange?: ValueChangeHandler<readonly T[]> | undefined;
   readonly renderItem: (props: ListEditorItemProps<T>) => ReactNode;
   readonly createItem: () => T;
+  readonly copyItem?: ((item: T) => T) | undefined;
   readonly getItemKey?: ((item: T, index: number) => string) | undefined;
   readonly expanded: boolean;
   readonly onExpandedChange: (expanded: boolean) => void;
@@ -67,6 +69,10 @@ const REMOVE_ATTRIBUTE = 'data-list-editor-remove';
 const ADD_ATTRIBUTE = 'data-list-editor-add';
 const MOVE_DIRECTIONS: Readonly<Record<string, number>> = { ArrowUp: -1, ArrowDown: 1 };
 const HALF = 2;
+
+function sameItem<T>(item: T): T {
+  return item;
+}
 
 function indexKey(_item: unknown, index: number): string {
   return String(index);
@@ -97,6 +103,7 @@ export function ListEditor<T>({
   onValueChange,
   renderItem,
   createItem,
+  copyItem = sameItem,
   getItemKey = indexKey,
   expanded,
   onExpandedChange,
@@ -190,7 +197,7 @@ export function ListEditor<T>({
       <div className={styles.header}>
         <button
           type="button"
-          className={styles.toggle}
+          className={classNames(foldoutHeader.header, styles.toggle)}
           aria-expanded={expanded}
           aria-controls={foldout.contentId}
           disabled={disabled}
@@ -198,7 +205,7 @@ export function ListEditor<T>({
           onKeyDown={foldout.handleKeyDown}
         >
           <FoldoutChevron expanded={expanded} />
-          <span className={styles.label}>{label}</span>
+          <span className={foldoutHeader.label}>{label}</span>
         </button>
         <NumberField
           className={styles.size}
@@ -211,7 +218,7 @@ export function ListEditor<T>({
           invalidMessages={labels.sizeMessages}
           onValueChange={(size, phase) => {
             if (phase === 'commit' && size !== value.length) {
-              commit(resizeItems(value, size, createItem), null);
+              commit(resizeItems(value, size, createItem, copyItem), null);
             }
           }}
         />
