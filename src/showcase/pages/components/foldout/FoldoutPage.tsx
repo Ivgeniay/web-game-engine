@@ -36,7 +36,8 @@ export function FoldoutPage() {
           <code>aria-controls</code>. Enter and Space toggle it, Right expands and Left collapses;
           with Alt the arrows act on the nested groups too. <code>disabled</code>, <code>ref</code>{' '}
           and other button attributes go to the header, <code>className</code> goes to the outer box
-          and is meant only for layout. The content is indented by one step.
+          and is meant only for layout. The content is indented by one step and stacks its children
+          in a column with a small gap, so captions and rows inside need no layout of their own.
         </p>
       </PageSection>
     </>

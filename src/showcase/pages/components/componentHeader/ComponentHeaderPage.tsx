@@ -34,7 +34,8 @@ export function ComponentHeaderPage() {
         <p>
           The header does not know what the menu holds. An integration builds the items, for example
           from the context menu registry of the editor. Clicks on the checkbox and the buttons do
-          not collapse the section.
+          not collapse the section. The body stacks its children in a column with a small gap, like
+          the content of a <code>Foldout</code>.
         </p>
         <ExampleBlock
           sources={[
