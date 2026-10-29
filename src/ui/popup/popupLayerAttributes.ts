@@ -9,3 +9,7 @@ export const POPUP_BLOCKS_TOOLTIPS_PROPS: Readonly<Record<string, string>> = {
 export function isTooltipBlocked(root: ParentNode): boolean {
   return root.querySelector(`[${POPUP_BLOCKS_TOOLTIPS_ATTRIBUTE}]`) !== null;
 }
+
+export function isInsidePopupLayer(element: Element | null): boolean {
+  return (element?.closest(`#${POPUP_LAYER_ID}`) ?? null) !== null;
+}

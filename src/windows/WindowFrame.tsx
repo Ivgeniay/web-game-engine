@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import type { ReactNode } from 'react';
 import { hotkeyScopeProps } from '@/core/hotkeys/hotkeyScope';
 import { useEditorRegistries } from '@/state/registries/registriesContext';
+import { isInsidePopupLayer } from '@/ui/popup/popupLayerAttributes';
 import styles from './WindowFrame.module.css';
 
 interface WindowFrameProps {
@@ -24,7 +25,9 @@ export function WindowFrame({ windowId, windowType, onActivate, children }: Wind
         return;
       }
 
-      if (frame.contains(frame.ownerDocument.activeElement)) {
+      const active = frame.ownerDocument.activeElement;
+
+      if (frame.contains(active) || isInsidePopupLayer(active)) {
         return;
       }
 

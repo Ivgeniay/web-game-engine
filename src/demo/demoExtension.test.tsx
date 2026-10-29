@@ -248,7 +248,6 @@ describe('demo integration', () => {
     const { stores } = await renderDemo();
 
     await user.click(object('Directional Light'));
-    await user.click(screen.getByRole('textbox', { name: 'Name' }));
     await user.click(screen.getByRole('button', { name: 'Light menu' }));
     await user.click(await screen.findByRole('menuitem', { name: 'Reset' }));
 
