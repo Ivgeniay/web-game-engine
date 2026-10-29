@@ -22,7 +22,7 @@ export const toolbarStatusBarPageMessages = defineDocMessages({
       'The game extension registers Play, Pause and Step in the main menu and in the toolbar, a resolution list in the toolbar and two status bar items. The mock engine calls `commands.refresh()` on every change, so the menu item and the toolbar button of a command are disabled together: Pause is available only while the game is playing, Step only while it is paused. Switch the language: the labels change at once.',
     editorFrameTitle: 'The editor frame',
     editorFrameText:
-      '`EditorFrame` from `@/shell/EditorFrame` puts the parts together: the menu bar and the toolbar at the top, the status bar at the bottom and the workspace between them, where docking will go. It also hosts the confirm dialogs. The framework registers nothing by itself, so in the editor the menu and the toolbar stay empty until an integration fills them.',
+      '`EditorFrame` from `@/shell/EditorFrame` puts the parts together: the menu bar and the toolbar at the top, the status bar at the bottom and the workspace between them, where `DockLayout` shows the windows. It also hosts the confirm dialogs. The framework registers nothing by itself, so in the editor the menu and the toolbar stay empty until an integration fills them.',
   },
   ru: {
     pageTitle: 'Панель инструментов и строка состояния',
@@ -45,6 +45,6 @@ export const toolbarStatusBarPageMessages = defineDocMessages({
       'Игровое расширение регистрирует Play, Pause и Step в главном меню и на панели инструментов, список разрешений на панели и два элемента строки состояния. Мок-движок вызывает `commands.refresh()` при каждом изменении, поэтому пункт меню и кнопка панели одной команды гаснут одновременно: Pause доступна, только пока игра идёт, Step — только пока она на паузе. Переключите язык: подписи сразу меняются.',
     editorFrameTitle: 'Каркас страницы редактора',
     editorFrameText:
-      '`EditorFrame` из `@/shell/EditorFrame` собирает части вместе: главное меню и панель инструментов сверху, строку состояния снизу и рабочую область между ними, куда встанет докинг. Ещё он показывает диалоги подтверждения. Каркас сам ничего не регистрирует, поэтому в редакторе меню и панель инструментов пусты, пока их не наполнит интеграция.',
+      '`EditorFrame` из `@/shell/EditorFrame` собирает части вместе: главное меню и панель инструментов сверху, строку состояния снизу и рабочую область между ними, где `DockLayout` показывает окна. Ещё он показывает диалоги подтверждения. Каркас сам ничего не регистрирует, поэтому в редакторе меню и панель инструментов пусты, пока их не наполнит интеграция.',
   },
 });
