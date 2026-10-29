@@ -1,0 +1,43 @@
+.root {
+  position: relative;
+  min-height: 0;
+  overflow: auto;
+  outline: none;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-md);
+  user-select: none;
+}
+
+.rows {
+  position: relative;
+}
+
+.row {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  height: var(--size-list-row-height);
+  padding: 0 var(--space-8) 0 var(--space-4);
+  cursor: default;
+}
+
+.row:hover:not([aria-selected='true']) {
+  background-color: var(--color-overlay-hover);
+}
+
+.row[aria-selected='true'] {
+  background-color: var(--color-bg-selection-inactive);
+}
+
+.root:focus-within .row[aria-selected='true'] {
+  background-color: var(--color-bg-selection);
+}
+
+.root:focus-visible .row[data-focused] {
+  outline: var(--size-border-width) solid var(--color-border-focus);
+  outline-offset: calc(-1 * var(--size-border-width));
+}

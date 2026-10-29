@@ -8,6 +8,7 @@ import { MenuPage } from '@/showcase/pages/components/menu/MenuPage';
 import { NumberFieldPage } from '@/showcase/pages/components/numberField/NumberFieldPage';
 import { PopoverPage } from '@/showcase/pages/components/popover/PopoverPage';
 import { PopupLayerPage } from '@/showcase/pages/components/popupLayer/PopupLayerPage';
+import { ListViewPage } from '@/showcase/pages/components/listView/ListViewPage';
 import { PropertyRowPage } from '@/showcase/pages/components/propertyRow/PropertyRowPage';
 import { RadioGroupPage } from '@/showcase/pages/components/radioGroup/RadioGroupPage';
 import { RovingFocusPage } from '@/showcase/pages/components/rovingFocus/RovingFocusPage';
@@ -222,6 +223,13 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     title: 'VectorField',
     description: 'Several numbers in one row with draggable axis captions.',
     component: VectorFieldPage,
+  },
+  {
+    id: 'components/list-view',
+    section: 'components',
+    title: 'ListView',
+    description: 'A fast list of rows with a single or multiple selection and keyboard moves.',
+    component: ListViewPage,
   },
   {
     id: 'components/toolbar',

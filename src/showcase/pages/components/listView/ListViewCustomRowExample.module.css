@@ -1,0 +1,12 @@
+.list {
+  width: var(--showcase-inspector-width);
+  height: var(--showcase-list-height);
+  border: var(--size-border-width) solid var(--color-border-control);
+  background-color: var(--color-bg-panel);
+}
+
+.time {
+  flex: none;
+  margin-left: var(--space-8);
+  color: var(--color-text-secondary);
+}
