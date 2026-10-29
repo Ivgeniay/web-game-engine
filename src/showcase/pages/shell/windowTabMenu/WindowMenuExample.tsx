@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { EditorExtension } from '@/contracts/editorExtension';
+import type { EditorExtension } from '@/state/registries/editorExtension';
 import { commonMessages } from '@/core/i18n/commonMessages';
 import { defineMessages } from '@/core/i18n/messages';
 import { messageRef } from '@/core/i18n/translate';

@@ -4,7 +4,7 @@ import { buildMenuTree } from '@/core/menus/menuTree';
 import { useTranslate } from '@/state/language/useTranslate';
 import { useFormatShortcut } from '@/state/platform/useFormatShortcut';
 import { useEditorRegistries } from '@/state/registries/registriesContext';
-import type { MenuItem } from '@/ui/menu/menuItems';
+import type { MenuItem } from '@/contracts/menu';
 import { menuItemsFromTree } from './menuItemsFromTree';
 
 export function useContextMenuItems<TTarget>(

@@ -11,7 +11,7 @@ import { classNames } from '@/ui/classNames';
 import { Icon } from '@/ui/icon/Icon';
 import { Menu } from '@/ui/menu/Menu';
 import type { MenuTriggerProps } from '@/ui/menu/Menu';
-import type { MenuItem } from '@/ui/menu/menuItems';
+import type { MenuItem } from '@/contracts/menu';
 import { useRovingFocusItem } from '@/ui/rovingFocus/useRovingFocusItem';
 import { useMergedRefs } from '@/ui/useMergedRefs';
 import styles from './FlagsField.module.css';

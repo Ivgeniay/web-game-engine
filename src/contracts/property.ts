@@ -1,7 +1,7 @@
 import type { MessageRef } from '@/core/i18n/translate';
-import type { PropertyRowSlots } from '@/ui/propertyRow/PropertyRow';
 import type { Color } from './color';
 import type { Bounds, Rect } from './geometry';
+import type { MenuItem } from './menu';
 import type { ValueChangeHandler, ValueChangePhase } from './valueChange';
 
 export const PROPERTY_NUMBER_KINDS = ['integer', 'float'] as const;
@@ -155,6 +155,17 @@ export type PropertyDescription =
   | ListProperty;
 
 export type PropertyValueType = PropertyDescription['type'];
+
+export interface PropertyRowReset {
+  readonly label: string;
+  readonly onReset: () => void;
+}
+
+export interface PropertyRowSlots {
+  readonly modified?: boolean | undefined;
+  readonly reset?: PropertyRowReset | undefined;
+  readonly menuItems?: readonly MenuItem[] | undefined;
+}
 
 export type TargetsChange<T> = (own: T) => T;
 

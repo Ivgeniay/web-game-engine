@@ -3,7 +3,7 @@ import { userEvent } from '@testing-library/user-event';
 import { useState } from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { ValueChangeHandler } from '@/contracts/valueChange';
-import type { MenuItem } from '@/ui/menu/menuItems';
+import type { MenuItem } from '@/contracts/menu';
 import { NumberField } from '@/ui/numberField/NumberField';
 import type { NumberKind } from '@/ui/numberField/numberText';
 import { TextField } from '@/ui/textField/TextField';

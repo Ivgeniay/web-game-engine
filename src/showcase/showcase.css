@@ -9,4 +9,8 @@
   --showcase-field-width: 200px;
   --showcase-inspector-width: 320px;
   --showcase-list-height: 200px;
+  --showcase-grid-width: 480px;
+  --showcase-grid-height: 280px;
+  --showcase-scale-width: 120px;
+  --showcase-thumbnail-size: 64px;
 }

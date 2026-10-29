@@ -7,7 +7,7 @@ import headerStyles from '@/ui/foldout/foldoutHeader.module.css';
 import { useFoldout } from '@/ui/foldout/useFoldout';
 import { IconButton } from '@/ui/iconButton/IconButton';
 import { Menu } from '@/ui/menu/Menu';
-import type { MenuItem } from '@/ui/menu/menuItems';
+import type { MenuItem } from '@/contracts/menu';
 import { useRovingFocusItem } from '@/ui/rovingFocus/useRovingFocusItem';
 import styles from './SectionHeader.module.css';
 

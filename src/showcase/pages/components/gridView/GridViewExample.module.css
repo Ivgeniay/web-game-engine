@@ -1,0 +1,18 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-8);
+  width: var(--showcase-grid-width);
+}
+
+.grid {
+  align-self: stretch;
+  height: var(--showcase-grid-height);
+  border: var(--size-border-width) solid var(--color-border-control);
+  background-color: var(--color-bg-panel);
+}
+
+.scale {
+  width: var(--showcase-scale-width);
+}

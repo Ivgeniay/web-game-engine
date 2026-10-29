@@ -11,7 +11,8 @@ import { useFoldout } from '@/ui/foldout/useFoldout';
 import { Icon } from '@/ui/icon/Icon';
 import { IconButton } from '@/ui/iconButton/IconButton';
 import { Menu } from '@/ui/menu/Menu';
-import type { MenuItem, MenuPoint } from '@/ui/menu/menuItems';
+import type { MenuItem } from '@/contracts/menu';
+import type { MenuPoint } from '@/ui/menu/menuItems';
 import { useRovingFocusItem } from '@/ui/rovingFocus/useRovingFocusItem';
 import styles from './ComponentHeader.module.css';
 

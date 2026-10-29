@@ -301,4 +301,30 @@ describe('Slider', () => {
     expect(onValueChange).not.toHaveBeenCalled();
     expect(thumb()?.getAttribute('style')).toContain('left: 0%');
   });
+
+  it('shows only the track without the number field', async () => {
+    const user = userEvent.setup();
+    const onValueChange = vi.fn();
+    render(
+      <Slider
+        aria-label={LABEL}
+        id="scale"
+        value={5}
+        min={0}
+        max={10}
+        step={1}
+        showField={false}
+        onValueChange={onValueChange}
+      />,
+    );
+    const slider = screen.getByRole('slider', { name: LABEL });
+
+    expect(screen.queryByRole('spinbutton')).toBeNull();
+    expect(slider.id).toBe('scale');
+
+    slider.focus();
+    await user.keyboard('{ArrowRight}');
+
+    expect(onValueChange).toHaveBeenLastCalledWith(6, 'commit');
+  });
 });

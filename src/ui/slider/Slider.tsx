@@ -26,7 +26,6 @@ interface SliderBaseProps {
   readonly kind?: NumberKind;
   readonly step?: number | undefined;
   readonly precision?: number | undefined;
-  readonly invalidMessages: NumberFieldMessages;
   readonly updateMode?: TextFieldUpdateMode | undefined;
   readonly mixed?: boolean | undefined;
   readonly disabled?: boolean | undefined;
@@ -48,7 +47,19 @@ interface SliderAriaLabelledBy {
   readonly 'aria-labelledby': string;
 }
 
-type SliderProps = SliderBaseProps & (SliderAriaLabel | SliderAriaLabelledBy);
+interface SliderWithField {
+  readonly showField?: true | undefined;
+  readonly invalidMessages: NumberFieldMessages;
+}
+
+interface SliderWithoutField {
+  readonly showField: false;
+  readonly invalidMessages?: never;
+}
+
+type SliderProps = SliderBaseProps &
+  (SliderWithField | SliderWithoutField) &
+  (SliderAriaLabel | SliderAriaLabelledBy);
 
 const DEFAULT_PRECISION = 3;
 const PERCENT = 100;
@@ -62,6 +73,7 @@ export function Slider({
   kind = 'float',
   step = DEFAULT_STEP[kind],
   precision = DEFAULT_PRECISION,
+  showField = true,
   invalidMessages,
   updateMode,
   mixed = false,
@@ -145,6 +157,7 @@ export function Slider({
       <div
         {...rovingProps}
         role="slider"
+        id={showField ? undefined : id}
         className={classNames(styles.track, styles[size])}
         aria-label={ariaLabel}
         aria-labelledby={ariaLabelledBy}
@@ -167,25 +180,27 @@ export function Slider({
           )}
         </span>
       </div>
-      <NumberField
-        id={id}
-        className={styles.field}
-        aria-label={ariaLabel}
-        aria-labelledby={ariaLabelledBy}
-        value={value}
-        onValueChange={onValueChange}
-        kind={kind}
-        min={min}
-        max={max}
-        step={step}
-        precision={precision}
-        invalidMessages={invalidMessages}
-        updateMode={updateMode}
-        mixed={mixed}
-        disabled={disabled}
-        readOnly={readOnly}
-        size={size}
-      />
+      {showField && invalidMessages !== undefined && (
+        <NumberField
+          id={id}
+          className={styles.field}
+          aria-label={ariaLabel}
+          aria-labelledby={ariaLabelledBy}
+          value={value}
+          onValueChange={onValueChange}
+          kind={kind}
+          min={min}
+          max={max}
+          step={step}
+          precision={precision}
+          invalidMessages={invalidMessages}
+          updateMode={updateMode}
+          mixed={mixed}
+          disabled={disabled}
+          readOnly={readOnly}
+          size={size}
+        />
+      )}
     </div>
   );
 }

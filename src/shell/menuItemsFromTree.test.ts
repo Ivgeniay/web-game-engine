@@ -9,7 +9,7 @@ import { messageRef, translateRef } from '@/core/i18n/translate';
 import { createMainMenuRegistry } from '@/core/menus/mainMenuRegistry';
 import type { MainMenuRegistry } from '@/core/menus/mainMenuRegistry';
 import { buildMenuTree } from '@/core/menus/menuTree';
-import type { MenuItem } from '@/ui/menu/menuItems';
+import type { MenuItem } from '@/contracts/menu';
 import { hasVisibleItems, menuItemsFromTree } from './menuItemsFromTree';
 
 const messages = defineMessages({

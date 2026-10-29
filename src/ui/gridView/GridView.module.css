@@ -1,0 +1,47 @@
+.cell {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  box-sizing: border-box;
+  padding: var(--size-list-cell-padding);
+  border-radius: var(--radius-sm);
+  cursor: default;
+}
+
+.thumbnail {
+  flex: 1 1 auto;
+  border-radius: var(--radius-sm);
+}
+
+.label {
+  flex: none;
+  height: var(--size-list-row-height);
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+  line-height: var(--size-list-row-height);
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cell:hover:not([aria-selected='true']) .thumbnail {
+  background-color: var(--color-overlay-hover);
+}
+
+.cell[aria-selected='true'] .thumbnail,
+.cell[aria-selected='true'] .label {
+  background-color: var(--color-bg-selection-inactive);
+}
+
+.root:focus-within .cell[aria-selected='true'] .thumbnail,
+.root:focus-within .cell[aria-selected='true'] .label {
+  background-color: var(--color-bg-selection);
+}
+
+.root:focus-visible .cell[data-focused] {
+  outline: var(--size-border-width) solid var(--color-border-focus);
+  outline-offset: calc(-1 * var(--size-border-width));
+}

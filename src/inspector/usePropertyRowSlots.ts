@@ -1,12 +1,11 @@
 import { useMemo } from 'react';
-import type { PropertyCommon, PropertyDescription } from '@/contracts/property';
+import type { PropertyCommon, PropertyDescription, PropertyRowSlots } from '@/contracts/property';
 import type { ValueChangeHandler } from '@/contracts/valueChange';
 import { commonMessages } from '@/core/i18n/commonMessages';
 import { frameworkIcons } from '@/icons/frameworkIcons';
 import { useContextMenuItems } from '@/shell/useContextMenuItems';
 import { useMessages } from '@/state/language/useMessages';
-import type { MenuItem } from '@/ui/menu/menuItems';
-import type { PropertyRowSlots } from '@/ui/propertyRow/PropertyRow';
+import type { MenuItem } from '@/contracts/menu';
 import { inspectorPropertyMenu } from './inspectorMenus';
 import { inspectorMessages } from './inspectorMessages';
 

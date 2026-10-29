@@ -11,16 +11,24 @@ import type {
 } from 'react';
 import { useRovingFocusItem } from '@/ui/rovingFocus/useRovingFocusItem';
 import { useMergedRefs } from '@/ui/useMergedRefs';
-import { useVirtualRows } from '@/ui/virtualList/useVirtualRows';
+import { useElementWidth, useVirtualRows } from '@/ui/virtualList/useVirtualRows';
 import type { VirtualRows } from '@/ui/virtualList/useVirtualRows';
+import type { VirtualRange } from '@/ui/virtualList/virtualRange';
+import { gridNavigationIndex, isGridNavigationKey } from './listNavigation';
 import { useListInteraction } from './useListInteraction';
 import type { ListInteraction, ListInteractionOptions } from './useListInteraction';
+
+export interface ListBoxGrid {
+  readonly cellWidth: number;
+  readonly rowHeight: number;
+}
 
 export interface ListBoxOptions extends Omit<
   ListInteractionOptions,
   'pageRowCount' | 'revealIndex'
 > {
   readonly ref: Ref<HTMLDivElement> | undefined;
+  readonly grid?: ListBoxGrid | undefined;
   readonly handleOwnKey?:
     ((event: KeyboardEvent<HTMLElement>, interaction: ListInteraction) => boolean) | undefined;
 }
@@ -48,6 +56,7 @@ export interface ListBoxRowProps {
 export interface ListBox {
   readonly interaction: ListInteraction;
   readonly virtualRows: VirtualRows;
+  readonly columns: number;
   readonly renderedIndexes: readonly number[];
   readonly containerProps: ListBoxContainerProps;
   readonly rowsStyle: CSSProperties;
@@ -55,13 +64,22 @@ export interface ListBox {
 }
 
 const LIST_ROW_SELECTOR = '[data-list-row]';
+const SINGLE_COLUMN = 1;
 
 function isBackground(event: MouseEvent<HTMLElement>): boolean {
   return event.target instanceof Element && event.target.closest(LIST_ROW_SELECTOR) === null;
 }
 
+function countColumns(width: number, grid: ListBoxGrid | undefined): number {
+  if (grid === undefined || grid.cellWidth <= 0) {
+    return SINGLE_COLUMN;
+  }
+
+  return Math.max(SINGLE_COLUMN, Math.floor(width / grid.cellWidth));
+}
+
 function collectRenderedIndexes(
-  { start, end }: VirtualRows,
+  { start, end }: VirtualRange,
   focusedIndex: number,
 ): readonly number[] {
   const indexes = Array.from({ length: end - start }, (_, offset) => start + offset);
@@ -70,14 +88,24 @@ function collectRenderedIndexes(
   return focusedOutside ? [...indexes, focusedIndex] : indexes;
 }
 
-export function useListBox({ ref, handleOwnKey, ...interactionOptions }: ListBoxOptions): ListBox {
+export function useListBox({
+  ref,
+  grid,
+  handleOwnKey,
+  ...interactionOptions
+}: ListBoxOptions): ListBox {
   const baseId = useId();
   const [element, setElement] = useState<HTMLDivElement | null>(null);
-  const virtualRows = useVirtualRows(element, interactionOptions.itemIds.length);
+  const width = useElementWidth(element);
+  const columns = countColumns(width, grid);
+  const itemCount = interactionOptions.itemIds.length;
+  const virtualRows = useVirtualRows(element, Math.ceil(itemCount / columns), grid?.rowHeight);
   const interaction = useListInteraction({
     ...interactionOptions,
-    pageRowCount: virtualRows.pageRowCount,
-    revealIndex: virtualRows.revealIndex,
+    pageRowCount: virtualRows.pageRowCount * columns,
+    revealIndex: (index) => {
+      virtualRows.revealIndex(Math.floor(index / columns));
+    },
   });
   const roving = useRovingFocusItem<HTMLDivElement>({
     ref: useMergedRefs(ref, setElement),
@@ -97,17 +125,50 @@ export function useListBox({ ref, handleOwnKey, ...interactionOptions }: ListBox
     return `${baseId}-row-${String(index)}`;
   }
 
+  function handleGridKey(event: KeyboardEvent<HTMLElement>): boolean {
+    if (grid === undefined || event.altKey || !isGridNavigationKey(event.key)) {
+      return false;
+    }
+
+    event.preventDefault();
+    interaction.navigateTo(event, gridNavigationIndex(event.key, focusedIndex, itemCount, columns));
+
+    return true;
+  }
+
+  function rowStyle(index: number): CSSProperties {
+    if (grid === undefined) {
+      return { transform: `translateY(${String(index * virtualRows.rowHeight)}px)` };
+    }
+
+    const column = index % columns;
+    const row = Math.floor(index / columns);
+
+    return {
+      width: grid.cellWidth,
+      height: grid.rowHeight,
+      transform: `translate(${String(column * grid.cellWidth)}px, ${String(row * grid.rowHeight)}px)`,
+    };
+  }
+
   return {
     interaction,
     virtualRows,
-    renderedIndexes: collectRenderedIndexes(virtualRows, focusedIndex),
+    columns,
+    renderedIndexes: collectRenderedIndexes(
+      {
+        start: virtualRows.start * columns,
+        end: Math.min(virtualRows.end * columns, itemCount),
+      },
+      focusedIndex,
+    ),
     containerProps: {
       ...roving,
       onKeyDown: (event) => {
         if (event.target !== event.currentTarget) {
           return;
         }
-        if (handleOwnKey?.(event, interaction) !== true) {
+        if (handleOwnKey?.(event, interaction) !== true && !handleGridKey(event)) {
           interaction.handleKeyDown(event);
         }
       },
@@ -125,7 +186,7 @@ export function useListBox({ ref, handleOwnKey, ...interactionOptions }: ListBox
       'aria-selected': selectedSet.has(id),
       'data-focused': index === focusedIndex || undefined,
       'data-list-row': '',
-      style: { transform: `translateY(${String(index * virtualRows.rowHeight)}px)` },
+      style: rowStyle(index),
       onClick: (event) => {
         interaction.handleRowClick(id, event);
       },

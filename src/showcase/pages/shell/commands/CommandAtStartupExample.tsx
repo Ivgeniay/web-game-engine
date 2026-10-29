@@ -3,7 +3,7 @@ import { defineCommand } from '@/core/commands/command';
 import type { CommandDefinition, CommandInvocation } from '@/core/commands/command';
 import { defineMessages } from '@/core/i18n/messages';
 import { messageRef } from '@/core/i18n/translate';
-import type { EditorExtension } from '@/contracts/editorExtension';
+import type { EditorExtension } from '@/state/registries/editorExtension';
 import { frameworkIcons } from '@/icons/frameworkIcons';
 import { useMessages } from '@/state/language/useMessages';
 import { useTranslate } from '@/state/language/useTranslate';

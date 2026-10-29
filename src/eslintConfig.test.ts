@@ -14,6 +14,7 @@ const SHELL_FILE = 'src/shell/EditorFrame.tsx';
 const DEMO_FILE = 'src/demo/demoExtension.ts';
 const SHARED_TEST_FILE = 'src/shared/developmentError.test.ts';
 const INSPECTOR_FILE = 'src/inspector/PropertyField.tsx';
+const CONTRACTS_FILE = 'src/contracts/property.ts';
 
 interface ForbiddenCase {
   readonly name: string;
@@ -206,6 +207,30 @@ const FORBIDDEN_CASES: readonly ForbiddenCase[] = [
     ruleId: 'no-restricted-imports',
   },
   {
+    name: 'a contract importing a type from ui',
+    filePath: CONTRACTS_FILE,
+    code: "import type { MenuPoint } from '@/ui/menu/menuItems';\nexport type Value = MenuPoint;\n",
+    ruleId: '@typescript-eslint/no-restricted-imports',
+  },
+  {
+    name: 'a contract importing a type from state',
+    filePath: CONTRACTS_FILE,
+    code: "import type { EditorRegistries } from '@/state/registries/editorRegistries';\nexport type Value = EditorRegistries;\n",
+    ruleId: '@typescript-eslint/no-restricted-imports',
+  },
+  {
+    name: 'a contract importing a value from core',
+    filePath: CONTRACTS_FILE,
+    code: "import { messageRef } from '@/core/i18n/translate';\nexport const value = messageRef;\n",
+    ruleId: '@typescript-eslint/no-restricted-imports',
+  },
+  {
+    name: 'a contract importing a value from icons',
+    filePath: CONTRACTS_FILE,
+    code: "import { frameworkIcons } from '@/icons/frameworkIcons';\nexport const value = frameworkIcons;\n",
+    ruleId: '@typescript-eslint/no-restricted-imports',
+  },
+  {
     name: 'a core test importing ui',
     filePath: CORE_TEST_FILE,
     code: "import { POPUP_LAYER_ID } from '@/ui/popup/popupLayerAttributes';\nexport const value = POPUP_LAYER_ID;\n",
@@ -301,6 +326,11 @@ const ALLOWED_CASES: readonly AllowedCase[] = [
     name: 'the inspector importing ui, state and core',
     filePath: INSPECTOR_FILE,
     code: "import { classNames } from '@/ui/classNames';\nimport { useTranslate } from '@/state/language/useTranslate';\nimport { samePropertyValue } from '@/core/inspector/propertyValue';\nexport const value = [classNames, useTranslate, samePropertyValue];\n",
+  },
+  {
+    name: 'a contract importing types from core, icons and other contracts',
+    filePath: CONTRACTS_FILE,
+    code: "import type { MessageRef } from '@/core/i18n/translate';\nimport type { IconSource } from '@/icons/icon';\nimport type { Color } from './color';\nexport type Value = [MessageRef, IconSource, Color];\n",
   },
   {
     name: 'props that end with Label and get their text from a parameter',

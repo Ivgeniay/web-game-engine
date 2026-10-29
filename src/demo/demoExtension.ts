@@ -1,4 +1,4 @@
-import type { EditorExtension } from '@/contracts/editorExtension';
+import type { EditorExtension } from '@/state/registries/editorExtension';
 import { combineUnsubscribes } from '@/core/unsubscribe';
 import { unityLayout } from './defaultLayout';
 import { registerDemoMenus } from './demoMenus';

@@ -1,4 +1,4 @@
-import type { MenuCheckedState } from '@/ui/menu/menuItems';
+import type { MenuCheckedState } from '@/contracts/menu';
 
 export interface FlagOption<T extends string> {
   readonly value: T;

@@ -1,0 +1,19 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-8);
+}
+
+.row {
+  display: flex;
+  gap: var(--space-8);
+}
+
+.thumbnail {
+  width: var(--showcase-thumbnail-size);
+  height: var(--showcase-thumbnail-size);
+  border: var(--size-border-width) solid var(--color-border-control);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-bg-field);
+}

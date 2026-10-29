@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { frameworkIcons } from '@/icons/frameworkIcons';
 import { ComponentHeader } from '@/ui/componentHeader/ComponentHeader';
 import { Label } from '@/ui/label/Label';
-import type { MenuItem } from '@/ui/menu/menuItems';
+import type { MenuItem } from '@/contracts/menu';
 import styles from './ComponentHeaderExample.module.css';
 
 const TITLE = 'Light';

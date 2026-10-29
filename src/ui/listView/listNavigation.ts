@@ -106,3 +106,43 @@ export function findTypeaheadMatch(
 
   return NOT_FOUND;
 }
+
+export const GRID_NAVIGATION_KEYS = ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'] as const;
+
+export type GridNavigationKey = (typeof GRID_NAVIGATION_KEYS)[number];
+
+export function isGridNavigationKey(key: string): key is GridNavigationKey {
+  return GRID_NAVIGATION_KEYS.some((navigationKey) => navigationKey === key);
+}
+
+export function gridNavigationIndex(
+  key: GridNavigationKey,
+  currentIndex: number,
+  itemCount: number,
+  columns: number,
+): number {
+  const lastIndex = itemCount - 1;
+
+  if (currentIndex === NOT_FOUND) {
+    return 0;
+  }
+
+  switch (key) {
+    case 'ArrowLeft':
+      return Math.max(0, currentIndex - 1);
+    case 'ArrowRight':
+      return Math.min(lastIndex, currentIndex + 1);
+    case 'ArrowUp':
+      return currentIndex - columns >= 0 ? currentIndex - columns : currentIndex;
+    case 'ArrowDown': {
+      const below = currentIndex + columns;
+      const lastRow = Math.floor(lastIndex / columns);
+
+      if (below <= lastIndex) {
+        return below;
+      }
+
+      return Math.floor(currentIndex / columns) < lastRow ? lastIndex : currentIndex;
+    }
+  }
+}

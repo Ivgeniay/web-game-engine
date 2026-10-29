@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { frameworkIcons } from '@/icons/frameworkIcons';
 import { Label } from '@/ui/label/Label';
-import type { MenuItem } from '@/ui/menu/menuItems';
+import type { MenuItem } from '@/contracts/menu';
 import { SplitButton } from '@/ui/splitButton/SplitButton';
 import styles from './SplitButtonExample.module.css';
 

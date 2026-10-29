@@ -78,6 +78,18 @@ const inspectorImportPattern = {
   message: 'The inspector mechanism builds on ui, state and contracts; they do not import it.',
 };
 
+const contractsLayerPattern = {
+  regex: '^@/(ui|state|shell|layout|windows|inspector)(/|$)',
+  message:
+    'contracts does not depend on ui, state, shell, layout, windows and inspector. Move the type into src/contracts.',
+};
+
+const contractsTypeOnlyPattern = {
+  regex: '^@/(core|icons)(/|$)',
+  allowTypeImports: true,
+  message: 'contracts imports only types from core and icons: use import type.',
+};
+
 const coreImportPatterns = [
   {
     regex: '^@/(ui|state|shell|inspector)(/|$)',
@@ -191,7 +203,24 @@ export default defineConfig([
     },
   },
   {
-    files: ['src/{ui,state,contracts}/**/*.{ts,tsx}'],
+    files: ['src/contracts/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': 'off',
+      '@typescript-eslint/no-restricted-imports': [
+        'error',
+        {
+          patterns: [
+            parentPathImportPattern,
+            integrationImportPattern,
+            contractsLayerPattern,
+            contractsTypeOnlyPattern,
+          ],
+        },
+      ],
+    },
+  },
+  {
+    files: ['src/{ui,state}/**/*.{ts,tsx}'],
     rules: {
       'no-restricted-imports': [
         'error',

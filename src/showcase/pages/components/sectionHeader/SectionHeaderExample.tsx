@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { frameworkIcons } from '@/icons/frameworkIcons';
 import { useNumberFieldMessages } from '@/state/fields/useNumberFieldMessages';
 import { Checkbox } from '@/ui/checkbox/Checkbox';
-import type { MenuItem } from '@/ui/menu/menuItems';
+import type { MenuItem } from '@/contracts/menu';
 import { NumberField } from '@/ui/numberField/NumberField';
 import { PropertyRow } from '@/ui/propertyRow/PropertyRow';
 import { PropertyRowGroup } from '@/ui/propertyRow/PropertyRowGroup';

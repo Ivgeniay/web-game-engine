@@ -2,7 +2,8 @@ import { FloatingNode, FloatingTree, useFloatingParentNodeId } from '@floating-u
 import type { ReferenceType, VirtualElement } from '@floating-ui/react';
 import { useCallback, useMemo, useRef, useState } from 'react';
 import type { KeyboardEvent, ReactNode, RefObject } from 'react';
-import type { MenuItem, MenuNavigationDirection, MenuPoint } from './menuItems';
+import type { MenuItem } from '@/contracts/menu';
+import type { MenuNavigationDirection, MenuPoint } from './menuItems';
 import { MenuList } from './MenuList';
 import { useMenuLevel } from './useMenuLevel';
 

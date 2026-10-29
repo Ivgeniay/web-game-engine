@@ -5,7 +5,7 @@ import { POPUP_BLOCKS_TOOLTIPS_PROPS } from '@/ui/popup/popupLayerAttributes';
 import { PopupPortal } from '@/ui/popup/PopupPortal';
 import popupSurface from '@/ui/popup/popupSurface.module.css';
 import styles from './Menu.module.css';
-import type { MenuItem } from './menuItems';
+import type { MenuItem } from '@/contracts/menu';
 import { MenuItemView } from './MenuItemView';
 import { MenuLevelContext } from './menuLevelContext';
 import type { MenuLevel, MenuListRefs } from './useMenuLevel';

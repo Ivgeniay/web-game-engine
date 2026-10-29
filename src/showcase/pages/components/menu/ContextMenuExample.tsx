@@ -2,7 +2,8 @@ import { useState } from 'react';
 import { frameworkIcons } from '@/icons/frameworkIcons';
 import { Label } from '@/ui/label/Label';
 import { Menu } from '@/ui/menu/Menu';
-import type { MenuItem, MenuPoint } from '@/ui/menu/menuItems';
+import type { MenuItem } from '@/contracts/menu';
+import type { MenuPoint } from '@/ui/menu/menuItems';
 import styles from './ContextMenuExample.module.css';
 
 const MENU_LABEL = 'Scene object';

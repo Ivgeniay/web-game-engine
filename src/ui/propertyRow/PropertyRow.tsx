@@ -1,11 +1,12 @@
 import { useId, useState } from 'react';
 import type { KeyboardEvent, MouseEvent, ReactNode } from 'react';
+import type { PropertyRowSlots } from '@/contracts/property';
 import { frameworkIcons } from '@/icons/frameworkIcons';
 import { classNames } from '@/ui/classNames';
 import { IconButton } from '@/ui/iconButton/IconButton';
 import { Label } from '@/ui/label/Label';
 import { Menu } from '@/ui/menu/Menu';
-import type { MenuItem, MenuPoint } from '@/ui/menu/menuItems';
+import type { MenuPoint } from '@/ui/menu/menuItems';
 import { isTextEntry } from '@/ui/textEntry';
 import { useValueDrag } from '@/ui/valueDrag/useValueDrag';
 import type { ValueDragTarget } from '@/ui/valueDrag/useValueDrag';
@@ -14,17 +15,6 @@ import styles from './PropertyRow.module.css';
 export interface PropertyFieldProps {
   readonly id: string;
   readonly labelId: string;
-}
-
-export interface PropertyRowReset {
-  readonly label: string;
-  readonly onReset: () => void;
-}
-
-export interface PropertyRowSlots {
-  readonly modified?: boolean | undefined;
-  readonly reset?: PropertyRowReset | undefined;
-  readonly menuItems?: readonly MenuItem[] | undefined;
 }
 
 interface PropertyRowProps extends PropertyRowSlots {

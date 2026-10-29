@@ -5,7 +5,8 @@ import { useTranslate } from '@/state/language/useTranslate';
 import { useFormatShortcut } from '@/state/platform/useFormatShortcut';
 import { useEditorRegistries } from '@/state/registries/registriesContext';
 import { Menu } from '@/ui/menu/Menu';
-import type { MenuItem, MenuPoint } from '@/ui/menu/menuItems';
+import type { MenuItem } from '@/contracts/menu';
+import type { MenuPoint } from '@/ui/menu/menuItems';
 import { menuItemsFromTree } from './menuItemsFromTree';
 
 export interface ContextMenuRequest<TTarget> {

@@ -5,7 +5,7 @@ import { defineCommand } from '@/core/commands/command';
 import { defineMessages } from '@/core/i18n/messages';
 import { messageRef } from '@/core/i18n/translate';
 import { defineContextMenu } from '@/core/menus/contextMenuRegistry';
-import type { MenuItem } from '@/ui/menu/menuItems';
+import type { MenuItem } from '@/contracts/menu';
 import { createTestEditor } from './testEditor';
 import { TestEditorProviders } from './TestEditorProviders';
 import { useContextMenuItems } from './useContextMenuItems';

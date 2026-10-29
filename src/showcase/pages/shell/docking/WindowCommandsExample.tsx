@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { defineCommand } from '@/core/commands/command';
 import type { CommandDefinition } from '@/core/commands/command';
-import type { EditorExtension } from '@/contracts/editorExtension';
+import type { EditorExtension } from '@/state/registries/editorExtension';
 import { startHotkeyController } from '@/core/hotkeys/hotkeyController';
 import { defineMessages } from '@/core/i18n/messages';
 import { messageRef } from '@/core/i18n/translate';

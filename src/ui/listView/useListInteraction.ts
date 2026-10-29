@@ -38,6 +38,7 @@ export interface ListInteraction {
   readonly handleBackgroundClick: () => void;
   readonly handleFocus: () => void;
   readonly moveFocus: (index: number, gesture: SelectionGesture | null) => void;
+  readonly navigateTo: (event: KeyboardEvent<HTMLElement>, index: number) => void;
 }
 
 const SELECT_ALL_LETTER = 'a';
@@ -242,5 +243,6 @@ export function useListInteraction({
     handleBackgroundClick,
     handleFocus,
     moveFocus,
+    navigateTo: handleNavigationKey,
   };
 }

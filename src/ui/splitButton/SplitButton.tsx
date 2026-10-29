@@ -8,7 +8,7 @@ import { classNames } from '@/ui/classNames';
 import { useMergedRefs } from '@/ui/useMergedRefs';
 import { IconButton } from '@/ui/iconButton/IconButton';
 import { Menu } from '@/ui/menu/Menu';
-import type { MenuItem } from '@/ui/menu/menuItems';
+import type { MenuItem } from '@/contracts/menu';
 import styles from './SplitButton.module.css';
 
 interface SplitButtonProps {

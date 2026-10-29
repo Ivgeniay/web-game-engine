@@ -3,7 +3,7 @@ import { useId } from 'react';
 import { frameworkIcons } from '@/icons/frameworkIcons';
 import type { IconSource } from '@/icons/icon';
 import styles from './Menu.module.css';
-import type { MenuCheckedState } from './menuItems';
+import type { MenuCheckedState } from '@/contracts/menu';
 import { MenuRowContent } from './MenuRowContent';
 import { useMenuLevelContext } from './useMenuLevelContext';
 

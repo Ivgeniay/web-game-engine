@@ -29,7 +29,11 @@ import { LabelPage } from '@/showcase/pages/components/label/LabelPage';
 import { labelPageMessages } from '@/showcase/pages/components/label/labelPageMessages';
 import { ListEditorPage } from '@/showcase/pages/components/listEditor/ListEditorPage';
 import { listEditorPageMessages } from '@/showcase/pages/components/listEditor/listEditorPageMessages';
+import { GridViewPage } from '@/showcase/pages/components/gridView/GridViewPage';
+import { gridViewPageMessages } from '@/showcase/pages/components/gridView/gridViewPageMessages';
 import { ListViewPage } from '@/showcase/pages/components/listView/ListViewPage';
+import { ThumbnailPage } from '@/showcase/pages/components/thumbnail/ThumbnailPage';
+import { thumbnailPageMessages } from '@/showcase/pages/components/thumbnail/thumbnailPageMessages';
 import { listViewPageMessages } from '@/showcase/pages/components/listView/listViewPageMessages';
 import { MenuPage } from '@/showcase/pages/components/menu/MenuPage';
 import { menuPageMessages } from '@/showcase/pages/components/menu/menuPageMessages';
@@ -351,6 +355,20 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     title: messageRef(listViewPageMessages, 'pageTitle'),
     description: messageRef(listViewPageMessages, 'pageDescription'),
     component: ListViewPage,
+  },
+  {
+    id: 'components/grid-view',
+    section: 'components',
+    title: messageRef(gridViewPageMessages, 'pageTitle'),
+    description: messageRef(gridViewPageMessages, 'pageDescription'),
+    component: GridViewPage,
+  },
+  {
+    id: 'components/thumbnail',
+    section: 'components',
+    title: messageRef(thumbnailPageMessages, 'pageTitle'),
+    description: messageRef(thumbnailPageMessages, 'pageDescription'),
+    component: ThumbnailPage,
   },
   {
     id: 'components/tree-view',

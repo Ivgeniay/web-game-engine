@@ -1,5 +1,5 @@
 import styles from './Menu.module.css';
-import type { MenuItem } from './menuItems';
+import type { MenuItem } from '@/contracts/menu';
 import { MenuRow } from './MenuRow';
 import { MenuSubmenu } from './MenuSubmenu';
 

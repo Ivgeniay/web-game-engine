@@ -62,6 +62,23 @@ function readRowHeight(element: HTMLElement): number {
   return parsePixels(getComputedStyle(element).getPropertyValue(ROW_HEIGHT_TOKEN));
 }
 
+function readClientWidth(element: HTMLElement): number {
+  return element.clientWidth;
+}
+
+export function useTokenPixels(element: HTMLElement | null, token: string): number {
+  const read = useCallback(
+    (target: HTMLElement) => parsePixels(getComputedStyle(target).getPropertyValue(token)),
+    [token],
+  );
+
+  return useElementMetric(element, read);
+}
+
+export function useElementWidth(element: HTMLElement | null): number {
+  return useElementMetric(element, readClientWidth);
+}
+
 function readScrollTop(element: HTMLElement): number {
   return element.scrollTop;
 }
@@ -70,8 +87,13 @@ function readViewportHeight(element: HTMLElement): number {
   return element.clientHeight;
 }
 
-export function useVirtualRows(element: HTMLElement | null, rowCount: number): VirtualRows {
-  const rowHeight = useElementMetric(element, readRowHeight);
+export function useVirtualRows(
+  element: HTMLElement | null,
+  rowCount: number,
+  fixedRowHeight?: number,
+): VirtualRows {
+  const tokenRowHeight = useElementMetric(element, readRowHeight);
+  const rowHeight = fixedRowHeight ?? tokenRowHeight;
   const scrollTop = useElementMetric(element, readScrollTop);
   const viewportHeight = useElementMetric(element, readViewportHeight);
 

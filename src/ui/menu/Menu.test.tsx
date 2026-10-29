@@ -8,7 +8,8 @@ import { IconButton } from '@/ui/iconButton/IconButton';
 import { POPUP_BLOCKS_TOOLTIPS_ATTRIBUTE } from '@/ui/popup/popupLayerAttributes';
 import { Toolbar } from '@/ui/toolbar/Toolbar';
 import { Menu } from './Menu';
-import type { MenuItem, MenuNavigationDirection, MenuPoint } from './menuItems';
+import type { MenuItem } from '@/contracts/menu';
+import type { MenuNavigationDirection, MenuPoint } from './menuItems';
 
 const MENU_LABEL = 'Edit';
 const TRIGGER_LABEL = 'Open edit menu';

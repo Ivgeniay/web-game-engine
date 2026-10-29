@@ -3,7 +3,7 @@ import { frameworkIcons } from '@/icons/frameworkIcons';
 import { IconButton } from '@/ui/iconButton/IconButton';
 import { Label } from '@/ui/label/Label';
 import { Menu } from '@/ui/menu/Menu';
-import type { MenuActionItem, MenuItem } from '@/ui/menu/menuItems';
+import type { MenuActionItem, MenuItem } from '@/contracts/menu';
 import { Toolbar } from '@/ui/toolbar/Toolbar';
 import styles from './ToolbarMenuExample.module.css';
 

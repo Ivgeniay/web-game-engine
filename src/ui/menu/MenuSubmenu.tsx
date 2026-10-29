@@ -2,7 +2,7 @@ import { FloatingNode, useListItem } from '@floating-ui/react';
 import { useId, useRef, useState } from 'react';
 import { useMergedRefs } from '@/ui/useMergedRefs';
 import styles from './Menu.module.css';
-import type { MenuSubmenuItem } from './menuItems';
+import type { MenuSubmenuItem } from '@/contracts/menu';
 import { MenuList } from './MenuList';
 import { MenuRowContent } from './MenuRowContent';
 import { useMenuLevel } from './useMenuLevel';

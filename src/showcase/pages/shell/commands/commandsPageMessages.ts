@@ -20,7 +20,7 @@ export const commandsPageMessages = defineDocMessages({
     registriesIntegrationText:
       'The registries of the editor are created by `createEditorRegistries` in the entry point and passed down with `RegistriesProvider`, just like the theme and language stores. There are no global registries: a test or an example creates its own isolated set. Components reach the registries with `useEditorRegistries`.',
     registriesIntegrationText2:
-      'An integration connects through one function of the `EditorExtension` type from `@/contracts/editorExtension`. It receives the registries, registers its elements and returns a function that cancels all of them. Every `register` or `handle` call returns its own cancel function; join several with `combineUnsubscribes` from `@/core/unsubscribe`.',
+      'An integration connects through one function of the `EditorExtension` type from `@/state/registries/editorExtension`. It receives the registries, registers its elements and returns a function that cancels all of them. Every `register` or `handle` call returns its own cancel function; join several with `combineUnsubscribes` from `@/core/unsubscribe`.',
     availabilityAtTitle: 'Availability at the moment of display',
     availabilityAtText:
       '`isEnabled` and `isChecked` are evaluated when the command is shown: when a menu opens and when a toolbar button renders. A menu item and a button of the same command read the same handler, so they become disabled together.',
@@ -64,7 +64,7 @@ export const commandsPageMessages = defineDocMessages({
     registriesIntegrationText:
       'Реестры редактора создаёт `createEditorRegistries` в точке входа и передаёт вниз через `RegistriesProvider`, так же как сторы темы и языка. Глобальных реестров нет: тест или пример создаёт свой изолированный набор. Компоненты получают реестры через `useEditorRegistries`.',
     registriesIntegrationText2:
-      'Интеграция подключается одной функцией типа `EditorExtension` из `@/contracts/editorExtension`. Она получает реестры, регистрирует свои элементы и возвращает функцию, которая отменяет их все. Каждый вызов `register` или `handle` возвращает свою функцию отмены; несколько отмен объединяет `combineUnsubscribes` из `@/core/unsubscribe`.',
+      'Интеграция подключается одной функцией типа `EditorExtension` из `@/state/registries/editorExtension`. Она получает реестры, регистрирует свои элементы и возвращает функцию, которая отменяет их все. Каждый вызов `register` или `handle` возвращает свою функцию отмены; несколько отмен объединяет `combineUnsubscribes` из `@/core/unsubscribe`.',
     availabilityAtTitle: 'Доступность в момент показа',
     availabilityAtText:
       '`isEnabled` и `isChecked` вычисляются, когда команда показывается: когда открывается меню и когда отрисовывается кнопка панели инструментов. Пункт меню и кнопка одной команды читают один обработчик, поэтому гаснут одновременно.',

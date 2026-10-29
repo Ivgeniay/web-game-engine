@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { frameworkIcons } from '@/icons/frameworkIcons';
 import { Foldout } from '@/ui/foldout/Foldout';
-import type { MenuItem } from '@/ui/menu/menuItems';
+import type { MenuItem } from '@/contracts/menu';
 import { ComponentHeader } from './ComponentHeader';
 
 const TITLE = 'Rigidbody';

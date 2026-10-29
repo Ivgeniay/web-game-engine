@@ -3,7 +3,7 @@ import type { CommandRegistry } from '@/core/commands/commandRegistry';
 import type { MenuCommandNode, MenuNode, MenuNodeGroup } from '@/core/menus/menuTree';
 import type { RefTranslator } from '@/state/language/useTranslate';
 import type { ShortcutFormatter } from '@/state/platform/useFormatShortcut';
-import type { MenuItem } from '@/ui/menu/menuItems';
+import type { MenuItem } from '@/contracts/menu';
 
 export interface MenuBuildContext<TTarget> {
   readonly commands: CommandRegistry;

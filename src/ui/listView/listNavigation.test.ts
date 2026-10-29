@@ -1,5 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
+  gridNavigationIndex,
+  isGridNavigationKey,
   EMPTY_TYPEAHEAD,
   TYPEAHEAD_RESET_DELAY_MS,
   continueTypeahead,
@@ -126,5 +128,37 @@ describe('findTypeaheadMatch', () => {
 
   it('returns no row without a match', () => {
     expect(findTypeaheadMatch(ITEMS, getLabel, 0, 'x', LOCALE)).toBe(NO_INDEX);
+  });
+});
+
+describe('gridNavigationIndex', () => {
+  const ITEMS = 12;
+  const COLUMNS = 5;
+
+  it('moves by one cell left and right and stays at the ends', () => {
+    expect(gridNavigationIndex('ArrowRight', 3, ITEMS, COLUMNS)).toBe(4);
+    expect(gridNavigationIndex('ArrowLeft', 3, ITEMS, COLUMNS)).toBe(2);
+    expect(gridNavigationIndex('ArrowLeft', 0, ITEMS, COLUMNS)).toBe(0);
+    expect(gridNavigationIndex('ArrowRight', 11, ITEMS, COLUMNS)).toBe(11);
+  });
+
+  it('moves by one row up and down', () => {
+    expect(gridNavigationIndex('ArrowDown', 1, ITEMS, COLUMNS)).toBe(6);
+    expect(gridNavigationIndex('ArrowUp', 6, ITEMS, COLUMNS)).toBe(1);
+    expect(gridNavigationIndex('ArrowUp', 2, ITEMS, COLUMNS)).toBe(2);
+  });
+
+  it('goes to the last item when the row below is shorter', () => {
+    expect(gridNavigationIndex('ArrowDown', 8, ITEMS, COLUMNS)).toBe(11);
+    expect(gridNavigationIndex('ArrowDown', 11, ITEMS, COLUMNS)).toBe(11);
+  });
+
+  it('starts from the first item when nothing has the focus', () => {
+    expect(gridNavigationIndex('ArrowDown', -1, ITEMS, COLUMNS)).toBe(0);
+  });
+
+  it('recognizes only the arrows', () => {
+    expect(isGridNavigationKey('ArrowLeft')).toBe(true);
+    expect(isGridNavigationKey('Home')).toBe(false);
   });
 });
