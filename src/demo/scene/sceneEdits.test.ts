@@ -51,6 +51,7 @@ describe('applySceneEdit', () => {
       light: null,
       path: null,
       note: null,
+      meshRenderer: null,
     };
 
     applySceneEdit(scene, undo, LABEL, addObject(content, NEW_ID));

@@ -4,6 +4,7 @@ import type { TreeModel } from '@/ui/treeView/treeModel';
 const PATH_SEPARATOR = '/';
 
 export const PROJECT_ROOT_ID = 'Assets';
+export const PROJECT_ASSET_DRAG_TYPE = 'demo.asset';
 
 const FOLDERS: Readonly<Record<string, readonly string[]>> = {
   Assets: ['Materials', 'Models', 'Prefabs', 'Scenes', 'Scripts', 'Textures'],
@@ -23,7 +24,7 @@ function childPath(parent: string, name: string): string {
   return `${parent}${PATH_SEPARATOR}${name}`;
 }
 
-function nameOf(path: string): string {
+export function assetNameOf(path: string): string {
   return path.slice(path.lastIndexOf(PATH_SEPARATOR) + 1);
 }
 
@@ -35,7 +36,7 @@ export const PROJECT_TREE: TreeModel = {
   rootIds: [PROJECT_ROOT_ID],
   getChildren: (path) => (FOLDERS[path] ?? []).map((name) => childPath(path, name)),
   hasChildren: isFolder,
-  getLabel: nameOf,
+  getLabel: assetNameOf,
   getIcon: (path, expanded) => {
     if (!isFolder(path)) {
       return frameworkIcons.file;
@@ -44,3 +45,15 @@ export const PROJECT_TREE: TreeModel = {
     return expanded ? frameworkIcons['folder-open'] : frameworkIcons.folder;
   },
 };
+
+function collectFiles(folder: string): readonly string[] {
+  return (FOLDERS[folder] ?? []).flatMap((name) => {
+    const path = childPath(folder, name);
+
+    return isFolder(path) ? collectFiles(path) : [path];
+  });
+}
+
+export function projectFilesWithExtension(extension: string): readonly string[] {
+  return collectFiles(PROJECT_ROOT_ID).filter((path) => path.endsWith(extension));
+}

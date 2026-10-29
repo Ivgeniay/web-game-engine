@@ -1,6 +1,10 @@
 import { useRef, useState } from 'react';
 import { demoMessages } from '@/demo/demoMessages';
-import { PROJECT_ROOT_ID, PROJECT_TREE } from '@/demo/project/projectAssets';
+import {
+  PROJECT_ASSET_DRAG_TYPE,
+  PROJECT_ROOT_ID,
+  PROJECT_TREE,
+} from '@/demo/project/projectAssets';
 import { useMessages } from '@/state/language/useMessages';
 import { SearchField } from '@/ui/searchField/SearchField';
 import { TreeView } from '@/ui/treeView/TreeView';
@@ -31,6 +35,7 @@ export function ProjectWindow() {
         model={PROJECT_TREE}
         filter={query}
         selectionMode="multiple"
+        dragType={PROJECT_ASSET_DRAG_TYPE}
         {...state}
       />
     </div>

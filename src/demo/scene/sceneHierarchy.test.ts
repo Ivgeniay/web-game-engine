@@ -20,6 +20,7 @@ function node(id: string, parentId: string | null = null): SceneObject {
     light: null,
     path: null,
     note: null,
+    meshRenderer: null,
   };
 }
 

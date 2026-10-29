@@ -1,8 +1,4 @@
-export interface DragData {
-  readonly type: string;
-  readonly ids: readonly string[];
-  readonly label: string;
-}
+import type { DragData } from '@/contracts/dragData';
 
 export interface DragPoint {
   readonly clientX: number;

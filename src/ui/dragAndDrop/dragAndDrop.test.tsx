@@ -2,7 +2,7 @@ import { act, cleanup, fireEvent, render, screen } from '@testing-library/react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { isTooltipBlocked } from '@/ui/popup/popupLayerAttributes';
 import { DragAndDropLayer } from './DragAndDropLayer';
-import type { DragData } from './dragData';
+import type { DragData } from '@/contracts/dragData';
 import { DRAG_START_THRESHOLD, useDragSource } from './useDragSource';
 import { useDropTarget } from './useDropTarget';
 

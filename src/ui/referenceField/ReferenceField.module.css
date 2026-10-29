@@ -1,0 +1,46 @@
+.root {
+  display: flex;
+  cursor: default;
+}
+
+.clearable {
+  padding-inline-end: 0;
+}
+
+.dropTarget {
+  background-color: var(--color-overlay-drop-target);
+}
+
+.target {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  text-align: start;
+}
+
+.icon {
+  display: flex;
+  flex: none;
+}
+
+.name {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.name[data-empty] {
+  color: var(--color-text-secondary);
+}
+
+.pick {
+  display: flex;
+  flex: none;
+  color: var(--color-text-secondary);
+}
+
+.clear {
+  flex: none;
+}

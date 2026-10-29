@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Button } from '@/ui/button/Button';
-import type { DragData } from '@/ui/dragAndDrop/dragData';
+import type { DragData } from '@/contracts/dragData';
 import { useDragSource } from '@/ui/dragAndDrop/useDragSource';
 import { useDropTarget } from '@/ui/dragAndDrop/useDropTarget';
 import { Label } from '@/ui/label/Label';

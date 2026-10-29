@@ -6,6 +6,7 @@ import { useDemoStores, useScene } from '@/demo/demoStores';
 import { demoMessages } from '@/demo/demoMessages';
 import { applySceneEdit, renameObject } from '@/demo/scene/sceneEdits';
 import type { SceneEdit } from '@/demo/scene/sceneEdits';
+import { SCENE_OBJECT_DRAG_TYPE } from '@/demo/scene/sceneReferences';
 import {
   createSceneTreeModel,
   deleteObjects,
@@ -25,8 +26,6 @@ import {
   renameObjectCommand,
 } from './demoWindowCommands';
 import styles from './DemoWindow.module.css';
-
-const SCENE_OBJECT_DRAG_TYPE = 'demo.scene-object';
 
 export function HierarchyWindow() {
   const { scene } = useDemoStores();

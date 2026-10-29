@@ -64,6 +64,13 @@ export interface Note {
   readonly text: string;
 }
 
+export interface MeshRenderer {
+  readonly enabled: boolean;
+  readonly mesh: string | null;
+  readonly material: string | null;
+  readonly anchorOverride: string | null;
+}
+
 export interface SceneObject {
   readonly id: string;
   readonly name: string;
@@ -73,6 +80,7 @@ export interface SceneObject {
   readonly light: Light | null;
   readonly path: Path | null;
   readonly note: Note | null;
+  readonly meshRenderer: MeshRenderer | null;
 }
 
 export type SceneObjectContent = Omit<SceneObject, 'id' | 'parentId'>;
@@ -113,6 +121,13 @@ export const DEFAULT_PATH: Path = { waypoints: [] };
 
 export const DEFAULT_NOTE: Note = { text: '' };
 
+export const DEFAULT_MESH_RENDERER: MeshRenderer = {
+  enabled: true,
+  mesh: null,
+  material: null,
+  anchorOverride: null,
+};
+
 export const DEFAULT_LIGHT: Light = {
   enabled: true,
   type: 'point',
@@ -137,6 +152,7 @@ function plain(name: string, position: readonly number[] = [0, 0, 0]): SceneObje
     light: null,
     path: null,
     note: null,
+    meshRenderer: null,
   };
 }
 
@@ -162,7 +178,15 @@ const INITIAL_OBJECTS: readonly InitialObject[] = [
   {
     key: 'rock-1',
     parentKey: 'rocks',
-    content: { ...plain('Rock', [2, 0, 3]), note: { text: 'Cover for the first wave.' } },
+    content: {
+      ...plain('Rock', [2, 0, 3]),
+      note: { text: 'Cover for the first wave.' },
+      meshRenderer: {
+        ...DEFAULT_MESH_RENDERER,
+        mesh: 'Assets/Models/Props/Rock.fbx',
+        material: 'Assets/Materials/Rock.mat',
+      },
+    },
   },
   {
     key: 'rock-2',
@@ -170,6 +194,11 @@ const INITIAL_OBJECTS: readonly InitialObject[] = [
     content: {
       ...plain('Rock', [-4, 0, 1]),
       note: { text: 'Too close to the bridge.\nMove it before the next build.' },
+      meshRenderer: {
+        ...DEFAULT_MESH_RENDERER,
+        mesh: 'Assets/Models/Props/Rock.fbx',
+        material: 'Assets/Materials/Ground.mat',
+      },
     },
   },
   {
@@ -195,7 +224,18 @@ const INITIAL_OBJECTS: readonly InitialObject[] = [
       },
     },
   },
-  { key: 'model', parentKey: 'player', content: plain('Model') },
+  {
+    key: 'model',
+    parentKey: 'player',
+    content: {
+      ...plain('Model'),
+      meshRenderer: {
+        ...DEFAULT_MESH_RENDERER,
+        mesh: 'Assets/Models/Characters/Player.fbx',
+        material: 'Assets/Materials/Player.mat',
+      },
+    },
+  },
   {
     key: 'weapon',
     parentKey: 'player',

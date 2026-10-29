@@ -16,6 +16,7 @@ function object(id: string, rigidbody: SceneObject['rigidbody']): SceneObject {
     light: null,
     path: null,
     note: null,
+    meshRenderer: null,
   };
 }
 

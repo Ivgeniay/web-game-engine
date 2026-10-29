@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import type { PointerEvent as ReactPointerEvent, RefObject } from 'react';
 import { useDragAndDropManager } from '@/ui/dragAndDrop/dragAndDropContext';
-import type { DragData, DragPoint } from '@/ui/dragAndDrop/dragData';
+import type { DragData } from '@/contracts/dragData';
+import type { DragPoint } from '@/ui/dragAndDrop/dragData';
 import { useDragSource } from '@/ui/dragAndDrop/useDragSource';
 import { useDropTarget } from '@/ui/dragAndDrop/useDropTarget';
 import type { DropTargetProps } from '@/ui/dragAndDrop/useDropTarget';

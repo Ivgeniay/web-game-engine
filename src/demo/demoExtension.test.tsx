@@ -281,6 +281,59 @@ describe('demo integration', () => {
     expect(weapon()?.rigidbody?.mass).toBe(0.2);
   });
 
+  it('picks a material in the picker with a preview and one undo entry', async () => {
+    const user = userEvent.setup();
+    const { stores, editor } = await renderDemo();
+    const model = () =>
+      stores.scene.getState().objects.find(({ name }) => name === 'Model')?.meshRenderer;
+
+    await user.click(object('Model'));
+    const material = screen.getByRole('button', { name: 'Material' });
+
+    expect(material.textContent).toBe('Player');
+
+    await user.click(material);
+    const dialog = await screen.findByRole('dialog', { name: 'Select Material' });
+    await user.click(within(dialog).getByRole('option', { name: 'Ground' }));
+
+    expect(model()?.material).toBe('Assets/Materials/Ground.mat');
+
+    await user.keyboard('{Enter}');
+
+    expect(screen.queryByRole('dialog')).toBeNull();
+    expect(material.textContent).toBe('Ground');
+
+    act(() => {
+      editor.registries.undo.undo();
+    });
+
+    expect(model()?.material).toBe('Assets/Materials/Player.mat');
+  });
+
+  it('takes a material dragged from the project window', async () => {
+    const user = userEvent.setup();
+    const { stores } = await renderDemo();
+    const project = screen.getByRole('tree', { name: 'Project' });
+
+    await user.click(object('Model'));
+    await user.click(within(project).getByRole('treeitem', { name: 'Materials' }));
+    await user.keyboard('{ArrowRight}');
+    const rock = within(project).getByRole('treeitem', { name: 'Rock.mat' });
+    const material = screen.getByRole('button', { name: 'Material' });
+    Object.defineProperty(document, 'elementFromPoint', {
+      configurable: true,
+      value: (clientX: number) => (clientX >= DROP_X ? material : rock),
+    });
+
+    fireEvent.pointerDown(rock, { clientX: 10, clientY: 10, button: 0 });
+    fireEvent.pointerMove(window, { clientX: DROP_X, clientY: 10 });
+    fireEvent.pointerUp(window, { clientX: DROP_X, clientY: 10 });
+
+    expect(
+      stores.scene.getState().objects.find(({ name }) => name === 'Model')?.meshRenderer?.material,
+    ).toBe('Assets/Materials/Rock.mat');
+  });
+
   it('changes the light color and intensity with one undo entry each', async () => {
     const user = userEvent.setup();
     const { stores, editor } = await renderDemo();
@@ -440,6 +493,7 @@ describe('demo integration', () => {
 
 const TREE_HEIGHT = TEST_ROW_HEIGHT * TEST_VISIBLE_ROWS;
 const AREA_SIZE = 100;
+const DROP_X = 500;
 
 function stubPointerCapture(): void {
   Object.assign(HTMLElement.prototype, {

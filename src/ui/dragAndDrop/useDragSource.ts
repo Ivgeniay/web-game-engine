@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react';
 import type { PointerEvent as ReactPointerEvent } from 'react';
 import { useDragAndDropManager } from './dragAndDropContext';
-import type { DragData, DragPoint } from './dragData';
+import type { DragData } from '@/contracts/dragData';
+import type { DragPoint } from './dragData';
 
 export interface DragSourceOptions {
   readonly enabled?: boolean | undefined;

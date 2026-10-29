@@ -138,6 +138,11 @@
 | Property editor | Редактор свойства | Компонент для типа значения; реестр `propertyEditors` |
 | Value type | Тип значения | `number`, `vector` и другие; свой тип интеграции — `PropertyType` |
 | Target | Цель | Объект, свойство которого редактируется; `targetIds` |
+| Reference field | Поле ссылки | `ReferenceField`, аналог `ObjectField` |
+| Picker dialog | Окно выбора | `PickerDialog`, аналог Object Picker; в заголовке — «Выбор: …» |
+| Preview, thumbnail | Превью | `Thumbnail`; загрузчик — `ThumbnailLoader` |
+| Asset | Ассет | Файл проекта; вкладка окна выбора «Ассеты» |
+| Grid view | Сетка | `GridView`; размер ячейки — «размер значков» |
 
 ## Правила русского перевода
 

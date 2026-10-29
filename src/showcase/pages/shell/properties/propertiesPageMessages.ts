@@ -9,7 +9,7 @@ export const propertiesPageMessages = defineDocMessages({
     describingText:
       'The integration describes a property of its objects as data, and the framework picks the field for it. A description is a `PropertyDescription` from `@/contracts/property`: the value type in `type`, an `id`, a `label` (a `MessageRef`), and `read(targetId)` and `write(targetId, value)`. The framework does not know how engine objects are built: it only passes the ids of the targets, and the integration reads and writes the values itself.',
     describingText2:
-      'Descriptions are made by typed constructors from `@/core/inspector/properties`: `numberProperty`, `stringProperty`, `booleanProperty`, `vectorProperty`, `colorProperty`, `enumProperty`, `flagsProperty`, `rectProperty`, `boundsProperty`, `listProperty` and `customProperty`. They check `read` and `write` against the value type: an enumeration takes its values from the options, a list takes its item type from `createItem`.',
+      'Descriptions are made by typed constructors from `@/core/inspector/properties`: `numberProperty`, `stringProperty`, `booleanProperty`, `vectorProperty`, `colorProperty`, `enumProperty`, `flagsProperty`, `rectProperty`, `boundsProperty`, `referenceProperty`, `listProperty` and `customProperty`. They check `read` and `write` against the value type: an enumeration takes its values from the options, a list takes its item type from `createItem`.',
     describingText3:
       'Common fields: `readOnly` shows the field but does not let it be changed, `hidden` does not show the property, `defaultValue` is the value the property is reset to, see [Inspector](shell/inspector). Display attributes depend on the type:',
     describingItem:
@@ -20,6 +20,8 @@ export const propertiesPageMessages = defineDocMessages({
       '`vector`: `dimensions` from 2 to 4, `kind`, `min`, `max`, `step`; `color`: `showAlpha`; `rect` and `bounds`: `kind`.',
     describingItem4:
       '`enum` and `flags`: `options` with a value and a `label`. A [Select](components/select) and a [FlagsField](components/flags-field) show them.',
+    describingItem5:
+      '`reference`: the value is the id of a target or `null`, `provider` is a `ReferenceProvider`. A [ReferenceField](components/reference-field) with a [PickerDialog](components/picker-dialog) shows it.',
     fieldTitle: 'Property field',
     fieldText:
       '`PropertyField` from `@/inspector/PropertyField` draws one property for the targets in `targetIds` as a [PropertyRow](components/property-row) with the field of its type. Put the rows into a `PropertyRowGroup`. The field reads the values while it is drawn, so redraw it when the data of the engine changes.',
@@ -42,7 +44,7 @@ export const propertiesPageMessages = defineDocMessages({
     describingText:
       'Интеграция описывает свойство своих объектов данными, а поле для него выбирает каркас. Описание — это `PropertyDescription` из `@/contracts/property`: тип значения в `type`, `id`, подпись `label` (это `MessageRef`), а также `read(targetId)` и `write(targetId, value)`. Каркас не знает, как устроены объекты движка: он передаёт только id целей, а читает и записывает значения сама интеграция.',
     describingText2:
-      'Описания создают типизированные конструкторы из `@/core/inspector/properties`: `numberProperty`, `stringProperty`, `booleanProperty`, `vectorProperty`, `colorProperty`, `enumProperty`, `flagsProperty`, `rectProperty`, `boundsProperty`, `listProperty` и `customProperty`. Они сверяют `read` и `write` с типом значения: перечисление берёт свои значения из вариантов, список — тип элемента из `createItem`.',
+      'Описания создают типизированные конструкторы из `@/core/inspector/properties`: `numberProperty`, `stringProperty`, `booleanProperty`, `vectorProperty`, `colorProperty`, `enumProperty`, `flagsProperty`, `rectProperty`, `boundsProperty`, `referenceProperty`, `listProperty` и `customProperty`. Они сверяют `read` и `write` с типом значения: перечисление берёт свои значения из вариантов, список — тип элемента из `createItem`.',
     describingText3:
       'Общие поля: `readOnly` показывает поле, но не даёт его менять, `hidden` не показывает свойство, `defaultValue` — значение, к которому свойство сбрасывается, см. [Инспектор](shell/inspector). Атрибуты отображения зависят от типа:',
     describingItem:
@@ -53,6 +55,8 @@ export const propertiesPageMessages = defineDocMessages({
       '`vector`: `dimensions` от 2 до 4, `kind`, `min`, `max`, `step`; `color`: `showAlpha`; `rect` и `bounds`: `kind`.',
     describingItem4:
       '`enum` и `flags`: варианты `options` со значением и подписью `label`. Их показывают [Select](components/select) и [FlagsField](components/flags-field).',
+    describingItem5:
+      '`reference`: значение — id цели или `null`, `provider` — `ReferenceProvider`. Его показывают [ReferenceField](components/reference-field) и [PickerDialog](components/picker-dialog).',
     fieldTitle: 'Поле свойства',
     fieldText:
       '`PropertyField` из `@/inspector/PropertyField` рисует одно свойство для целей из `targetIds` строкой [PropertyRow](components/property-row) с полем его типа. Строки кладите в `PropertyRowGroup`. Поле читает значения при отрисовке, поэтому перерисовывайте его, когда меняются данные движка.',

@@ -8,6 +8,7 @@ import { EnumEditor } from './EnumEditor';
 import { FlagsEditor } from './FlagsEditor';
 import { NumberEditor } from './NumberEditor';
 import { RectEditor } from './RectEditor';
+import { ReferenceEditor } from './ReferenceEditor';
 import { StringEditor } from './StringEditor';
 import { VectorEditor } from './VectorEditor';
 
@@ -62,6 +63,8 @@ export function ListItemEditor({ item, ...props }: ListItemEditorProps) {
       return <RectEditor spec={item} {...itemEditorProps(item, props)} />;
     case 'bounds':
       return <BoundsEditor spec={item} {...itemEditorProps(item, props)} />;
+    case 'reference':
+      return <ReferenceEditor spec={item} {...itemEditorProps(item, props)} />;
     case 'custom':
       return <CustomEditor valueType={item.valueType} {...itemEditorProps(item, props)} />;
   }

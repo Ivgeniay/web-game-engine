@@ -1,7 +1,7 @@
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { DragAndDropLayer } from '@/ui/dragAndDrop/DragAndDropLayer';
-import type { DragData } from '@/ui/dragAndDrop/dragData';
+import type { DragData } from '@/contracts/dragData';
 import {
   TEST_ROW_HEIGHT,
   TEST_VISIBLE_ROWS,

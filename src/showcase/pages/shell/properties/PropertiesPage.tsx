@@ -23,6 +23,7 @@ export function PropertiesPage() {
           <li>{doc('describingItem2')}</li>
           <li>{doc('describingItem3')}</li>
           <li>{doc('describingItem4')}</li>
+          <li>{doc('describingItem5')}</li>
         </ul>
       </PageSection>
       <PageSection title={doc('fieldTitle')}>

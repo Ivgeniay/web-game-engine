@@ -7,14 +7,21 @@ import {
   flagsProperty,
   listProperty,
   numberProperty,
+  referenceProperty,
   stringProperty,
   vectorProperty,
 } from '@/core/inspector/properties';
 import { demoMessages } from '@/demo/demoMessages';
+import { createAssetPreviewLoader } from '@/demo/project/assetPreviews';
 import { COMPONENT_KINDS, hasComponent } from '@/demo/scene/sceneComponents';
+import {
+  createAssetReferenceProvider,
+  createSceneObjectReferenceProvider,
+} from '@/demo/scene/sceneReferences';
 import type { ComponentKind } from '@/demo/scene/sceneComponents';
 import {
   DEFAULT_LIGHT,
+  DEFAULT_MESH_RENDERER,
   DEFAULT_NOTE,
   DEFAULT_PATH,
   DEFAULT_RIGIDBODY,
@@ -24,6 +31,7 @@ import {
 } from '@/demo/scene/sceneStore';
 import type {
   Light,
+  MeshRenderer,
   Note,
   Path,
   Rigidbody,
@@ -43,6 +51,8 @@ const MAX_SHADOW_STRENGTH = 1;
 const ROTATION_STEP = 1;
 const ORIGIN: readonly number[] = [0, 0, 0];
 const SECTION_TYPE_PREFIX = 'demo.';
+const MESH_EXTENSION = '.fbx';
+const MATERIAL_EXTENSION = '.mat';
 
 export function componentOfSection(section: InspectorSection): ComponentKind | undefined {
   return COMPONENT_KINDS.find((kind) => kind === section.id);
@@ -70,6 +80,8 @@ function createSections(scene: SceneStore): readonly InspectorSection[] {
   const lightOf = (id: string): Light => objectOf(id)?.light ?? DEFAULT_LIGHT;
   const pathOf = (id: string): Path => objectOf(id)?.path ?? DEFAULT_PATH;
   const noteOf = (id: string): Note => objectOf(id)?.note ?? DEFAULT_NOTE;
+  const rendererOf = (id: string): MeshRenderer =>
+    objectOf(id)?.meshRenderer ?? DEFAULT_MESH_RENDERER;
 
   const patchTransform = (id: string, patch: Partial<Transform>) => {
     update(id, (object) => ({ ...object, transform: { ...object.transform, ...patch } }));
@@ -81,6 +93,27 @@ function createSections(scene: SceneStore): readonly InspectorSection[] {
         : { ...object, rigidbody: { ...object.rigidbody, ...patch } },
     );
   };
+  const patchRenderer = (id: string, patch: Partial<MeshRenderer>) => {
+    update(id, (object) =>
+      object.meshRenderer === null
+        ? object
+        : { ...object, meshRenderer: { ...object.meshRenderer, ...patch } },
+    );
+  };
+  const loadAssetPreview = createAssetPreviewLoader();
+  const meshes = createAssetReferenceProvider(
+    scene,
+    MESH_EXTENSION,
+    (object) => object.meshRenderer?.mesh ?? null,
+    loadAssetPreview,
+  );
+  const materials = createAssetReferenceProvider(
+    scene,
+    MATERIAL_EXTENSION,
+    (object) => object.meshRenderer?.material ?? null,
+    loadAssetPreview,
+  );
+  const sceneObjects = createSceneObjectReferenceProvider(scene);
   const patchLight = (id: string, patch: Partial<Light>) => {
     update(id, (object) =>
       object.light === null ? object : { ...object, light: { ...object.light, ...patch } },
@@ -114,6 +147,49 @@ function createSections(scene: SceneStore): readonly InspectorSection[] {
         transformVector('position'),
         transformVector('rotation', ROTATION_STEP),
         transformVector('scale'),
+      ],
+    },
+    {
+      id: 'meshRenderer',
+      type: `${SECTION_TYPE_PREFIX}meshRenderer`,
+      title: messageRef(demoMessages, 'meshRenderer'),
+      enabled: {
+        read: (id) => rendererOf(id).enabled,
+        write: (id, enabled) => {
+          patchRenderer(id, { enabled });
+        },
+      },
+      items: [
+        referenceProperty({
+          id: 'mesh',
+          label: messageRef(demoMessages, 'mesh'),
+          provider: meshes,
+          defaultValue: DEFAULT_MESH_RENDERER.mesh,
+          read: (id) => rendererOf(id).mesh,
+          write: (id, mesh) => {
+            patchRenderer(id, { mesh });
+          },
+        }),
+        referenceProperty({
+          id: 'material',
+          label: messageRef(demoMessages, 'material'),
+          provider: materials,
+          defaultValue: DEFAULT_MESH_RENDERER.material,
+          read: (id) => rendererOf(id).material,
+          write: (id, material) => {
+            patchRenderer(id, { material });
+          },
+        }),
+        referenceProperty({
+          id: 'anchorOverride',
+          label: messageRef(demoMessages, 'anchorOverride'),
+          provider: sceneObjects,
+          defaultValue: DEFAULT_MESH_RENDERER.anchorOverride,
+          read: (id) => rendererOf(id).anchorOverride,
+          write: (id, anchorOverride) => {
+            patchRenderer(id, { anchorOverride });
+          },
+        }),
       ],
     },
     {

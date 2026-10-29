@@ -1,4 +1,5 @@
-import type { DragData, DragPoint, DragSession, DropTargetHandlers } from './dragData';
+import type { DragData } from '@/contracts/dragData';
+import type { DragPoint, DragSession, DropTargetHandlers } from './dragData';
 
 export type FindDropTarget = (point: DragPoint) => string | null;
 

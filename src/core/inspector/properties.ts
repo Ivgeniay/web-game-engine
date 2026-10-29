@@ -12,6 +12,7 @@ import type {
   PropertyOption,
   PropertyType,
   RectProperty,
+  ReferenceProperty,
   StringProperty,
   VectorProperty,
 } from '@/contracts/property';
@@ -88,6 +89,10 @@ export function rectProperty(input: WithoutType<RectProperty>): RectProperty {
 
 export function boundsProperty(input: WithoutType<BoundsProperty>): BoundsProperty {
   return { ...input, type: 'bounds' };
+}
+
+export function referenceProperty(input: WithoutType<ReferenceProperty>): ReferenceProperty {
+  return { ...input, type: 'reference' };
 }
 
 export function customProperty<T>(input: CustomPropertyInput<T>): NoInfer<CustomProperty<T>> {

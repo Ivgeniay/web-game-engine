@@ -11,7 +11,7 @@ export const thumbnailPageMessages = defineDocMessages({
       'The load is cancelled when the item changes or the thumbnail goes away: stop the work of the engine on `signal`. Keep `load` the same between renders, a new function starts a new load. Caching is the job of the integration. An image with a known address is passed in `src` and is not loaded.',
     layoutTitle: 'Size and accessibility',
     layoutText:
-      'The thumbnail fills the box that its parent gives it through `className` and fits the image inside without cropping. It is decorative and hidden from assistive technology: the caption of the cell or the field names the item. It does not take the focus. In the example the first texture loads quickly, the second slowly, and the third has no preview.',
+      'The thumbnail fills the box that its parent gives it through `className` and fits the image inside without cropping. It is decorative and hidden from assistive technology: the caption of the cell or the field names the item. It does not take the focus. In the example the loader of the integration draws a shape of its own color for each texture: the sun loads quickly, the grass slowly, and the load of the water fails on purpose, so its icon stays. The caption under each thumbnail shows the state that the example tracks in its loader.',
   },
   ru: {
     pageTitle: 'Thumbnail',
@@ -23,6 +23,6 @@ export const thumbnailPageMessages = defineDocMessages({
       'Загрузка отменяется, когда элемент меняется или превью исчезает: остановите работу движка по `signal`. Держите `load` одной и той же между отрисовками: новая функция запускает новую загрузку. Кэш — забота интеграции. Изображение с известным адресом передаётся в `src` и не загружается.',
     layoutTitle: 'Размер и доступность',
     layoutText:
-      'Превью заполняет рамку, которую ему даёт родитель через `className`, и вписывает изображение без обрезки. Оно декоративное и скрыто от вспомогательных технологий: элемент называет подпись ячейки или поля. Фокус оно не получает. В примере первая текстура загружается быстро, вторая медленно, у третьей превью нет.',
+      'Превью заполняет рамку, которую ему даёт родитель через `className`, и вписывает изображение без обрезки. Оно декоративное и скрыто от вспомогательных технологий: элемент называет подпись ячейки или поля. Фокус оно не получает. В примере загрузчик интеграции рисует для каждой текстуры фигуру своего цвета: солнце загружается быстро, трава медленно, а загрузка воды намеренно завершается ошибкой, поэтому у неё остаётся иконка. Подпись под каждым превью показывает состояние, которое пример отслеживает в своём загрузчике.',
   },
 });

@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import type { DragData } from '@/ui/dragAndDrop/dragData';
+import type { DragData } from '@/contracts/dragData';
 import { TreeView } from '@/ui/treeView/TreeView';
 import type { TreeDropTarget } from '@/ui/treeView/treeDrop';
 import type { TreeModel } from '@/ui/treeView/treeModel';

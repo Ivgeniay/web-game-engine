@@ -15,6 +15,7 @@ import { FlagsEditor } from './editors/FlagsEditor';
 import { ListPropertyEditor } from './editors/ListPropertyEditor';
 import { NumberEditor } from './editors/NumberEditor';
 import { RectEditor } from './editors/RectEditor';
+import { ReferenceEditor } from './editors/ReferenceEditor';
 import { StringEditor } from './editors/StringEditor';
 import { VectorEditor } from './editors/VectorEditor';
 import { usePropertyRowSlots } from './usePropertyRowSlots';
@@ -121,6 +122,12 @@ function editorOf(property: PropertyDescription, targetIds: readonly string[]): 
       return (
         <BoundProperty {...bound} property={property}>
           {(props) => <BoundsEditor spec={property} {...props} />}
+        </BoundProperty>
+      );
+    case 'reference':
+      return (
+        <BoundProperty {...bound} property={property}>
+          {(props) => <ReferenceEditor spec={property} {...props} />}
         </BoundProperty>
       );
     case 'list':

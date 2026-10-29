@@ -1,0 +1,26 @@
+.body {
+  width: var(--size-picker-width);
+  max-width: 100%;
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+}
+
+.search {
+  flex: 1 1 auto;
+}
+
+.results {
+  height: var(--size-picker-results-height);
+  border: var(--size-border-width) solid var(--color-border-control);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-bg-field);
+}
+
+.scale {
+  align-self: flex-end;
+  width: var(--size-picker-scale-width);
+}

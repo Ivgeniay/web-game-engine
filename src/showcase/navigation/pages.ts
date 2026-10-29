@@ -31,6 +31,10 @@ import { ListEditorPage } from '@/showcase/pages/components/listEditor/ListEdito
 import { listEditorPageMessages } from '@/showcase/pages/components/listEditor/listEditorPageMessages';
 import { GridViewPage } from '@/showcase/pages/components/gridView/GridViewPage';
 import { gridViewPageMessages } from '@/showcase/pages/components/gridView/gridViewPageMessages';
+import { PickerDialogPage } from '@/showcase/pages/components/pickerDialog/PickerDialogPage';
+import { pickerDialogPageMessages } from '@/showcase/pages/components/pickerDialog/pickerDialogPageMessages';
+import { ReferenceFieldPage } from '@/showcase/pages/components/referenceField/ReferenceFieldPage';
+import { referenceFieldPageMessages } from '@/showcase/pages/components/referenceField/referenceFieldPageMessages';
 import { ListViewPage } from '@/showcase/pages/components/listView/ListViewPage';
 import { ThumbnailPage } from '@/showcase/pages/components/thumbnail/ThumbnailPage';
 import { thumbnailPageMessages } from '@/showcase/pages/components/thumbnail/thumbnailPageMessages';
@@ -369,6 +373,20 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     title: messageRef(thumbnailPageMessages, 'pageTitle'),
     description: messageRef(thumbnailPageMessages, 'pageDescription'),
     component: ThumbnailPage,
+  },
+  {
+    id: 'components/reference-field',
+    section: 'components',
+    title: messageRef(referenceFieldPageMessages, 'pageTitle'),
+    description: messageRef(referenceFieldPageMessages, 'pageDescription'),
+    component: ReferenceFieldPage,
+  },
+  {
+    id: 'components/picker-dialog',
+    section: 'components',
+    title: messageRef(pickerDialogPageMessages, 'pageTitle'),
+    description: messageRef(pickerDialogPageMessages, 'pageDescription'),
+    component: PickerDialogPage,
   },
   {
     id: 'components/tree-view',

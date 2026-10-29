@@ -88,6 +88,7 @@ function registerGameObjectMenu(
         light: null,
         path: null,
         note: null,
+        meshRenderer: null,
       };
 
       applySceneEdit(store, undo, label, addObject(content, store.getState().createId()));

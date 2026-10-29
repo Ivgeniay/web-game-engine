@@ -18,7 +18,13 @@ export type SizeTokenKind = (typeof SIZE_TOKEN_KINDS)[number];
 
 export const SIZE_TOKEN_PREFIXES: Readonly<Record<SizeTokenKind, readonly string[]>> = {
   control: ['--size-control-'],
-  panel: ['--size-menubar-', '--size-toolbar-', '--size-tab-', '--size-statusbar-'],
+  panel: [
+    '--size-menubar-',
+    '--size-toolbar-',
+    '--size-tab-',
+    '--size-statusbar-',
+    '--size-picker-',
+  ],
   icon: ['--size-icon-'],
   border: ['--size-border-'],
   scrollbar: ['--size-scrollbar'],

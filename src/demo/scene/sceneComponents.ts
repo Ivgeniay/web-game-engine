@@ -1,6 +1,7 @@
 import type { SceneSnapshot } from './sceneHierarchy';
 import {
   DEFAULT_LIGHT,
+  DEFAULT_MESH_RENDERER,
   DEFAULT_NOTE,
   DEFAULT_PATH,
   DEFAULT_RIGIDBODY,
@@ -8,7 +9,14 @@ import {
 } from './sceneStore';
 import type { SceneObject } from './sceneStore';
 
-export const COMPONENT_KINDS = ['transform', 'rigidbody', 'light', 'path', 'note'] as const;
+export const COMPONENT_KINDS = [
+  'transform',
+  'meshRenderer',
+  'rigidbody',
+  'light',
+  'path',
+  'note',
+] as const;
 
 export type ComponentKind = (typeof COMPONENT_KINDS)[number];
 
@@ -17,6 +25,7 @@ export const REMOVABLE_COMPONENTS: ReadonlySet<ComponentKind> = new Set([
   'light',
   'path',
   'note',
+  'meshRenderer',
 ]);
 
 function resetIn(object: SceneObject, component: ComponentKind): SceneObject {
@@ -31,6 +40,10 @@ function resetIn(object: SceneObject, component: ComponentKind): SceneObject {
       return object.path === null ? object : { ...object, path: DEFAULT_PATH };
     case 'note':
       return object.note === null ? object : { ...object, note: DEFAULT_NOTE };
+    case 'meshRenderer':
+      return object.meshRenderer === null
+        ? object
+        : { ...object, meshRenderer: DEFAULT_MESH_RENDERER };
   }
 }
 
@@ -46,6 +59,8 @@ function removeFrom(object: SceneObject, component: ComponentKind): SceneObject 
       return { ...object, path: null };
     case 'note':
       return { ...object, note: null };
+    case 'meshRenderer':
+      return { ...object, meshRenderer: null };
   }
 }
 
@@ -90,5 +105,7 @@ export function hasComponent(object: SceneObject, component: ComponentKind): boo
       return object.path !== null;
     case 'note':
       return object.note !== null;
+    case 'meshRenderer':
+      return object.meshRenderer !== null;
   }
 }

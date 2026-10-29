@@ -1,7 +1,10 @@
 import type { MessageRef } from '@/core/i18n/translate';
+import type { IconSource } from '@/icons/icon';
 import type { Color } from './color';
+import type { DragData } from './dragData';
 import type { Bounds, Rect } from './geometry';
 import type { MenuItem } from './menu';
+import type { ThumbnailLoader } from './thumbnail';
 import type { ValueChangeHandler, ValueChangePhase } from './valueChange';
 
 export const PROPERTY_NUMBER_KINDS = ['integer', 'float'] as const;
@@ -103,6 +106,26 @@ export interface BoundsSpec {
   readonly kind?: PropertyNumberKind | undefined;
 }
 
+export interface ReferenceTab {
+  readonly id: string;
+  readonly label: MessageRef;
+  readonly getItemIds: () => readonly string[];
+}
+
+export interface ReferenceProvider {
+  readonly tabs: readonly ReferenceTab[];
+  readonly getLabel: (id: string) => string;
+  readonly getIcon?: ((id: string) => IconSource | undefined) | undefined;
+  readonly loadThumbnail?: ThumbnailLoader | undefined;
+  readonly dragTypes: readonly string[];
+  readonly resolveDrop: (data: DragData) => string | null;
+}
+
+export interface ReferenceSpec {
+  readonly type: 'reference';
+  readonly provider: ReferenceProvider;
+}
+
 export interface CustomSpec<T = unknown> {
   readonly type: 'custom';
   readonly valueType: PropertyType<T>;
@@ -117,6 +140,7 @@ export type EnumProperty<T extends string = string> = PropertyCommon<T> & EnumSp
 export type FlagsProperty<T extends string = string> = PropertyCommon<readonly T[]> & FlagsSpec<T>;
 export type RectProperty = PropertyCommon<Rect> & RectSpec;
 export type BoundsProperty = PropertyCommon<Bounds> & BoundsSpec;
+export type ReferenceProperty = PropertyCommon<string | null> & ReferenceSpec;
 export type CustomProperty<T = unknown> = PropertyCommon<T> & CustomSpec<T>;
 
 export type ListItem<I> =
@@ -129,6 +153,7 @@ export type ListItem<I> =
   | (ItemAccess<I, readonly string[]> & FlagsSpec)
   | (ItemAccess<I, Rect> & RectSpec)
   | (ItemAccess<I, Bounds> & BoundsSpec)
+  | (ItemAccess<I, string | null> & ReferenceSpec)
   | (ItemAccess<I, unknown> & CustomSpec);
 
 export interface ListSpec<I = unknown> {
@@ -151,6 +176,7 @@ export type PropertyDescription =
   | FlagsProperty
   | RectProperty
   | BoundsProperty
+  | ReferenceProperty
   | CustomProperty
   | ListProperty;
 
