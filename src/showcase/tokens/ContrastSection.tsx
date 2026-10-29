@@ -1,13 +1,20 @@
+import { showcaseMessages } from '@/showcase/shell/showcaseMessages';
+import { useMessages } from '@/state/language/useMessages';
 import { useThemeStore } from '@/state/theme/useThemeStore';
 import type { ContrastPairKind } from '@/themes/contrastPairs';
 import styles from './ContrastSection.module.css';
 import { getContrastRows } from './contrastRows';
 
-const COLUMN_TITLES = ['sample', 'kind', 'foreground', 'background', 'ratio', 'min', 'result'];
-const TEXT_SAMPLE = 'Text sample';
+const COLUMN_TITLE_KEYS = [
+  'columnSample',
+  'columnKind',
+  'columnForeground',
+  'columnBackground',
+  'columnRatio',
+  'columnMinimum',
+  'columnResult',
+] as const;
 const RATIO_FRACTION_DIGITS = 2;
-const PASS_LABEL = 'pass';
-const FAIL_LABEL = 'fail';
 const COLOR_TOKEN_PREFIX = '--color-';
 
 function colorReference(name: string): string {
@@ -23,11 +30,12 @@ function PairSample({
   readonly foreground: string;
   readonly background: string;
 }) {
+  const t = useMessages(showcaseMessages);
   const foregroundColor = colorReference(foreground);
 
   return (
     <div className={styles.sample} style={{ background: colorReference(background) }}>
-      {kind === 'text' && <span style={{ color: foregroundColor }}>{TEXT_SAMPLE}</span>}
+      {kind === 'text' && <span style={{ color: foregroundColor }}>{t('textSample')}</span>}
       {kind === 'indicator' && (
         <span className={styles.indicator} style={{ background: foregroundColor }} />
       )}
@@ -41,15 +49,16 @@ function PairSample({
 export function ContrastSection() {
   const resolvedTheme = useThemeStore((state) => state.resolvedTheme);
   const rows = getContrastRows(resolvedTheme);
+  const t = useMessages(showcaseMessages);
 
   return (
     <div className={styles.root}>
       <table className={styles.table}>
         <thead>
           <tr>
-            {COLUMN_TITLES.map((title) => (
-              <th key={title} className={styles.headerCell}>
-                {title}
+            {COLUMN_TITLE_KEYS.map((key) => (
+              <th key={key} className={styles.headerCell}>
+                {t(key)}
               </th>
             ))}
           </tr>
@@ -72,7 +81,7 @@ export function ContrastSection() {
               <td className={styles.codeCell}>
                 <span className={styles.result}>
                   <span className={row.passes ? styles.passMark : styles.failMark} />
-                  {row.passes ? PASS_LABEL : FAIL_LABEL}
+                  {row.passes ? t('contrastPass') : t('contrastFail')}
                 </span>
               </td>
             </tr>

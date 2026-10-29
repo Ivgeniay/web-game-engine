@@ -1,53 +1,104 @@
+import { messageRef } from '@/core/i18n/translate';
 import { ButtonPage } from '@/showcase/pages/components/button/ButtonPage';
+import { buttonPageMessages } from '@/showcase/pages/components/button/buttonPageMessages';
 import { CheckboxPage } from '@/showcase/pages/components/checkbox/CheckboxPage';
+import { checkboxPageMessages } from '@/showcase/pages/components/checkbox/checkboxPageMessages';
 import { ComponentHeaderPage } from '@/showcase/pages/components/componentHeader/ComponentHeaderPage';
+import { componentHeaderPageMessages } from '@/showcase/pages/components/componentHeader/componentHeaderPageMessages';
 import { DialogPage } from '@/showcase/pages/components/dialog/DialogPage';
+import { dialogPageMessages } from '@/showcase/pages/components/dialog/dialogPageMessages';
 import { DragAndDropPage } from '@/showcase/pages/components/dragAndDrop/DragAndDropPage';
+import { dragAndDropPageMessages } from '@/showcase/pages/components/dragAndDrop/dragAndDropPageMessages';
 import { FoldoutPage } from '@/showcase/pages/components/foldout/FoldoutPage';
+import { foldoutPageMessages } from '@/showcase/pages/components/foldout/foldoutPageMessages';
 import { IconButtonPage } from '@/showcase/pages/components/iconButton/IconButtonPage';
+import { iconButtonPageMessages } from '@/showcase/pages/components/iconButton/iconButtonPageMessages';
 import { KbdPage } from '@/showcase/pages/components/kbd/KbdPage';
+import { kbdPageMessages } from '@/showcase/pages/components/kbd/kbdPageMessages';
 import { LabelPage } from '@/showcase/pages/components/label/LabelPage';
-import { MenuPage } from '@/showcase/pages/components/menu/MenuPage';
-import { NumberFieldPage } from '@/showcase/pages/components/numberField/NumberFieldPage';
-import { PopoverPage } from '@/showcase/pages/components/popover/PopoverPage';
-import { PopupLayerPage } from '@/showcase/pages/components/popupLayer/PopupLayerPage';
+import { labelPageMessages } from '@/showcase/pages/components/label/labelPageMessages';
 import { ListViewPage } from '@/showcase/pages/components/listView/ListViewPage';
+import { listViewPageMessages } from '@/showcase/pages/components/listView/listViewPageMessages';
+import { MenuPage } from '@/showcase/pages/components/menu/MenuPage';
+import { menuPageMessages } from '@/showcase/pages/components/menu/menuPageMessages';
+import { NumberFieldPage } from '@/showcase/pages/components/numberField/NumberFieldPage';
+import { numberFieldPageMessages } from '@/showcase/pages/components/numberField/numberFieldPageMessages';
+import { PopoverPage } from '@/showcase/pages/components/popover/PopoverPage';
+import { popoverPageMessages } from '@/showcase/pages/components/popover/popoverPageMessages';
+import { PopupLayerPage } from '@/showcase/pages/components/popupLayer/PopupLayerPage';
+import { popupLayerPageMessages } from '@/showcase/pages/components/popupLayer/popupLayerPageMessages';
 import { PropertyRowPage } from '@/showcase/pages/components/propertyRow/PropertyRowPage';
+import { propertyRowPageMessages } from '@/showcase/pages/components/propertyRow/propertyRowPageMessages';
 import { RadioGroupPage } from '@/showcase/pages/components/radioGroup/RadioGroupPage';
+import { radioGroupPageMessages } from '@/showcase/pages/components/radioGroup/radioGroupPageMessages';
 import { RovingFocusPage } from '@/showcase/pages/components/rovingFocus/RovingFocusPage';
+import { rovingFocusPageMessages } from '@/showcase/pages/components/rovingFocus/rovingFocusPageMessages';
 import { SearchFieldPage } from '@/showcase/pages/components/searchField/SearchFieldPage';
+import { searchFieldPageMessages } from '@/showcase/pages/components/searchField/searchFieldPageMessages';
 import { SelectPage } from '@/showcase/pages/components/select/SelectPage';
+import { selectPageMessages } from '@/showcase/pages/components/select/selectPageMessages';
 import { SeparatorPage } from '@/showcase/pages/components/separator/SeparatorPage';
+import { separatorPageMessages } from '@/showcase/pages/components/separator/separatorPageMessages';
 import { TextFieldPage } from '@/showcase/pages/components/textField/TextFieldPage';
+import { textFieldPageMessages } from '@/showcase/pages/components/textField/textFieldPageMessages';
 import { ToggleButtonPage } from '@/showcase/pages/components/toggleButton/ToggleButtonPage';
+import { toggleButtonPageMessages } from '@/showcase/pages/components/toggleButton/toggleButtonPageMessages';
 import { ToggleButtonGroupPage } from '@/showcase/pages/components/toggleButtonGroup/ToggleButtonGroupPage';
-import { TooltipPage } from '@/showcase/pages/components/tooltip/TooltipPage';
+import { toggleButtonGroupPageMessages } from '@/showcase/pages/components/toggleButtonGroup/toggleButtonGroupPageMessages';
 import { ToolbarPage } from '@/showcase/pages/components/toolbar/ToolbarPage';
+import { toolbarPageMessages } from '@/showcase/pages/components/toolbar/toolbarPageMessages';
+import { TooltipPage } from '@/showcase/pages/components/tooltip/TooltipPage';
+import { tooltipPageMessages } from '@/showcase/pages/components/tooltip/tooltipPageMessages';
 import { TreeViewPage } from '@/showcase/pages/components/treeView/TreeViewPage';
+import { treeViewPageMessages } from '@/showcase/pages/components/treeView/treeViewPageMessages';
 import { ValueDragPage } from '@/showcase/pages/components/valueDrag/ValueDragPage';
+import { valueDragPageMessages } from '@/showcase/pages/components/valueDrag/valueDragPageMessages';
 import { VectorFieldPage } from '@/showcase/pages/components/vectorField/VectorFieldPage';
+import { vectorFieldPageMessages } from '@/showcase/pages/components/vectorField/vectorFieldPageMessages';
 import { ColorsPage } from '@/showcase/pages/foundations/ColorsPage';
+import { colorsPageMessages } from '@/showcase/pages/foundations/colorsPageMessages';
 import { ContrastPage } from '@/showcase/pages/foundations/ContrastPage';
+import { contrastPageMessages } from '@/showcase/pages/foundations/contrastPageMessages';
 import { IconsPage } from '@/showcase/pages/foundations/icons/IconsPage';
-import { LocalizationPage } from '@/showcase/pages/foundations/localization/LocalizationPage';
+import { iconsPageMessages } from '@/showcase/pages/foundations/icons/iconsPageMessages';
 import { LayersAndMotionPage } from '@/showcase/pages/foundations/LayersAndMotionPage';
+import { layersAndMotionPageMessages } from '@/showcase/pages/foundations/layersAndMotionPageMessages';
+import { LocalizationPage } from '@/showcase/pages/foundations/localization/LocalizationPage';
+import { localizationPageMessages } from '@/showcase/pages/foundations/localization/localizationPageMessages';
 import { RadiusAndShadowsPage } from '@/showcase/pages/foundations/RadiusAndShadowsPage';
+import { radiusAndShadowsPageMessages } from '@/showcase/pages/foundations/radiusAndShadowsPageMessages';
 import { SizesPage } from '@/showcase/pages/foundations/SizesPage';
+import { sizesPageMessages } from '@/showcase/pages/foundations/sizesPageMessages';
 import { SpacingPage } from '@/showcase/pages/foundations/SpacingPage';
+import { spacingPageMessages } from '@/showcase/pages/foundations/spacingPageMessages';
 import { ThemesPage } from '@/showcase/pages/foundations/themes/ThemesPage';
+import { themesPageMessages } from '@/showcase/pages/foundations/themes/themesPageMessages';
 import { TypographyPage } from '@/showcase/pages/foundations/TypographyPage';
+import { typographyPageMessages } from '@/showcase/pages/foundations/typographyPageMessages';
 import { DemoScenePage } from '@/showcase/pages/overview/demoScene/DemoScenePage';
+import { demoScenePageMessages } from '@/showcase/pages/overview/demoScene/demoScenePageMessages';
 import { OverviewPage } from '@/showcase/pages/overview/OverviewPage';
+import { overviewPageMessages } from '@/showcase/pages/overview/overviewPageMessages';
 import { CommandsPage } from '@/showcase/pages/shell/commands/CommandsPage';
+import { commandsPageMessages } from '@/showcase/pages/shell/commands/commandsPageMessages';
 import { ConfirmDialogPage } from '@/showcase/pages/shell/confirmDialog/ConfirmDialogPage';
+import { confirmDialogPageMessages } from '@/showcase/pages/shell/confirmDialog/confirmDialogPageMessages';
 import { ContextMenuPage } from '@/showcase/pages/shell/contextMenu/ContextMenuPage';
+import { contextMenuPageMessages } from '@/showcase/pages/shell/contextMenu/contextMenuPageMessages';
 import { DockingPage } from '@/showcase/pages/shell/docking/DockingPage';
+import { dockingPageMessages } from '@/showcase/pages/shell/docking/dockingPageMessages';
 import { HotkeysPage } from '@/showcase/pages/shell/hotkeys/HotkeysPage';
+import { hotkeysPageMessages } from '@/showcase/pages/shell/hotkeys/hotkeysPageMessages';
 import { LayoutPage } from '@/showcase/pages/shell/layout/LayoutPage';
+import { layoutPageMessages } from '@/showcase/pages/shell/layout/layoutPageMessages';
 import { MenuBarPage } from '@/showcase/pages/shell/menuBar/MenuBarPage';
+import { menuBarPageMessages } from '@/showcase/pages/shell/menuBar/menuBarPageMessages';
 import { ToolbarStatusBarPage } from '@/showcase/pages/shell/toolbarStatusBar/ToolbarStatusBarPage';
+import { toolbarStatusBarPageMessages } from '@/showcase/pages/shell/toolbarStatusBar/toolbarStatusBarPageMessages';
 import { UndoPage } from '@/showcase/pages/shell/undo/UndoPage';
+import { undoPageMessages } from '@/showcase/pages/shell/undo/undoPageMessages';
 import { WindowTabMenuPage } from '@/showcase/pages/shell/windowTabMenu/WindowTabMenuPage';
+import { windowTabMenuPageMessages } from '@/showcase/pages/shell/windowTabMenu/windowTabMenuPageMessages';
 import type { ShowcasePage } from './showcasePage';
 
 export const OVERVIEW_PAGE_ID = 'overview';
@@ -56,371 +107,351 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
   {
     id: OVERVIEW_PAGE_ID,
     section: 'overview',
-    title: 'Overview',
-    description:
-      'What the editor framework is, how this showcase is organized and how to read its pages.',
+    title: messageRef(overviewPageMessages, 'pageTitle'),
+    description: messageRef(overviewPageMessages, 'pageDescription'),
     component: OverviewPage,
   },
   {
     id: 'overview/demo-scene',
     section: 'overview',
-    title: 'Demo scene',
-    description:
-      'The demonstration integration in src/demo: every extension point together in a Unity-style editor.',
+    title: messageRef(demoScenePageMessages, 'pageTitle'),
+    description: messageRef(demoScenePageMessages, 'pageDescription'),
     component: DemoScenePage,
   },
   {
     id: 'foundations/themes',
     section: 'foundations',
-    title: 'Themes',
-    description:
-      'Theme modes, reading and changing the theme from code, and styling components with tokens.',
+    title: messageRef(themesPageMessages, 'pageTitle'),
+    description: messageRef(themesPageMessages, 'pageDescription'),
     component: ThemesPage,
   },
   {
     id: 'foundations/localization',
     section: 'foundations',
-    title: 'Localization',
-    description:
-      'Languages, dictionaries, substitutions, plural forms and message references for interface texts.',
+    title: messageRef(localizationPageMessages, 'pageTitle'),
+    description: messageRef(localizationPageMessages, 'pageDescription'),
     component: LocalizationPage,
   },
   {
     id: 'foundations/icons',
     section: 'foundations',
-    title: 'Icons',
-    description:
-      'Framework icons, the Icon component, icons in data, integration icon sets and drawing rules.',
+    title: messageRef(iconsPageMessages, 'pageTitle'),
+    description: messageRef(iconsPageMessages, 'pageDescription'),
     component: IconsPage,
   },
   {
     id: 'foundations/colors',
     section: 'foundations',
-    title: 'Colors',
-    description: 'All color tokens and their roles. Use them for every color in the interface.',
+    title: messageRef(colorsPageMessages, 'pageTitle'),
+    description: messageRef(colorsPageMessages, 'pageDescription'),
     component: ColorsPage,
   },
   {
     id: 'foundations/typography',
     section: 'foundations',
-    title: 'Typography',
-    description: 'Font families, sizes, weights and line heights for interface text and code.',
+    title: messageRef(typographyPageMessages, 'pageTitle'),
+    description: messageRef(typographyPageMessages, 'pageDescription'),
     component: TypographyPage,
   },
   {
     id: 'foundations/spacing',
     section: 'foundations',
-    title: 'Spacing',
-    description: 'The spacing scale for paddings, margins and gaps.',
+    title: messageRef(spacingPageMessages, 'pageTitle'),
+    description: messageRef(spacingPageMessages, 'pageDescription'),
     component: SpacingPage,
   },
   {
     id: 'foundations/sizes',
     section: 'foundations',
-    title: 'Sizes',
-    description: 'Sizes of controls, panels, icons, borders and scrollbars.',
+    title: messageRef(sizesPageMessages, 'pageTitle'),
+    description: messageRef(sizesPageMessages, 'pageDescription'),
     component: SizesPage,
   },
   {
     id: 'foundations/radius-and-shadows',
     section: 'foundations',
-    title: 'Radius and shadows',
-    description: 'Corner radii and shadows for surfaces and floating elements.',
+    title: messageRef(radiusAndShadowsPageMessages, 'pageTitle'),
+    description: messageRef(radiusAndShadowsPageMessages, 'pageDescription'),
     component: RadiusAndShadowsPage,
   },
   {
     id: 'foundations/layers-and-motion',
     section: 'foundations',
-    title: 'Layers and motion',
-    description: 'Stacking order of editor layers, transition durations and easing curves.',
+    title: messageRef(layersAndMotionPageMessages, 'pageTitle'),
+    description: messageRef(layersAndMotionPageMessages, 'pageDescription'),
     component: LayersAndMotionPage,
   },
   {
     id: 'foundations/contrast',
     section: 'foundations',
-    title: 'Contrast',
-    description: 'Contrast ratios of the color pairs used in the interface, for the current theme.',
+    title: messageRef(contrastPageMessages, 'pageTitle'),
+    description: messageRef(contrastPageMessages, 'pageDescription'),
     component: ContrastPage,
   },
   {
     id: 'components/button',
     section: 'components',
-    title: 'Button',
-    description: 'A button with text and an optional icon that runs an action.',
+    title: messageRef(buttonPageMessages, 'pageTitle'),
+    description: messageRef(buttonPageMessages, 'pageDescription'),
     component: ButtonPage,
   },
   {
     id: 'components/icon-button',
     section: 'components',
-    title: 'IconButton',
-    description: 'A square button with only an icon and a required label.',
+    title: messageRef(iconButtonPageMessages, 'pageTitle'),
+    description: messageRef(iconButtonPageMessages, 'pageDescription'),
     component: IconButtonPage,
   },
   {
     id: 'components/toggle-button',
     section: 'components',
-    title: 'ToggleButton',
-    description: 'A button that is switched on and off, with text or only an icon.',
+    title: messageRef(toggleButtonPageMessages, 'pageTitle'),
+    description: messageRef(toggleButtonPageMessages, 'pageDescription'),
     component: ToggleButtonPage,
   },
   {
     id: 'components/toggle-button-group',
     section: 'components',
-    title: 'ToggleButtonGroup',
-    description: 'A row of toggle buttons to choose one, none or one, or several options.',
+    title: messageRef(toggleButtonGroupPageMessages, 'pageTitle'),
+    description: messageRef(toggleButtonGroupPageMessages, 'pageDescription'),
     component: ToggleButtonGroupPage,
   },
   {
     id: 'components/checkbox',
     section: 'components',
-    title: 'Checkbox',
-    description: 'A box that switches a boolean value, with a mixed state for partial values.',
+    title: messageRef(checkboxPageMessages, 'pageTitle'),
+    description: messageRef(checkboxPageMessages, 'pageDescription'),
     component: CheckboxPage,
   },
   {
     id: 'components/radio-group',
     section: 'components',
-    title: 'RadioGroup',
-    description:
-      'A list of labelled options to choose one value, with arrow keys that choose at once.',
+    title: messageRef(radioGroupPageMessages, 'pageTitle'),
+    description: messageRef(radioGroupPageMessages, 'pageDescription'),
     component: RadioGroupPage,
   },
   {
     id: 'components/text-field',
     section: 'components',
-    title: 'TextField',
-    description: 'A one-line text input that commits on Enter or blur and reverts on Esc.',
+    title: messageRef(textFieldPageMessages, 'pageTitle'),
+    description: messageRef(textFieldPageMessages, 'pageDescription'),
     component: TextFieldPage,
   },
   {
     id: 'components/search-field',
     section: 'components',
-    title: 'SearchField',
-    description: 'A query input that filters a window, with a clear button.',
+    title: messageRef(searchFieldPageMessages, 'pageTitle'),
+    description: messageRef(searchFieldPageMessages, 'pageDescription'),
     component: SearchFieldPage,
   },
   {
     id: 'components/number-field',
     section: 'components',
-    title: 'NumberField',
-    description: 'An integer or float input with a typing filter, a range and arrow steps.',
+    title: messageRef(numberFieldPageMessages, 'pageTitle'),
+    description: messageRef(numberFieldPageMessages, 'pageDescription'),
     component: NumberFieldPage,
   },
   {
     id: 'components/value-drag',
     section: 'components',
-    title: 'Value drag',
-    description:
-      'A hook that changes a number by dragging, with modifiers and an optional pointer lock.',
+    title: messageRef(valueDragPageMessages, 'pageTitle'),
+    description: messageRef(valueDragPageMessages, 'pageDescription'),
     component: ValueDragPage,
   },
   {
     id: 'components/property-row',
     section: 'components',
-    title: 'PropertyRow',
-    description: 'An inspector line with a caption, a field and a shared caption column.',
+    title: messageRef(propertyRowPageMessages, 'pageTitle'),
+    description: messageRef(propertyRowPageMessages, 'pageDescription'),
     component: PropertyRowPage,
   },
   {
     id: 'components/vector-field',
     section: 'components',
-    title: 'VectorField',
-    description: 'Several numbers in one row with draggable axis captions.',
+    title: messageRef(vectorFieldPageMessages, 'pageTitle'),
+    description: messageRef(vectorFieldPageMessages, 'pageDescription'),
     component: VectorFieldPage,
   },
   {
     id: 'components/list-view',
     section: 'components',
-    title: 'ListView',
-    description: 'A fast list of rows with a single or multiple selection and keyboard moves.',
+    title: messageRef(listViewPageMessages, 'pageTitle'),
+    description: messageRef(listViewPageMessages, 'pageDescription'),
     component: ListViewPage,
   },
   {
     id: 'components/tree-view',
     section: 'components',
-    title: 'TreeView',
-    description: 'A fast tree over flat data with expanding, selection and keyboard moves.',
+    title: messageRef(treeViewPageMessages, 'pageTitle'),
+    description: messageRef(treeViewPageMessages, 'pageDescription'),
     component: TreeViewPage,
   },
   {
     id: 'components/drag-and-drop',
     section: 'components',
-    title: 'Drag and drop',
-    description: 'Typed data moved with the pointer from a source to a target, across windows.',
+    title: messageRef(dragAndDropPageMessages, 'pageTitle'),
+    description: messageRef(dragAndDropPageMessages, 'pageDescription'),
     component: DragAndDropPage,
   },
   {
     id: 'components/foldout',
     section: 'components',
-    title: 'Foldout',
-    description: 'A collapsible group with Alt+click for the nested groups.',
+    title: messageRef(foldoutPageMessages, 'pageTitle'),
+    description: messageRef(foldoutPageMessages, 'pageDescription'),
     component: FoldoutPage,
   },
   {
     id: 'components/component-header',
     section: 'components',
-    title: 'ComponentHeader',
-    description: 'The header of an inspector section: collapse, enable, title, help and menu.',
+    title: messageRef(componentHeaderPageMessages, 'pageTitle'),
+    description: messageRef(componentHeaderPageMessages, 'pageDescription'),
     component: ComponentHeaderPage,
   },
   {
     id: 'components/toolbar',
     section: 'components',
-    title: 'Toolbar',
-    description: 'A row of controls along the edge of a window that is one Tab stop.',
+    title: messageRef(toolbarPageMessages, 'pageTitle'),
+    description: messageRef(toolbarPageMessages, 'pageDescription'),
     component: ToolbarPage,
   },
   {
     id: 'components/separator',
     section: 'components',
-    title: 'Separator',
-    description: 'A horizontal or vertical line between groups, or a flexible gap.',
+    title: messageRef(separatorPageMessages, 'pageTitle'),
+    description: messageRef(separatorPageMessages, 'pageDescription'),
     component: SeparatorPage,
   },
   {
     id: 'components/label',
     section: 'components',
-    title: 'Label',
-    description: 'A text in one of the text tones, with truncation and optional selection.',
+    title: messageRef(labelPageMessages, 'pageTitle'),
+    description: messageRef(labelPageMessages, 'pageDescription'),
     component: LabelPage,
   },
   {
     id: 'components/kbd',
     section: 'components',
-    title: 'Kbd',
-    description: 'A keyboard shortcut shown as text.',
+    title: messageRef(kbdPageMessages, 'pageTitle'),
+    description: messageRef(kbdPageMessages, 'pageDescription'),
     component: KbdPage,
   },
   {
     id: 'components/tooltip',
     section: 'components',
-    title: 'Tooltip',
-    description: 'A short hint with an optional shortcut, shown on hover and keyboard focus.',
+    title: messageRef(tooltipPageMessages, 'pageTitle'),
+    description: messageRef(tooltipPageMessages, 'pageDescription'),
     component: TooltipPage,
   },
   {
     id: 'components/menu',
     section: 'components',
-    title: 'Menu',
-    description:
-      'A list of commands with submenus, opened from a button or at a point on the screen.',
+    title: messageRef(menuPageMessages, 'pageTitle'),
+    description: messageRef(menuPageMessages, 'pageDescription'),
     component: MenuPage,
   },
   {
     id: 'components/select',
     section: 'components',
-    title: 'Select',
-    description:
-      'A field that chooses one value from a list, with icons, separators and an action.',
+    title: messageRef(selectPageMessages, 'pageTitle'),
+    description: messageRef(selectPageMessages, 'pageDescription'),
     component: SelectPage,
   },
   {
     id: 'components/popover',
     section: 'components',
-    title: 'Popover',
-    description: 'A floating panel with any content next to its trigger.',
+    title: messageRef(popoverPageMessages, 'pageTitle'),
+    description: messageRef(popoverPageMessages, 'pageDescription'),
     component: PopoverPage,
   },
   {
     id: 'components/dialog',
     section: 'components',
-    title: 'Dialog',
-    description: 'A modal window with a title, content and actions, above a dimmed editor.',
+    title: messageRef(dialogPageMessages, 'pageTitle'),
+    description: messageRef(dialogPageMessages, 'pageDescription'),
     component: DialogPage,
   },
   {
     id: 'components/roving-focus',
     section: 'components',
-    title: 'Roving focus',
-    description:
-      'One Tab stop for a group of controls, with arrow keys inside: the mechanism behind toolbars and groups.',
+    title: messageRef(rovingFocusPageMessages, 'pageTitle'),
+    description: messageRef(rovingFocusPageMessages, 'pageDescription'),
     component: RovingFocusPage,
   },
   {
     id: 'components/popup-layer',
     section: 'components',
-    title: 'Popup layer',
-    description:
-      'The shared layer for tooltips, menus, lists, popovers and dialogs: z-index and position.',
+    title: messageRef(popupLayerPageMessages, 'pageTitle'),
+    description: messageRef(popupLayerPageMessages, 'pageDescription'),
     component: PopupLayerPage,
   },
   {
     id: 'shell/commands',
     section: 'shell',
-    title: 'Commands',
-    description:
-      'Command definitions and handlers, the integration entry point and registration for the lifetime of a component.',
+    title: messageRef(commandsPageMessages, 'pageTitle'),
+    description: messageRef(commandsPageMessages, 'pageDescription'),
     component: CommandsPage,
   },
   {
     id: 'shell/hotkeys',
     section: 'shell',
-    title: 'Hotkeys',
-    description:
-      'Shortcuts of commands: key matching in any layout, scopes, text fields, platform labels and reserved shortcuts.',
+    title: messageRef(hotkeysPageMessages, 'pageTitle'),
+    description: messageRef(hotkeysPageMessages, 'pageDescription'),
     component: HotkeysPage,
   },
   {
     id: 'shell/menu-bar',
     section: 'shell',
-    title: 'Menu bar',
-    description:
-      'The main menu built from registered paths: groups, separators, commands and keyboard access.',
+    title: messageRef(menuBarPageMessages, 'pageTitle'),
+    description: messageRef(menuBarPageMessages, 'pageDescription'),
     component: MenuBarPage,
   },
   {
     id: 'shell/context-menu',
     section: 'shell',
-    title: 'Context menu',
-    description:
-      'Menus assembled for a context and its target, opened by right click, Shift+F10 or the menu key.',
+    title: messageRef(contextMenuPageMessages, 'pageTitle'),
+    description: messageRef(contextMenuPageMessages, 'pageDescription'),
     component: ContextMenuPage,
   },
   {
     id: 'shell/toolbar-and-status-bar',
     section: 'shell',
-    title: 'Toolbar and status bar',
-    description:
-      'The main toolbar and the status bar built from registered commands and components, and the editor frame.',
+    title: messageRef(toolbarStatusBarPageMessages, 'pageTitle'),
+    description: messageRef(toolbarStatusBarPageMessages, 'pageDescription'),
     component: ToolbarStatusBarPage,
   },
   {
     id: 'shell/confirm-dialog',
     section: 'shell',
-    title: 'Confirm dialog',
-    description: 'Asking the user from code and getting the answer as a promise, with a queue.',
+    title: messageRef(confirmDialogPageMessages, 'pageTitle'),
+    description: messageRef(confirmDialogPageMessages, 'pageDescription'),
     component: ConfirmDialogPage,
   },
   {
     id: 'shell/docking',
     section: 'shell',
-    title: 'Docking',
-    description:
-      'Window types from the registry, opening, closing and maximizing windows, the active window and its hotkey scope.',
+    title: messageRef(dockingPageMessages, 'pageTitle'),
+    description: messageRef(dockingPageMessages, 'pageDescription'),
     component: DockingPage,
   },
   {
     id: 'shell/layout',
     section: 'shell',
-    title: 'Layout',
-    description:
-      'The default layout of the integration, saving and restoring the layout, and resetting it.',
+    title: messageRef(layoutPageMessages, 'pageTitle'),
+    description: messageRef(layoutPageMessages, 'pageDescription'),
     component: LayoutPage,
   },
   {
     id: 'shell/window-tab-menu',
     section: 'shell',
-    title: 'Window tab menu',
-    description:
-      'The menu of a tab with the items of the window and the framework, the Window menu and the docking shortcuts.',
+    title: messageRef(windowTabMenuPageMessages, 'pageTitle'),
+    description: messageRef(windowTabMenuPageMessages, 'pageDescription'),
     component: WindowTabMenuPage,
   },
   {
     id: 'shell/undo',
     section: 'shell',
-    title: 'Undo stack',
-    description:
-      'Operations from the integration, one entry per edit of a field, grouping and Mod+Z in fields.',
+    title: messageRef(undoPageMessages, 'pageTitle'),
+    description: messageRef(undoPageMessages, 'pageDescription'),
     component: UndoPage,
   },
 ];

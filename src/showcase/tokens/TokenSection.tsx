@@ -1,4 +1,6 @@
 import type { CSSProperties } from 'react';
+import { showcaseMessages } from '@/showcase/shell/showcaseMessages';
+import { useMessages } from '@/state/language/useMessages';
 import type { TokenGroup } from '@/themes/customProperties';
 import styles from './TokenSection.module.css';
 import { useTokenValues } from './useTokenValues';
@@ -8,9 +10,8 @@ interface TokenSectionProps {
   readonly names: readonly string[];
 }
 
-const COLUMN_TITLES = ['sample', 'token', 'value'];
+const COLUMN_TITLE_KEYS = ['columnSample', 'columnToken', 'columnValue'] as const;
 const FONT_SAMPLE_TEXT = 'Aa Bb 0123';
-const FONT_SAMPLE_MULTILINE_TEXT = 'Line height sample\nsecond line';
 const ICON_SIZE_MARKER = '-icon-';
 
 const FONT_LINE_HEIGHT_PREFIX = '--font-line-height-';
@@ -45,6 +46,7 @@ function sizeSampleStyle(name: string): CSSProperties {
 }
 
 function TokenSample({ group, name }: { readonly group: TokenGroup; readonly name: string }) {
+  const t = useMessages(showcaseMessages);
   const reference = tokenReference(name);
 
   switch (group) {
@@ -53,7 +55,7 @@ function TokenSample({ group, name }: { readonly group: TokenGroup; readonly nam
     case 'font':
       return (
         <div className={styles.fontSample} style={fontSampleStyle(name)}>
-          {isLineHeightToken(name) ? FONT_SAMPLE_MULTILINE_TEXT : FONT_SAMPLE_TEXT}
+          {isLineHeightToken(name) ? t('lineHeightSample') : FONT_SAMPLE_TEXT}
         </div>
       );
     case 'space':
@@ -73,15 +75,16 @@ function TokenSample({ group, name }: { readonly group: TokenGroup; readonly nam
 
 export function TokenSection({ group, names }: TokenSectionProps) {
   const values = useTokenValues(names);
+  const t = useMessages(showcaseMessages);
 
   return (
     <div className={styles.root}>
       <table className={styles.table}>
         <thead>
           <tr>
-            {COLUMN_TITLES.map((title) => (
-              <th key={title} className={styles.headerCell}>
-                {title}
+            {COLUMN_TITLE_KEYS.map((key) => (
+              <th key={key} className={styles.headerCell}>
+                {t(key)}
               </th>
             ))}
           </tr>

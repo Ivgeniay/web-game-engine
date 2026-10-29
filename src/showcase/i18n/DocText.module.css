@@ -1,0 +1,16 @@
+.code {
+  padding: 0 var(--space-2);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-bg-field);
+  font-family: var(--font-family-mono);
+  font-size: var(--font-size-sm);
+}
+
+.link {
+  color: var(--color-text-primary);
+  text-decoration: underline;
+}
+
+.link:focus-visible {
+  outline: var(--size-border-width) solid var(--color-border-focus);
+}

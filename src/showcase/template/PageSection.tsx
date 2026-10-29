@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import styles from './PageSection.module.css';
 
 interface PageSectionProps {
-  readonly title: string;
+  readonly title: ReactNode;
   readonly children: ReactNode;
 }
 

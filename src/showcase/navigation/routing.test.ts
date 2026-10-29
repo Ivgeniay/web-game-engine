@@ -1,4 +1,6 @@
 import { describe, expect, it } from 'vitest';
+import { messageRef } from '@/core/i18n/translate';
+import { defineDocMessages } from '@/showcase/i18n/docMessages';
 import { findPage, pageHref, parseHash, resolvePage } from './routing';
 import type { ShowcasePage } from './showcasePage';
 
@@ -6,8 +8,19 @@ function EmptyPage() {
   return null;
 }
 
+const pageMessages = defineDocMessages({
+  en: { pageTitle: 'Page', pageDescription: 'A test page.' },
+  ru: { pageTitle: 'Страница', pageDescription: 'Тестовая страница.' },
+});
+
 function createPage(id: string): ShowcasePage {
-  return { id, section: 'overview', title: id, description: id, component: EmptyPage };
+  return {
+    id,
+    section: 'overview',
+    title: messageRef(pageMessages, 'pageTitle'),
+    description: messageRef(pageMessages, 'pageDescription'),
+    component: EmptyPage,
+  };
 }
 
 const FALLBACK_ID = 'overview';
