@@ -1,3 +1,4 @@
+import type { Rect } from '@/contracts/geometry';
 import type { ValueChangeHandler } from '@/contracts/valueChange';
 import { classNames } from '@/ui/classNames';
 import type { NumberFieldMessages, NumberKind } from '@/ui/numberField/numberText';
@@ -5,13 +6,6 @@ import type { FieldSize } from '@/ui/textField/fieldBox';
 import type { VectorAxis } from '@/ui/vectorField/vectorAxes';
 import { VectorField } from '@/ui/vectorField/VectorField';
 import styles from './RectField.module.css';
-
-export interface Rect {
-  readonly x: number;
-  readonly y: number;
-  readonly width: number;
-  readonly height: number;
-}
 
 export type RectMixed = Readonly<Partial<Record<keyof Rect, boolean>>>;
 

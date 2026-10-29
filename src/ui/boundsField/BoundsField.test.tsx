@@ -2,10 +2,11 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { useState } from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import type { Bounds } from '@/contracts/geometry';
 import type { ValueChangeHandler } from '@/contracts/valueChange';
 import { PropertyRowGroup } from '@/ui/propertyRow/PropertyRowGroup';
 import { BoundsField } from './BoundsField';
-import type { Bounds, BoundsMixed } from './BoundsField';
+import type { BoundsMixed } from './BoundsField';
 
 const LABEL = 'Bounds';
 const CENTER = 'Center';

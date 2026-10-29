@@ -113,6 +113,8 @@ import { MenuBarPage } from '@/showcase/pages/shell/menuBar/MenuBarPage';
 import { menuBarPageMessages } from '@/showcase/pages/shell/menuBar/menuBarPageMessages';
 import { ToolbarStatusBarPage } from '@/showcase/pages/shell/toolbarStatusBar/ToolbarStatusBarPage';
 import { toolbarStatusBarPageMessages } from '@/showcase/pages/shell/toolbarStatusBar/toolbarStatusBarPageMessages';
+import { PropertiesPage } from '@/showcase/pages/shell/properties/PropertiesPage';
+import { propertiesPageMessages } from '@/showcase/pages/shell/properties/propertiesPageMessages';
 import { UndoPage } from '@/showcase/pages/shell/undo/UndoPage';
 import { undoPageMessages } from '@/showcase/pages/shell/undo/undoPageMessages';
 import { WindowTabMenuPage } from '@/showcase/pages/shell/windowTabMenu/WindowTabMenuPage';
@@ -534,5 +536,12 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     title: messageRef(undoPageMessages, 'pageTitle'),
     description: messageRef(undoPageMessages, 'pageDescription'),
     component: UndoPage,
+  },
+  {
+    id: 'shell/properties',
+    section: 'shell',
+    title: messageRef(propertiesPageMessages, 'pageTitle'),
+    description: messageRef(propertiesPageMessages, 'pageDescription'),
+    component: PropertiesPage,
   },
 ];

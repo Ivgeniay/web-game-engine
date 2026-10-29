@@ -1,9 +1,9 @@
 import { useState } from 'react';
+import type { Rect } from '@/contracts/geometry';
 import { useNumberFieldMessages } from '@/state/fields/useNumberFieldMessages';
 import { PropertyRow } from '@/ui/propertyRow/PropertyRow';
 import { PropertyRowGroup } from '@/ui/propertyRow/PropertyRowGroup';
 import { RectField } from '@/ui/rectField/RectField';
-import type { Rect } from '@/ui/rectField/RectField';
 import styles from './RectFieldExample.module.css';
 
 const VIEWPORT_LABEL = 'Viewport rect';

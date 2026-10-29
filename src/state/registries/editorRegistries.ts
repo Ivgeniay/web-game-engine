@@ -1,5 +1,7 @@
 import { createCommandRegistry } from '@/core/commands/commandRegistry';
 import type { CommandRegistry } from '@/core/commands/commandRegistry';
+import { createPropertyEditorRegistry } from '@/core/inspector/propertyEditorRegistry';
+import type { PropertyEditorRegistry } from '@/core/inspector/propertyEditorRegistry';
 import { createContextMenuRegistry } from '@/core/menus/contextMenuRegistry';
 import type { ContextMenuRegistry } from '@/core/menus/contextMenuRegistry';
 import { createMainMenuRegistry } from '@/core/menus/mainMenuRegistry';
@@ -27,6 +29,7 @@ export interface EditorRegistries {
   readonly windows: WindowRegistry;
   readonly workspace: Workspace;
   readonly undo: UndoStack;
+  readonly propertyEditors: PropertyEditorRegistry;
 }
 
 export function createEditorRegistries(): EditorRegistries {
@@ -40,5 +43,6 @@ export function createEditorRegistries(): EditorRegistries {
     windows: createWindowRegistry(),
     workspace: createWorkspace(),
     undo: createUndoStack(),
+    propertyEditors: createPropertyEditorRegistry(),
   };
 }

@@ -2,9 +2,10 @@ import { cleanup, render, screen } from '@testing-library/react';
 import { userEvent } from '@testing-library/user-event';
 import { useState } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import type { Rect } from '@/contracts/geometry';
 import type { ValueChangeHandler } from '@/contracts/valueChange';
 import { RectField } from './RectField';
-import type { Rect, RectMixed } from './RectField';
+import type { RectMixed } from './RectField';
 
 const LABEL = 'Viewport';
 const MESSAGES = { incomplete: 'Enter a number', belowMin: 'Too small', aboveMax: 'Too large' };

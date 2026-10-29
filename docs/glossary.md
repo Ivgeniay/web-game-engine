@@ -134,6 +134,10 @@
 | Handle | Ручка | Ручка перетаскивания строки |
 | Rect field / bounds field | Поле прямоугольника / поле объёма | `RectField`, `BoundsField` |
 | Center / size / extent | Центр / размер / половина размера | В `BoundsField` — полный размер |
+| Property description | Описание свойства | `PropertyDescription`, данные интеграции |
+| Property editor | Редактор свойства | Компонент для типа значения; реестр `propertyEditors` |
+| Value type | Тип значения | `number`, `vector` и другие; свой тип интеграции — `PropertyType` |
+| Target | Цель | Объект, свойство которого редактируется; `targetIds` |
 
 ## Правила русского перевода
 

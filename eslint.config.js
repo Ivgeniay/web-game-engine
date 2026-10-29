@@ -73,10 +73,16 @@ const showcaseIntegrationImportPatterns = [
   },
 ];
 
+const inspectorImportPattern = {
+  regex: '^@/inspector(/|$)',
+  message: 'The inspector mechanism builds on ui, state and contracts; they do not import it.',
+};
+
 const coreImportPatterns = [
   {
-    regex: '^@/(ui|state|shell)(/|$)',
-    message: 'core does not depend on ui, state and shell. Pass the knowledge as a parameter.',
+    regex: '^@/(ui|state|shell|inspector)(/|$)',
+    message:
+      'core does not depend on ui, state, shell and inspector. Pass the knowledge as a parameter.',
   },
 ];
 
@@ -180,6 +186,17 @@ export default defineConfig([
         'error',
         {
           patterns: [parentPathImportPattern, integrationImportPattern],
+        },
+      ],
+    },
+  },
+  {
+    files: ['src/{ui,state,contracts}/**/*.{ts,tsx}'],
+    rules: {
+      'no-restricted-imports': [
+        'error',
+        {
+          patterns: [parentPathImportPattern, integrationImportPattern, inspectorImportPattern],
         },
       ],
     },

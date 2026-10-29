@@ -13,6 +13,7 @@ const CORE_TEST_FILE = 'src/core/registry/registry.test.ts';
 const SHELL_FILE = 'src/shell/EditorFrame.tsx';
 const DEMO_FILE = 'src/demo/demoExtension.ts';
 const SHARED_TEST_FILE = 'src/shared/developmentError.test.ts';
+const INSPECTOR_FILE = 'src/inspector/PropertyField.tsx';
 
 interface ForbiddenCase {
   readonly name: string;
@@ -187,6 +188,24 @@ const FORBIDDEN_CASES: readonly ForbiddenCase[] = [
     ruleId: 'no-restricted-imports',
   },
   {
+    name: 'a core module importing the inspector',
+    filePath: CORE_FILE,
+    code: "import { PropertyField } from '@/inspector/PropertyField';\nexport const value = PropertyField;\n",
+    ruleId: 'no-restricted-imports',
+  },
+  {
+    name: 'a ui primitive importing the inspector',
+    filePath: FRAMEWORK_TS_FILE,
+    code: "import { PropertyField } from '@/inspector/PropertyField';\nexport const value = PropertyField;\n",
+    ruleId: 'no-restricted-imports',
+  },
+  {
+    name: 'a ui primitive importing the demo integration',
+    filePath: FRAMEWORK_TS_FILE,
+    code: "import { installDemo } from '@/demo/demoExtension';\nexport const value = installDemo;\n",
+    ruleId: 'no-restricted-imports',
+  },
+  {
     name: 'a core test importing ui',
     filePath: CORE_TEST_FILE,
     code: "import { POPUP_LAYER_ID } from '@/ui/popup/popupLayerAttributes';\nexport const value = POPUP_LAYER_ID;\n",
@@ -277,6 +296,11 @@ const ALLOWED_CASES: readonly AllowedCase[] = [
     name: 'framework code that follows the rules',
     filePath: FRAMEWORK_TSX_FILE,
     code: "import { Kbd } from '@/ui/kbd/Kbd';\n\ninterface HintProps {\n  readonly shortcut: string;\n}\n\nexport function Hint({ shortcut }: HintProps) {\n  return <Kbd>{shortcut}</Kbd>;\n}\n",
+  },
+  {
+    name: 'the inspector importing ui, state and core',
+    filePath: INSPECTOR_FILE,
+    code: "import { classNames } from '@/ui/classNames';\nimport { useTranslate } from '@/state/language/useTranslate';\nimport { samePropertyValue } from '@/core/inspector/propertyValue';\nexport const value = [classNames, useTranslate, samePropertyValue];\n",
   },
   {
     name: 'props that end with Label and get their text from a parameter',

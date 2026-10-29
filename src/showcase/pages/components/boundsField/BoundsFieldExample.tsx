@@ -1,7 +1,7 @@
 import { useState } from 'react';
+import type { Bounds } from '@/contracts/geometry';
 import { useNumberFieldMessages } from '@/state/fields/useNumberFieldMessages';
 import { BoundsField } from '@/ui/boundsField/BoundsField';
-import type { Bounds } from '@/ui/boundsField/BoundsField';
 import { PropertyRowGroup } from '@/ui/propertyRow/PropertyRowGroup';
 import styles from './BoundsFieldExample.module.css';
 

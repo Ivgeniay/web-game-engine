@@ -1,4 +1,5 @@
 import { useId } from 'react';
+import type { Bounds } from '@/contracts/geometry';
 import type { ValueChangeHandler } from '@/contracts/valueChange';
 import { classNames } from '@/ui/classNames';
 import { Label } from '@/ui/label/Label';
@@ -7,11 +8,6 @@ import { PropertyRow } from '@/ui/propertyRow/PropertyRow';
 import { VECTOR3_AXES } from '@/ui/vectorField/vectorAxes';
 import { VectorField } from '@/ui/vectorField/VectorField';
 import styles from './BoundsField.module.css';
-
-export interface Bounds {
-  readonly center: readonly number[];
-  readonly size: readonly number[];
-}
 
 export interface BoundsMixed {
   readonly center?: readonly boolean[] | undefined;
