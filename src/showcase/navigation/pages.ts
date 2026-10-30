@@ -35,6 +35,10 @@ import { PickerDialogPage } from '@/showcase/pages/components/pickerDialog/Picke
 import { pickerDialogPageMessages } from '@/showcase/pages/components/pickerDialog/pickerDialogPageMessages';
 import { ReferenceFieldPage } from '@/showcase/pages/components/referenceField/ReferenceFieldPage';
 import { referenceFieldPageMessages } from '@/showcase/pages/components/referenceField/referenceFieldPageMessages';
+import { BreadcrumbsPage } from '@/showcase/pages/components/breadcrumbs/BreadcrumbsPage';
+import { breadcrumbsPageMessages } from '@/showcase/pages/components/breadcrumbs/breadcrumbsPageMessages';
+import { SearchableMenuPage } from '@/showcase/pages/components/searchableMenu/SearchableMenuPage';
+import { searchableMenuPageMessages } from '@/showcase/pages/components/searchableMenu/searchableMenuPageMessages';
 import { ListViewPage } from '@/showcase/pages/components/listView/ListViewPage';
 import { ThumbnailPage } from '@/showcase/pages/components/thumbnail/ThumbnailPage';
 import { thumbnailPageMessages } from '@/showcase/pages/components/thumbnail/thumbnailPageMessages';
@@ -387,6 +391,20 @@ export const SHOWCASE_PAGES: readonly ShowcasePage[] = [
     title: messageRef(pickerDialogPageMessages, 'pageTitle'),
     description: messageRef(pickerDialogPageMessages, 'pageDescription'),
     component: PickerDialogPage,
+  },
+  {
+    id: 'components/searchable-menu',
+    section: 'components',
+    title: messageRef(searchableMenuPageMessages, 'pageTitle'),
+    description: messageRef(searchableMenuPageMessages, 'pageDescription'),
+    component: SearchableMenuPage,
+  },
+  {
+    id: 'components/breadcrumbs',
+    section: 'components',
+    title: messageRef(breadcrumbsPageMessages, 'pageTitle'),
+    description: messageRef(breadcrumbsPageMessages, 'pageDescription'),
+    component: BreadcrumbsPage,
   },
   {
     id: 'components/tree-view',

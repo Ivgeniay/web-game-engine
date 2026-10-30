@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { hasComponent, removeComponent, resetComponent } from './sceneComponents';
+import { addComponent, hasComponent, removeComponent, resetComponent } from './sceneComponents';
 import { DEFAULT_LIGHT, DEFAULT_RIGIDBODY, DEFAULT_TRANSFORM } from './sceneStore';
 import type { SceneObject } from './sceneStore';
 
@@ -58,5 +58,15 @@ describe('scene components', () => {
     expect(hasComponent(lit, 'light')).toBe(true);
     expect(hasComponent(lit, 'transform')).toBe(true);
     expect(hasComponent(lit, 'rigidbody')).toBe(false);
+  });
+
+  it('adds a component with default values only to the objects without it', () => {
+    const result = addComponent(SNAPSHOT, ['a', 'c'], 'rigidbody');
+
+    expect(result.objects.map(({ rigidbody }) => rigidbody)).toEqual([
+      HEAVY,
+      HEAVY,
+      DEFAULT_RIGIDBODY,
+    ]);
   });
 });

@@ -334,6 +334,37 @@ describe('demo integration', () => {
     ).toBe('Assets/Materials/Rock.mat');
   });
 
+  it('adds a component from the searchable menu and undoes it', async () => {
+    const user = userEvent.setup();
+    const { stores, editor } = await renderDemo();
+    const camera = () => stores.scene.getState().objects.find(({ name }) => name === 'Main Camera');
+
+    await user.click(object('Main Camera'));
+    await user.click(screen.getByRole('button', { name: 'Add Component' }));
+    const search = await screen.findByRole('combobox', { name: 'Search' });
+    await waitFor(() => {
+      expect(document.activeElement).toBe(search);
+    });
+    await user.keyboard('rigid{Enter}');
+
+    expect(camera()?.rigidbody).not.toBeNull();
+    expect(screen.getByRole('checkbox', { name: 'Enable Rigidbody' })).toBeDefined();
+
+    await user.click(screen.getByRole('button', { name: 'Add Component' }));
+    await user.click(await screen.findByRole('option', { name: 'Physics' }));
+
+    expect(screen.getByRole('option', { name: 'Rigidbody' }).getAttribute('aria-disabled')).toBe(
+      'true',
+    );
+
+    await user.keyboard('{Escape}');
+    act(() => {
+      editor.registries.undo.undo();
+    });
+
+    expect(camera()?.rigidbody).toBeNull();
+  });
+
   it('changes the light color and intensity with one undo entry each', async () => {
     const user = userEvent.setup();
     const { stores, editor } = await renderDemo();

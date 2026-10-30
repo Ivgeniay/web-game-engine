@@ -47,6 +47,27 @@ function resetIn(object: SceneObject, component: ComponentKind): SceneObject {
   }
 }
 
+function addTo(object: SceneObject, component: ComponentKind): SceneObject {
+  if (hasComponent(object, component)) {
+    return object;
+  }
+
+  switch (component) {
+    case 'transform':
+      return object;
+    case 'rigidbody':
+      return { ...object, rigidbody: DEFAULT_RIGIDBODY };
+    case 'light':
+      return { ...object, light: DEFAULT_LIGHT };
+    case 'path':
+      return { ...object, path: DEFAULT_PATH };
+    case 'note':
+      return { ...object, note: DEFAULT_NOTE };
+    case 'meshRenderer':
+      return { ...object, meshRenderer: DEFAULT_MESH_RENDERER };
+  }
+}
+
 function removeFrom(object: SceneObject, component: ComponentKind): SceneObject {
   switch (component) {
     case 'transform':
@@ -83,6 +104,14 @@ export function resetComponent(
   component: ComponentKind,
 ): SceneSnapshot {
   return editObjects(snapshot, ids, (object) => resetIn(object, component));
+}
+
+export function addComponent(
+  snapshot: SceneSnapshot,
+  ids: readonly string[],
+  component: ComponentKind,
+): SceneSnapshot {
+  return editObjects(snapshot, ids, (object) => addTo(object, component));
 }
 
 export function removeComponent(

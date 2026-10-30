@@ -1,0 +1,17 @@
+.root {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-8);
+  min-width: 0;
+  max-width: 100%;
+}
+
+.path {
+  width: var(--showcase-inspector-width);
+  max-width: 100%;
+  border: var(--size-border-width) solid var(--color-border-control);
+  border-radius: var(--radius-sm);
+  resize: horizontal;
+  overflow: hidden;
+}

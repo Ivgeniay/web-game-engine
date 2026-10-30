@@ -143,6 +143,11 @@
 | Preview, thumbnail | Превью | `Thumbnail`; загрузчик — `ThumbnailLoader` |
 | Asset | Ассет | Файл проекта; вкладка окна выбора «Ассеты» |
 | Grid view | Сетка | `GridView`; размер ячейки — «размер значков» |
+| Inspector section | Секция | `InspectorSection`; в интерфейсе — «компонент», как в Unity |
+| Property group | Группа свойств | `{ type: 'group' }`, заголовок — `SectionHeader` |
+| Searchable menu | Меню с поиском | `SearchableMenu`, аналог `AdvancedDropdown` |
+| Breadcrumbs | Путь | `Breadcrumbs`; имя компонента не переводится |
+| Value type editor | Редактор типа | Редактор своего типа значения интеграции, `propertyEditors.register` |
 
 ## Правила русского перевода
 

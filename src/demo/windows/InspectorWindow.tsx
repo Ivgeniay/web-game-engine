@@ -15,6 +15,7 @@ import { useRegistration } from '@/state/registries/useRegistration';
 import { Label } from '@/ui/label/Label';
 import { PropertyRowGroup } from '@/ui/propertyRow/PropertyRowGroup';
 import { removeComponentCommand, resetComponentCommand } from './demoWindowCommands';
+import { AddComponentButton } from './inspector/AddComponentButton';
 import styles from './inspector/Inspector.module.css';
 import {
   componentOfSection,
@@ -75,6 +76,7 @@ export function InspectorWindow() {
             <PropertyField property={nameProperty} targetIds={selectedIds} />
           </PropertyRowGroup>
           <Inspector source={source} targetIds={selectedIds} />
+          <AddComponentButton />
         </>
       )}
     </div>

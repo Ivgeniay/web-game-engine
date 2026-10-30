@@ -185,7 +185,9 @@
 - Перенос данных — `src/ui/dragAndDrop/` на Pointer Events: `useDragSource` (`startDrag` из `onPointerDown`, порог 3 пикселя, Esc отменяет, клик после переноса гасится) и `useDropTarget` (`accepts`, `onDragOver`, `onDragLeave`, `onDrop`). Данные — `DragData { type, ids, label }`, тип с префиксом своей части: `demo.scene-object`. HTML5 Drag and Drop — только для файлов из ОС и вкладок dockview.
 - Точка входа оборачивает приложение в `DragAndDropLayer` внутри `PopupLayer`. Слой держит сеанс и рисует превью с `--z-drag`; пока идёт перенос, подсказки не показываются. Без слоя хуки бросают ошибку, но только когда перенос включён.
 - Перетаскивание в TreeView: `dragType` делает строки источником, `onDropData` — дерево целью, `canDropData` уточняет место, `dropTypes` — чужие типы данных. Место — `TreeDropTarget`: узел с `before`, `after`, `inside` или `root`. Внутрь себя и своих потомков дерево не роняет само; переносит данные владелец.
-- Foldout и ComponentHeader: развёрнутость управляемая, свёрнутое содержимое остаётся смонтированным с `hidden`, Alt+клик меняет и вложенные секции. Содержимое выстраивается столбцом. Меню ComponentHeader — готовые `menuItems`; из реестра их строит `useContextMenuItems(context, target)` из `src/shell/`.
+- Foldout, SectionHeader и ComponentHeader: развёрнутость управляемая, свёрнутое содержимое остаётся смонтированным с `hidden`, Alt+клик меняет и вложенные секции. Содержимое выстраивается столбцом. Меню ComponentHeader и SectionHeader — готовые `menuItems`; из реестра их строит `useContextMenuItems(context, target)` из `src/shell/`.
+- GridView строится на том же `useListBox` с раскладкой сеткой: колонки по ширине, виртуализация по рядам ячеек, стрелки во все стороны. Масштаб `cellSize` управляемый, при `GRID_CELL_SIZE_MIN` сетка становится списком. Превью — Thumbnail с загрузчиком `ThumbnailLoader(id, signal)` из `src/contracts/thumbnail.ts`; загрузчик держится одним и тем же между отрисовками, кэш — у интеграции.
+- Выбор из большого набора: ReferenceField с PickerDialog (предпросмотр, фиксация, отмена по протоколу значения, пункт «Нет» — `null`) и SearchableMenu (иерархия с поиском, фокус в поиске, активная строка через `aria-activedescendant`). Путь по уровням — Breadcrumbs. Переведённые подписи — `usePickerDialogLabels`, `useReferenceFieldLabels`, `useSearchableMenuLabels`.
 
 ## Архитектура
 
@@ -269,6 +271,18 @@ src/
 - Несколько изменений в одну запись — `undo.group(label, run)`. Операции, добавленные во время отмены или повтора, игнорируются. Глубина — 200 записей.
 - Поле связывается со стеком через `useUndoableValue({ label, read, write })` из `src/state/undo/` (вне React — `createUndoableValue` из `core`): одно редактирование или одно перетаскивание — одна запись, отмена (`cancel`) и возврат к исходному значению записей не создают. Флажок и выпадающий список вызывают обработчик с фазой `commit`.
 - Команды каркаса `undoCommand` и `redoCommand` (Mod+Z, Mod+Shift+Z, `allowInTextInput: 'whenCommitted'`) из `src/core/undo/undoCommands.ts`. Обработчики регистрирует `EditorFrame`, интеграция ставит команды в своё меню Edit. Вне `EditorFrame` — `registerUndoCommands(commands, undo)`.
+
+### Инспектор и свойства
+
+Каркас не знает, как устроены объекты движка. Интеграция описывает их свойства данными, а инспектор каркаса строит по ним поля. Страницы «Описание свойств» и «Инспектор» витрины и демо-сцена показывают каждый механизм на примере.
+
+- Свойство — данные `PropertyDescription` из `src/contracts/property.ts`, создаются конструкторами `numberProperty`, `vectorProperty`, `enumProperty`, `referenceProperty`, `listProperty` и другими из `src/core/inspector/properties.ts`. Обязательные поля — `id`, подпись `label` (`MessageRef`), `read(targetId)` и `write(targetId, value)`; необязательные — `readOnly`, `hidden`, `defaultValue` и атрибуты своего типа.
+- `PropertyField` из `src/inspector/` рисует одно свойство для `targetIds`. Смешанное значение — прочерк. Одно изменение — одна запись отмены для всех целей. Тронутая компонента вектора, прямоугольника и объёма записывается во все цели как есть, остальные сохраняют своё значение.
+- `defaultValue` даёт отметку «значение изменено», кнопку сброса и пункт «Сбросить» в меню свойства. Свои пункты меню свойства и секции интеграция регистрирует в контекстах `inspectorPropertyMenu` и `inspectorSectionMenu` из `src/inspector/inspectorMenus.ts`.
+- `Inspector` получает `InspectorSource { getSections(targetIds), subscribe(listener) }` из `src/contracts/inspector.ts`. Секция — `{ id, type, title, icon?, enabled?, items }`, элементы — свойства и группы `{ type: 'group', id, label, properties }`.
+- Свой тип значения: `definePropertyType<T>({ id })` с префиксом своей части, редактор — `propertyEditors.register(type, Editor)`, свойство — `customProperty({ valueType, … })`. Редактор получает `PropertyEditorProps<T>` и передаёт `row` своей `PropertyRow`. Встроенные типы каркаса перерегистрировать нельзя.
+- Своя отрисовка секции: `inspectorSections.register({ type, component })`. Компонент получает `InspectorSectionProps`; обычные заголовок и строки дают `InspectorSectionFrame` и `InspectorItems`.
+- Ссылка — `referenceProperty` с `ReferenceProvider`: вкладки окна выбора, имя и иконка цели, загрузчик превью, типы и разбор перетаскиваемых данных.
 
 ### Окна и докинг
 

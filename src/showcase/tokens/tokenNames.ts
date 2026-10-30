@@ -24,6 +24,8 @@ export const SIZE_TOKEN_PREFIXES: Readonly<Record<SizeTokenKind, readonly string
     '--size-tab-',
     '--size-statusbar-',
     '--size-picker-',
+    '--size-searchable-menu-',
+    '--size-breadcrumb-',
   ],
   icon: ['--size-icon-'],
   border: ['--size-border-'],

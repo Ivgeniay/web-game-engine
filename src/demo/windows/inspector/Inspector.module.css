@@ -7,3 +7,8 @@
   padding: var(--space-8);
   overflow-y: auto;
 }
+
+.addComponent {
+  align-self: center;
+  margin-block-start: var(--space-8);
+}

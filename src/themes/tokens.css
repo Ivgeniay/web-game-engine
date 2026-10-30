@@ -52,6 +52,9 @@
   --size-picker-width: 480px;
   --size-picker-results-height: 320px;
   --size-picker-scale-width: 120px;
+  --size-searchable-menu-width: 240px;
+  --size-searchable-menu-list-height: 240px;
+  --size-breadcrumb-max-width: 160px;
   --size-color-area-height: 144px;
   --size-color-strip-height: 12px;
   --size-color-marker: 10px;
